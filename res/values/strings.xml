@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">FCR</string>
+    <string name="action_settings">Configuración</string>
+    <string name="action_help">Ayuda</string>
+
+    <string name="drawer_open">Abrir drawer</string>
+    <string name="drawer_close">Cerrar drawer</string>
+    
+    <string name="hello_world">Hola Mundo</string>
+    
+    <string name="codes">Códigos</string>
+    <string name="digital_systems">Digitales</string>
+    <string name="networks">Redes</string>
+    
+    <string name="binary">Binario</string>
+    <string name="hexadecimal">Hexadecimal</string>
+    <string name="sign_and_magnitude">Signo-magnitud</string>
+    <string name="logic_gate">Puerta lógica</string>
+    <string name="logic_operation">Operación lógica</string>
+    <string name="network_address">Dirección de red</string>
+    <string name="cidr">CIDR</string>
+    <string name="host_count">Número de hosts</string>
+    <string name="network_mask">Máscara de red</string>
+    <string name="network_layer">Capa de red</string>
+    <string name="protocol">Protocolo</string>
+    
+    <string name="dummy_exercise">Ejercicio</string>   
+    
+
+</resources>
