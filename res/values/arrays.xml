@@ -1,22 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="codes">
+    <array name="codes">
         <item>@string/binary</item>
         <item>@string/hexadecimal</item>
         <item>@string/sign_and_magnitude</item>
-    </string-array>
-    <string-array name="digital_systems">
+    </array>
+    <array name="digital_systems">
         <item>@string/logic_gate</item>
         <item>@string/logic_operation</item>
-    </string-array>
-    <string-array name="networks">
+    </array>
+    <array name="networks">
         <item>@string/network_address</item>
         <item>@string/cidr</item>
         <item>@string/host_count</item>
         <item>@string/network_mask</item>
         <item>@string/network_layer</item>
         <item>@string/protocol</item>
-    </string-array>
+    </array>
+
+    <array name="highscores">
+        <item>@string/highscores</item>
+    </array>
 
 </resources>

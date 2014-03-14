@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
@@ -14,7 +16,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import es.uniovi.imovil.fcrtrainer.SectionedDrawerAdapter.Group;
@@ -31,9 +32,9 @@ public class MainActivity extends ActionBarActivity implements
 	 */
 	private static final String LAST_EXERCISE = "last_exercise";
 	/**
-	 * Preferencia que indica que el usuario sabe manejar el drawer. La guía
-	 * de Android recomienda mostrar el Drawer abierto hasta que el usuario lo
-	 * haya desplegado al menos una vez.
+	 * Preferencia que indica que el usuario sabe manejar el drawer. La guía de
+	 * Android recomienda mostrar el Drawer abierto hasta que el usuario lo haya
+	 * desplegado al menos una vez.
 	 */
 	private static final String USER_LEARNED_DRAWER = "user_learned_drawer";
 
@@ -42,7 +43,7 @@ public class MainActivity extends ActionBarActivity implements
 	private ListView mDrawerList;
 	private CharSequence mDrawerTitle;
 	private CharSequence mTitle;
-	private int mExerciseIndex;
+	private int mExerciseResIndex;
 	private boolean mUserLearnedDrawer;
 
 	@Override
@@ -56,7 +57,7 @@ public class MainActivity extends ActionBarActivity implements
 
 		if (savedInstanceState != null) {
 			// Recuperar el estado tras una interrupción
-			mExerciseIndex = savedInstanceState.getInt(LAST_EXERCISE);
+			mExerciseResIndex = savedInstanceState.getInt(LAST_EXERCISE);
 			mUserLearnedDrawer = savedInstanceState
 					.getBoolean(USER_LEARNED_DRAWER);
 			fromSavedInstanceState = true;
@@ -64,8 +65,7 @@ public class MainActivity extends ActionBarActivity implements
 			// Restaurar el estado desde las preferencias
 			SharedPreferences prefs = getSharedPreferences(PREFERENCES,
 					Context.MODE_PRIVATE);
-			mExerciseIndex = prefs.getInt(LAST_EXERCISE,
-					ExerciseFragmentFactory.BINARY_EXERCISE_INDEX);
+			mExerciseResIndex = prefs.getInt(LAST_EXERCISE, R.string.binary);
 			mUserLearnedDrawer = prefs.getBoolean(USER_LEARNED_DRAWER, false);
 		}
 
@@ -83,7 +83,7 @@ public class MainActivity extends ActionBarActivity implements
 		SharedPreferences prefs = getSharedPreferences(PREFERENCES,
 				Context.MODE_PRIVATE);
 		SharedPreferences.Editor prefsEditor = prefs.edit();
-		prefsEditor.putInt(LAST_EXERCISE, mExerciseIndex);
+		prefsEditor.putInt(LAST_EXERCISE, mExerciseResIndex);
 		prefsEditor.putBoolean(USER_LEARNED_DRAWER, mUserLearnedDrawer);
 		prefsEditor.commit();
 	}
@@ -93,7 +93,7 @@ public class MainActivity extends ActionBarActivity implements
 		super.onSaveInstanceState(savedInstanceState);
 
 		// Guardar el estado de la actividad
-		savedInstanceState.putInt(LAST_EXERCISE, mExerciseIndex);
+		savedInstanceState.putInt(LAST_EXERCISE, mExerciseResIndex);
 		savedInstanceState.putBoolean(USER_LEARNED_DRAWER, mUserLearnedDrawer);
 	}
 
@@ -141,19 +141,20 @@ public class MainActivity extends ActionBarActivity implements
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		if (position != mExerciseIndex) {
+		int newExerciseIndex = (Integer) parent.getItemAtPosition(position);
+		if (newExerciseIndex != mExerciseResIndex) {
 			// Cambiar el fragmento de contenido actual
-			mExerciseIndex = position;
+			mExerciseResIndex = newExerciseIndex;
 			updateContentFragment();
-			mTitle = ((TextView) view.findViewById(R.id.entry_text)).getText();
+			mTitle = getString(mExerciseResIndex);
 		}
 		// Cerrar el Drawer
 		mDrawerLayout.closeDrawer(mDrawerList);
 	}
 
 	private void updateContentFragment() {
-		BaseExerciseFragment fragment = ExerciseFragmentFactory
-				.createExercise(mExerciseIndex);
+		Fragment fragment = FragmentFactory
+				.createExercise(mExerciseResIndex);
 		FragmentTransaction fragmentTransaction = getSupportFragmentManager()
 				.beginTransaction();
 		fragmentTransaction.replace(R.id.content_frame, fragment);
@@ -162,7 +163,7 @@ public class MainActivity extends ActionBarActivity implements
 
 	private void initializeDrawer(boolean fromSavedState) {
 		// Contenido organizado en secciones
-		ArrayList<Group<String, String>> sections = createDrawerEntries();
+		ArrayList<Group<String, Integer>> sections = createDrawerEntries();
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
 		mDrawerList.setAdapter(new SectionedDrawerAdapter(this,
@@ -202,7 +203,7 @@ public class MainActivity extends ActionBarActivity implements
 			mDrawerLayout.openDrawer(mDrawerList);
 			actionBar.setTitle(mDrawerTitle);
 		} else {
-			mTitle = (String) mDrawerList.getAdapter().getItem(mExerciseIndex);
+			mTitle = getString(mExerciseResIndex);
 			setTitle(mTitle);
 		}
 
@@ -212,21 +213,33 @@ public class MainActivity extends ActionBarActivity implements
 		actionBar.setHomeButtonEnabled(true);
 	}
 
-	private ArrayList<Group<String, String>> createDrawerEntries() {
-		ArrayList<Group<String, String>> sections = new ArrayList<Group<String, String>>();
+	private ArrayList<Group<String, Integer>> createDrawerEntries() {
+		ArrayList<Group<String, Integer>> sections = new ArrayList<Group<String,
+				Integer>>();
 
 		addSection(sections, R.string.codes, R.array.codes);
 		addSection(sections, R.string.digital_systems, R.array.digital_systems);
 		addSection(sections, R.string.networks, R.array.networks);
+		addSection(sections, R.string.highscores, R.array.highscores);
 
 		return sections;
 	}
 
-	private void addSection(ArrayList<Group<String, String>> sections, int sectionNameId,
-			int childrenArrayId) {
-		Group<String, String> group;
-		group = new Group<String, String>(getString(sectionNameId));
-		group.children = getResources().getStringArray(childrenArrayId);
+	private void addSection(ArrayList<Group<String, Integer>> sections,
+			int sectionNameId, int childrenArrayId) {
+		Group<String, Integer> group;
+		group = new Group<String, Integer>(getString(sectionNameId));
+
+		TypedArray array = getResources().obtainTypedArray(childrenArrayId);
+
+		group.children = new Integer[array.length()];
+		for (int i = 0; i < array.length(); i++) {
+			int defaultId = 0;
+			group.children[i] = array.getResourceId(i, defaultId);
+		}
+		
+		array.recycle();
+		
 		sections.add(group);
 	}
 }

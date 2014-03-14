@@ -26,6 +26,11 @@
     <string name="network_layer">Network layer</string>
     <string name="protocol">Protocol</string>
     
+    <string name="highscores">Highscores</string>
+    <string name="default_user_name">Me</string>
+    <string name="error_parsing_highscores">Error al analizar las puntuaciones</string>
+    <string name="all">All</string>
+    
     <string name="dummy_exercise">Exercise</string>   
     
 

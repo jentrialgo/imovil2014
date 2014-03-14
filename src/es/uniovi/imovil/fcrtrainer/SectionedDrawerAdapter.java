@@ -32,17 +32,19 @@ final class SectionedDrawerAdapter extends BaseAdapter {
 		public TextView titleTextView;
 	}
 
-	private ArrayList<Group<String, String>> mGroups;
+	private ArrayList<Group<String, Integer>> mGroups;
+	private Context mContext;
 	private int[] mGroupBaseIndexes;
 	private LayoutInflater mInflater;
 	private int mChildLayoutRes;
 	private int mHeaderLayoutRes;
 
 	public SectionedDrawerAdapter(Context context, int childLayoutRes,
-			int headerLayoutRes, ArrayList<Group<String, String>> groups) {
+			int headerLayoutRes, ArrayList<Group<String, Integer>> groups) {
 		if (context == null || groups == null) {
 			throw new IllegalArgumentException();
 		}
+		mContext = context;
 		mGroups = groups;
 		mInflater = LayoutInflater.from(context);
 		mChildLayoutRes = childLayoutRes;
@@ -95,7 +97,7 @@ final class SectionedDrawerAdapter extends BaseAdapter {
 			String header = mGroups.get(groupIndex).key;
 			return getGroupView(header, convertView, parent);
 		} else {
-			String child = mGroups.get(groupIndex).children[childIndex];
+			int child = mGroups.get(groupIndex).children[childIndex];
 			return getChildView(child, convertView, parent);
 		}
 	}
@@ -121,7 +123,6 @@ final class SectionedDrawerAdapter extends BaseAdapter {
 	}
 
 	public View getGroupView(String header, View convertView, ViewGroup parent) {
-
 		View groupView = convertView;
 		HeaderViewHolder viewHolder;
 		if (groupView == null
@@ -137,8 +138,7 @@ final class SectionedDrawerAdapter extends BaseAdapter {
 		return groupView;
 	}
 
-	public View getChildView(String child, View convertView, ViewGroup parent) {
-
+	public View getChildView(int childId, View convertView, ViewGroup parent) {
 		View childView = convertView;
 		ChildViewHolder viewHolder;
 		if (childView == null
@@ -150,7 +150,7 @@ final class SectionedDrawerAdapter extends BaseAdapter {
 			childView.setTag(viewHolder);
 		}
 		viewHolder = (ChildViewHolder) childView.getTag();
-		viewHolder.entryTextView.setText(child);
+		viewHolder.entryTextView.setText(mContext.getString(childId));
 		return childView;
 	}
 

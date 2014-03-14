@@ -1,0 +1,165 @@
+package es.uniovi.imovil.fcrtrainer;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+
+import org.json.JSONException;
+
+import es.uniovi.imovil.fcrtrainer.highscores.Highscore;
+import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
+import android.content.res.TypedArray;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+public class HighscoresFragment extends Fragment implements OnItemSelectedListener {
+
+	private static final String TAG = "HighscoresFragment";
+
+	private final static int ALL_EXERCISES = -1; // negativo para que no coincida con un
+													// id
+
+	private View mRootView;
+	private Spinner mExerciseSpinner;
+	private ListView mHighscoreListView;
+
+	public static HighscoresFragment newInstance() {
+		HighscoresFragment fragment = new HighscoresFragment();
+		return fragment;
+	}
+
+	public HighscoresFragment() {
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+
+		mRootView = inflater.inflate(R.layout.fragment_highscores, container, false);
+
+		initializeExerciseSpinner();
+
+		// El ListView se inicializa porque cuando se carga el spinner, se genera un
+		// evento onItemSelected del spinner
+
+		return mRootView;
+	}
+
+	private void initializeExerciseSpinner() {
+		// La idea de esta función es crear los elementos del spinner utilizando
+		// los arrays definidos en los recursos
+
+		ArrayList<Exercise> exercises = new ArrayList<Exercise>();
+		Exercise all = new Exercise(getString(R.string.all), ALL_EXERCISES);
+		exercises.add(all);
+		addExerciseModule(exercises, R.array.codes);
+		addExerciseModule(exercises, R.array.digital_systems);
+		addExerciseModule(exercises, R.array.networks);
+
+		ArrayAdapter<Exercise> adapter = new ArrayAdapter<Exercise>(getActivity(),
+				android.R.layout.simple_list_item_1, exercises);
+
+		mExerciseSpinner = (Spinner) mRootView.findViewById(R.id.spinner_exercise);
+		mExerciseSpinner.setAdapter(adapter);
+
+		mExerciseSpinner.setOnItemSelectedListener(this);
+	}
+
+	private void addExerciseModule(ArrayList<Exercise> exercises, int arrayResourceId) {
+		TypedArray array = getResources().obtainTypedArray(arrayResourceId);
+
+		for (int i = 0; i < array.length(); i++) {
+			int defaultId = 0;
+			int resourceId = array.getResourceId(i, defaultId);
+
+			Exercise exercise = new Exercise(getResources().getString(resourceId),
+					resourceId);
+			exercises.add(exercise);
+		}
+
+		array.recycle();
+	}
+
+	private void initializeListView(int selectedExerciseId) {
+		mHighscoreListView = (ListView) mRootView.findViewById(R.id.list_view_highscores);
+		ArrayList<Highscore> highscores = loadHighscores();
+
+		if (highscores.size() == 0) {
+			// Esta es la primera vez que se abre esta ventana, así que añadimos algunas
+			// puntuaciones de ejemplo para que el usuario tenga algo que intentar batir
+			addBasicHighscores();
+			highscores = loadHighscores();
+		}
+
+		Collections.sort(highscores);
+		Collections.reverse(highscores);
+
+		ArrayList<Highscore> selectedHighscores = new ArrayList<Highscore>();
+
+		for (Highscore highscore : highscores) {
+			if (selectedExerciseId == ALL_EXERCISES
+					|| selectedExerciseId == highscore.getExercise()) {
+				selectedHighscores.add(highscore);
+			}
+		}
+
+		HighscoreAdapter adapter = new HighscoreAdapter(getActivity(), selectedHighscores);
+		mHighscoreListView.setAdapter(adapter);
+	}
+
+	private ArrayList<Highscore> loadHighscores() {
+		ArrayList<Highscore> highscores = new ArrayList<Highscore>();
+
+		try {
+			highscores = HighscoreManager.loadHighscores(getActivity());
+		} catch (JSONException e) {
+			Log.d(TAG, "Error al analizar el JSON: " + e.getMessage());
+			Toast.makeText(getActivity(),
+					getActivity().getString(R.string.error_parsing_highscores),
+					Toast.LENGTH_LONG).show();
+
+			// Las puntuaciones estarán vacías
+		}
+		return highscores;
+	}
+
+	private void addBasicHighscores() {
+		String[] names = { "Ángel Manuel", "Beltrán", "David Alejandro", "Diego", "Enol",
+				"Gabriel", "Henrik", "Inés", "Lucía", "Marcos", "Miguel Ángel", "Óscar",
+				"Raphael", "Roberto", "Walter" };
+		try {
+			for (int i = 0; i < names.length; i++) {
+				int minScore = 10;
+				int maxScore = 100;
+				int score = minScore
+						+ (int) (Math.random() * ((maxScore - minScore) + 1));
+				HighscoreManager.addScore(getActivity(), score, R.string.binary,
+						new Date(), names[i]);
+			}
+		} catch (JSONException e) {
+			Log.d(TAG, "Error al analizar el JSON: " + e.getMessage());
+		}
+	}
+
+	@Override
+	public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+		Exercise exercise = (Exercise) parent.getItemAtPosition(pos);
+		initializeListView(exercise.getId());
+	}
+
+	@Override
+	public void onNothingSelected(AdapterView<?> view) {
+		// No hay que hacer nada
+	}
+
+}
