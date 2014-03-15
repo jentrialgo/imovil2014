@@ -12,7 +12,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
