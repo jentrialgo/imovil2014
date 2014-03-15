@@ -199,11 +199,11 @@ public class MainActivity extends ActionBarActivity implements
 		};
 
 		// Si el usuario no ha desplegado alguna vez el Drawer
+		mTitle = getString(mExerciseResIndex);
 		if (!mUserLearnedDrawer && !fromSavedState) {
 			mDrawerLayout.openDrawer(mDrawerList);
 			actionBar.setTitle(mDrawerTitle);
-		} else {
-			mTitle = getString(mExerciseResIndex);
+		} else {			
 			setTitle(mTitle);
 		}
 
