@@ -31,6 +31,7 @@
     <string name="highscores">Puntuaciones</string>
     <string name="default_user_name">Yo</string>
     <string name="error_parsing_highscores">Error al analizar las puntuaciones</string>
+    <string name="error_adding_initial_highscores">Error al insertar las puntuaciones iniciales</string>
     <string name="all">Todos</string>
     
     <string name="dummy_exercise">Ejercicio</string>   

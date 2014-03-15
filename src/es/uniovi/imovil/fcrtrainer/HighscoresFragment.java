@@ -8,8 +8,11 @@ import org.json.JSONException;
 
 import es.uniovi.imovil.fcrtrainer.highscores.Highscore;
 import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,11 +25,23 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-public class HighscoresFragment extends Fragment implements OnItemSelectedListener {
+public class HighscoresFragment extends Fragment implements
+		OnItemSelectedListener {
 
 	private static final String TAG = "HighscoresFragment";
 
-	private final static int ALL_EXERCISES = -1; // negativo para que no coincida con un
+	/**
+	 * Nombre del fichero de preferencias.
+	 */
+	private static final String PREFERENCES = "preferences";
+
+	/**
+	 * Preferencia que indica si es la primera ver que se abren las puntuaciones
+	 */
+	private static final String FIRST_TIME_HIGHSCORES = "first_time_highscores";
+
+	private final static int ALL_EXERCISES = -1; // negativo para que no
+													// coincida con un
 													// id
 
 	private View mRootView;
@@ -46,11 +61,13 @@ public class HighscoresFragment extends Fragment implements OnItemSelectedListen
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		mRootView = inflater.inflate(R.layout.fragment_highscores, container, false);
+		mRootView = inflater.inflate(R.layout.fragment_highscores, container,
+				false);
 
 		initializeExerciseSpinner();
 
-		// El ListView se inicializa porque cuando se carga el spinner, se genera un
+		// El ListView se inicializa porque cuando se carga el spinner, se
+		// genera un
 		// evento onItemSelected del spinner
 
 		return mRootView;
@@ -67,24 +84,26 @@ public class HighscoresFragment extends Fragment implements OnItemSelectedListen
 		addExerciseModule(mExercises, R.array.digital_systems);
 		addExerciseModule(mExercises, R.array.networks);
 
-		ArrayAdapter<Exercise> adapter = new ArrayAdapter<Exercise>(getActivity(),
-				android.R.layout.simple_list_item_1, mExercises);
+		ArrayAdapter<Exercise> adapter = new ArrayAdapter<Exercise>(
+				getActivity(), android.R.layout.simple_list_item_1, mExercises);
 
-		mExerciseSpinner = (Spinner) mRootView.findViewById(R.id.spinner_exercise);
+		mExerciseSpinner = (Spinner) mRootView
+				.findViewById(R.id.spinner_exercise);
 		mExerciseSpinner.setAdapter(adapter);
 
 		mExerciseSpinner.setOnItemSelectedListener(this);
 	}
 
-	private void addExerciseModule(ArrayList<Exercise> exercises, int arrayResourceId) {
+	private void addExerciseModule(ArrayList<Exercise> exercises,
+			int arrayResourceId) {
 		TypedArray array = getResources().obtainTypedArray(arrayResourceId);
 
 		for (int i = 0; i < array.length(); i++) {
 			int defaultId = 0;
 			int resourceId = array.getResourceId(i, defaultId);
 
-			Exercise exercise = new Exercise(getResources().getString(resourceId),
-					resourceId);
+			Exercise exercise = new Exercise(getResources().getString(
+					resourceId), resourceId);
 			exercises.add(exercise);
 		}
 
@@ -92,23 +111,38 @@ public class HighscoresFragment extends Fragment implements OnItemSelectedListen
 	}
 
 	private void initializeListView(int selectedExerciseId) {
-		mHighscoreListView = (ListView) mRootView.findViewById(R.id.list_view_highscores);
-		ArrayList<Highscore> highscores = loadHighscores();
+		mHighscoreListView = (ListView) mRootView
+				.findViewById(R.id.list_view_highscores);
 
-		if (highscores.size() == 0) {
-			// Esta es la primera vez que se abre esta ventana, así que añadimos algunas
-			// puntuaciones de ejemplo para que el usuario tenga algo que intentar batir
+		if (firstTime()) {
 			addBasicHighscores();
-			highscores = loadHighscores();
 		}
+
+		ArrayList<Highscore> highscores = loadHighscores();
 
 		highscores = selectHighscores(highscores, selectedExerciseId);
 
 		Collections.sort(highscores);
 		Collections.reverse(highscores);
 
-		HighscoreAdapter adapter = new HighscoreAdapter(getActivity(), highscores);
+		HighscoreAdapter adapter = new HighscoreAdapter(getActivity(),
+				highscores);
 		mHighscoreListView.setAdapter(adapter);
+	}
+
+	private boolean firstTime() {
+		SharedPreferences sharedPreferences = getActivity()
+				.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
+		boolean defaultValue = true;
+		boolean firstTime = sharedPreferences.getBoolean(FIRST_TIME_HIGHSCORES,
+				defaultValue);
+		if (firstTime) {
+			SharedPreferences.Editor editor = sharedPreferences.edit();
+			editor.putBoolean(FIRST_TIME_HIGHSCORES, false);
+			editor.commit();
+			return true;
+		}
+		return false;
 	}
 
 	private ArrayList<Highscore> loadHighscores() {
@@ -126,8 +160,9 @@ public class HighscoresFragment extends Fragment implements OnItemSelectedListen
 		}
 		return highscores;
 	}
-	
-	private ArrayList<Highscore> selectHighscores(ArrayList<Highscore> highscores, int selectedExerciseId) {
+
+	private ArrayList<Highscore> selectHighscores(
+			ArrayList<Highscore> highscores, int selectedExerciseId) {
 		ArrayList<Highscore> selectedHighscores = new ArrayList<Highscore>();
 
 		for (Highscore highscore : highscores) {
@@ -140,33 +175,47 @@ public class HighscoresFragment extends Fragment implements OnItemSelectedListen
 	}
 
 	private void addBasicHighscores() {
-		String[] names = { "Ángel Manuel", "Beltrán", "David Alejandro", "Diego", "Enol",
-				"Gabriel", "Henrik", "Inés", "Lucía", "Marcos", "Miguel Ángel", "Óscar",
-				"Raphael", "Roberto", "Walter" };
+		String[] names = { "Ángel Manuel", "Beltrán", "David Alejandro",
+				"Diego", "Enol", "Gabriel", "Henrik", "Inés", "Lucía",
+				"Marcos", "Miguel Ángel", "Óscar", "Raphael", "Roberto",
+				"Walter" };
+		ArrayList<Highscore> highscores = new ArrayList<Highscore>();
+
 		for (Exercise exercise : mExercises) {
-			if (exercise.getId() != ALL_EXERCISES) { // ALL_EXERCISES is not really an exercise
-				addBasicScoresForExercise(names, exercise.getId());
+			if (exercise.getId() != ALL_EXERCISES) { // ALL_EXERCISES is not
+														// really an exercise
+				addBasicScoresForExercise(highscores, names, exercise.getId());
 			}
+		}
+
+		try {
+			HighscoreManager.addAllHighscores(getActivity(), highscores);
+		} catch (JSONException e) {
+			Log.d(TAG, "Error al analizar el JSON: " + e.getMessage());
+			Toast.makeText(
+					getActivity(),
+					getActivity().getString(
+							R.string.error_adding_initial_highscores),
+					Toast.LENGTH_LONG).show();
 		}
 	}
 
-	private void addBasicScoresForExercise(String[] names, int exerciseId) {
-		try {
-			for (int i = 0; i < names.length; i++) {
-				int minScore = 10;
-				int maxScore = 100;
-				int score = minScore
-						+ (int) (Math.random() * ((maxScore - minScore) + 1));
-				HighscoreManager.addScore(getActivity(), score, exerciseId,
-						new Date(), names[i]);
-			}
-		} catch (JSONException e) {
-			Log.d(TAG, "Error al analizar el JSON: " + e.getMessage());
+	private void addBasicScoresForExercise(ArrayList<Highscore> highscores,
+			String[] names, int exerciseId) {
+		for (int i = 0; i < names.length; i++) {
+			int minScore = 10;
+			int maxScore = 100;
+			int score = minScore
+					+ (int) (Math.random() * ((maxScore - minScore) + 1));
+			Highscore highscore = new Highscore(score, exerciseId, new Date(),
+					names[i]);
+			highscores.add(highscore);
 		}
 	}
 
 	@Override
-	public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+	public void onItemSelected(AdapterView<?> parent, View view, int pos,
+			long id) {
 		Exercise exercise = (Exercise) parent.getItemAtPosition(pos);
 		initializeListView(exercise.getId());
 	}

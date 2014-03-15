@@ -15,7 +15,7 @@ import android.util.Log;
 
 /**
  * Clase para leer y guardar las puntuaciones
- *
+ * 
  */
 public class HighscoreManager {
 	private static final String TAG = "HigscoreManager";
@@ -65,7 +65,8 @@ public class HighscoreManager {
 				userName = context.getString(R.string.default_user_name);
 			}
 
-			highscores.add(new Highscore(score, exercise, dateString, userName));
+			highscores
+					.add(new Highscore(score, exercise, dateString, userName));
 		}
 
 		return highscores;
@@ -107,6 +108,28 @@ public class HighscoreManager {
 		saveHighscores(context, highscores);
 	}
 
+	/**
+	 * Añade un array de puntuaciones. Está pensado para ser utilizado
+	 * inicialmente cuando se rellenan con las puntuaciones iniciales para ser
+	 * más rápido que añadirlas una a una
+	 * 
+	 * @param activity
+	 * @param highscores
+	 * @throws JSONException
+	 */
+	public static void addAllHighscores(Context context,
+			ArrayList<Highscore> newHighscores) throws JSONException {
+		ArrayList<Highscore> highscores = new ArrayList<Highscore>();
+		try {
+			highscores = loadHighscores(context);
+		} catch (JSONException e) {
+			Log.d(TAG, "Error al leer las puntuaciones para añadir una nueva: "
+					+ e.getMessage());
+		}
+		highscores.addAll(newHighscores);
+		saveHighscores(context, highscores);
+	}
+
 	private static void saveHighscores(Context context,
 			ArrayList<Highscore> highscores) throws JSONException {
 		SharedPreferences.Editor editor = mSharedPreferences.edit();
@@ -128,4 +151,5 @@ public class HighscoreManager {
 		}
 		return array.toString();
 	}
+
 }
