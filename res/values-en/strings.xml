@@ -17,6 +17,8 @@
     <string name="binary">Binary</string>
     <string name="hexadecimal">Hexadecimal</string>
     <string name="sign_and_magnitude">Sign-and-magnitude</string>
+    <string name="interpretation">Interpretación</string>
+    <string name="floating_point">Coma flotante</string>
     <string name="logic_gate">Logic gate</string>
     <string name="logic_operation">Logic operation</string>
     <string name="network_address">Network address</string>

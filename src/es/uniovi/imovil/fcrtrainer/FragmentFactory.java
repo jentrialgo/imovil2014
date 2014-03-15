@@ -28,6 +28,10 @@ final public class FragmentFactory {
 			// TODO: return HexadecimalExerciseFragment.newInstance();
 		case R.string.sign_and_magnitude:
 			// TODO: return SignedMagnitudeExerciseFragment.newInstance();
+		case R.string.interpretation:
+			// TODO: return InterpretationExerciseFragment.newInstance();
+		case R.string.floating_point:
+			// TODO: return FloatingPointExerciseFragment.newInstance();
 		case R.string.logic_gate:
 			// TODO: return LogicGateExerciseFragment.newInstance();
 		case R.string.logic_operation:
