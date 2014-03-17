@@ -186,7 +186,7 @@ Apache License
       same "printed page" as the copyright notice for easier
       identification within third-party archives.
 
-   Copyright {2014} {Profesores y alumnos de la asignatura Inform√°tica M√≥vil de la EPI de Gij√≥n}
+   Copyright 2014 Profesores y alumnos de la asignatura Inform·tica MÛvil de la EPI de GijÛn
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
