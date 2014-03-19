@@ -67,7 +67,7 @@ final public class FragmentFactory {
 		case R.string.protocol:
 			// TODO: return ProtocolExerciseFragment.newInstance();
 
-			//return DummyExerciseFragment.newInstance();
+			return DummyExerciseFragment.newInstance();
 
 		default:
 			throw new IllegalStateException();
