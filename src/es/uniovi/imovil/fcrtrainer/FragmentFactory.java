@@ -53,7 +53,8 @@ final public class FragmentFactory {
 		case R.string.logic_gate:
 			// TODO: return LogicGateExerciseFragment.newInstance();
 		case R.string.logic_operation:
-			// TODO: return LogicOperationExerciseFragment.newInstance();
+			// TODO: 
+			return LogicOperationExerciseFragment.newInstance();
 		case R.string.network_address:
 			// TODO: return NetworAddressExerciseFragment.newInstance();
 		case R.string.cidr:
