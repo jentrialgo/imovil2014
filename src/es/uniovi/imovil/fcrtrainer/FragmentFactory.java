@@ -47,13 +47,15 @@ final public class FragmentFactory {
 		case R.string.sign_and_magnitude:
 			// TODO: return SignedMagnitudeExerciseFragment.newInstance();
 		case R.string.interpretation:
-			// TODO: return InterpretationExerciseFragment.newInstance();
+			// TODO: 
+			return InterpretationExerciseFragment.newInstance();
 		case R.string.floating_point:
 			// TODO: return FloatingPointExerciseFragment.newInstance();
 		case R.string.logic_gate:
 			// TODO: return LogicGateExerciseFragment.newInstance();
 		case R.string.logic_operation:
-			// TODO: return LogicOperationExerciseFragment.newInstance();
+			// TODO: 
+			return LogicOperationExerciseFragment.newInstance();
 		case R.string.network_address:
 			// TODO: return NetworAddressExerciseFragment.newInstance();
 		case R.string.cidr:
@@ -63,11 +65,11 @@ final public class FragmentFactory {
 		case R.string.network_mask:
 			// TODO: return NetworkMaskExerciseFragment.newInstance();
 		case R.string.network_layer:
-			// TODO: return NetworkLayerExerciseFragment.newInstance();
+			return NetworkLayerExerciseFragment.newInstance();
 		case R.string.protocol:
-			// TODO: return ProtocolExerciseFragment.newInstance();
+			return ProtocolExerciseFragment.newInstance();
 
-			return DummyExerciseFragment.newInstance();
+			//return DummyExerciseFragment.newInstance();
 
 		default:
 			throw new IllegalStateException();
