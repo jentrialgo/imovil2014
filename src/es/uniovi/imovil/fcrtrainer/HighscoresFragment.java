@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-*/
+ */
 
 package es.uniovi.imovil.fcrtrainer;
 
@@ -57,10 +57,6 @@ public class HighscoresFragment extends Fragment implements
 	 */
 	private static final String FIRST_TIME_HIGHSCORES = "first_time_highscores";
 
-	private final static int ALL_EXERCISES = -1; // negativo para que no
-													// coincida con un
-													// id
-
 	private View mRootView;
 	private Spinner mExerciseSpinner;
 	private ListView mHighscoreListView;
@@ -84,8 +80,7 @@ public class HighscoresFragment extends Fragment implements
 		initializeExerciseSpinner();
 
 		// El ListView se inicializa porque cuando se carga el spinner, se
-		// genera un
-		// evento onItemSelected del spinner
+		// genera un evento onItemSelected del spinner
 
 		return mRootView;
 	}
@@ -95,8 +90,6 @@ public class HighscoresFragment extends Fragment implements
 		// los arrays definidos en los recursos
 
 		mExercises = new ArrayList<Exercise>();
-		Exercise all = new Exercise(getString(R.string.all), ALL_EXERCISES);
-		mExercises.add(all);
 		addExerciseModule(mExercises, R.array.codes);
 		addExerciseModule(mExercises, R.array.digital_systems);
 		addExerciseModule(mExercises, R.array.networks);
@@ -183,8 +176,7 @@ public class HighscoresFragment extends Fragment implements
 		ArrayList<Highscore> selectedHighscores = new ArrayList<Highscore>();
 
 		for (Highscore highscore : highscores) {
-			if (selectedExerciseId == ALL_EXERCISES
-					|| selectedExerciseId == highscore.getExercise()) {
+			if (selectedExerciseId == highscore.getExercise()) {
 				selectedHighscores.add(highscore);
 			}
 		}
@@ -199,10 +191,7 @@ public class HighscoresFragment extends Fragment implements
 		ArrayList<Highscore> highscores = new ArrayList<Highscore>();
 
 		for (Exercise exercise : mExercises) {
-			if (exercise.getId() != ALL_EXERCISES) { // ALL_EXERCISES is not
-														// really an exercise
-				addBasicScoresForExercise(highscores, names, exercise.getId());
-			}
+			addBasicScoresForExercise(highscores, names, exercise.getId());
 		}
 
 		try {
