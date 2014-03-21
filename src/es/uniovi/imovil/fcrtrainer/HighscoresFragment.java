@@ -184,10 +184,7 @@ public class HighscoresFragment extends Fragment implements
 	}
 
 	private void addBasicHighscores() {
-		String[] names = { "Ángel Manuel", "Beltrán", "David Alejandro",
-				"Diego", "Enol", "Gabriel", "Henrik", "Inés", "Lucía",
-				"Marcos", "Miguel Ángel", "Óscar", "Raphael", "Roberto",
-				"Walter" };
+		String[] names = getResources().getStringArray(R.array.student_names);
 		ArrayList<Highscore> highscores = new ArrayList<Highscore>();
 
 		for (Exercise exercise : mExercises) {
