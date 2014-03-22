@@ -51,6 +51,8 @@ limitations under the License.
     <string name="all">Todos</string>
     
     <string name="dummy_exercise">Ejercicio</string>   
+     
+     <string name="fragment_interpretation">Complemento a 2</string>   
     
 
 </resources>
