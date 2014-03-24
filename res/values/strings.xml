@@ -52,7 +52,25 @@ limitations under the License.
     
     <string name="dummy_exercise">Ejercicio</string>   
      
-     <string name="fragment_interpretation">Complemento a 2</string>   
+    <string name="fragment_interpretation">Complemento a 2</string>   
     
+    <string name="train">Entrenamiento</string>
+    <string name="game">Juego</string>
+    
+    <string name="LOentrada1">Entrada 1:</string>
+    <string name="LOentrada2">Entrada 2:</string>
+    <string name="LOoperation">Operación:</string>
+    <string name="LOsalida">Calcular </string>
+    <string name="LOresult">Resultado </string>
 
+    <string name="cero">0</string>
+    <string name="one">1</string>
+     
+    <string name="LOand">AND</string>
+    <string name="LOor">OR</string>
+    <string name="LOxor">XOR</string>
+    <string name="LOnand">NAND</string>
+    <string name="LOxnor">XNOR</string>
+    <string name="LOnor">NOR</string>
+    
 </resources>

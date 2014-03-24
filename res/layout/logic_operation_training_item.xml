@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+       <Spinner
+           android:id="@+id/spinner_LOentrada1"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentLeft="true"
+           android:layout_below="@+id/tventrada1" />
+     
+       <ListView
+	        android:id="@+id/list_view_LOentrada1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:divider="@null"
+	        android:dividerHeight="0dp" >
+    	</ListView>
+
+       <Spinner
+           android:id="@+id/spinner_LOentrada2"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentLeft="true"
+           android:layout_below="@+id/tventrada2" />
+       
+       <ListView
+	        android:id="@+id/list_view_LOentrada2"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:divider="@null"
+	        android:dividerHeight="0dp" >
+       </ListView>
+      
+  
+      <ListView
+	        android:id="@+id/list_view_LOoperation"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:divider="@null"
+	        android:dividerHeight="0dp"> 
+       </ListView>
+
+       <Spinner
+           android:id="@+id/spinner_LOoperacion"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentLeft="true"
+           android:layout_alignTop="@+id/LOoperation"
+           android:layout_marginTop="16dp" />
+
+
+       <TextView
+           android:id="@+id/tventrada1"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentLeft="true"
+           android:layout_alignParentTop="true"
+           android:layout_marginTop="66dp"
+           android:text="@string/LOentrada1" />
+
+       <TextView
+           android:id="@+id/LOoperation"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentLeft="true"
+           android:layout_below="@+id/tventrada1"
+           android:layout_marginTop="74dp"
+           android:text="@string/LOoperation" />
+
+       <TextView
+           android:id="@+id/tventrada2"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentLeft="true"
+           android:layout_below="@+id/LOoperation"
+           android:layout_marginTop="78dp"
+           android:text="@string/LOentrada2" />
+
+       <Button
+           android:id="@+id/LOsalida"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_below="@+id/tventrada2"
+           android:layout_centerHorizontal="true"
+           android:layout_marginTop="61dp"
+           android:text="@string/LOsalida" />
+
+       <TextView
+           android:id="@+id/LOresult"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_below="@+id/LOsalida"
+           android:layout_centerHorizontal="true"
+           android:layout_marginTop="30dp"
+           android:text="@string/LOresult"
+           android:textStyle="bold" />
+      
+</RelativeLayout>

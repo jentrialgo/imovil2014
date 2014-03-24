@@ -260,4 +260,20 @@ public class MainActivity extends ActionBarActivity implements
 		
 		sections.add(group);
 	}
+	
+	//Funcion que cambia las vistas de operaciones logicas
+	public void replaceLOFragment(Boolean b){
+        FragmentTransaction t = getSupportFragmentManager().beginTransaction();
+        
+        if (b){
+        	LogicOperationTrainFragment mFrag1 = new LogicOperationTrainFragment();
+        	t.replace(R.id.fragment_LOcontainer,mFrag1 );
+        	t.commit();
+        }
+        else {
+        	LogicOperationGameFragment mFrag2 = new LogicOperationGameFragment();
+        	t.replace(R.id.fragment_LOcontainer,mFrag2 );
+        	t.commit();
+        }
+    }
 }

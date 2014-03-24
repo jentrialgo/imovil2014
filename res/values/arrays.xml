@@ -41,4 +41,22 @@ limitations under the License.
         <item>@string/highscores</item>
     </array>
 
+     <array name="options">
+        <item>@string/train</item>
+        <item>@string/game</item>
+    </array>
+    
+      <array name="LOentrances">
+        <item>@string/cero</item>
+        <item>@string/one</item>
+    </array>
+    
+      <array name="LOoperation">
+        <item>@string/LOand</item>
+        <item>@string/LOor</item>
+        <item>@string/LOxor</item>
+        <item>@string/LOnand</item>
+        <item>@string/LOxnor</item>
+        <item>@string/LOnor</item>
+    </array>
 </resources>
