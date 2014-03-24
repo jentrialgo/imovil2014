@@ -41,7 +41,7 @@ final public class FragmentFactory {
 		case R.string.highscores:
 			return HighscoresFragment.newInstance();
 		case R.string.binary:
-			// TODO: return BinaryExerciseFragment.newInstance();
+			return BinaryExerciseFragment.newInstance();
 		case R.string.hexadecimal:
 			// TODO: return HexadecimalExerciseFragment.newInstance();
 		case R.string.sign_and_magnitude:
