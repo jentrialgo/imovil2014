@@ -59,7 +59,7 @@ final public class FragmentFactory {
 		case R.string.network_address:
 			// TODO: return NetworAddressExerciseFragment.newInstance();
 		case R.string.cidr:
-			// TODO: return CidrExerciseFragment.newInstance();
+			return CidrExerciseFragment.newInstance();
 		case R.string.host_count:
 			// TODO: return HostCountExerciseFragment.newInstance();
 		case R.string.network_mask:
