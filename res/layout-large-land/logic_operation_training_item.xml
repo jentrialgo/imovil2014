@@ -3,13 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
+ 
        <Spinner
            android:id="@+id/spinner_LOentrada1"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:layout_alignBaseline="@+id/tventrada1"
-    	   android:layout_toRightOf="@+id/tventrada1" />
+           android:layout_alignBaseline="@id/tventrada1"
+    	   android:layout_toRightOf="@id/tventrada1"
+           />
      
        <ListView
 	        android:id="@+id/list_view_LOentrada1"
@@ -23,8 +24,8 @@
            android:id="@+id/spinner_LOentrada2"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:layout_alignBaseline="@+id/tventrada2"
-    	   android:layout_toRightOf="@+id/tventrada2" />
+           android:layout_alignBaseline="@id/tventrada2"
+    	   android:layout_toRightOf="@id/tventrada2"/>
        
        <ListView
 	        android:id="@+id/list_view_LOentrada2"
@@ -47,26 +48,10 @@
            android:id="@+id/spinner_LOoperacion"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:layout_alignBaseline="@+id/LOoperation"
-    	   android:layout_toRightOf="@+id/LOoperation" />
+           android:layout_alignBaseline="@id/LOoperation"
+    	   android:layout_toRightOf="@id/LOoperation"
+            />
 
-
-       <TextView
-           android:id="@+id/tventrada1"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_alignParentLeft="true"
-           android:layout_alignParentTop="true"
-           android:layout_marginTop="124dp"
-           android:text="@string/LOentrada1" />
-
-       <TextView
-           android:id="@+id/LOoperation"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_centerVertical="true"
-           android:layout_toRightOf="@+id/tventrada1"
-           android:text="@string/LOoperation" />
 
        <Button
            android:id="@+id/LOsalida"
@@ -74,18 +59,8 @@
            android:layout_height="wrap_content"
            android:layout_below="@+id/LOoperation"
            android:layout_centerHorizontal="true"
-           android:layout_marginTop="80dp"
+           android:layout_marginTop="58dp"
            android:text="@string/LOsalida" />
-
-       <TextView
-           android:id="@+id/LOresult"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_below="@+id/LOsalida"
-           android:layout_centerHorizontal="true"
-           android:layout_marginTop="29dp"
-           android:text="@string/LOresult"
-           android:textStyle="bold" />
 
        <TextView
            android:id="@+id/tventrada2"
@@ -93,8 +68,36 @@
            android:layout_height="wrap_content"
            android:layout_alignBaseline="@+id/tventrada1"
            android:layout_alignBottom="@+id/tventrada1"
-           android:layout_marginLeft="26dp"
-           android:layout_toRightOf="@+id/LOoperation"
+           android:layout_marginLeft="125dp"
+           android:layout_toRightOf="@+id/LOsalida"
            android:text="@string/LOentrada2" />
+
+       <TextView
+           android:id="@+id/LOoperation"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_centerVertical="true"
+           android:layout_toLeftOf="@+id/LOsalida"
+           android:text="@string/LOoperation" />
+
+       <TextView
+           android:id="@+id/LOresult"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_below="@+id/LOsalida"
+           android:layout_centerHorizontal="true"
+           android:layout_marginTop="27dp"
+           android:text="@string/LOresult"
+           android:textStyle="bold" />
+
+       <TextView
+           android:id="@+id/tventrada1"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_above="@+id/LOoperation"
+           android:layout_alignParentLeft="true"
+           android:layout_marginBottom="67dp"
+           android:layout_marginLeft="103dp"
+           android:text="@string/LOentrada1" />
       
 </RelativeLayout>
