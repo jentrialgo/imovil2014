@@ -80,22 +80,7 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment impleme
 	
 	}
 	
-
-	/*
-	static BaseExerciseFragment createLogicOperationOption (String selectedOption){
-		System.out.println(selectedOption);
-		switch (selectedOption){
-		case R.string.train:
-			return LogicOperationTrainFragment.newInstance();
-		case R.string.game:
-			return LogicOperationGameFragment.newInstance();
-		default:
-			throw new IllegalStateException();
-		}
-		return LogicOperationTrainFragment.newInstance();
-	}
-	*/
-
+	
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
 		Option option = (Option) parent.getItemAtPosition(pos);
