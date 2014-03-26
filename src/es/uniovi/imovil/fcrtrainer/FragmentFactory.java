@@ -50,18 +50,18 @@ final public class FragmentFactory {
 			return ProtocolExerciseFragment.newInstance();
 		case R.string.hexadecimal:
 			return HexadecimalExerciseFragment.newInstance();
+		case R.string.logic_gate:		
+			return LogicGateExerciseFragment.newInstance();
+		case R.string.cidr:
+			return CidrExerciseFragment.newInstance();
 		case R.string.binary:
 			// TODO: return BinaryExerciseFragment.newInstance();
 		case R.string.sign_and_magnitude:
 			// TODO: return SignedMagnitudeExerciseFragment.newInstance();
 		case R.string.floating_point:
 			// TODO: return FloatingPointExerciseFragment.newInstance();
-		case R.string.logic_gate:
-			// TODO: return LogicGateExerciseFragment.newInstance();
 		case R.string.network_address:
 			// TODO: return NetworAddressExerciseFragment.newInstance();
-		case R.string.cidr:
-			// TODO: return CidrExerciseFragment.newInstance();
 		case R.string.host_count:
 			// TODO: return HostCountExerciseFragment.newInstance();
 		case R.string.network_mask:
