@@ -41,4 +41,22 @@ limitations under the License.
         <item>@string/highscores</item>
     </array>
 
+    <string-array name="student_names">
+        <item>Ángel Manuel</item>
+        <item>Beltrán</item>
+        <item>David Alejandro</item>
+        <item>Diego</item>
+        <item>Enol</item>
+        <item>Gabriel</item>
+        <item>Henrik</item>
+        <item>Inés</item>
+        <item>Lucía</item>
+        <item>Marcos</item>
+        <item>Miguel Ángel</item>
+        <item>Óscar</item>
+        <item>Raphael</item>
+        <item>Roberto</item>
+        <item>Walter</item>
+    </string-array>
+    
 </resources>
