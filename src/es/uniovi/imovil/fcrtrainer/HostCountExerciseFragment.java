@@ -7,13 +7,11 @@ import android.view.ViewGroup;
 
 public class HostCountExerciseFragment extends BaseExerciseFragment{
 
-
 	private View mRootView;
 
-	//Constructor.
+	// Constructor
 	public HostCountExerciseFragment() 
 	{
-		
 	}
 	
 	public static HostCountExerciseFragment newInstance() 
@@ -22,10 +20,8 @@ public class HostCountExerciseFragment extends BaseExerciseFragment{
 		return fragment;
 	}
 	
-	public View onCreateView(LayoutInflater inflater,
-			ViewGroup container, Bundle savedInstanceState) {
-		mRootView=inflater.inflate(R.layout.fragment_protocol, container, false);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		mRootView=inflater.inflate(R.layout.fragment_host_count, container, false);
 		return mRootView;
 	}
-
 }

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+<TextView
+    android:id="@+id/pregunta"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    android:layout_marginTop="130dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:text="Numero de hosts a partir de la mascara de red 255.255.248.0"
+    android:textSize="30dp" />
+
+<TextView
+    android:id="@+id/tiempo"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="50dp"
+    android:paddingRight="10dip"
+    android:text="00:37"
+    android:textSize="50dp" />
+
+<Button
+    android:id="@+id/respuesta1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"
+    android:minHeight="75dp"
+    android:minWidth="100dp"
+    android:text="Respuesta 1" />
+
+<Button
+    android:id="@+id/respuesta2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/respuesta1"
+    android:layout_centerHorizontal="true"
+    android:minHeight="65dip"
+    android:minWidth="100dip"
+    android:text="Respuesta 2" />
+
+<Button
+    android:id="@+id/respuesta3"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/respuesta2"
+    android:layout_centerHorizontal="true"
+    android:minHeight="75dp"
+    android:minWidth="100dp"
+    android:text="Respuesta 3" />
+
+</RelativeLayout>
+    
