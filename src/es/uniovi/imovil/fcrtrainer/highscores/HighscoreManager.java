@@ -14,11 +14,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-*/
+ */
 
 package es.uniovi.imovil.fcrtrainer.highscores;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 import org.json.JSONArray;
@@ -30,6 +31,7 @@ import es.uniovi.imovil.fcrtrainer.R;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.util.SparseIntArray;
 
 /**
  * Clase para leer y guardar las puntuaciones
@@ -43,6 +45,7 @@ public class HighscoreManager {
 	private static final String HIGHSCORE_EXERCISE_TAG = "Exercise";
 	private static final String HIGHSCORE_DATE_TAG = "Date";
 	private static final String HIGHSCORE_USERNAME_TAG = "Username";
+	private static final int MAX_NUMBER_HIGHSCORES = 10;
 
 	private static SharedPreferences mSharedPreferences;
 
@@ -123,7 +126,33 @@ public class HighscoreManager {
 					+ e.getMessage());
 		}
 		highscores.add(highscore);
+		highscores = trim(highscores, MAX_NUMBER_HIGHSCORES);
 		saveHighscores(context, highscores);
+	}
+
+	private static ArrayList<Highscore> trim(ArrayList<Highscore> highscores,
+			int maxNumberHighscores) {
+		ArrayList<Highscore> trimmedHighscores = new ArrayList<Highscore>();
+		SparseIntArray highscoresPerExercise = new SparseIntArray();
+
+		Collections.sort(highscores);
+		Collections.reverse(highscores);
+
+		for (int i = 0; i < highscores.size(); i++) {
+			int exercise = highscores.get(i).getExercise();
+			if (highscoresPerExercise.get(exercise) != 0) {
+				int numHighscores = highscoresPerExercise.get(exercise);
+				if (numHighscores < maxNumberHighscores) {
+					highscoresPerExercise.put(exercise, numHighscores + 1);
+					trimmedHighscores.add(highscores.get(i));
+				}
+			} else {
+				highscoresPerExercise.put(exercise, 1);
+				trimmedHighscores.add(highscores.get(i));
+			}
+		}
+
+		return trimmedHighscores;
 	}
 
 	/**
@@ -145,6 +174,7 @@ public class HighscoreManager {
 					+ e.getMessage());
 		}
 		highscores.addAll(newHighscores);
+		highscores = trim(highscores, MAX_NUMBER_HIGHSCORES);
 		saveHighscores(context, highscores);
 	}
 
