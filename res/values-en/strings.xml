@@ -36,5 +36,24 @@
     
     <string name="dummy_exercise">Exercise</string>   
     
+    <string name="train">Training</string>
+    <string name="game">Game</string>
+    
+    <string name="LOentrada1">Input 1:</string>
+    <string name="LOentrada2">Input 2:</string>
+    <string name="LOoperation">Operationn:</string>
+    <string name="LOsalida">Calculate </string>
+    <string name="LOresult">Result </string>
+
+    <string name="cero">0</string>
+    <string name="one">1</string>
+     
+    <string name="LOand">AND</string>
+    <string name="LOor">OR</string>
+    <string name="LOxor">XOR</string>
+    <string name="LOnand">NAND</string>
+    <string name="LOxnor">XNOR</string>
+    <string name="LOnor">NOR</string>
+    
 
 </resources>
