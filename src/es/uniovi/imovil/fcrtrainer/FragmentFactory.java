@@ -40,22 +40,24 @@ final public class FragmentFactory {
 		switch (resIndex) {
 		case R.string.highscores:
 			return HighscoresFragment.newInstance();
+		case R.string.interpretation:
+			return InterpretationExerciseFragment.newInstance();
+		case R.string.logic_operation:
+			return LogicOperationExerciseFragment.newInstance();
+		case R.string.network_layer:
+			return NetworkLayerExerciseFragment.newInstance();
+		case R.string.protocol:
+			return ProtocolExerciseFragment.newInstance();
+		case R.string.hexadecimal:
+			return HexadecimalExerciseFragment.newInstance();
 		case R.string.binary:
 			// TODO: return BinaryExerciseFragment.newInstance();
-		case R.string.hexadecimal:
-			// TODO: return HexadecimalExerciseFragment.newInstance();
 		case R.string.sign_and_magnitude:
 			// TODO: return SignedMagnitudeExerciseFragment.newInstance();
-		case R.string.interpretation:
-			// TODO: 
-			return InterpretationExerciseFragment.newInstance();
 		case R.string.floating_point:
 			// TODO: return FloatingPointExerciseFragment.newInstance();
 		case R.string.logic_gate:
 			// TODO: return LogicGateExerciseFragment.newInstance();
-		case R.string.logic_operation:
-			// TODO: 
-			return LogicOperationExerciseFragment.newInstance();
 		case R.string.network_address:
 			// TODO: return NetworAddressExerciseFragment.newInstance();
 		case R.string.cidr:
@@ -64,12 +66,8 @@ final public class FragmentFactory {
 			// TODO: return HostCountExerciseFragment.newInstance();
 		case R.string.network_mask:
 			// TODO: return NetworkMaskExerciseFragment.newInstance();
-		case R.string.network_layer:
-			return NetworkLayerExerciseFragment.newInstance();
-		case R.string.protocol:
-			return ProtocolExerciseFragment.newInstance();
 
-			//return DummyExerciseFragment.newInstance();
+			return DummyExerciseFragment.newInstance();
 
 		default:
 			throw new IllegalStateException();
