@@ -53,6 +53,13 @@ limitations under the License.
     <string name="dummy_exercise">Ejercicio</string>   
      
      <string name="fragment_interpretation">Complemento a 2</string>   
+     
+     
+     <!-- Strings logic gate -->
+     
+     <string name="buttonlogicgate">Comprobar</string>
+     
+     <!--  Fin Strings logic gate -->
     
 
 </resources>
