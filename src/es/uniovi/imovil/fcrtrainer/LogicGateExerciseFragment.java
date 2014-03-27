@@ -2,6 +2,8 @@
 package es.uniovi.imovil.fcrtrainer;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -24,6 +26,7 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment  implements 
 	int[] myImageList;
 	TypedArray arrayimage;
 	ImageView imageview;
+	EditText edit;
 
 	public static LogicGateExerciseFragment newInstance() {
 
@@ -62,7 +65,7 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment  implements 
 			//Buscamos el id del textID y cogemos el valor que tiene en ese momento y
 			//lo ponemos en mayúsculas para compararlo
 
-			EditText edit=(EditText) rootView.findViewById(R.id.edit);
+			edit=(EditText) rootView.findViewById(R.id.edit);
 			Editable texto= edit.getText();
 			String textos= texto.toString().toUpperCase();
 
@@ -77,7 +80,6 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment  implements 
 					edit.setText("");
 					imageview.setImageResource(arrayimage.getResourceId(contador, 0));
 				}
-				//Si no, significa que no hay más strings y hemos acabado.
 				else {
 					imageview.setVisibility(ImageView.GONE);
 					logicgate.setVisibility(TextView.VISIBLE);
@@ -87,9 +89,37 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment  implements 
 					arrayimage.recycle();
 				}
 			}
+			
+			else {
+				dialog();
 
+
+			}
 		}
+
 	}
+	public void dialog(){
 
+		final AlertDialog.Builder alertDialog= new AlertDialog.Builder(getActivity());
+		alertDialog.setTitle("¡Has fallado!");
+		alertDialog.setMessage("¿Quieres probar de nuevo o bien quieres saber la solución?");
+		alertDialog.setCancelable(true);
+		alertDialog.setPositiveButton("Reintentar",
+				new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				edit.setText("");
+				dialog.cancel();
+			}
+		});
+		alertDialog.setNegativeButton("Solución",
+				new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				edit.setText(logicstring[contador]);
+				
+			}
+		});
 
+		AlertDialog alert11 = alertDialog.create();
+		alert11.show();
+	}
 }
