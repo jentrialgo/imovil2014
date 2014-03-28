@@ -13,7 +13,7 @@
     android:layout_marginTop="130dp"
     android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp"
-    android:text="Numero de hosts a partir de la mascara de red 255.255.248.0"
+    android:text="@array/host_count_questions"
     android:textSize="20dp" />
 
 <TextView
