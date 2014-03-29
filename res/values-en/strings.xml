@@ -36,5 +36,18 @@
     
     <string name="dummy_exercise">Exercise</string>   
     
+    
+    
+     <!-- Strings logic gate -->
+     
+     <string name="button_logic_gate">Check</string>
+     <string name="failed_logic_gate">You failed!</string>
+     <string name="dialog_try_logic_gate">Do you want to try again or want to	 know the solution?</string>
+     <string name="try_again_logic_gate">Try again</string>
+     <string name="solution_logic_gate">Solution</string>
+     <string name="done_logic_gate">You are done</string>
+     
+     <!--  Fin Strings logic gate -->
+    
 
 </resources>

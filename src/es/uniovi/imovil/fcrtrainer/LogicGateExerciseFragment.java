@@ -58,60 +58,32 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment  implements 
 
 		return rootView;
 	}
+	
 	@Override
 	public void onClick(View v) {
 		if(v.getId() == R.id.buttonlogicgate){
+			CompruebaRespuesta();
 
-			//Buscamos el id del textID y cogemos el valor que tiene en ese momento y
-			//lo ponemos en mayúsculas para compararlo
-
-			edit=(EditText) rootView.findViewById(R.id.edit);
-			Editable texto= edit.getText();
-			String textos= texto.toString().toUpperCase();
-
-			//Si lo que hay en el edittext es igual a la posicion del array de strings en la posicion
-			//definida por el contador, se aumenta el contador y se cambia la imagen y el string al de 
-			//la siguiente posición
-
-			if(logicstring[contador].equals(textos)){
-				if(contador<logicstring.length-1){
-					contador++;
-					logicgate.setText(logicstring[contador]);
-					edit.setText("");
-					imageview.setImageResource(arrayimage.getResourceId(contador, 0));
-				}
-				else {
-					imageview.setVisibility(ImageView.GONE);
-					logicgate.setVisibility(TextView.VISIBLE);
-					buttoncheck.setVisibility(Button.GONE);
-					edit.setVisibility(EditText.GONE);
-					logicgate.setText("Has acabado");
-					arrayimage.recycle();
-				}
-			}
-			
-			else {
-				dialog();
-
-
-			}
 		}
 
 	}
-	public void dialog(){
+	
+	public void showFailureDialog(){
 
+		//Se crea el alert dialog que mostrara dos botones, uno de comprobar y otro para volver a intentarlo
+		
 		final AlertDialog.Builder alertDialog= new AlertDialog.Builder(getActivity());
-		alertDialog.setTitle("¡Has fallado!");
-		alertDialog.setMessage("¿Quieres probar de nuevo o bien quieres saber la solución?");
+		alertDialog.setTitle(R.string.failed_logic_gate);
+		alertDialog.setMessage(R.string.dialog_try_logic_gate);
 		alertDialog.setCancelable(true);
-		alertDialog.setPositiveButton("Reintentar",
+		alertDialog.setPositiveButton(R.string.try_again_logic_gate,
 				new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 				edit.setText("");
 				dialog.cancel();
 			}
 		});
-		alertDialog.setNegativeButton("Solución",
+		alertDialog.setNegativeButton(R.string.solution_logic_gate,
 				new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 				edit.setText(logicstring[contador]);
@@ -122,4 +94,53 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment  implements 
 		AlertDialog alert11 = alertDialog.create();
 		alert11.show();
 	}
+
+
+public void CompruebaRespuesta(){
+	//Buscamos el id del textID y cogemos el valor que tiene en ese momento y
+	//lo ponemos en mayúsculas para compararlo
+
+	edit=(EditText) rootView.findViewById(R.id.edit);
+	Editable texto= edit.getText();
+	String textos= texto.toString().toUpperCase();
+
+	/*Se comprueba si lo que hay en la posicion del string fijada por el contodar es igual a
+	lo que hay dentro del edittext*/
+
+	if(logicstring[contador].equals(textos)){
+		
+		/*Si el contador es menor que la longitud del string, se aumenta el contador y
+		 * se muestra la siguiente imagen
+		 */
+		
+		if(contador<logicstring.length-1){
+			contador++;
+			logicgate.setText(logicstring[contador]);
+			edit.setText("");
+			imageview.setImageResource(arrayimage.getResourceId(contador, 0));
+		}
+		
+		// Si no, cuando ya se ha recorrido el string, se pone invisible todo el layout
+		//y solo se muestra un texto de que se ha acabado
+		
+		else {
+			imageview.setVisibility(ImageView.GONE);
+			logicgate.setVisibility(TextView.VISIBLE);
+			buttoncheck.setVisibility(Button.GONE);
+			edit.setVisibility(EditText.GONE);
+			logicgate.setText(R.string.done_logic_gate);
+			arrayimage.recycle();
+		}
+	}
+	
+	//Si no es igual es texto del string con el del editText, se muestra un Alert Dialog
+	
+	else {
+		showFailureDialog();
+
+
+	}
+
+	
+}
 }

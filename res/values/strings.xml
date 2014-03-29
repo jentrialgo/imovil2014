@@ -57,7 +57,12 @@ limitations under the License.
      
      <!-- Strings logic gate -->
      
-     <string name="buttonlogicgate">Comprobar</string>
+     <string name="button_logic_gate">Comprobar</string>
+     <string name="failed_logic_gate">¡Has fallado!</string>
+     <string name="dialog_try_logic_gate">¿Quieres probar de nuevo o bien quieres saber la solución?</string>
+     <string name="try_again_logic_gate">Reintentar</string>
+     <string name="solution_logic_gate">Solución</string>
+     <string name="done_logic_gate">Has acabado</string>
      
      <!--  Fin Strings logic gate -->
     

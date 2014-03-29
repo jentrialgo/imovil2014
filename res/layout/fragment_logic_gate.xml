@@ -34,6 +34,6 @@
         android:layout_below="@+id/edit"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="42dp"
-        android:text="@string/buttonlogicgate" />
+        android:text="@string/button_logic_gate" />
 
 </RelativeLayout>
