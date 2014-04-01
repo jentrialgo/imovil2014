@@ -18,11 +18,18 @@ limitations under the License.
 
 package es.uniovi.imovil.fcrtrainer;
 
+import java.util.Locale;
+import java.util.Random;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Ejercicio a modo de prueba que no hace nada particular, solo mostrar
@@ -30,6 +37,10 @@ import android.widget.TextView;
  *
  */
 public class HexadecimalExerciseFragment extends BaseExerciseFragment {
+	private EditText etResponse;
+	private Button bCheck;
+	private TextView tvNumberToConvert;
+	private int numberToConvert;
 	
 	public static HexadecimalExerciseFragment newInstance() {
 		
@@ -46,8 +57,38 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 		
 		View rootView;
 		rootView = inflater.inflate(R.layout.fragment_hexadecimal, container, false);
-		TextView text = (TextView) rootView.findViewById(R.id.textview);
-		text.setText(getClass().getCanonicalName());
+		
+		etResponse = (EditText) rootView.findViewById(R.id.response);
+		bCheck = (Button) rootView.findViewById(R.id.checkbutton);
+		tvNumberToConvert = (TextView) rootView.findViewById(R.id.numbertoconvert);
+	
+		bCheck.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				isCorrect(etResponse.getEditableText().toString().trim().toLowerCase(Locale.US));
+				
+			}});
+		
+		generateRandomNumber();
+		
 		return rootView;
 	}
+	
+	public void generateRandomNumber(){
+		Random randomGenerator = new Random();
+		numberToConvert = randomGenerator.nextInt(1000);
+		tvNumberToConvert.setText(String.valueOf(numberToConvert));
+	}
+	
+	public void isCorrect(String response){
+		if (response.equals(Integer.toHexString(numberToConvert))){
+			Toast.makeText(getActivity(), getResources().getString(R.string.correct), Toast.LENGTH_SHORT).show();
+			generateRandomNumber();
+			etResponse.setText("");
+		}else{
+			Toast.makeText(getActivity(), getResources().getString(R.string.not_correct), Toast.LENGTH_SHORT).show();
+		}
+	}
+	
 }

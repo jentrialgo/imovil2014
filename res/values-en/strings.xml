@@ -39,5 +39,11 @@
     
     <string name="initial_clock_value">2:00</string>
     <string name="error_no_clock">Error: this exercise is not prepared for playing</string>
+    
+    <string name="convert_to_hex">Convert to hex</string>
+    <string name="your_response">Your response</string>
+    <string name="check">Check</string>
+    <string name="correct">Correct!</string>
+    <string name="not_correct">That\'s not correct!</string>
 
 </resources>
