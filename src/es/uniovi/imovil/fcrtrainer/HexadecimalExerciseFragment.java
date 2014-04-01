@@ -22,13 +22,16 @@ import java.util.Locale;
 import java.util.Random;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 /**
@@ -61,13 +64,23 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 		etResponse = (EditText) rootView.findViewById(R.id.response);
 		bCheck = (Button) rootView.findViewById(R.id.checkbutton);
 		tvNumberToConvert = (TextView) rootView.findViewById(R.id.numbertoconvert);
+		
+		etResponse.setOnEditorActionListener(new OnEditorActionListener(){
+
+			@Override
+			public boolean onEditorAction(TextView v, int actionId,
+					KeyEvent event) {
+				if(EditorInfo.IME_ACTION_DONE == actionId){
+					isCorrect(etResponse.getEditableText().toString().trim().toLowerCase(Locale.US));
+				}
+				return false;
+			}});
 	
 		bCheck.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
 				isCorrect(etResponse.getEditableText().toString().trim().toLowerCase(Locale.US));
-				
 			}});
 		
 		generateRandomNumber();

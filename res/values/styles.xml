@@ -39,8 +39,12 @@ limitations under the License.
         <item name="android:textColor">@color/darkgray</item>
         <item name="android:textStyle">italic</item>
         <item name="android:layout_marginBottom">10dp</item>
-        <item name="android:layout_marginTop">10dp</item>
         <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-light</item>
     </style>
+    
+        <style name="cardsbar">
+            <item name="android:background">@color/mediumdarkgray</item>
+            <item name="android:layout_marginBottom">10dp</item>
+        </style>
 
 </resources>
