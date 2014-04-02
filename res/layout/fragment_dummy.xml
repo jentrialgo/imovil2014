@@ -25,8 +25,18 @@ limitations under the License.
     android:paddingTop="@dimen/activity_vertical_margin" >
 
     <TextView
+        android:id="@+id/text_view_clock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/initial_clock_value"
+        android:textSize="20sp"
+        android:visibility="gone" />
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/text_view_clock"
         android:text="@string/hello_world" />
 
 </RelativeLayout>
