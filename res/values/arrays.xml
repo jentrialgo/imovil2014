@@ -59,4 +59,23 @@ limitations under the License.
         <item>Walter</item>
     </string-array>
     
+    <string-array name="host_count_questions">
+        <item>¿Cuantos hosts existen en la subred definida por la mascara 255.255.255.128?</item>
+		<item>¿Cuantos hosts existen en la subred definida por la mascara 255.255.255.192?</item>
+		<item>¿Cuantos hosts existen en la subred definida por la mascara 255.255.255.224?</item>
+		<item>¿Cuantos hosts existen en la subred definida por la mascara 255.255.255.240?</item>
+		<item>¿Cuantos hosts existen en la subred definida por la mascara 255.255.255.248?</item>
+		<item>¿Cuantos hosts existen en la subred definida por la mascara 255.255.255.252?</item>
+		<item>¿Cuantos hosts existen en la subred definida por la mascara 255.255.255.254?</item>
+		<item>¿Cuantos hosts existen en la subred definida por la mascara 255.255.255.255?</item>
+		<item>¿Cuantos hosts existen en la subred definida por la mascara 255.255.255.0?</item>
+		<item>¿Cuantos hosts existen en la subred definida por la mascara 255.255.128.0?</item>
+		<item>¿Cuantos hosts existen en la subred definida por la mascara 255.255.192.0?</item>
+		<item>¿Cuantos hosts existen en la subred definida por la mascara 255.255.224.0?</item>
+		<item>¿Cuantos hosts existen en la subred definida por la mascara 255.255.240.0?</item>
+		<item>¿Cuantos hosts existen en la subred definida por la mascara 255.255.248.0?</item>
+		<item>¿Cuantos hosts existen en la subred definida por la mascara 255.255.252.0?</item>
+		<item>¿Cuantos hosts existen en la subred definida por la mascara 255.255.254.0?</item>
+    </string-array>
+    
 </resources>

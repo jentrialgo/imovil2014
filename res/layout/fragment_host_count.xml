@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
 <TextView
-    android:id="@+id/pregunta"
+    android:id="@+id/question"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentLeft="true"
@@ -13,8 +13,7 @@
     android:layout_marginTop="130dp"
     android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp"
-    android:text="@array/host_count_questions"
-    android:textSize="20dp" />
+    android:textSize="30dp" />
 
 <TextView
     android:id="@+id/tiempo"
@@ -27,35 +26,54 @@
     android:text="00:37"
     android:textSize="50dp" />
 
-<Button
-    android:id="@+id/respuesta1"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_centerHorizontal="true"
-    android:layout_centerVertical="true"
-    android:minHeight="75dp"
-    android:minWidth="100dp"
-    android:text="Respuesta 1" />
+<!--  AÑADIR UN LAYOUT PARA EL CONTENEDOR DE LAS RESPUESTAS, PARA EL ESTILO CREAR UN ESTILO Y ASIGNARLO EN EL CODIGO -->
 
-<Button
-    android:id="@+id/respuesta2"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_below="@+id/respuesta1"
-    android:layout_centerHorizontal="true"
-    android:minHeight="65dip"
-    android:minWidth="100dip"
-    android:text="Respuesta 2" />
-
-<Button
-    android:id="@+id/respuesta3"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_below="@+id/respuesta2"
-    android:layout_centerHorizontal="true"
-    android:minHeight="75dp"
-    android:minWidth="100dp"
-    android:text="Respuesta 3" />
+    <RadioGroup
+        android:id="@+id/radioAnswers"
+        android:layout_marginTop="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/question"
+        android:layout_centerHorizontal="true" >
+ 
+        <RadioButton
+            android:id="@+id/firstOption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Respuesta 1" 
+            android:checked="true" />
+ 
+        <RadioButton
+            android:id="@+id/secondOption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Respuesta 2" />
+        
+        <RadioButton
+            android:id="@+id/thirdOption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Respuesta 3" />
+ 
+    </RadioGroup>
+    
+       <Button
+        android:id="@+id/btnOk"
+        android:layout_marginTop="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btnOk" 
+        android:layout_below="@+id/radioAnswers"
+        android:layout_centerHorizontal="true"/>
+       
+       <Button
+        android:id="@+id/btnSolution"
+        android:layout_marginTop="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btnSolution"
+        android:layout_toRightOf="@+id/btnOk"
+        android:layout_below="@+id/radioAnswers"/>
 
 </RelativeLayout>
     
