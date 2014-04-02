@@ -49,8 +49,12 @@ limitations under the License.
     <string name="error_parsing_highscores">Error al analizar las puntuaciones</string>
     <string name="error_adding_initial_highscores">Error al insertar las puntuaciones iniciales</string>
     <string name="all">Todos</string>
-    
-    <string name="dummy_exercise">Ejercicio</string>   
+    <string name="training">Entrenamiento</string>
+    <string name="retry">Reintentar</string>
+    <string name="finish">Entrenamiento finalido.</string>
+    <string name="dummy_exercise">Ejercicio</string>  
+    <string name="success">Has acertado</string> 
+    <string name="fail">Has fallado. La respuesta correcta es</string>  
      
      <string name="fragment_interpretation">Complemento a 2</string>   
     

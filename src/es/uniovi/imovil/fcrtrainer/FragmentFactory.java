@@ -64,12 +64,12 @@ final public class FragmentFactory {
 			// TODO: return HostCountExerciseFragment.newInstance();
 		case R.string.network_mask:
 			// TODO: return NetworkMaskExerciseFragment.newInstance();
+			return DummyExerciseFragment.newInstance();
 		case R.string.network_layer:
 			return NetworkLayerExerciseFragment.newInstance();
 		case R.string.protocol:
 			return ProtocolExerciseFragment.newInstance();
 
-			//return DummyExerciseFragment.newInstance();
 
 		default:
 			throw new IllegalStateException();
