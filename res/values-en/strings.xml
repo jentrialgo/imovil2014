@@ -35,6 +35,6 @@
     <string name="next_binary">next</string>
     <string name="title_binary">Binario</string>
     <string name="correct_binary">correct</string>
-    <string name="wrong_binary">false</string>
+
 
 </resources>

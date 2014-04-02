@@ -58,7 +58,8 @@ limitations under the License.
 	<string name="check_binary">comprobar</string>
 	<string name="next_binary">siguente</string>
 	<string name="title_binary">Binario</string>
+	
 	<string name="correct_binary">correcto</string>
 	<string name="wrong_binary">falso</string>
- 	
+  
 </resources>

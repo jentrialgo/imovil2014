@@ -63,9 +63,14 @@ public class BinaryExerciseFragment extends BaseExerciseFragment implements OnCl
 		return rootView;
 	}
 	
-	private void clearResponseTextView(){
+	private void clearViews(){
+		//TextView
 		TextView responseTextView = (TextView) rootView.findViewById(R.id.correct_or_wrong);
 		responseTextView.setText("");
+		
+		//Edit
+		EditText userInput = (EditText) rootView.findViewById(R.id.answer);
+		userInput.setText("");
 	}
 	
 	private void newQuestion(){
@@ -76,7 +81,7 @@ public class BinaryExerciseFragment extends BaseExerciseFragment implements OnCl
 		question.setText(this.currentQuestion); //convert to string ...if not application stops...
 		
 		
-		clearResponseTextView();
+		clearViews();
 		//System.out.println(questionNumber);	
 	}
 
@@ -91,6 +96,7 @@ public class BinaryExerciseFragment extends BaseExerciseFragment implements OnCl
 		}
 	}
 	
+	//TODO: Delete zeros...
 
 	private void checkAnswer(){
 		EditText answerEditText	= (EditText) rootView.findViewById(R.id.answer);
@@ -99,17 +105,13 @@ public class BinaryExerciseFragment extends BaseExerciseFragment implements OnCl
 		String questionConverted = this.binaryConverter.convertDecimalToBinary(this.currentQuestion);
 		
 		TextView responseTextView = (TextView) rootView.findViewById(R.id.correct_or_wrong);
-		
+	
 		String response = "";
 		if(answer.equals(questionConverted)){
-			response = "CORRECT! Viva la vida!";
+			response = "correcto! viva la vida";
 		}else{
-			response = "NOOOOOO!";
+			response = "nooo!";
 		}
 		responseTextView.setText(response);
 	}
-
-
-
-
 }
