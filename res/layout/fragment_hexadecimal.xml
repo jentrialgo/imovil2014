@@ -35,9 +35,10 @@ limitations under the License.
         android:text="@string/convert_to_hex" />
 
     <RelativeLayout
+        style="@style/cards"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@android:color/white" >
+        android:background="@drawable/cards" >
 
         <TextView
             android:id="@+id/numbertoconvert"
@@ -51,11 +52,6 @@ limitations under the License.
 
     </RelativeLayout>
 
-    <RelativeLayout
-        style="@style/cardsbar"
-        android:layout_width="match_parent"
-        android:layout_height="2dp" />
-
     <TextView
         android:id="@+id/textView3"
         style="@style/Title2DarkLight"
@@ -64,9 +60,10 @@ limitations under the License.
         android:text="@string/your_response" />
 
     <RelativeLayout
+        style="@style/cards"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@android:color/white" >
+        android:background="@drawable/cards" >
 
         <EditText
             android:id="@+id/response"
@@ -82,17 +79,11 @@ limitations under the License.
 
     </RelativeLayout>
 
-    <RelativeLayout
-        style="@style/cardsbar"
-        android:layout_width="match_parent"
-        android:layout_height="2dp" />
-
     <Button
         android:id="@+id/checkbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
         android:text="@string/check" />
 
 </LinearLayout>

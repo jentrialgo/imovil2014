@@ -42,8 +42,7 @@ limitations under the License.
         <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-light</item>
     </style>
     
-        <style name="cardsbar">
-            <item name="android:background">@color/mediumdarkgray</item>
+        <style name="cards">
             <item name="android:layout_marginBottom">10dp</item>
         </style>
 
