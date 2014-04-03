@@ -44,6 +44,7 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 	private Button bCheck;
 	private TextView tvNumberToConvert;
 	private int numberToConvert;
+	private static final int MAX_NUMBER_TO_CONVERT = 1000;
 	
 	public static HexadecimalExerciseFragment newInstance() {
 		
@@ -90,8 +91,8 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 	
 	public void generateRandomNumber(){
 		Random randomGenerator = new Random();
-		numberToConvert = randomGenerator.nextInt(1000);
-		tvNumberToConvert.setText(String.valueOf(numberToConvert));
+		numberToConvert = randomGenerator.nextInt(MAX_NUMBER_TO_CONVERT);
+		tvNumberToConvert.setText(Integer.toBinaryString(numberToConvert));
 	}
 	
 	public void isCorrect(String response){
