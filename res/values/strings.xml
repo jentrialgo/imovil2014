@@ -61,5 +61,6 @@ limitations under the License.
 	
 	<string name="correct_binary">correcto</string>
 	<string name="wrong_binary">falso</string>
-  
+  	<string name="binary_hint">example: 00000000</string>
+  	<string name="solution_binary">solution</string>
 </resources>

@@ -35,6 +35,7 @@
     <string name="next_binary">next</string>
     <string name="title_binary">Binario</string>
     <string name="correct_binary">correct</string>
-
+  	<string name="binary_hint">ejemplo: 00000000</string>
+  	<string name="solution_binary">solución</string>
 
 </resources>

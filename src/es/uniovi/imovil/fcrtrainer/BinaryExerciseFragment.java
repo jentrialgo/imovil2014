@@ -25,6 +25,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -32,10 +33,17 @@ import android.widget.TextView;
  * etiqueta.
  * 
  */
-public class BinaryExerciseFragment extends BaseExerciseFragment implements OnClickListener {
+public class BinaryExerciseFragment extends BaseExerciseFragment implements
+		OnClickListener {
 	private BinaryConverter binaryConverter = new BinaryConverter();
 	private View rootView;
 	private String currentQuestion;
+
+	private enum MODE_BUTTON{
+		CHECK,
+		NEXT
+	}
+	MODE_BUTTON modeButton = MODE_BUTTON.CHECK;
 	
 	public static BinaryExerciseFragment newInstance() {
 		BinaryExerciseFragment fragment = new BinaryExerciseFragment();
@@ -54,64 +62,144 @@ public class BinaryExerciseFragment extends BaseExerciseFragment implements OnCl
 
 		Button check = (Button) rootView.findViewById(R.id.button_check);
 		check.setOnClickListener(this);
-		
-		Button next = (Button) rootView.findViewById(R.id.button_next);
-		next.setOnClickListener(this);
-		
+
+		Button solution = (Button) rootView.findViewById(R.id.button_solution);
+		solution.setOnClickListener(this);
+
 		newQuestion();
-		
+
 		return rootView;
 	}
-	
-	private void clearViews(){
-		//TextView
-		TextView responseTextView = (TextView) rootView.findViewById(R.id.correct_or_wrong);
-		responseTextView.setText("");
-		
-		//Edit
+
+	private void clearViews() {
+		// Image
+		ImageView response = (ImageView) rootView
+				.findViewById(R.id.correct_or_wrong);
+		response.setVisibility(View.INVISIBLE);
+
+		// UserInput
 		EditText userInput = (EditText) rootView.findViewById(R.id.answer);
 		userInput.setText("");
-	}
-	
-	private void newQuestion(){
-		int questionNumber = binaryConverter.createRandomNumber();
-		TextView question = (TextView) this.rootView.findViewById(R.id.question);
 		
-		this.currentQuestion = "" + questionNumber;
-		question.setText(this.currentQuestion); //convert to string ...if not application stops...
+		//Information
+		clearInformationText();
 		
 		
-		clearViews();
-		//System.out.println(questionNumber);	
+		//CheckButton
+		setButtonToCheck();
+		
+		//SolutionButton
+		setSolutionButtonInvisible(false);
 	}
 
+	private void clearInformationText() {
+		// InformationText
+		TextView textView = (TextView) rootView.findViewById(R.id.information);
+		textView.setText("");
+	}
+
+	private void newQuestion() {
+		int questionNumber = binaryConverter.createRandomNumber();
+		TextView question = (TextView) this.rootView
+				.findViewById(R.id.question);
+
+		this.currentQuestion = "" +  questionNumber; // convert to string ...
+		question.setText(this.currentQuestion + " = "); 
+		clearViews();
+		// System.out.println(questionNumber);
+	}
+
+	
 	@Override
 	public void onClick(View view) {
-		if(view.getId() == R.id.button_check){
-			checkAnswer();
+		if (view.getId() == R.id.button_check) {
+			clearInformationText();
+			
+			switch(modeButton){
+				case CHECK: checkAnswer(); break;
+				case NEXT: newQuestion(); break;
+			}
 		}
-		
-		if(view.getId() == R.id.button_next){
-			newQuestion();
-		}
-	}
-	
-	//TODO: Delete zeros...
 
-	private void checkAnswer(){
-		EditText answerEditText	= (EditText) rootView.findViewById(R.id.answer);
-		
-		String answer = answerEditText.getText().toString();
-		String questionConverted = this.binaryConverter.convertDecimalToBinary(this.currentQuestion);
-		
-		TextView responseTextView = (TextView) rootView.findViewById(R.id.correct_or_wrong);
-	
-		String response = "";
-		if(answer.equals(questionConverted)){
-			response = "correcto! viva la vida";
-		}else{
-			response = "nooo!";
+		if (view.getId() == R.id.button_solution) {
+			setSolutionButtonInvisible(true);
+			showSolution();
+			setButtonToNext();
 		}
-		responseTextView.setText(response);
 	}
+	private void setButtonToCheck(){
+		//ButtonText
+		Button next = (Button) rootView.findViewById(R.id.button_check);
+		next.setText(getResources().getString(R.string.check_binary));
+		modeButton = MODE_BUTTON.CHECK;
+	}
+	
+	private void setButtonToNext(){
+		Button check = (Button) rootView.findViewById(R.id.button_check);
+		check.setText(getResources().getString(R.string.next_binary));
+		
+		modeButton = MODE_BUTTON.NEXT;
+	}
+	
+	private void setSolutionButtonInvisible(boolean invisible){
+		Button solutionButton = (Button) rootView.findViewById(R.id.button_solution);
+		if(invisible)
+			solutionButton.setVisibility(View.INVISIBLE);
+		else
+			solutionButton.setVisibility(View.VISIBLE);
+		
+	}
+	private void showSolution(){
+		EditText solution = (EditText) rootView.findViewById(R.id.answer);
+		solution.setText(convertQuestionToBinary());
+	}
+
+	private boolean isAnswerEmpty(String answer){
+		if (answer.matches("") || !answer.contains("1")) {
+			TextView information = (TextView) getView().findViewById(
+					R.id.information);
+			information.setText("insertar un valor > 0 por favor.");
+			return true;
+		}
+		return false;
+	}
+	
+	private String convertQuestionToBinary(){
+		return this.binaryConverter.convertDecimalToBinary(this.currentQuestion);
+
+	}
+	private void checkAnswer() {
+		EditText answerEditText = (EditText) rootView.findViewById(R.id.answer);
+
+		String answer = answerEditText.getText().toString();
+		System.out.println("answer: " + answer);
+		
+		if(isAnswerEmpty(answer))
+			return;
+		
+		// check if other numbers then
+		System.out.println("answer: " + answer);
+		
+		//get answer without zeros in front to compare it easy.
+		answer = binaryConverter.deleteStartingZeroesFromBinaryInput(answer);
+		
+		//Convert Question to binary
+		String questionConverted = convertQuestionToBinary();
+		
+		//The image informs the user about a correct/wrong input
+		ImageView response = (ImageView) rootView
+				.findViewById(R.id.correct_or_wrong);
+
+		if (answer.equals(questionConverted)) {
+			response.setImageDrawable(getResources().getDrawable(
+					R.drawable.true_1_64));
+		} else {
+			response.setImageDrawable(getResources().getDrawable(
+					R.drawable.false_0_64));
+		}
+		response.setVisibility(View.VISIBLE); //show the image
+	}
+
+
+
 }
