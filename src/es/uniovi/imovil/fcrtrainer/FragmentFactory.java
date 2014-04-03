@@ -40,6 +40,10 @@ final public class FragmentFactory {
 		switch (resIndex) {
 		case R.string.highscores:
 			return HighscoresFragment.newInstance();
+		case R.string.binary:
+			return BinaryExerciseFragment.newInstance();
+		case R.string.sign_and_magnitude:
+			// TODO: return SignedMagnitudeExerciseFragment.newInstance();
 		case R.string.interpretation:
 			return InterpretationExerciseFragment.newInstance();
 		case R.string.logic_operation:
@@ -54,10 +58,6 @@ final public class FragmentFactory {
 			return LogicGateExerciseFragment.newInstance();
 		case R.string.cidr:
 			return CidrExerciseFragment.newInstance();
-		case R.string.binary:
-			// TODO: return BinaryExerciseFragment.newInstance();
-		case R.string.sign_and_magnitude:
-			// TODO: return SignedMagnitudeExerciseFragment.newInstance();
 		case R.string.floating_point:
 			// TODO: return FloatingPointExerciseFragment.newInstance();
 		case R.string.network_address:

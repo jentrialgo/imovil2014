@@ -25,6 +25,7 @@ limitations under the License.
     <dimen name="drawer_divider_height">1dp</dimen>
     <dimen name="drawer_header_padding">20dp</dimen>
     <dimen name="drawer_item_padding">16dp</dimen>
+    <dimen name="question_size">32dip</dimen>
     
     
 </resources>
