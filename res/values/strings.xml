@@ -63,5 +63,7 @@ limitations under the License.
     <string name="check">Comprobar</string>
     <string name="correct">¡Correcto!</string>
     <string name="not_correct">¡No es correcto!</string>
+    <string name="solution">Solución</string>
+    <string name="change">Cambiar</string>
 
 </resources>

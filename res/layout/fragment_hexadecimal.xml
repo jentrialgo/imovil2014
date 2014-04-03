@@ -52,12 +52,13 @@ limitations under the License.
 
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/textView3"
-        style="@style/Title2DarkLight"
+    <Button
+        android:id="@+id/change"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/your_response" />
+        android:layout_gravity="center_horizontal"
+        android:drawableLeft="@drawable/ic_import_export"
+        android:text="@string/change" />
 
     <RelativeLayout
         style="@style/cards"
@@ -79,11 +80,23 @@ limitations under the License.
 
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/checkbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/check" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/checkbutton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/check" />
+
+        <Button
+            android:id="@+id/seesolution"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/solution" />
+    </LinearLayout>
 
 </LinearLayout>

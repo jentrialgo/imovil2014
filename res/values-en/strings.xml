@@ -45,5 +45,7 @@
     <string name="check">Check</string>
     <string name="correct">Correct!</string>
     <string name="not_correct">That\'s not correct!</string>
+    <string name="solution">Solution</string>
+    <string name="change">Change</string>
 
 </resources>
