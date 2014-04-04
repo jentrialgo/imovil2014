@@ -4,29 +4,74 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <Spinner
-        android:id="@+id/spinner_logic_operation_options"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-         />
+ <TextView
+     android:id="@+id/LOpregunta"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_alignParentTop="true"
+     android:layout_centerHorizontal="true"
+     android:text="@string/LOpregunta" />
 
-    
-    <ListView
-        android:id="@+id/list_view_options"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:divider="@null"
-        android:dividerHeight="0dp" >
-    </ListView>
-     
+ <EditText
+     android:id="@+id/LOrespuesta"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_centerHorizontal="true"
+     android:layout_centerVertical="true"
+     android:inputType="number" 
+     />
 
-     <RelativeLayout
-         android:id="@+id/fragment_LOcontainer"
-         android:layout_width="match_parent"
-         android:layout_height="match_parent"
-         android:layout_alignParentLeft="true"
-         android:layout_alignParentTop="true" >
-     </RelativeLayout>
+ <TextView
+     android:id="@+id/LOsolucion"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_below="@+id/LOrespuesta"
+     android:layout_centerHorizontal="true"
+     android:text="" />
 
+ <TextView
+     android:id="@+id/LOentrada1"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_above="@+id/LOentrada2"
+     android:layout_centerHorizontal="true"
+     android:layout_marginBottom="19dp"
+      />
 
+   <Button
+       android:id="@+id/LObCalcular"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignBaseline="@+id/LObSolucion"
+       android:layout_alignBottom="@+id/LObSolucion"
+       android:layout_alignRight="@+id/LOpregunta"
+       android:text="@string/LObCalcular" />
+
+   <TextView
+       android:id="@+id/LOentrada2"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_above="@+id/LOrespuesta"
+       android:layout_alignLeft="@+id/LOentrada1"
+       android:layout_marginBottom="44dp"
+       />
+
+   <TextView
+       android:id="@+id/LOoperacion"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignBaseline="@+id/LOentrada2"
+       android:layout_alignBottom="@+id/LOentrada2"
+       android:layout_marginRight="17dp"
+       android:layout_toLeftOf="@+id/LOentrada2"
+       />
+
+   <Button
+       android:id="@+id/LObSolucion"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_below="@+id/LOsolucion"
+       android:layout_toLeftOf="@+id/LOentrada2"
+       android:text="@string/LObSolucion" />
+ 
 </RelativeLayout>

@@ -117,8 +117,8 @@ public class MainActivity extends ActionBarActivity implements
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflar el menú
-		if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
+		// Inflar el menú		
+		if (isDrawerOpen()) {
 			// TODO: Si el Drawer está desplegado no deben mostrarse iconos de
 			// acción
 			getMenuInflater().inflate(R.menu.main, menu);
@@ -141,7 +141,8 @@ public class MainActivity extends ActionBarActivity implements
 		}
 		// TODO: Manejar otras acciones del Action Bar
 
-		return super.onOptionsItemSelected(item);
+		boolean father = super.onOptionsItemSelected(item);
+		return father;
 	}
 
 	@Override
@@ -170,6 +171,10 @@ public class MainActivity extends ActionBarActivity implements
 		mDrawerLayout.closeDrawer(mDrawerList);
 	}
 
+	public boolean isDrawerOpen() {
+		return mDrawerLayout.isDrawerOpen(mDrawerList);
+	}
+	
 	private void updateContentFragment() {
 		Fragment fragment = FragmentFactory
 				.createExercise(mExerciseResIndex);
@@ -260,20 +265,4 @@ public class MainActivity extends ActionBarActivity implements
 		
 		sections.add(group);
 	}
-	
-	//Funcion que cambia las vistas de operaciones logicas
-	public void replaceLOFragment(Boolean b){
-        FragmentTransaction t = getSupportFragmentManager().beginTransaction();
-        
-        if (b){
-        	LogicOperationTrainFragment mFrag1 = new LogicOperationTrainFragment();
-        	t.replace(R.id.fragment_LOcontainer,mFrag1 );
-        	t.commit();
-        }
-        else {
-        	LogicOperationGameFragment mFrag2 = new LogicOperationGameFragment();
-        	t.replace(R.id.fragment_LOcontainer,mFrag2 );
-        	t.commit();
-        }
-    }
 }

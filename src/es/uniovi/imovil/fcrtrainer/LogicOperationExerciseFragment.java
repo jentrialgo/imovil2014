@@ -1,27 +1,31 @@
 package es.uniovi.imovil.fcrtrainer;
 
 
+import java.util.Random;
 
-import java.util.ArrayList;
-import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
-import android.widget.RelativeLayout;
-import android.widget.Spinner;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 
-public class LogicOperationExerciseFragment extends BaseExerciseFragment implements OnItemSelectedListener{
+public class LogicOperationExerciseFragment extends BaseExerciseFragment implements OnClickListener{
 
 	private View mRootView;
-	private Spinner mLogicOperationSpinner;
-	ArrayList<Option> mOptions;
-	private RelativeLayout mOptionFragment;
-	static Boolean mBool;
+	private TextView mTvEntrada1;
+	private TextView mTvEntrada2;
+	private TextView mTvOperacion;
+	private TextView mTvSalida;
+	private EditText mEtRespuesta;
+	private Button mBOk;
+	private Button mBSolucion;
 	
 	
 	public static LogicOperationExerciseFragment newInstance() {
@@ -36,68 +40,153 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment impleme
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		String binario;
 		
 		mRootView = inflater.inflate(R.layout.fragmen_logic_operation, container, false);
-		initializeLogicOperationSpinner();
+		
+		mTvEntrada1 = (TextView) mRootView.findViewById(R.id.LOentrada1);
+		binario = BinarioAleatorio();
+		mTvEntrada1.setText(binario);
+		
+		mTvEntrada2 = (TextView) mRootView.findViewById(R.id.LOentrada2);
+		binario = BinarioAleatorio();
+		mTvEntrada2.setText(binario);
+		
+		mTvOperacion = (TextView) mRootView.findViewById(R.id.LOoperacion);
+		String operacion = OperacionAleatoria();
+		mTvOperacion.setText(operacion);
+		
+		mTvSalida = (TextView) mRootView.findViewById(R.id.LOsolucion);
+		mTvSalida.setTextColor(Color.RED);
+		
+		mEtRespuesta = (EditText) mRootView.findViewById(R.id.LOrespuesta);
+		mEtRespuesta.requestFocus();
+		
+		mBOk = (Button)mRootView.findViewById(R.id.LObCalcular);
+		mBOk.setOnClickListener(this);
+		
+		mBSolucion = (Button) mRootView.findViewById(R.id.LObSolucion);
+		mBSolucion.setOnClickListener(this);
+		
 		return mRootView;
 	}
 
-	public void initializeLogicOperationSpinner(){
-		mOptions = new ArrayList<Option>();
-		addOptions(mOptions, R.array.options);
-
-		ArrayAdapter<Option> adapter = new ArrayAdapter<Option>(
-				getActivity(), android.R.layout.simple_list_item_1, mOptions);
-
-		mLogicOperationSpinner = (Spinner) mRootView
-				.findViewById(R.id.spinner_logic_operation_options);
-		mLogicOperationSpinner.setAdapter(adapter);
-
-		mLogicOperationSpinner.setOnItemSelectedListener(this);
-	}
-
 	
-	private void addOptions(ArrayList<Option> options, int arrayResourceId) {
-		TypedArray array = getResources().obtainTypedArray(arrayResourceId);
-
-		for (int i = 0; i < array.length(); i++) {
-			int defaultId = 0;
-			int resourceId = array.getResourceId(i, defaultId);
-
-			Option option = new Option(getResources().getString(resourceId), resourceId);
-			options.add(option);
+	//Funciones para el modo entrenamiento
+	public String LOCalcularResultado (int entrada1, String operacion, int entrada2){
+		int result=0;
+		String solucion;
+		
+		if (operacion.equals("AND"))
+				result = entrada1 & entrada2;
+		else if (operacion.equals("OR"))
+				result = entrada1 | entrada2;
+		else if (operacion.equals("XOR"))
+				result = entrada1 ^ entrada2;
+		
+		solucion = Integer.toBinaryString(result);
+		//Rellenar con los 0 que falten por delante
+		int i=solucion.length();
+		while (i < 5){
+			solucion = "0" + solucion;
+			i=solucion.length();
 		}
+		
+		return solucion;
+	}
+	
+	//Funcion que otorga numeros binarios aleatorios de 5 bits
+	private String BinarioAleatorio(){
+		//Generacion de un entero aleatorio entre 0 y 31
+		Random rnd = new Random();
+		int entero = rnd.nextInt(32);
+		//Pasamos el entero a binario
+		String binario = Integer.toBinaryString(entero);
+		//LLenamos la cadena de 0 hasta tener 5 bits
+		int i=binario.length();
+		while (i < 5){
+		  binario = "0" + binario;
+		  i=binario.length();
+		}
+		return binario;
+	}
+	
+	//Funcion que genera una operacion aleatoria (AND,OR...)
+	private String OperacionAleatoria(){
+		Random rnd = new Random();
+		int entero = rnd.nextInt(3);
+		
+		String operacion;
+		switch(entero){
+		case 0:
+			operacion = "AND";
+			return operacion;
+		case 1:
+			operacion = "OR";
+			return operacion;
+		default:
+			operacion = "XOR";
+			return operacion;
+		}
+	}
+	//Fin de las funciones para el modo entrenamiento
 
-		array.recycle();
-		
-	}
-	
-	private void initializeFragmentView(int selectedExerciseId) {
-		mOptionFragment = (RelativeLayout) mRootView.findViewById(R.id.fragment_LOcontainer);
-		
-		//Llamar al fragment adecuado (entrenamiento o juego)
-		((MainActivity)getActivity()).replaceLOFragment(mBool);
-	
-	}
-	
-	
 	@Override
-	public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
-		Option option = (Option) parent.getItemAtPosition(pos);
-		//comprobar la opcion entrenamiento o juego para cargar los fragments
-		if(option.getOption().equals("Entrenamiento"))
-			mBool=true;
-		if(option.getOption().equals("Juego"))
-			mBool=false;
-		initializeFragmentView(option.getId());
-		
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		// TODO Auto-generated method stub
+		super.onCreateOptionsMenu(menu, inflater);
 	}
 
-	
 	@Override
-	public void onNothingSelected(AdapterView<?> view) {
-		// No hacer nada
+	public void onClick(View v) {
+		String binario;
+		String op;
 		
-	}
-	
+		String stringE1 = mTvEntrada1.getText().toString();
+		int entrada1 = Integer.parseInt(stringE1,2);
+		
+		String stringE2 = mTvEntrada2.getText().toString();
+		int entrada2 = Integer.parseInt(stringE2,2);
+		
+		String operacion = mTvOperacion.getText().toString();
+		
+		String solucion = LOCalcularResultado(entrada1,operacion, entrada2);
+		
+		String respuesta = mEtRespuesta.getText().toString();
+		
+		//si se ha pulsado el boton ok se comprueba el resultado del editText
+		if(v.getId()== mBOk.getId()){
+			if(respuesta.equals(solucion)){
+				mTvSalida.setText("");
+				
+				//si se acertó la respuesta, crear otra pregunta
+				binario = BinarioAleatorio();
+				mTvEntrada1.setText(binario);
+				
+				binario = BinarioAleatorio();
+				mTvEntrada2.setText(binario);
+				
+				op = OperacionAleatoria();
+				mTvOperacion.setText(op);
+				
+				mEtRespuesta.setText("");
+			}
+			else{
+				mTvSalida.setText("Error, inténtalo de nuevo");
+			}
+		}
+		
+		//Si se ha pulsado el boton solucion se muestra la respuesta en el edittext
+		if(v.getId() == mBSolucion.getId()){
+			//Para mostrar la solucion anter debe haber dado una respuesta
+			if(respuesta.equals("")){
+				mTvSalida.setText("Para pedir la solución debes responer algo");
+			}
+			else{
+				mEtRespuesta.setText(solucion);
+				mTvSalida.setText("Respuesta pedida");
+			}
+		}
+			
+	}		
 }
