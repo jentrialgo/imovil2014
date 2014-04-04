@@ -21,15 +21,20 @@ package es.uniovi.imovil.fcrtrainer;
 import java.util.Locale;
 import java.util.Random;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnticipateOvershootInterpolator;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
@@ -39,17 +44,21 @@ import android.widget.Toast;
  * una etiqueta.
  *
  */
-public class HexadecimalExerciseFragment extends BaseExerciseFragment {
+@SuppressLint("NewApi") public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 	private EditText etResponse;
 	private Button bCheck;
 	private Button bChange;
 	private TextView tvNumberToConvert;
 	private TextView tvTitle;
+	private View result;
+	private ImageView resultimage;
 	private int numberToConvert;
 	private boolean tohex = true;
 	private static final int MAX_NUMBER_TO_CONVERT = 1000;
 	private static final int GENERATE_BIN_TO_CONVERT = 0;
 	private static final int GENERATE_HEX_TO_CONVERT = 1;
+	private AlphaAnimation animation;
+	private AnticipateOvershootInterpolator antovershoot;
 
 	public static HexadecimalExerciseFragment newInstance() {
 
@@ -72,6 +81,10 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 		tvNumberToConvert = (TextView) rootView.findViewById(R.id.numbertoconvert);
 		bChange = (Button) rootView.findViewById(R.id.change);
 		tvTitle = (TextView) rootView.findViewById(R.id.exercisetitle);
+		result = (View) rootView.findViewById(R.id.result);
+		resultimage = (ImageView) rootView.findViewById(R.id.resultimage);
+
+		antovershoot = new AnticipateOvershootInterpolator(10f);
 
 		etResponse.setOnEditorActionListener(new OnEditorActionListener(){
 
@@ -141,18 +154,37 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 	}
 
 	public void showResult(boolean correct){
+
+		result.setVisibility(View.VISIBLE);
+		animation = new AlphaAnimation(0,1);
+		animation.setDuration(600);
+		animation.setFillBefore(true);
+		animation.setFillAfter(true);
+		animation.setRepeatCount(Animation.RESTART);
+		animation.setRepeatMode(Animation.REVERSE);
+		result.startAnimation(animation);
+
+		/*
+		 * I'm using two images here, one for the correct answer and another one for the incorrect ones. We should create
+		 * another fragment (About this app?) to credit the author of those images, which are under the Creative Commons
+		 * Attribution - No Derivative Works 3.0 Unported. The source of the images is iconfinder, 
+		 * https://www.iconfinder.com/icons/27837/accept_check_confirmed_go_green_ok_positive_yes_icon#size=128
+		 * and the author is Visual Pharm, http://icons8.com/. 
+		 */
+		
 		if(correct){
-
-			Toast.makeText(getActivity(), getResources().getString(R.string.correct), Toast.LENGTH_SHORT).show();
+			resultimage.setImageDrawable(getResources().getDrawable(R.drawable.correct));
 			etResponse.setText("");
-
 			if(tohex) generateRandomNumber(GENERATE_BIN_TO_CONVERT);
 			else generateRandomNumber(GENERATE_HEX_TO_CONVERT);
-
 		} else {
-			
-			Toast.makeText(getActivity(), getResources().getString(R.string.not_correct), Toast.LENGTH_SHORT).show();
+			resultimage.setImageDrawable(getResources().getDrawable(R.drawable.incorrect));
+		}
 
+		// This only works in API 12+. We should take a look for alternatives (NineOldAndroids library, maybe?)
+		if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB_MR2){
+			resultimage.animate().setDuration(500);
+			resultimage.animate().setInterpolator(antovershoot).scaleX(1.5f).scaleY(1.5f);
 		}
 
 	}
