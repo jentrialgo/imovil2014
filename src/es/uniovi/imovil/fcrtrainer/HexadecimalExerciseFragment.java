@@ -42,9 +42,14 @@ import android.widget.Toast;
 public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 	private EditText etResponse;
 	private Button bCheck;
+	private Button bChange;
 	private TextView tvNumberToConvert;
+	private TextView tvTitle;
 	private int numberToConvert;
+	private boolean tohex = true;
 	private static final int MAX_NUMBER_TO_CONVERT = 1000;
+	private static final int GENERATE_BIN_TO_CONVERT = 0;
+	private static final int GENERATE_HEX_TO_CONVERT = 1;
 	
 	public static HexadecimalExerciseFragment newInstance() {
 		
@@ -65,6 +70,8 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 		etResponse = (EditText) rootView.findViewById(R.id.response);
 		bCheck = (Button) rootView.findViewById(R.id.checkbutton);
 		tvNumberToConvert = (TextView) rootView.findViewById(R.id.numbertoconvert);
+		bChange = (Button) rootView.findViewById(R.id.change);
+		tvTitle = (TextView) rootView.findViewById(R.id.exercisetitle);
 		
 		etResponse.setOnEditorActionListener(new OnEditorActionListener(){
 
@@ -72,7 +79,8 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 			public boolean onEditorAction(TextView v, int actionId,
 					KeyEvent event) {
 				if(EditorInfo.IME_ACTION_DONE == actionId){
-					isCorrect(etResponse.getEditableText().toString().trim().toLowerCase(Locale.US));
+					if(tohex) isCorrect(etResponse.getEditableText().toString().trim().toLowerCase(Locale.US), tohex);
+					else isCorrect(etResponse.getEditableText().toString().trim(), tohex);
 				}
 				return false;
 			}});
@@ -81,28 +89,67 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 
 			@Override
 			public void onClick(View v) {
-				isCorrect(etResponse.getEditableText().toString().trim().toLowerCase(Locale.US));
+				if(tohex) isCorrect(etResponse.getEditableText().toString().trim().toLowerCase(Locale.US), tohex);
+				else isCorrect(etResponse.getEditableText().toString().trim(), tohex);
 			}});
 		
-		generateRandomNumber();
+		bChange.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View arg0) {
+				tohex ^= true;
+				if(tohex) System.out.println("tohex");
+				else System.out.println("notohex");
+				if(tohex){
+					tvTitle.setText(getResources().getString(R.string.convert_to_hex));
+					generateRandomNumber(GENERATE_BIN_TO_CONVERT);
+				}else{
+					tvTitle.setText(getResources().getString(R.string.convert_to_bin));
+					generateRandomNumber(GENERATE_HEX_TO_CONVERT);
+				}
+			}
+		});
+		
+		generateRandomNumber(GENERATE_BIN_TO_CONVERT);
 		
 		return rootView;
 	}
 	
-	public void generateRandomNumber(){
+	public void generateRandomNumber(int type){
 		Random randomGenerator = new Random();
 		numberToConvert = randomGenerator.nextInt(MAX_NUMBER_TO_CONVERT);
-		tvNumberToConvert.setText(Integer.toBinaryString(numberToConvert));
+		if(type == GENERATE_BIN_TO_CONVERT) tvNumberToConvert.setText(Integer.toBinaryString(numberToConvert));
+		else tvNumberToConvert.setText(Integer.toHexString(numberToConvert).toUpperCase(Locale.US));
 	}
 	
-	public void isCorrect(String response){
-		if (response.equals(Integer.toHexString(numberToConvert))){
-			Toast.makeText(getActivity(), getResources().getString(R.string.correct), Toast.LENGTH_SHORT).show();
-			generateRandomNumber();
-			etResponse.setText("");
+	/**
+	 * Checks if the response is correct
+	 * @param response the user input
+	 * @param tohex the conversion type. If true, conversion to hex. If false, conversion to binary.
+	 */
+	public void isCorrect(String response, boolean tohex){
+		if(tohex){
+			if (response.equals(Integer.toHexString(numberToConvert))){
+				Toast.makeText(getActivity(), getResources().getString(R.string.correct), Toast.LENGTH_SHORT).show();
+				generateRandomNumber(GENERATE_BIN_TO_CONVERT);
+				etResponse.setText("");
+			}else{
+				Toast.makeText(getActivity(), getResources().getString(R.string.not_correct), Toast.LENGTH_SHORT).show();
+			}
 		}else{
-			Toast.makeText(getActivity(), getResources().getString(R.string.not_correct), Toast.LENGTH_SHORT).show();
+			if (response.equals(Integer.toBinaryString(numberToConvert))){
+				Toast.makeText(getActivity(), getResources().getString(R.string.correct), Toast.LENGTH_SHORT).show();
+				generateRandomNumber(GENERATE_HEX_TO_CONVERT);
+				etResponse.setText("");
+			}else{
+				Toast.makeText(getActivity(), getResources().getString(R.string.not_correct), Toast.LENGTH_SHORT).show();
+			}
 		}
 	}
 	
+	public void animateAfterCheck(boolean correct){
+		
+	}
+	
 }
+

@@ -28,7 +28,7 @@ limitations under the License.
     android:paddingTop="@dimen/activity_vertical_margin" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/exercisetitle"
         style="@style/Title2DarkLight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

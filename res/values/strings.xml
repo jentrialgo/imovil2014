@@ -59,7 +59,7 @@ limitations under the License.
     <string name="error_no_clock">Error: este ejercicio no está preparado para jugar</string>
     
     <string name="convert_to_hex">Convierte a hexadecimal</string>
-    <string name="your_response">Tu respuesta</string>
+    <string name="convert_to_bin">Convierte a binario</string>
     <string name="check">Comprobar</string>
     <string name="correct">¡Correcto!</string>
     <string name="not_correct">¡No es correcto!</string>
