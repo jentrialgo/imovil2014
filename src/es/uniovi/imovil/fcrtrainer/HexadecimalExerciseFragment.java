@@ -1,6 +1,6 @@
 /*
 
-Copyright 2014 Profesores y alumnos de la asignatura Inform?tica M?vil de la EPI de Gij?n
+Copyright 2014 Profesores y alumnos de la asignatura Informática Móvil de la EPI de Gijón
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -39,13 +39,8 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
-/**
- * Ejercicio a modo de prueba que no hace nada particular, solo mostrar
- * una etiqueta.
- *
- */
-@SuppressLint("NewApi") public class HexadecimalExerciseFragment extends BaseExerciseFragment {
-	private EditText etResponse;
+public class HexadecimalExerciseFragment extends BaseExerciseFragment {
+	private EditText etAnswer;
 	private Button bCheck;
 	private Button bChange;
 	private TextView tvNumberToConvert;
@@ -76,7 +71,7 @@ import android.widget.Toast;
 		View rootView;
 		rootView = inflater.inflate(R.layout.fragment_hexadecimal, container, false);
 
-		etResponse = (EditText) rootView.findViewById(R.id.response);
+		etAnswer = (EditText) rootView.findViewById(R.id.answer);
 		bCheck = (Button) rootView.findViewById(R.id.checkbutton);
 		tvNumberToConvert = (TextView) rootView.findViewById(R.id.numbertoconvert);
 		bChange = (Button) rootView.findViewById(R.id.change);
@@ -86,14 +81,14 @@ import android.widget.Toast;
 
 		antovershoot = new AnticipateOvershootInterpolator(10f);
 
-		etResponse.setOnEditorActionListener(new OnEditorActionListener(){
+		etAnswer.setOnEditorActionListener(new OnEditorActionListener(){
 
 			@Override
 			public boolean onEditorAction(TextView v, int actionId,
 					KeyEvent event) {
 				if(EditorInfo.IME_ACTION_DONE == actionId){
-					if(tohex) isCorrect(etResponse.getEditableText().toString().trim().toLowerCase(Locale.US));
-					else isCorrect(etResponse.getEditableText().toString().trim());
+					if(tohex) isCorrect(etAnswer.getEditableText().toString().trim().toLowerCase(Locale.US));
+					else isCorrect(etAnswer.getEditableText().toString().trim());
 				}
 				return false;
 			}});
@@ -102,8 +97,8 @@ import android.widget.Toast;
 
 			@Override
 			public void onClick(View v) {
-				if(tohex) isCorrect(etResponse.getEditableText().toString().trim().toLowerCase(Locale.US));
-				else isCorrect(etResponse.getEditableText().toString().trim());
+				if(tohex) isCorrect(etAnswer.getEditableText().toString().trim().toLowerCase(Locale.US));
+				else isCorrect(etAnswer.getEditableText().toString().trim());
 			}});
 
 		bChange.setOnClickListener(new OnClickListener(){
@@ -112,11 +107,11 @@ import android.widget.Toast;
 			public void onClick(View arg0) {
 				tohex ^= true;
 				if(tohex){
-					etResponse.setInputType(EditorInfo.TYPE_CLASS_TEXT);
+					etAnswer.setInputType(EditorInfo.TYPE_CLASS_TEXT);
 					tvTitle.setText(getResources().getString(R.string.convert_to_hex));
 					generateRandomNumber(GENERATE_BIN_TO_CONVERT);
 				}else{
-					etResponse.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
+					etAnswer.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
 					tvTitle.setText(getResources().getString(R.string.convert_to_bin));
 					generateRandomNumber(GENERATE_HEX_TO_CONVERT);
 				}
@@ -137,23 +132,26 @@ import android.widget.Toast;
 	}
 
 	/**
-	 * Checks if the response is correct
-	 * @param response the user input
-	 * @param tohex the conversion type. If true, conversion to hex. If false, conversion to binary.
+	 * Checks if the answer is correct
+	 * @param answer, the user input
 	 */
-	public void isCorrect(String response){
+	public void isCorrect(String answer){
 		if(tohex){
-			if (response.equals(Integer.toHexString(numberToConvert)))
+			if (answer.equals(Integer.toHexString(numberToConvert)))
 				showResult(true);
 			else showResult(false);
 		}else{
-			if (response.equals(Integer.toBinaryString(numberToConvert)))
+			if (answer.equals(Integer.toBinaryString(numberToConvert)))
 				showResult(true);
 			else showResult(false);
 		}
 	}
 
-	public void showResult(boolean correct){
+	/**
+	 * Shows to the user if the answer was correct or not. 
+	 * @param correct, true if correct
+	 */
+	@SuppressLint("NewApi") public void showResult(boolean correct){
 
 		result.setVisibility(View.VISIBLE);
 		animation = new AlphaAnimation(0,1);
@@ -174,7 +172,7 @@ import android.widget.Toast;
 		
 		if(correct){
 			resultimage.setImageDrawable(getResources().getDrawable(R.drawable.correct));
-			etResponse.setText("");
+			etAnswer.setText("");
 			if(tohex) generateRandomNumber(GENERATE_BIN_TO_CONVERT);
 			else generateRandomNumber(GENERATE_HEX_TO_CONVERT);
 		} else {
@@ -190,4 +188,3 @@ import android.widget.Toast;
 	}
 
 }
-
