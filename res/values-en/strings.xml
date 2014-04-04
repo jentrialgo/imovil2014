@@ -8,13 +8,10 @@
 
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
-    
     <string name="hello_world">Hello World</string>
-    
     <string name="codes">Codes</string>
     <string name="digital_systems">Digital systems</string>
     <string name="networks">Networks</string>
-    
     <string name="binary">Binary</string>
     <string name="hexadecimal">Hexadecimal</string>
     <string name="sign_and_magnitude">Sign-and-magnitude</string>
@@ -28,7 +25,6 @@
     <string name="network_mask">Network mask</string>
     <string name="network_layer">Network layer</string>
     <string name="protocol">Protocol</string>
-    
     <string name="highscores">Highscores</string>
     <string name="default_user_name">Me</string>
     <string name="error_parsing_highscores">Error al analizar las puntuaciones</string>
@@ -47,5 +43,13 @@
     <string name="not_correct">That\'s not correct!</string>
     <string name="solution">Solution</string>
     <string name="change">Change</string>
+
+    <!-- Modulo: Binario -->
+    <string name="check_binary">check</string>
+    <string name="next_binary">next</string>
+    <string name="title_binary">Binario</string>
+    <string name="correct_binary">correct</string>
+  	<string name="binary_hint">ejemplo: 00000000</string>
+  	<string name="solution_binary">solución</string>
 
 </resources>
