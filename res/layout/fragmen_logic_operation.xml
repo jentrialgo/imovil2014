@@ -35,8 +35,7 @@
      android:layout_height="wrap_content"
      android:layout_above="@+id/LOentrada2"
      android:layout_centerHorizontal="true"
-     android:layout_marginBottom="19dp"
-      />
+     android:layout_marginBottom="19dp" />
 
    <Button
        android:id="@+id/LObCalcular"
@@ -48,23 +47,13 @@
        android:text="@string/LObCalcular" />
 
    <TextView
-       android:id="@+id/LOentrada2"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:layout_above="@+id/LOrespuesta"
-       android:layout_alignLeft="@+id/LOentrada1"
-       android:layout_marginBottom="44dp"
-       />
-
-   <TextView
        android:id="@+id/LOoperacion"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:layout_alignBaseline="@+id/LOentrada2"
        android:layout_alignBottom="@+id/LOentrada2"
        android:layout_marginRight="17dp"
-       android:layout_toLeftOf="@+id/LOentrada2"
-       />
+       android:layout_toLeftOf="@+id/LOentrada2" />
 
    <Button
        android:id="@+id/LObSolucion"
@@ -73,5 +62,20 @@
        android:layout_below="@+id/LOsolucion"
        android:layout_toLeftOf="@+id/LOentrada2"
        android:text="@string/LObSolucion" />
+
+   <ImageView
+       android:id="@+id/imageViewAnimacion"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_centerHorizontal="true"
+       android:layout_centerVertical="true"
+       android:src="@drawable/ic_estrella" />
+
+   <TextView
+       android:id="@+id/LOentrada2"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_above="@+id/imageViewAnimacion"
+       android:layout_alignRight="@+id/LOentrada1" />
  
 </RelativeLayout>

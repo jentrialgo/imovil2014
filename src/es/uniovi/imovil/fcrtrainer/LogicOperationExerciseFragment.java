@@ -11,12 +11,16 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Animation.AnimationListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
-public class LogicOperationExerciseFragment extends BaseExerciseFragment implements OnClickListener{
+public class LogicOperationExerciseFragment extends BaseExerciseFragment implements OnClickListener, AnimationListener{
 
 	private View mRootView;
 	private TextView mTvEntrada1;
@@ -26,7 +30,11 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment impleme
 	private EditText mEtRespuesta;
 	private Button mBOk;
 	private Button mBSolucion;
-	
+	private Animation animation;
+	private ImageView mAnimacion;
+	private static String entrada1persistencia = "ENTRADA1";
+	private static String entrada2persistencia = "ENTRADA2";
+	private static String operacionpersistencia = "OPERACION";
 	
 	public static LogicOperationExerciseFragment newInstance() {
 		
@@ -68,6 +76,9 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment impleme
 		mBSolucion = (Button) mRootView.findViewById(R.id.LObSolucion);
 		mBSolucion.setOnClickListener(this);
 		
+		mAnimacion= (ImageView) mRootView.findViewById(R.id.imageViewAnimacion);
+		mAnimacion.setVisibility(View.INVISIBLE);
+	
 		return mRootView;
 	}
 
@@ -159,6 +170,9 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment impleme
 			if(respuesta.equals(solucion)){
 				mTvSalida.setText("");
 				
+				//Crear animacion
+				strartAnimacionEstrella();
+				
 				//si se acertó la respuesta, crear otra pregunta
 				binario = BinarioAleatorio();
 				mTvEntrada1.setText(binario);
@@ -188,5 +202,30 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment impleme
 			}
 		}
 			
+	}
+
+	private void strartAnimacionEstrella() {
+		mAnimacion.setVisibility(View.VISIBLE);
+		animation = AnimationUtils.loadAnimation(getActivity(), R.anim.appearance);
+		mAnimacion.startAnimation(animation);
+		mAnimacion.setVisibility(View.INVISIBLE);
+	}
+
+	@Override
+	public void onAnimationStart(Animation animation) {
+		// Nada que hacer aqui
+		
+	}
+
+	@Override
+	public void onAnimationEnd(Animation animation) {
+		// Nada que hacer aqui
+		
+	}
+
+	@Override
+	public void onAnimationRepeat(Animation animation) {
+		// Nada que hacer aqui
+		
 	}		
 }
