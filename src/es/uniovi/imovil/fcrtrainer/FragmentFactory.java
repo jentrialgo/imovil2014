@@ -48,6 +48,14 @@ final public class FragmentFactory {
 			return InterpretationExerciseFragment.newInstance();
 		case R.string.logic_operation:
 			return LogicOperationExerciseFragment.newInstance();
+		case R.string.network_address:
+			// TODO: return NetworAddressExerciseFragment.newInstance();
+		case R.string.cidr:
+			return CidrExerciseFragment.newInstance();
+		case R.string.host_count:
+			// TODO: return HostCountExerciseFragment.newInstance();
+		case R.string.network_mask:
+			return NetworkMaskExerciseFragment.newInstance();
 		case R.string.network_layer:
 			return NetworkLayerExerciseFragment.newInstance();
 		case R.string.protocol:
@@ -56,16 +64,8 @@ final public class FragmentFactory {
 			return HexadecimalExerciseFragment.newInstance();
 		case R.string.logic_gate:		
 			return LogicGateExerciseFragment.newInstance();
-		case R.string.cidr:
-			return CidrExerciseFragment.newInstance();
 		case R.string.floating_point:
 			// TODO: return FloatingPointExerciseFragment.newInstance();
-		case R.string.network_address:
-			// TODO: return NetworAddressExerciseFragment.newInstance();
-		case R.string.host_count:
-			// TODO: return HostCountExerciseFragment.newInstance();
-		case R.string.network_mask:
-			// TODO: return NetworkMaskExerciseFragment.newInstance();
 
 			return DummyExerciseFragment.newInstance();
 
