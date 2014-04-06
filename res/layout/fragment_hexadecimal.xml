@@ -75,7 +75,7 @@ limitations under the License.
             android:background="@drawable/cards" >
 
             <EditText
-                android:id="@+id/response"
+                android:id="@+id/answer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -124,7 +124,7 @@ limitations under the License.
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="140dp"/>android:visibility="gone"AnticipateOvershootInterpolator
+            android:layout_marginTop="140dp"/>
     </RelativeLayout>
 
 </RelativeLayout>
