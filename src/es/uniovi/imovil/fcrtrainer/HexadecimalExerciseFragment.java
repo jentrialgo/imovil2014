@@ -37,7 +37,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
-import android.widget.Toast;
 
 public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 	private EditText etAnswer;
@@ -180,9 +179,9 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 		}
 
 		// This only works in API 12+. We should take a look for alternatives (NineOldAndroids library, maybe?)
-		if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB_MR2){
-			resultimage.animate().setDuration(500);
-			resultimage.animate().setInterpolator(antovershoot).scaleX(1.5f).scaleY(1.5f);
+		// TODO: Should go back to its original size after the animation
+		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB_MR2){
+			resultimage.animate().setDuration(500).setInterpolator(antovershoot).scaleX(1.5f).scaleY(1.5f).start();
 		}
 
 	}
