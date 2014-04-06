@@ -1,3 +1,4 @@
+
 package es.uniovi.imovil.fcrtrainer;
 
 import android.os.Bundle;
@@ -6,15 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class CidrExerciseFragment extends BaseExerciseFragment{
+public class NetworkMaskExerciseFragment extends BaseExerciseFragment{
 
-	public static CidrExerciseFragment newInstance() {
+	public static NetworkMaskExerciseFragment newInstance() {
 		
-		CidrExerciseFragment fragment = new CidrExerciseFragment();
+		NetworkMaskExerciseFragment fragment = new NetworkMaskExerciseFragment();
 		return fragment;
 	}
 	
-	public CidrExerciseFragment() {
+	public NetworkMaskExerciseFragment() {
 	}
 
 	@Override
@@ -22,7 +23,7 @@ public class CidrExerciseFragment extends BaseExerciseFragment{
 			Bundle savedInstanceState) {
 		
 		View rootView;
-		rootView = inflater.inflate(R.layout.fragment_cidr, container, false);
+		rootView = inflater.inflate(R.layout.fragment_networkmask, container, false);
 		
 		return rootView;
 	}

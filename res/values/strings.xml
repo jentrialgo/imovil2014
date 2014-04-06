@@ -20,7 +20,8 @@ limitations under the License.
     <string name="app_name">FCR</string>
     <string name="action_settings">Configuración</string>
     <string name="action_help">Ayuda</string>
-
+    <string name="action_game_control">Jugar</string>
+ 
     <string name="drawer_open">Abrir drawer</string>
     <string name="drawer_close">Cerrar drawer</string>
     
@@ -53,24 +54,28 @@ limitations under the License.
     <string name="dummy_exercise">Ejercicio</string>   
      
     <string name="fragment_interpretation">Complemento a 2</string>   
-    
-    <string name="train">Entrenamiento</string>
-    <string name="game">Juego</string>
-    
-    <string name="LOentrada1">Entrada 1:</string>
-    <string name="LOentrada2">Entrada 2:</string>
-    <string name="LOoperation">Operación:</string>
-    <string name="LOsalida">Calcular </string>
-    <string name="LOresult">Resultado </string>
 
-    <string name="cero">0</string>
-    <string name="one">1</string>
-     
+    <string name="initial_clock_value">2:00</string>
+    <string name="error_no_clock">Error: este ejercicio no está preparado para jugar</string>
+
     <string name="LOand">AND</string>
     <string name="LOor">OR</string>
     <string name="LOxor">XOR</string>
-    <string name="LOnand">NAND</string>
-    <string name="LOxnor">XNOR</string>
-    <string name="LOnor">NOR</string>
     
+    <string name="LOpregunta">¿Cuál es la solución a esta operación lógica?</string>
+    <string name="LObSolucion">Solución</string>
+    <string name="LObCalcular">OK</string>
+    <string name="LObNext">Siguiente</string>
+    
+
+    <!-- Modulo: Binario -->
+	<string name="check_binary">comprobar</string>
+	<string name="next_binary">siguente</string>
+	<string name="title_binary">Binario</string>
+	
+	<string name="correct_binary">correcto</string>
+	<string name="wrong_binary">falso</string>
+  	<string name="binary_hint">example: 00000000</string>
+  	<string name="solution_binary">solution</string>
+
 </resources>
