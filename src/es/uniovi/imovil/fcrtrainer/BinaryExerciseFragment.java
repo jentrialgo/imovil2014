@@ -180,7 +180,7 @@ public class BinaryExerciseFragment extends BaseExerciseFragment implements
 			modeGame = MODE_GAME.BINARY_TO_DECIMAL;
 		}
 	}
-
+	
 	private void changeViews() {
 		EditText answer = (EditText) rootView.findViewById(R.id.answer);
 
@@ -189,21 +189,20 @@ public class BinaryExerciseFragment extends BaseExerciseFragment implements
 			answer.setKeyListener(DigitsKeyListener.getInstance(getResources().getString(R.string.digits_available_decimal_binary)));
 			answer.setHint(getResources().getString(R.string.hint_2_binary));
 			
-			setMaxLength(answer, 100);
 		} else {
 			// DECIMAL TO BINARY: User input: only 0 or 1
 			answer.setKeyListener(DigitsKeyListener.getInstance(getResources().getString(R.string.digits_available_01_binary)));
 			answer.setHint(getResources().getString(R.string.hint_binary));
-			
-			setMaxLength(answer, 8);
 		}
 	}
 	
+	/* Not used...
 	private void setMaxLength(EditText text, int max){
 		InputFilter maxLengthFilter = new InputFilter.LengthFilter(max);
 		text.setFilters(new InputFilter[]{ maxLengthFilter });
 	}
-
+	*/
+	
 	private void setButtonToCheck() {
 		// ButtonText
 		Button next = (Button) rootView.findViewById(R.id.button_check);
