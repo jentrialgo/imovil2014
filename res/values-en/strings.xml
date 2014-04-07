@@ -37,5 +37,6 @@
     <string name="correct_binary">correct</string>
   	<string name="binary_hint">ejemplo: 00000000</string>
   	<string name="solution_binary">solución</string>
+  	<string name="change_binary">cambiar</string>
 
 </resources>

@@ -38,7 +38,8 @@ public class BinaryConverter {
 		return convertDecimalToBinary(number);
 	}
 	
-	public int convertBinaryToInteger(String binary){
-		return Integer.parseInt(binary, 2);
+	public String convertBinaryToDecimal(String binary){
+		return "" + Integer.parseInt(binary, 2);
 	}
+
 }

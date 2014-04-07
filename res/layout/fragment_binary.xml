@@ -42,7 +42,9 @@ limitations under the License.
 	        android:ems="10"
 	        android:inputType="phone" 
 	        android:maxLength="8"
+	        
 	        android:digits="01"
+	        
 	        android:hint ="@string/binary_hint">
 			
 	        <requestFocus />
@@ -66,7 +68,13 @@ limitations under the License.
             android:layout_height="wrap_content"
             android:text="@string/check_binary" 
             android:layout_gravity="center_vertical"/>
-
+        <Button 
+            android:id="@+id/button_change"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/change_binary"
+            android:layout_gravity="center_vertical"
+            />
         <Button
             android:id="@+id/button_solution"
             android:layout_width="wrap_content"
