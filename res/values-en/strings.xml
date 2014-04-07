@@ -31,12 +31,12 @@
     <string name="dummy_exercise">Exercise</string>
 
     <!-- Modulo: Binario -->
-    <string name="check_binary">check</string>
-    <string name="next_binary">next</string>
+    <string name="check_binary">check answer</string>
+    <string name="next_binary">next question</string>
     <string name="title_binary">Binario</string>
     <string name="correct_binary">correct</string>
-  	<string name="binary_hint">ejemplo: 00000000</string>
-  	<string name="solution_binary">solución</string>
-  	<string name="change_binary">cambiar</string>
+  	<string name="binary_hint">example: 00000000</string>
+  	<string name="solution_binary">show solution</string>
+  	<string name="change_binary">change mode</string>
 
 </resources>
