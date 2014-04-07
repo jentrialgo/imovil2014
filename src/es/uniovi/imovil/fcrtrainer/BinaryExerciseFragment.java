@@ -67,7 +67,8 @@ public class BinaryExerciseFragment extends BaseExerciseFragment implements
 		solution.setOnClickListener(this);
 
 		newQuestion();
-
+		clearViews();
+		
 		return rootView;
 	}
 
@@ -105,7 +106,6 @@ public class BinaryExerciseFragment extends BaseExerciseFragment implements
 
 		this.currentQuestion = "" +  questionNumber; // convert to string ...
 		question.setText(this.currentQuestion + " = "); 
-		clearViews();
 		// System.out.println(questionNumber);
 	}
 
@@ -117,7 +117,10 @@ public class BinaryExerciseFragment extends BaseExerciseFragment implements
 			
 			switch(modeButton){
 				case CHECK: checkAnswer(); break;
-				case NEXT: newQuestion(); break;
+				case NEXT: 
+					newQuestion(); 
+					clearViews();
+					break;
 			}
 		}
 
@@ -147,8 +150,8 @@ public class BinaryExerciseFragment extends BaseExerciseFragment implements
 			solutionButton.setVisibility(View.INVISIBLE);
 		else
 			solutionButton.setVisibility(View.VISIBLE);
-		
 	}
+	
 	private void showSolution(){
 		EditText solution = (EditText) rootView.findViewById(R.id.answer);
 		solution.setText(convertQuestionToBinary());
@@ -193,6 +196,11 @@ public class BinaryExerciseFragment extends BaseExerciseFragment implements
 		if (answer.equals(questionConverted)) {
 			response.setImageDrawable(getResources().getDrawable(
 					R.drawable.true_1_64));
+			
+			//show next button
+			setSolutionButtonInvisible(true);
+			setButtonToNext();
+			
 		} else {
 			response.setImageDrawable(getResources().getDrawable(
 					R.drawable.false_0_64));

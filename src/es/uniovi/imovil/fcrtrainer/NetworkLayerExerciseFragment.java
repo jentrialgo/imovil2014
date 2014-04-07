@@ -30,8 +30,6 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 		rootView =inflater.inflate(R.layout.fragment_layer, container, false);
 		return rootView;
 	}
-
-
 }
 
 
