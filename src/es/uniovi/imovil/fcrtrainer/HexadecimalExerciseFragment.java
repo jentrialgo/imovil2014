@@ -42,6 +42,7 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 	private EditText etAnswer;
 	private Button bCheck;
 	private Button bChange;
+	private Button bSolution;
 	private TextView tvNumberToConvert;
 	private TextView tvTitle;
 	private View result;
@@ -71,14 +72,16 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 		rootView = inflater.inflate(R.layout.fragment_hexadecimal, container, false);
 
 		etAnswer = (EditText) rootView.findViewById(R.id.answer);
+		bChange = (Button) rootView.findViewById(R.id.change);
+		bSolution = (Button) rootView.findViewById(R.id.seesolution);
 		bCheck = (Button) rootView.findViewById(R.id.checkbutton);
 		tvNumberToConvert = (TextView) rootView.findViewById(R.id.numbertoconvert);
-		bChange = (Button) rootView.findViewById(R.id.change);
 		tvTitle = (TextView) rootView.findViewById(R.id.exercisetitle);
 		result = (View) rootView.findViewById(R.id.result);
 		resultimage = (ImageView) rootView.findViewById(R.id.resultimage);
+		
 
-		antovershoot = new AnticipateOvershootInterpolator(10f);
+		antovershoot = new AnticipateOvershootInterpolator(5f);
 
 		etAnswer.setOnEditorActionListener(new OnEditorActionListener(){
 
@@ -114,6 +117,14 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 					tvTitle.setText(getResources().getString(R.string.convert_to_bin));
 					generateRandomNumber(GENERATE_HEX_TO_CONVERT);
 				}
+			}
+		});
+		
+		bSolution.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				showSolution();
 			}
 		});
 
@@ -176,14 +187,26 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 			else generateRandomNumber(GENERATE_HEX_TO_CONVERT);
 		} else {
 			resultimage.setImageDrawable(getResources().getDrawable(R.drawable.incorrect));
+			etAnswer.setText("");
 		}
 
-		// This only works in API 12+. We should take a look for alternatives (NineOldAndroids library, maybe?)
-		// TODO: Should go back to its original size after the animation
+		// This only works in API 12+. We should take a look for alternatives (NineOldAndroids library, maybe? We can also
+		// skip this animation on old devices)
 		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB_MR2){
-			resultimage.animate().setDuration(500).setInterpolator(antovershoot).scaleX(1.5f).scaleY(1.5f).start();
-		}
+			
+			resultimage.animate().setDuration(700).setInterpolator(antovershoot).scaleX(1.5f).scaleY(1.5f).withEndAction(new Runnable(){
 
+				@Override
+				public void run() {
+					resultimage.animate().scaleX(1f).scaleY(1f);
+				}
+			});
+		}
+	}
+	
+	public void showSolution(){
+		if(tohex) etAnswer.setText(Integer.toHexString(numberToConvert));
+		else etAnswer.setText(Integer.toBinaryString(numberToConvert));
 	}
 
 }
