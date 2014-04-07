@@ -138,7 +138,6 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 		numberToConvert = randomGenerator.nextInt(MAX_NUMBER_TO_CONVERT);
 		if(type == GENERATE_BIN_TO_CONVERT) tvNumberToConvert.setText(Integer.toBinaryString(numberToConvert));
 		else tvNumberToConvert.setText(Integer.toHexString(numberToConvert).toUpperCase(Locale.US));
-		System.out.println(numberToConvert);
 	}
 
 	/**
@@ -192,6 +191,7 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 
 		// This only works in API 12+. We should take a look for alternatives (NineOldAndroids library, maybe? We can also
 		// skip this animation on old devices)
+		
 		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB_MR2){
 			
 			resultimage.animate().setDuration(700).setInterpolator(antovershoot).scaleX(1.5f).scaleY(1.5f).withEndAction(new Runnable(){
