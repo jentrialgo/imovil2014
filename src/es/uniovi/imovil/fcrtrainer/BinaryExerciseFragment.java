@@ -186,14 +186,14 @@ public class BinaryExerciseFragment extends BaseExerciseFragment implements
 
 		if (modeGame == MODE_GAME.BINARY_TO_DECIMAL) {
 			// User input: 0 to 9
-			answer.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
-			answer.setHint("example: 64");
+			answer.setKeyListener(DigitsKeyListener.getInstance(getResources().getString(R.string.digits_available_decimal_binary)));
+			answer.setHint(getResources().getString(R.string.hint_2_binary));
 			
 			setMaxLength(answer, 100);
 		} else {
 			// DECIMAL TO BINARY: User input: only 0 or 1
-			answer.setKeyListener(DigitsKeyListener.getInstance("01"));
-			answer.setHint("example: 00000000");
+			answer.setKeyListener(DigitsKeyListener.getInstance(getResources().getString(R.string.digits_available_01_binary)));
+			answer.setHint(getResources().getString(R.string.hint_binary));
 			
 			setMaxLength(answer, 8);
 		}
@@ -241,7 +241,7 @@ public class BinaryExerciseFragment extends BaseExerciseFragment implements
 		if (answer.matches("")) {
 			TextView information = (TextView) getView().findViewById(
 					R.id.information);
-			information.setText("insertar un valor por favor.");
+			information.setText(getResources().getString(R.string.insert_value_binary));
 			return true;
 		}
 		return false;

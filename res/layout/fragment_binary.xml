@@ -45,7 +45,7 @@ limitations under the License.
 	        
 	        android:digits="01"
 	        
-	        android:hint ="@string/binary_hint">
+	        android:hint ="@string/hint_binary">
 			
 	        <requestFocus />
 	    </EditText>
