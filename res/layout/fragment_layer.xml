@@ -1,17 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
- <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-     android:layout_width="match_parent"
-     android:layout_height="match_parent" >
- 
-     <TextView
-         android:id="@+id/fragment_layer"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignParentTop="true"
-         android:layout_centerHorizontal="true"
-         android:layout_marginTop="16dp"
-         android:text="Layer"
-         android:textSize="30pt" />
- 
- </RelativeLayout>
- 
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <TextView
+        android:id="@+id/textlayer"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/logic_gate_and" />
+
+    <TextView
+        android:id="@+id/layer_exercise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/logic_gate"
+        android:visibility="gone" 
+        android:layout_centerHorizontal="true"/>
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="155dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textlayer"
+        android:layout_centerHorizontal="true"
+        android:ems="10"	
+        android:inputType="textNoSuggestions" />
+
+    <Button
+        android:id="@+id/button_layer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinner"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="42dp"
+        android:text="@string/button_layer_exercise" />
+
+</RelativeLayout>

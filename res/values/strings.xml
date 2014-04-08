@@ -53,7 +53,14 @@ limitations under the License.
     
     <string name="dummy_exercise">Ejercicio</string>   
      
-    <string name="fragment_interpretation">Complemento a 2</string>    
+    <string name="fragment_interpretation">Complemento a 2</string>   
+    
+    <!-- Strings layer exercise  -->
+    
+    <string name="button_layer_exercise">Comprobar</string>
+    
+    
+    <!-- Fin Strings layer exercise -->
     
      <!-- Strings logic gate -->
      
