@@ -60,4 +60,28 @@ limitations under the License.
     </string-array>
     
 
+    
+    <!-- Arrays logic gate -->
+    
+    <string-array name="logic_gates">
+        <item>AND</item>
+        <item>OR</item>
+        <item>NOT</item>
+        <item>XOR</item>
+        <item>NAND</item>
+        <item>NOR</item>
+    </string-array>
+    
+	<array name="logic_gates_images">
+        <item>@drawable/logic_gate_and</item>
+        <item>@drawable/logic_gate_or</item>
+        <item>@drawable/logic_gate_not</item>
+        <item>@drawable/logic_gate_xor</item>
+        <item>@drawable/logic_gate_nand</item>
+        <item>@drawable/logic_gate_nor</item>
+    </array>
+    
+	 <!-- Fin Arrays logic gate -->
+    
 </resources>
+
