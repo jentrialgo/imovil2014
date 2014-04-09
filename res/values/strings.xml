@@ -57,5 +57,17 @@ limitations under the License.
     
     <string name="initial_clock_value">2:00</string>
     <string name="error_no_clock">Error: este ejercicio no está preparado para jugar</string>
+    
+    <string name="ip_add">Dirección IP:</string>
+    <string name="mask">Máscara:</string>
+    <string name="text_butt_ans">Comprobar</string>
+    <string name="text_butt_solution">Mostrar respuesta</string>
+    <string name="failed_logic_gate">Has fallado</string>
+    <string name="dialog_try_logic_gate">¿Reintentar?</string>
+    <string name="try_again_logic_gate">Reintentar</string>
+    <string name="solution_logic_gate">Mostrar respuesta</string>
+    <string name="end_train">Entrenamiento finalizado</string>
+    
+    
 
 </resources>

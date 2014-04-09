@@ -59,4 +59,30 @@ limitations under the License.
         <item>Walter</item>
     </string-array>
     
+     <string-array name="ips">
+        <item>156.35.45.8</item>
+        <item>221.241.21.7</item>
+        <item>178.35.85.96</item>
+        <item>192.168.52.1</item>
+        <item>168.75.84.17</item>
+     </string-array>
+     
+     <string-array name="masks">
+        <item>255.255.255.0</item>
+        <item>255.255.0.0</item>
+        <item>255.0.0.0</item>
+        <item>255.255.240.0</item>
+        <item>255.224.0.0</item>
+     </string-array>
+     
+     <string-array name="nets">
+        <item>156.35.45.0</item>
+        <item>221.241.0.0</item>
+        <item>178.0.0.0</item>
+        <item>192.168.48.0</item>
+        <item>168.64.0.0</item>
+     </string-array>
+     
+     
+    
 </resources>
