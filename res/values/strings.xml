@@ -65,7 +65,7 @@ limitations under the License.
 	<string name="digits_available_01_binary">01</string>
   	<string name="hint_binary">ejemplo: 00000000</string>
   	<string name="hint_2_binary">ejemplo: 64</string>
-  	<string name="solution_binary">show solución</string>
+  	<string name="solution_binary">mostrar solución</string>
   	<string name="change_binary">cambiar modo</string>
   	<string name="insert_value_binary">insertar un valor por favor.</string>
 </resources>

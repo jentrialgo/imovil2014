@@ -40,7 +40,7 @@ limitations under the License.
 	        android:layout_marginTop="5dp"
 	        android:layout_marginRight="5dp"
 	        android:ems="10"
-	        android:inputType="phone" 
+	        android:inputType="number" 
 	        android:maxLength="8"
 	        
 	        android:digits="01"
