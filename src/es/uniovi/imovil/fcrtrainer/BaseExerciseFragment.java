@@ -1,6 +1,6 @@
 /*
 
-Copyright 2014 Profesores y alumnos de la asignatura Informática Móvil de la EPI de Gijón
+Copyright 2014 Profesores y alumnos de la asignatura Informï¿½tica Mï¿½vil de la EPI de Gijï¿½n
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,44 +18,52 @@ limitations under the License.
 
 package es.uniovi.imovil.fcrtrainer;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnticipateOvershootInterpolator;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 /**
  * Clase base de la que deben heredar todos los fragmentos de los ejercicios.
- * Contendrá toda la funcionalidad común a todos los ejercicios. Entre ellos
- * está un botón en la barra de tareas para empezar y parar de jugar.
+ * ContendrÃ¡ toda la funcionalidad comÃºn a todos los ejercicios. Entre ellos
+ * estÃ¡ un botÃ³n en la barra de tareas para empezar y parar de jugar.
  * 
  * Para que esto funcione, el fragmento debe tener definido un TextView llamado
- * text_view_clock, que debe ser inicialmente invisible. Este TextView servirá
- * para mostrar el reloj mientras se esté jugando. Cuando se pulse el botón de
- * jugar, se mostrará el reloj y empezará la cuenta atrás. Cuando se llegue a
- * cero, se acabará el juego.
+ * text_view_clock, que debe ser inicialmente invisible. Este TextView servirÃ¡
+ * para mostrar el reloj mientras se estÃ© jugando. Cuando se pulse el botÃ³n de
+ * jugar, se mostrarÃ¡ el reloj y empezarÃ¡ la cuenta atrÃ¡s. Cuando se llegue a
+ * cero, se acabarÃ¡ el juego.
  * 
  * Un fragmento con un ejercicio puede hacer estas cosas:
  * 
- * - Redefinir el método playGame() para empezar una partida. Aquí, típicamente,
- * se cambiará el layout para el modo juego y se generará la primera pregunta.
+ * - Redefinir el mÃ©todo playGame() para empezar una partida. AquÃ­, tÃ­picamente,
+ * se cambiarÃ¡ el layout para el modo juego y se generarÃ¡ la primera pregunta.
  * 
- * - Redefinir el método stopGame() para hacer las acciones que se deseen cuando
- * se acabe la partida, como por ejemplo, mostrar un mensaje con la puntuación y
+ * - Redefinir el mÃ©todo stopGame() para hacer las acciones que se deseen cuando
+ * se acabe la partida, como por ejemplo, mostrar un mensaje con la puntuaciÃ³n y
  * llamar a HighScoreManager.addScore().
  * 
- * - Redefinir el método cancelGame(), que se llama cuando el usuario cancela el
+ * - Redefinir el mÃ©todo cancelGame(), que se llama cuando el usuario cancela el
  * juego, para hacer las acciones que se deseen.
  * 
- * En estros tres métodos se debe llamar siempre al método padre en
+ * En estros tres mÃ©todos se debe llamar siempre al mÃ©todo padre en
  * BaseExercise, ya que son los que controlan el comportamiento del juego.
  * 
- * También se puede llamar en el constructor del fragmento al método
- * setGameDuration() si se desea una duración distinta de los dos minutos que se
+ * TambiÃ©n se puede llamar en el constructor del fragmento al mÃ©todo
+ * setGameDuration() si se desea una duraciÃ³n distinta de los dos minutos que se
  * tienen por defecto.
  */
 public abstract class BaseExerciseFragment extends Fragment {
@@ -70,6 +78,21 @@ public abstract class BaseExerciseFragment extends Fragment {
 	private TextView mClock;
 	private long mDurationMs = DEFAULT_GAME_DURATION_MS;
 	private long mStartMs;
+	
+	private AlphaAnimation animation;
+	private AnticipateOvershootInterpolator antovershoot;
+	
+	private View result;
+	private ImageView resultImage;
+
+	
+
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		result = (View) view.findViewById(R.id.result);
+		resultImage = (ImageView) view.findViewById(R.id.resultimage);
+		super.onViewCreated(view, savedInstanceState);
+	}
 
 	private final class TimeUpdater implements Runnable {
 		public void run() {
@@ -114,7 +137,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 			MainActivity activity = (MainActivity) getActivity();
 			item.setVisible(!activity.isDrawerOpen());
 		} catch (ClassCastException ex) {
-			// El fragmento está incrustado en una actividad distinta a
+			// El fragmento estÃ¡ incrustado en una actividad distinta a
 			// MainActivity. No se hace nada
 		}
 		if (mIsPlaying) {
@@ -143,11 +166,11 @@ public abstract class BaseExerciseFragment extends Fragment {
 	}
 
 	/**
-	 * Esta función comienza el juego. En BaseExercise simplemente se hace
+	 * Esta funciÃ³n comienza el juego. En BaseExercise simplemente se hace
 	 * visible el reloj y se lanza la tarea que lo actualiza cada segundo. Si se
-	 * quiere cambiar la duración del juego, se debe llamar antes a
+	 * quiere cambiar la duraciÃ³n del juego, se debe llamar antes a
 	 * setGameDuration(). Las clases derivadas deben redifinirla, llamando al
-	 * padre, para añadir lo necesario a cada juego particular
+	 * padre, para Ã±adir lo necesario a cada juego particular
 	 */
 	void startGame() {
 		mClock = (TextView) getView().findViewById(R.id.text_view_clock);
@@ -162,14 +185,14 @@ public abstract class BaseExerciseFragment extends Fragment {
 		setClockVisibility(View.VISIBLE);
 		getActivity().supportInvalidateOptionsMenu();
 
-		final long updateTime = 0; // Hacer la primera actualización
+		final long updateTime = 0; // Hacer la primera actualizaciï¿½n
 									// inmediatamente
 		mTimerHandler.postDelayed(mUpdateTimeTask, updateTime);
 	}
 
 	/**
-	 * Esta función cancela el juego, parando y ocultando el reloj. Las clases
-	 * derivadas deben redifinirla, llamando al padre, para añadir lo necesario
+	 * Esta funciÃ³n cancela el juego, parando y ocultando el reloj. Las clases
+	 * derivadas deben redifinirla, llamando al padre, para aÃ±adir lo necesario
 	 * a cada juego particular
 	 */
 	void cancelGame() {
@@ -177,9 +200,9 @@ public abstract class BaseExerciseFragment extends Fragment {
 	}
 
 	/**
-	 * Esta función se llama al finalizar el juego, parando y ocultando el
+	 * Esta funciÃ³n se llama al finalizar el juego, parando y ocultando el
 	 * reloj. Las clases derivadas deben redifinirla, llamando al padre, para
-	 * añadir lo necesario a cada juego particular
+	 * aÃ±adir lo necesario a cada juego particular
 	 */
 	void endGame() {
 		stopPlaying();
@@ -191,6 +214,41 @@ public abstract class BaseExerciseFragment extends Fragment {
 			mTimerHandler.removeCallbacks(mUpdateTimeTask);
 			setClockVisibility(View.GONE);
 			getActivity().supportInvalidateOptionsMenu();
+		}
+	}
+	
+	/**
+	 * Shows an animation when the user taps on the check button.
+	 * Currently requires a layout with the id result and an imageview
+	 * with the id resultimage. The implementation of this views can be
+	 * seen in fragment_hexadecimal.xml
+	 * 
+	 * @param correct if the answer is correct
+	 */
+	@SuppressLint("NewApi") protected void showAnimationAnswer(boolean correct){
+		
+		// Fade in - fade out
+		result.setVisibility(View.VISIBLE);
+		animation = new AlphaAnimation(0,1);
+		animation.setDuration(600);
+		animation.setFillBefore(true);
+		animation.setFillAfter(true);
+		animation.setRepeatCount(Animation.RESTART);
+		animation.setRepeatMode(Animation.REVERSE);
+		result.startAnimation(animation);
+		
+		if(correct) resultImage.setImageDrawable(getResources().getDrawable(R.drawable.correct));
+		else resultImage.setImageDrawable(getResources().getDrawable(R.drawable.incorrect));
+
+		// This only works in API 12+, so we skip this animation on old devices
+		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB_MR2){
+			resultImage.animate().setDuration(700).setInterpolator(antovershoot).scaleX(1.5f).scaleY(1.5f).withEndAction(new Runnable(){
+				@Override
+				public void run() {
+					// Back to its original size after the animation's end
+					resultImage.animate().scaleX(1f).scaleY(1f);
+				}
+			});
 		}
 	}
 
