@@ -1,6 +1,6 @@
 /*
 
-Copyright 2014 Profesores y alumnos de la asignatura Inform�tica M�vil de la EPI de Gij�n
+Copyright 2014 Profesores y alumnos de la asignatura Informática Móvil de la EPI de Gijón
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -185,7 +185,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 		setClockVisibility(View.VISIBLE);
 		getActivity().supportInvalidateOptionsMenu();
 
-		final long updateTime = 0; // Hacer la primera actualizaci�n
+		final long updateTime = 0; // Hacer la primera actualización
 									// inmediatamente
 		mTimerHandler.postDelayed(mUpdateTimeTask, updateTime);
 	}
