@@ -110,8 +110,6 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 				}
 			}
 		});
-		
-		bSolution.setOnClickListener(new OnClickListener(){
 
 		bSolution.setOnClickListener(new OnClickListener() {
 
