@@ -13,4 +13,63 @@
         android:text="@string/network_mask"
         android:textSize="15pt" />
 
+    <TextView
+        android:id="@+id/TextEnun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewPrueba"
+        android:layout_alignRight="@+id/textViewPrueba"
+        android:layout_below="@+id/textViewPrueba"
+        android:layout_marginTop="36dp"
+        android:text="@string/enunciadomasc"
+        android:textSize="7pt" />
+
+    <TextView
+        android:id="@+id/TextEnun2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TextEnun"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="43dp"
+        android:textSize="15pt"
+        android:text="prueba" />
+
+    <EditText
+        android:id="@+id/respuesta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TextEnun2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="85dp"
+        android:inputType="text"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/button1"
+        android:layout_alignBottom="@+id/button1"
+        android:layout_alignRight="@+id/respuesta"
+        android:text="@string/comprobar" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/respuesta"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="27dp"
+        android:text="@string/solucion" />
+
+    <ImageView
+        android:id="@+id/imagen"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignBottom="@+id/respuesta"
+        android:layout_alignParentRight="true"/>
+    
 </RelativeLayout>
