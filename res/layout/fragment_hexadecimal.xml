@@ -46,7 +46,7 @@ limitations under the License.
         <RelativeLayout
             style="@style/cards"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/cards" >
 
             <TextView
@@ -57,21 +57,13 @@ limitations under the License.
                 android:layout_centerVertical="true"
                 android:padding="10dp"
                 android:textColor="@color/mediumdarkgray"
-                android:textSize="40sp" />
+                android:textSize="32sp" />
         </RelativeLayout>
-
-        <Button
-            android:id="@+id/change"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:drawableLeft="@drawable/ic_import_export"
-            android:text="@string/change" />
 
         <RelativeLayout
             style="@style/cards"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/cards" >
 
             <EditText
@@ -106,8 +98,19 @@ limitations under the License.
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/solution" />
+
+            <Button
+                android:id="@+id/change"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_import_export"
+                android:minWidth="48dp" />
+
         </LinearLayout>
+
     </LinearLayout>
+    
+    <!--  Views required by the animation -->
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -126,5 +129,7 @@ limitations under the License.
             android:layout_centerHorizontal="true"
             android:layout_marginTop="140dp"/>
     </RelativeLayout>
+    
+    <!-- End of views required by the animation -->
 
 </RelativeLayout>
