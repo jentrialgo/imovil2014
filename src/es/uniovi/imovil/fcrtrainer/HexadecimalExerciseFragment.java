@@ -65,15 +65,13 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 			Bundle savedInstanceState) {
 
 		View rootView;
-		rootView = inflater.inflate(R.layout.fragment_hexadecimal, container,
-				false);
+		rootView = inflater.inflate(R.layout.fragment_hexadecimal, container, false);
 
 		etAnswer = (EditText) rootView.findViewById(R.id.answer);
 		bChange = (Button) rootView.findViewById(R.id.change);
 		bSolution = (Button) rootView.findViewById(R.id.seesolution);
 		bCheck = (Button) rootView.findViewById(R.id.checkbutton);
-		tvNumberToConvert = (TextView) rootView
-				.findViewById(R.id.numbertoconvert);
+		tvNumberToConvert = (TextView) rootView.findViewById(R.id.numbertoconvert);
 		tvTitle = (TextView) rootView.findViewById(R.id.exercisetitle);
 
 		etAnswer.setOnEditorActionListener(new OnEditorActionListener() {
@@ -81,47 +79,39 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId,
 					KeyEvent event) {
-				if (EditorInfo.IME_ACTION_DONE == actionId) {
-					if (tohex)
-						isCorrect(etAnswer.getEditableText().toString().trim()
-								.toLowerCase(Locale.US));
-					else
-						isCorrect(etAnswer.getEditableText().toString().trim());
+				if(EditorInfo.IME_ACTION_DONE == actionId){
+					if(tohex) isCorrect(etAnswer.getEditableText().toString().trim().toLowerCase(Locale.US));
+					else isCorrect(etAnswer.getEditableText().toString().trim());
 				}
 				return false;
-			}
-		});
+			}});
 
-		bCheck.setOnClickListener(new OnClickListener() {
+		bCheck.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
-				if (tohex)
-					isCorrect(etAnswer.getEditableText().toString().trim()
-							.toLowerCase(Locale.US));
-				else
-					isCorrect(etAnswer.getEditableText().toString().trim());
-			}
-		});
+				if(tohex) isCorrect(etAnswer.getEditableText().toString().trim().toLowerCase(Locale.US));
+				else isCorrect(etAnswer.getEditableText().toString().trim());
+			}});
 
-		bChange.setOnClickListener(new OnClickListener() {
+		bChange.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View arg0) {
 				tohex ^= true;
-				if (tohex) {
+				if(tohex){
 					etAnswer.setInputType(EditorInfo.TYPE_CLASS_TEXT);
-					tvTitle.setText(getResources().getString(
-							R.string.convert_to_hex));
+					tvTitle.setText(getResources().getString(R.string.convert_to_hex));
 					generateRandomNumber(GENERATE_BIN_TO_CONVERT);
 				} else {
 					etAnswer.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
-					tvTitle.setText(getResources().getString(
-							R.string.convert_to_bin));
+					tvTitle.setText(getResources().getString(R.string.convert_to_bin));
 					generateRandomNumber(GENERATE_HEX_TO_CONVERT);
 				}
 			}
 		});
+		
+		bSolution.setOnClickListener(new OnClickListener(){
 
 		bSolution.setOnClickListener(new OnClickListener() {
 
@@ -136,22 +126,16 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 		return rootView;
 	}
 
-	public void generateRandomNumber(int type) {
+	public void generateRandomNumber(int type){
 		Random randomGenerator = new Random();
 		numberToConvert = randomGenerator.nextInt(MAX_NUMBER_TO_CONVERT);
-		if (type == GENERATE_BIN_TO_CONVERT)
-			tvNumberToConvert.setText(Integer.toBinaryString(numberToConvert));
-		else
-			tvNumberToConvert.setText(Integer.toHexString(numberToConvert)
-					.toUpperCase(Locale.US));
-		System.out.println(numberToConvert);
+		if(type == GENERATE_BIN_TO_CONVERT) tvNumberToConvert.setText(Integer.toBinaryString(numberToConvert));
+		else tvNumberToConvert.setText(Integer.toHexString(numberToConvert).toUpperCase(Locale.US));
 	}
 
 	/**
 	 * Checks if the answer is correct
-	 * 
-	 * @param answer
-	 *            , the user input
+	 * @param answer, the user input
 	 */
 	public void isCorrect(String answer) {
 
