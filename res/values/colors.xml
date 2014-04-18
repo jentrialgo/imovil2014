@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+        <color name="darkgray">#424242</color>
+        <color name="mediumgray">#fff0f0f0</color>
+        <color name="mediumdarkgray">#ff979797</color>
+        <color name="pantalla">#88000000</color>
+    
+</resources>
