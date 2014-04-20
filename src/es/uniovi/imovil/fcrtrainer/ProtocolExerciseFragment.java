@@ -3,7 +3,6 @@ package es.uniovi.imovil.fcrtrainer;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;

@@ -1,19 +1,14 @@
 package es.uniovi.imovil.fcrtrainer;
 
-import java.util.HashMap;
-
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
