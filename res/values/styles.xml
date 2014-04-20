@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
@@ -33,5 +33,18 @@ limitations under the License.
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+    
+        <style name="Title2DarkLight">
+        <item name="android:textSize">28sp</item>
+        <item name="android:textColor">@color/darkgray</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-light</item>
+    </style>
+    
+        <style name="cards">
+            <item name="android:layout_marginTop">6dp</item>
+            <item name="android:layout_marginBottom">6dp</item>
+            <item name="android:padding">12dp</item>
+        </style>
 
 </resources>
