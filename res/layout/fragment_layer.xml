@@ -2,38 +2,113 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/mediumgray"
     android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/exercisetitle"
+        style="@style/Title2DarkLight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="@string/layer_tittle" />
+
     <TextView
         android:id="@+id/textlayer"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/exercisetitle"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/logic_gate_and" />
+        android:gravity="center"
+        android:background="@drawable/cards"
+        android:layout_margin="15dp"
+        android:textSize="20sp" />
+   
+
+    <RadioGroup
+        android:id="@+id/layer_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textlayer"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/cards"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:padding="10dp" >
+
+        <RadioButton
+            android:id="@+id/link_layer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/link_layer" />
+
+        <RadioButton
+            android:id="@+id/internet_layer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/internet_layer" />
+
+        <RadioButton
+            android:id="@+id/transport_layer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/transport_layer" />
+
+        <RadioButton
+            android:id="@+id/application_layer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/application_layer" />
+    </RadioGroup>
 
     <TextView
         android:id="@+id/layer_exercise"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/logic_gate"
-        android:visibility="gone" 
-        android:layout_centerHorizontal="true"/>
-
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="155dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textlayer"
         android:layout_centerHorizontal="true"
-        android:ems="10"	
-        android:inputType="textNoSuggestions" />
+        android:text="@string/logic_gate"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/button_layer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/spinner"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="42dp"
-        android:text="@string/button_layer_exercise" />
+        android:layout_alignLeft="@+id/textlayer"
+        android:layout_below="@+id/layer_group"
+        android:text="@string/button_layer_exercise"/>
 
+    <Button
+        android:id="@+id/button_solutionlayer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/button_layer"
+        android:layout_alignBottom="@+id/button_layer"
+        android:layout_alignRight="@+id/textlayer"
+        android:text="@string/button_solution" />
+    
+       <!--  Views required by the animation -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/result"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@color/pantalla"
+        android:visibility="gone" >
+
+        <ImageView
+            android:id="@+id/resultimage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="140dp"/>
+    </RelativeLayout>
+    
+    <!-- End of views required by the animation -->
+    
 </RelativeLayout>
+
+

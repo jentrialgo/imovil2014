@@ -61,22 +61,22 @@ limitations under the License.
     
     <!-- Arrays layer exercise -->  
       <string-array name="layer_exercise_questions">
-        <item>P1</item>
-        <item>P2</item>
-        <item>P3</item>
-        <item>P4</item>
-        <item>P5</item>
-        <item>P6</item>
+        <item>Protocolo IP</item>
+        <item>Protocolo UDP</item>
+        <item>Protocolo TCP</item>
+        <item>Protocolo POP3</item>
+        <item>Protocolo IMAP</item>
+        <item>Protocolo ICMP</item>
     </string-array>
 
     <!--  hay que poner las capas en orden alfabetico -->
     <string-array name="layer_exercise_answers">
-        <item>Capa1</item>
-        <item>Capa2</item>
-        <item>Capa3</item>
-        <item>Capa4</item>
-        <item>Capa5</item>
-        <item>Capa6</item>
+        <item>Capa de internet</item>
+        <item>Capa de transporte</item>
+        <item>Capa de transporte</item>
+        <item>Capa de aplicación</item>
+        <item>Capa de aplicación</item>
+        <item>Capa de internet</item>
     </string-array>
     
     <!-- Arrays logic gate -->
