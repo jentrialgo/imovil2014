@@ -61,5 +61,13 @@
      <string name="done_logic_gate">You are done</string>
      
      <!--  Fin Strings logic gate -->
+     
+     <!-- Modulo: Operaciones Lógicas -->
+  	<string name="LOand">AND</string>
+    <string name="LOor">OR</string>
+    <string name="LOxor">XOR</string>
+    
+    <string name="LOpregunta">¿Which is the solution of this 5-bit logic operation?</string>
+    <!-- Fin Operaciones Lógicas -->
 
 </resources>

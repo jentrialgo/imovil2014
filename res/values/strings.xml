@@ -86,4 +86,13 @@ limitations under the License.
 	<string name="wrong_binary">falso</string>
   	<string name="binary_hint">example: 00000000</string>
   	<string name="solution_binary">solution</string>
+  	
+  	<!-- Modulo: Operaciones Lógicas -->
+  	<string name="LOand">AND</string>
+    <string name="LOor">OR</string>
+    <string name="LOxor">XOR</string>
+    
+    <string name="LOpregunta">¿Cuál es la solución a esta operación lógica de 5 bits?</string>
+    <!-- Fin Operaciones Lógicas -->
 </resources>
+

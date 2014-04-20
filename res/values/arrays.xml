@@ -59,6 +59,7 @@ limitations under the License.
         <item>Walter</item>
     </string-array>
     
+
     
     <!-- Arrays logic gate -->
     
@@ -83,3 +84,4 @@ limitations under the License.
 	 <!-- Fin Arrays logic gate -->
     
 </resources>
+
