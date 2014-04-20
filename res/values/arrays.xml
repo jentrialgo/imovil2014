@@ -36,7 +36,7 @@ limitations under the License.
         <item>@string/network_layer</item>
         <item>@string/protocol</item>
     </array>
-
+     
     <array name="highscores">
         <item>@string/highscores</item>
     </array>
@@ -59,7 +59,25 @@ limitations under the License.
         <item>Walter</item>
     </string-array>
     
+    <!-- Arrays layer exercise -->  
+    <string-array name="layer_exercise_questions">
+        <item>Protocolo IP</item>
+        <item>Protocolo UDP</item>
+        <item>Protocolo TCP</item>
+        <item>Protocolo POP3</item>
+        <item>Protocolo IMAP</item>
+        <item>Protocolo ICMP</item>
+    </string-array>
 
+    <!--  hay que poner las capas en orden alfabetico -->
+    <string-array name="layer_exercise_answers">
+        <item>Capa de internet</item>
+        <item>Capa de transporte</item>
+        <item>Capa de transporte</item>
+        <item>Capa de aplicación</item>
+        <item>Capa de aplicación</item>
+        <item>Capa de internet</item>
+    </string-array>
     
     <!-- Arrays logic gate -->
     
