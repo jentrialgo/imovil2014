@@ -1,16 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
+    android:layout_height="match_parent"
+    android:background="@color/mediumgray"
+    android:orientation="vertical" >
+    
     <TextView
-        android:id="@+id/textViewPrueba"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:text="CIDR"
-        android:textSize="15pt" />
+       android:id="@+id/exercisetitle"
+       style="@style/Title2DarkLight"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="@string/cidr_title" 
+       android:layout_centerHorizontal="true"
+       android:layout_marginTop="20dp" />
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/respuesta"
+            android:layout_marginTop="20dp" >
+
+            <Button
+                android:id="@+id/cButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/check" />
+
+            <Button
+                android:id="@+id/sButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/solution" />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/respuesta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/mascara"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/cards"
+            android:ems="5"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:padding="10dp" >
+
+            <requestFocus />
+        </EditText>
+
+        <TextView
+            android:id="@+id/mascara"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/exercisetitle"
+            android:layout_margin="15dp"
+            android:background="@drawable/cards"
+            android:gravity="center"
+            android:textSize="25sp" />
+    
 </RelativeLayout>
+
+
