@@ -119,6 +119,7 @@ public class BinaryExerciseFragment extends BaseExerciseFragment implements
 			changeViews();
 			newQuestion();
 		}
+		
 	}
 	
 

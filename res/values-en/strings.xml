@@ -31,6 +31,7 @@
     <string name="error_adding_initial_highscores">Error while inserting initial highscores</string>
     <string name="all">All</string>
     
+
     <string name="dummy_exercise">Exercise</string>   
     
     <string name="initial_clock_value">2:00</string>
