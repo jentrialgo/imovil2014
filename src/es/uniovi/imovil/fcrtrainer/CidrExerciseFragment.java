@@ -82,12 +82,16 @@ public class CidrExerciseFragment extends BaseExerciseFragment{
 	}
 	
 	//Metodo para comprobar la respuesta
-	public void checkAnswer (String answer) {
+	
+	public void checkAnswer (String ans) {
 		
-		if ((answer.toString().equals(respuestas[mask].toString()))){
+		//Si es correcta, cambia la máscara por una nueva y pone el "EditText" en blanco
+		if ((ans.toString().equals(respuestas[mask].toString()))){
 			showAnimationAnswer(true);
 			mask = RANDOM();
 			mascara.setText(mascaras[mask]);
+			answer.setText("");
+			
 			} else
 				showAnimationAnswer(false);		
 	}
