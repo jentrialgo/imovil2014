@@ -120,6 +120,7 @@ public class BinaryExerciseFragment extends BaseExerciseFragment implements
 			newQuestion();
 		}
 	}
+	
 
 	private void changeMode() {
 		if (modeGame == MODE_GAME.BINARY_TO_DECIMAL) {
