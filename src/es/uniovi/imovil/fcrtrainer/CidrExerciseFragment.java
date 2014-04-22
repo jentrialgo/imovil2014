@@ -7,6 +7,7 @@ import java.util.Random;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.text.Editable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,7 +28,7 @@ public class CidrExerciseFragment extends BaseExerciseFragment{
 	int n;
 	EditText answer;
 	public int mask;
-	public static final int RANDOM_MASK = 0;
+	public static final int RANDOM_MASK = 5;
 	
 
 	public static CidrExerciseFragment newInstance() {
@@ -46,13 +47,17 @@ public class CidrExerciseFragment extends BaseExerciseFragment{
 		View rootView;
 		rootView = inflater.inflate(R.layout.fragment_cidr, container, false);
 		
-		//Aray mascaras y se inicializa la pregunta "mascara"
+		//Cogemos todos los views
 		
 		mascaras = getResources().getStringArray(R.array.mascaras);
 		bCheck=(Button) rootView.findViewById(R.id.cButton);
-		mascara.setText(mascaras[RANDOM_MASK]);
+		bSol=(Button) rootView.findViewById(R.id.sButton);
+		mascara = (TextView) rootView.findViewById(R.id.mascara);
 		answer = (EditText) rootView.findViewById(R.id.respuesta);
 		respuestas = getResources().getStringArray(R.array.cidr);
+		mask = RANDOM();
+		mascara.setText(mascaras[mask]);
+		
 		
 		//Usamos listeners para los botones "Comprobar" y "Solucion"
 		
@@ -61,14 +66,14 @@ public class CidrExerciseFragment extends BaseExerciseFragment{
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-			checkAnswer(answer.getEditableText().toString());
+			checkAnswer((answer.getEditableText().toString()));
 			}});
 		
 		bSol.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				showSolution();
+				showSolution(mask);
 			}
 		});
 		
@@ -78,29 +83,29 @@ public class CidrExerciseFragment extends BaseExerciseFragment{
 	
 	//Metodo para comprobar la respuesta
 	public void checkAnswer (String answer) {
-				
-		if (answer.equals(respuestas[n])){
+		
+		if ((answer.toString().equals(respuestas[mask].toString()))){
 			showAnimationAnswer(true);
-			RANDOM();
+			mask = RANDOM();
+			mascara.setText(mascaras[mask]);
 			} else
 				showAnimationAnswer(false);		
 	}
 	
 	//Metodo para mostrar la solucion
-	public void showSolution() {
+	public void showSolution(int n) {
 		
 		answer.setText(respuestas[n]);
 		
 	}
 	
-	//Metodo para generar una nueva mascara para responder
-	public void RANDOM(){
+	//Metodo para generar un número aleatorio
+	public int RANDOM(){
 
 		Random ran = new Random();
-		mask = ran.nextInt(RANDOM_MASK);
-		
-		mascara.setText(mascaras[mask]);
-		
+		n = ran.nextInt(RANDOM_MASK);
+
+		return n;
 	}
 
 }

@@ -47,8 +47,7 @@
             android:layout_marginTop="28dp"
             android:background="@drawable/cards"
             android:ems="5"
-            android:imeOptions="actionDone"
-            android:inputType="text"
+            android:inputType="number"
             android:padding="10dp" >
 
             <requestFocus />

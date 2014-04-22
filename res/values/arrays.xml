@@ -112,14 +112,14 @@ limitations under the License.
         <item>255.255.255.240</item>
     </string-array>
     
-	<array name="cidr">
+	<string-array name="cidr">
         <item>0</item>
         <item>9</item>
         <item>12</item>
         <item>16</item>
         <item>24</item>
         <item>28</item>
-    </array>
+    </string-array>
     
 	 <!-- Fin Arrays de CIDR -->
     
