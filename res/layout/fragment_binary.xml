@@ -14,80 +14,128 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:background="@color/mediumgray"
+    android:gravity="center_horizontal" >
+
     <LinearLayout
+        android:id="@+id/LinearLayout1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-	    <TextView
-	        android:id="@+id/question"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="center_horizontal"
-	        android:layout_marginLeft="5dp"
-	        android:layout_marginTop="5dp"
-	        android:layout_marginRight="5dp"
-	        android:text="@string/title_binary"
-	        android:textSize="@dimen/question_size" />
-	
-	    <EditText
-	        android:id="@+id/answer"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_marginTop="5dp"
-	        android:layout_marginRight="5dp"
-	        android:ems="10"
-	        android:inputType="number" 
-	        android:maxLength="8"
-	        
-	        android:digits="01"
-	        
-	        android:hint ="@string/hint_binary">
-			
-	        <requestFocus />
-	    </EditText>
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/information"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:text="" />
+            android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin" 
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical" >
 
-    <LinearLayout
+        <TextView
+            android:id="@+id/exercisetitle"
+            style="@style/Title2DarkLight"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/convert_to_bin" />
+
+        <RelativeLayout
+            style="@style/cards"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/cards" >
+
+            <TextView
+                android:id="@+id/numbertoconvert"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:padding="10dp"
+                android:textColor="@color/mediumdarkgray"
+                android:textSize="32sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            style="@style/cards"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/cards" >
+
+            <EditText
+                android:id="@+id/answer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:ems="10"
+                android:imeOptions="actionDone"
+                android:padding="10dp" 
+                
+                android:hint="@string/binary_hint"
+               	android:inputType="number" 
+	        	android:maxLength="8"
+	       		android:digits="01">
+
+                <requestFocus />
+            </EditText>
+        </RelativeLayout>
+
+        <!-- Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/checkbutton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/check" />
+
+            <Button
+                android:id="@+id/seesolution"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/solution" />
+
+            <Button
+                android:id="@+id/change"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_import_export"
+                android:minWidth="48dp" />
+
+        </LinearLayout>
+         <!-- /Buttons -->
+
+    </LinearLayout>
+    
+    <!--  Views required by the animation -->
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <Button
-            android:id="@+id/button_check"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/check_binary" 
-            android:layout_gravity="center_vertical"/>
-        <Button 
-            android:id="@+id/button_change"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/change_binary"
-            android:layout_gravity="center_vertical"
-            />
-        <Button
-            android:id="@+id/button_solution"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/solution_binary" 
-            android:layout_gravity="center_vertical"/>
+        android:layout_height="match_parent"
+        android:id="@+id/result"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@color/pantalla"
+        android:visibility="gone" >
 
         <ImageView
-            android:id="@+id/correct_or_wrong"
+            android:id="@+id/resultimage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/true_1_64" />
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="140dp"/>
+    </RelativeLayout>
+    
+    <!-- End of views required by the animation -->
 
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

@@ -1,3 +1,19 @@
+package es.uniovi.imovil.fcrtrainer.highscores;
+
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Collections;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
+import android.util.SparseIntArray;
+import es.uniovi.imovil.fcrtrainer.R;
+
 /*
 
 Copyright 2014 Profesores y alumnos de la asignatura Informática Móvil de la EPI de Gijón
@@ -15,23 +31,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
  */
-
+/*
 package es.uniovi.imovil.fcrtrainer.highscores;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import es.uniovi.imovil.fcrtrainer.R;
-
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.util.Log;
-import android.util.SparseIntArray;
 
 /**
  * Clase para leer y guardar las puntuaciones
