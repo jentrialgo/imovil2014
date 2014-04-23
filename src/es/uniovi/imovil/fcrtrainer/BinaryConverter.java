@@ -12,6 +12,7 @@ public class BinaryConverter{
 		if (string.matches("") || !string.contains("1")) {
 			return true;
 		}
+		
 		return false;
 	}
 	
