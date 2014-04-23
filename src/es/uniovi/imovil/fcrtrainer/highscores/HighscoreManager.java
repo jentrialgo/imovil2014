@@ -1,6 +1,6 @@
 /*
 
-Copyright 2014 Profesores y alumnos de la asignatura Inform·tica MÛvil de la EPI de GijÛn
+Copyright 2014 Profesores y alumnos de la asignatura Inform√°tica M√≥vil de la EPI de Gij√≥n
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -94,7 +94,7 @@ public class HighscoreManager {
 	}
 
 	/**
-	 * AÒade una puntuaciÛn a los datos de mejores puntuaciones
+	 * A√±ade una puntuaci√≥n a los datos de mejores puntuaciones
 	 * 
 	 * @param context
 	 *            Contexto para gestionar recursos
@@ -104,12 +104,12 @@ public class HighscoreManager {
 	 *            Ejercicio donde se han obtenido. Debe ser una de las
 	 *            constantes en ExerciseFragmentFactory
 	 * @param date
-	 *            Fecha en la que se obtuvo la puntuaciÛn
+	 *            Fecha en la que se obtuvo la puntuaci√≥n
 	 * @param userName
-	 *            Nombre del usuario que obtuvo la puntuaciÛn. Si se pasa null,
-	 *            ser· el nombre de usuario por defecto
+	 *            Nombre del usuario que obtuvo la puntuaci√≥n. Si se pasa null,
+	 *            ser√° el nombre de usuario por defecto
 	 * @throws JSONException
-	 *             Cuando no se puede pasar a JSON o de JSON una puntuaciÛn
+	 *             Cuando no se puede pasar a JSON o de JSON una puntuaci√≥n
 	 */
 	public static void addScore(Context context, int score, int exercise,
 			Date date, String userName) throws JSONException {
@@ -122,7 +122,7 @@ public class HighscoreManager {
 		try {
 			highscores = loadHighscores(context);
 		} catch (JSONException e) {
-			Log.d(TAG, "Error al leer las puntuaciones para aÒadir una nueva: "
+			Log.d(TAG, "Error al leer las puntuaciones para a√±adir una nueva: "
 					+ e.getMessage());
 		}
 		highscores.add(highscore);
@@ -156,9 +156,9 @@ public class HighscoreManager {
 	}
 
 	/**
-	 * AÒade un array de puntuaciones. Est· pensado para ser utilizado
+	 * A√±ade un array de puntuaciones. Est√° pensado para ser utilizado
 	 * inicialmente cuando se rellenan con las puntuaciones iniciales para ser
-	 * m·s r·pido que aÒadirlas una a una
+	 * m√°s r√°pido que a√±adirlas una a una
 	 * 
 	 * @param activity
 	 * @param highscores
@@ -170,7 +170,7 @@ public class HighscoreManager {
 		try {
 			highscores = loadHighscores(context);
 		} catch (JSONException e) {
-			Log.d(TAG, "Error al leer las puntuaciones para aÒadir una nueva: "
+			Log.d(TAG, "Error al leer las puntuaciones para a√±adir una nueva: "
 					+ e.getMessage());
 		}
 		highscores.addAll(newHighscores);
