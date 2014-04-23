@@ -35,11 +35,6 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 	int rbSelected;
 	private boolean changeColor=false;
 
-	public ProtocolExerciseFragment() 
-	{
-		//Constructor.
-	}
-
 	public static ProtocolExerciseFragment newInstance() 
 	{
 		ProtocolExerciseFragment fragment = new ProtocolExerciseFragment();
