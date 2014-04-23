@@ -22,6 +22,7 @@ limitations under the License.
         <item>@string/hexadecimal</item>
         <item>@string/sign_and_magnitude</item>
         <item>@string/interpretation</item>
+		<item>@string/twoscomplement</item>
         <item>@string/floating_point</item>
     </array>
     <array name="digital_systems">
