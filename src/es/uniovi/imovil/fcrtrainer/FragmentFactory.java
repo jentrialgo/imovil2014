@@ -1,3 +1,4 @@
+
 /*
 
 Copyright 2014 Profesores y alumnos de la asignatura Informática Móvil de la EPI de Gijón
@@ -48,6 +49,8 @@ final public class FragmentFactory {
 			return HexadecimalExerciseFragment.newInstance();
 		case R.string.interpretation:
 			return InterpretationExerciseFragment.newInstance();
+		case R.string.twoscomplement:
+			return TwosComplementExerciseFragment.newInstance();
 		case R.string.cidr:
 			return CidrExerciseFragment.newInstance();
 		case R.string.network_layer:

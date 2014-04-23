@@ -30,6 +30,7 @@ limitations under the License.
     <string name="binary">Binario</string>
     <string name="hexadecimal">Hexadecimal</string>
     <string name="sign_and_magnitude">Signo-magnitud</string>
+    <string name="twoscomplement">Complemento a dos</string>
     <string name="interpretation">Interpretación</string>
     <string name="floating_point">Coma flotante</string>
     <string name="logic_gate">Puerta lógica</string>
@@ -64,9 +65,6 @@ limitations under the License.
      <string name="done_logic_gate">Has acabado</string>
      
      <!--  Fin Strings logic gate -->
-    
-    <string name="dummy_exercise">Ejercicio</string>
-    <string name="fragment_interpretation">Complemento a 2</string>
 
     <!-- Strings layer exercise -->
     <string name="layer_tittle">Acierta la capa</string>
@@ -79,18 +77,6 @@ limitations under the License.
     <string name="application_layer">Capa de aplicación</string>
 
     <!-- Fin Strings layer exercise -->
-
-
-    <!-- Strings logic gate -->
-
-    <string name="button_logic_gate">Comprobar</string>
-    <string name="failed_logic_gate">¡Has fallado!</string>
-    <string name="dialog_try_logic_gate">¿Quieres probar de nuevo o bien quieres saber la solución?</string>
-    <string name="try_again_logic_gate">Reintentar</string>
-    <string name="solution_logic_gate">Solución</string>
-    <string name="done_logic_gate">Has acabado</string>
-
-    <!-- Fin Strings logic gate -->
 
     <string name="initial_clock_value">2:00</string>
     <string name="error_no_clock">Error: este ejercicio no está preparado para jugar</string>
@@ -106,7 +92,6 @@ limitations under the License.
 	<string name="check_binary">comprobar</string>
 	<string name="next_binary">siguente</string>
 	<string name="title_binary">Binario</string>
-	
 	<string name="correct_binary">correcto</string>
 	<string name="wrong_binary">falso</string>
   	<string name="binary_hint">example: 00000000</string>
@@ -119,14 +104,12 @@ limitations under the License.
     
     <string name="LOpregunta">¿Cuál es la solución a esta operación lógica de 5 bits?</string>
     <!-- Fin Operaciones Lógicas -->
-    <string name="check_binary">comprobar</string>
-    <string name="next_binary">siguente</string>
-    <string name="title_binary">Binario</string>
-    <string name="correct_binary">correcto</string>
-    <string name="wrong_binary">falso</string>
-    <string name="binary_hint">example: 00000000</string>
-    <string name="solution_binary">solution</string>
+
     <string name="cidr_title">Calcula la notación CIDR</string>
 
+    
+    <!-- Twos Complement -->
+	<string name="convert_to_twoscomplement">Convierte a complemento a dos</string>
+	<string name="convert_to_decimal">Convierte de complemento a dos a decimal</string>
+  	<!--  End Twos Complement -->
 </resources>
-
