@@ -21,21 +21,17 @@ limitations under the License.
     <string name="action_settings">Configuración</string>
     <string name="action_help">Ayuda</string>
     <string name="action_game_control">Jugar</string>
- 
     <string name="drawer_open">Abrir drawer</string>
     <string name="drawer_close">Cerrar drawer</string>
-    
     <string name="hello_world">Hola Mundo</string>
-    
     <string name="codes">Códigos</string>
     <string name="digital_systems">Digitales</string>
     <string name="networks">Redes</string>
-    
     <string name="binary">Binario</string>
     <string name="hexadecimal">Hexadecimal</string>
     <string name="sign_and_magnitude">Signo-magnitud</string>
+    <string name="twoscomplement">Complemento a dos</string>
     <string name="interpretation">Interpretación</string>
-	<string name="twoscomplement">Complemento a dos</string>
     <string name="floating_point">Coma flotante</string>
     <string name="logic_gate">Puerta lógica</string>
     <string name="logic_operation">Operación lógica</string>
@@ -45,14 +41,17 @@ limitations under the License.
     <string name="network_mask">Máscara de red</string>
     <string name="network_layer">Capa de red</string>
     <string name="protocol">Protocolo</string>
-    
     <string name="highscores">Puntuaciones</string>
     <string name="default_user_name">Yo</string>
     <string name="error_parsing_highscores">Error al analizar las puntuaciones</string>
     <string name="error_adding_initial_highscores">Error al insertar las puntuaciones iniciales</string>
     <string name="all">Todos</string>
-    
-    <string name="dummy_exercise">Ejercicio</string>   
+    <string name="training">Entrenamiento</string>
+    <string name="retry">Reintentar</string>
+    <string name="finish">Entrenamiento finalido.</string>
+    <string name="dummy_exercise">Ejercicio</string>  
+    <string name="success">Has acertado</string> 
+    <string name="fail">Has fallado. La respuesta correcta es</string>  
      
     <string name="fragment_interpretation">Complemento a 2</string>    
     
@@ -66,7 +65,19 @@ limitations under the License.
      <string name="done_logic_gate">Has acabado</string>
      
      <!--  Fin Strings logic gate -->
+
+    <!-- Strings layer exercise -->
+    <string name="layer_tittle">Acierta la capa</string>
+    <string name="button_layer_exercise">Comprobar</string>
+    <string name="button_solution">Solución</string>
     
+    <string name="link_layer">Capa de enlace</string>
+    <string name="internet_layer">Capa de internet</string>
+    <string name="transport_layer">Capa de transporte</string>
+    <string name="application_layer">Capa de aplicación</string>
+
+    <!-- Fin Strings layer exercise -->
+
     <string name="initial_clock_value">2:00</string>
     <string name="error_no_clock">Error: este ejercicio no está preparado para jugar</string>
     <string name="convert_to_hex">Convierte a hexadecimal</string>
@@ -81,13 +92,23 @@ limitations under the License.
 	<string name="check_binary">comprobar</string>
 	<string name="next_binary">siguente</string>
 	<string name="title_binary">Binario</string>
-	
 	<string name="correct_binary">correcto</string>
 	<string name="wrong_binary">falso</string>
   	<string name="binary_hint">example: 00000000</string>
   	<string name="solution_binary">solution</string>
   	
-  	<!-- Twos Complement -->
+  	<!-- Modulo: Operaciones Lógicas -->
+  	<string name="LOand">AND</string>
+    <string name="LOor">OR</string>
+    <string name="LOxor">XOR</string>
+    
+    <string name="LOpregunta">¿Cuál es la solución a esta operación lógica de 5 bits?</string>
+    <!-- Fin Operaciones Lógicas -->
+
+    <string name="cidr_title">Calcula la notación CIDR</string>
+
+    
+    <!-- Twos Complement -->
 	<string name="convert_to_twoscomplement">Convierte a complemento a dos</string>
 	<string name="convert_to_decimal">Convierte de complemento a dos a decimal</string>
   	<!--  End Twos Complement -->
