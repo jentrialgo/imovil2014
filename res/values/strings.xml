@@ -66,6 +66,8 @@ limitations under the License.
      <string name="try_again_logic_gate">Reintentar</string>
      <string name="solution_logic_gate">Solución</string>
      <string name="done_logic_gate">Has acabado</string>
+     <string name="button_logic_gate_solution">Solución</string>
+     <string name="logic_gate_title">¿Que puerta lógica es?</string>
      
      <!--  Fin Strings logic gate -->
 
@@ -80,7 +82,7 @@ limitations under the License.
     <string name="application_layer">Capa de aplicación</string>
 
     <!-- Fin Strings layer exercise -->
-
+    
     <string name="initial_clock_value">2:00</string>
     <string name="error_no_clock">Error: este ejercicio no está preparado para jugar</string>
     <string name="convert_to_hex">Convierte a hexadecimal</string>
