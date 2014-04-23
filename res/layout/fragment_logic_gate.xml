@@ -3,12 +3,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
+    <ImageView
+        android:id="@+id/imagelogicgate"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/logic_gate_and" />
 
     <TextView
+        android:id="@+id/logic_gate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/logic_gate" />
-    
+        android:text="@string/logic_gate"
+        android:visibility="gone" 
+        android:layout_centerHorizontal="true"/>
+
+    <EditText
+        android:id="@+id/edit"
+        android:layout_width="155dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imagelogicgate"
+        android:layout_centerHorizontal="true"
+        android:ems="10"	
+        android:inputType="textNoSuggestions" />
+
+    <Button
+        android:id="@+id/buttonlogicgate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="42dp"
+        android:text="@string/button_logic_gate" />
+
 </RelativeLayout>
 
