@@ -35,6 +35,7 @@ limitations under the License.
     <string name="hexadecimal">Hexadecimal</string>
     <string name="sign_and_magnitude">Signo-magnitud</string>
     <string name="interpretation">Interpretación</string>
+	<string name="twoscomplement">Complemento a dos</string>
     <string name="floating_point">Coma flotante</string>
     <string name="logic_gate">Puerta lógica</string>
     <string name="logic_operation">Operación lógica</string>
@@ -68,7 +69,6 @@ limitations under the License.
     
     <string name="initial_clock_value">2:00</string>
     <string name="error_no_clock">Error: este ejercicio no está preparado para jugar</string>
-    
     <string name="convert_to_hex">Convierte a hexadecimal</string>
     <string name="convert_to_bin">Convierte a binario</string>
     <string name="check">Comprobar</string>
@@ -86,4 +86,9 @@ limitations under the License.
 	<string name="wrong_binary">falso</string>
   	<string name="binary_hint">example: 00000000</string>
   	<string name="solution_binary">solution</string>
+  	
+  	<!-- Twos Complement -->
+	<string name="convert_to_twoscomplement">Convierte a complemento a dos</string>
+	<string name="convert_to_decimal">Convierte de complemento a dos a decimal</string>
+  	<!--  End Twos Complement -->
 </resources>

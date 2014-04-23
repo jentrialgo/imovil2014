@@ -46,6 +46,8 @@ final public class FragmentFactory {
 			// TODO: return SignedMagnitudeExerciseFragment.newInstance();
 		case R.string.interpretation:
 			return InterpretationExerciseFragment.newInstance();
+		case R.string.twoscomplement:
+			return TwosComplementExerciseFragment.newInstance();
 		case R.string.logic_operation:
 			return LogicOperationExerciseFragment.newInstance();
 		case R.string.network_address:
