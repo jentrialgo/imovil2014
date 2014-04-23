@@ -41,6 +41,7 @@ public class BinaryExerciseFragment extends BaseExerciseFragment implements
 	private View rootView;
 	private String currentQuestion;
 
+	
 	private enum MODE_GAME {
 		BINARY_TO_DECIMAL, DECIMAL_TO_BINARY
 	}
