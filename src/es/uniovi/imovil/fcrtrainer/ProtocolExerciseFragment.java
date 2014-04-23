@@ -2,6 +2,7 @@ package es.uniovi.imovil.fcrtrainer;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,29 +10,31 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ProtocolExerciseFragment extends BaseExerciseFragment implements OnClickListener {
+public class ProtocolExerciseFragment extends BaseExerciseFragment {
 
 	//Problemas al cargar de la BD las preguntas.
 	//Esqueleto m’nimo, pero sin probar la funcionalidad por no cargarse bien la BD.
 	private static final String DB_NAME = "protocolFCR.sqlite";
 	private static final int DB_VERSION = 1;
-	private static final String TAG = null;
 	private ArrayList<Test> testList=null;
 	private View mRootView;
-	private Button respButton1;
-	private Button respButton2;
-	private Button respButton3;
-	private Button respButton4; 
-	private Button retry;
 	private TextView question;
 	private int i=0;
-
-
 	int trainingAcerts;
 	Test test;
+	RadioGroup rg;
+	RadioButton rb1;
+	RadioButton rb2;
+	RadioButton rb3;
+	Button bCheck;
+	Button bSolution;
+	int rbSelected;
+	private boolean changeColor=false;
 
 	public ProtocolExerciseFragment() 
 	{
@@ -44,20 +47,17 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment implements On
 		return fragment;
 	}
 
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) 
+	{
 		mRootView=inflater.inflate(R.layout.fragment_protocol, container, false);
         DataBaseHelper db = new DataBaseHelper(this.getActivity(), DB_NAME, null, DB_VERSION);
-        respButton1 = (Button) mRootView.findViewById(R.id.button1);
-        respButton1.setOnClickListener(this);
-        respButton2 = (Button) mRootView.findViewById(R.id.button2);
-        respButton2.setOnClickListener(this);
-        respButton3 = (Button) mRootView.findViewById(R.id.button3);
-        respButton3.setOnClickListener(this);
-        respButton4 = (Button) mRootView.findViewById(R.id.button4);
-        respButton4.setOnClickListener(this);
+        rb1 = (RadioButton) mRootView.findViewById(R.id.rb1);
+        rb2 = (RadioButton) mRootView.findViewById(R.id.rb2);
+        rb3 = (RadioButton) mRootView.findViewById(R.id.rb3);
+        rg = (RadioGroup) mRootView.findViewById(R.id.rg1);
         question = (TextView) mRootView.findViewById(R.id.exerciseQuestion); 
-        retry = (Button) mRootView.findViewById(R.id.retry);
-        retry.setOnClickListener(this);
+        bCheck = (Button) mRootView.findViewById(R.id.checkbutton);
+		bSolution = (Button) mRootView.findViewById(R.id.seesolution);
         try 
         {
             db.createDataBase();
@@ -70,75 +70,95 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment implements On
         testList=db.loadData();
         //Lanzar el entrenamiento.
 		//seeDB();
-        training();               
-		return mRootView;
+        training(); 
+	    //Raccionar a eventos del RadioGroup
+	    rb1.setOnClickListener(new RadioButton.OnClickListener(){
+	        @Override
+	        public void onClick(View v) {
+	            rbSelected=1;
+	        }
+	    });
+	    
+	    rb2.setOnClickListener(new RadioButton.OnClickListener(){
+	        @Override
+	        public void onClick(View v) {
+	            rbSelected=2;
+	        }
+	    });
+	    
+	    rb3.setOnClickListener(new RadioButton.OnClickListener(){
+	        @Override
+	        public void onClick(View v) {
+	            rbSelected=3;
+	        }
+	    });
+	    
+	    //Eventos del botón de comprobar la solución.
+		bCheck.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				changeColor=false;
+				switch(rbSelected)
+				{
+				case 1:
+					if (rb1.getText().equals(test.getResponse()))
+						showAnimationAnswer(true);
+					else 
+						showAnimationAnswer(false);
+					rb1.setChecked(false);
+					reset();
+					training();
+					return;
+				case 2:
+					if (rb2.getText().equals(test.getResponse()))
+						showAnimationAnswer(true);
+					else
+						showAnimationAnswer(false);
+					if (!changeColor)
+						rb2.setTextColor(0xff000000);
+					rb2.setChecked(false);
+					reset();
+					training();
+					return;
+				case 3:
+					if (rb3.getText().equals(test.getResponse()))
+						showAnimationAnswer(true);
+					else 
+						showAnimationAnswer(false);
+					rb3.setChecked(false);
+					reset();
+					training();	
+					return;
+				default:
+					reset();
+					training();
+					return;
+				}				
+			}
+
+			private void reset() {
+				// TODO Auto-generated method stub
+				rbSelected=0;
+				i++;
+				if (!changeColor)
+				{
+					rb1.setTextColor(0xff000000);
+					rb2.setTextColor(0xff000000);
+					rb3.setTextColor(0xff000000);
+				}			
+			}
+		});
+		
+		//Botón de mostrar solución.
+		bSolution.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+					showSolution();
+			}
+		});
+		return mRootView;		
 	}
 
-	private void retry()
-	{
-		i=0;
-		respButton1.setVisibility(View.VISIBLE);
-		respButton2.setVisibility(View.VISIBLE);
-		respButton3.setVisibility(View.VISIBLE);
-		respButton4.setVisibility(View.VISIBLE);
-		retry.setVisibility(View.INVISIBLE);
-		training();
-	}
-
-
-	//Controlar las respuestas del usuario.
-	@Override
-	public void onClick(View v)
-	{
-		int idSelected = v.getId();
-		if (idSelected == retry.getId())
-			retry();
-		else if (idSelected==respButton1.getId()) //Pulsado bot—n 1.
-			if (respButton1.getText().equals(test.getResponse()))
-			{
-				Toast.makeText(getActivity(), R.string.success, Toast.LENGTH_SHORT).show();	
-			}
-			else 
-			{
-				Toast.makeText(getActivity(),  " Fallo. La respuesta es "+ test.getResponse(), Toast.LENGTH_SHORT).show();
-			}
-		else if (idSelected==respButton2.getId()) //Pulsado bot—n 1.
-			if (respButton2.getText().equals(test.getResponse()))
-			{
-				Toast.makeText(getActivity(), R.string.success, Toast.LENGTH_SHORT).show();	
-			}
-			else 
-			{
-				Toast.makeText(getActivity(), " Fallo. La respuesta es "+ test.getResponse(), Toast.LENGTH_SHORT).show();
-			}
-		else if (idSelected==respButton3.getId()) //Pulsado bot—n 1.
-			if (respButton3.getText().equals(test.getResponse()))
-			{
-				Toast.makeText(getActivity(), R.string.success, Toast.LENGTH_SHORT).show();	
-			}
-			else 
-			{
-				Toast.makeText(getActivity(), " Fallo. La respuesta es "+ test.getResponse(), Toast.LENGTH_SHORT).show();
-			}
-		else
-			if (respButton4.getText().equals(test.getResponse()))
-			{
-				//Acierto. Hacer algo. ÀIncrementar contador?. ÀMostrar mensaje?.
-				Toast.makeText(getActivity(), R.string.success, Toast.LENGTH_SHORT).show();		    
-			}
-			else 
-			{
-				Toast.makeText(getActivity(), " Fallo. La respuesta es "+ test.getResponse(), Toast.LENGTH_SHORT).show();
-			}
-		i++; //Incrementar la variable global que marca la pregunta.
-		training(); //Se regresa a training. Se pasar‡ a la siguiente pregunta.
-	}
-
-	@Override
-	public void onResume()
-	{
-		super.onResume();
-	}
 
 	private void training()
 	{
@@ -147,41 +167,32 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment implements On
 			test = testList.get(i);				
 			//Mostrar pregunta y opciones.
 			question.setText(test.getQuestion());
-			respButton1.setText(test.getOption1());
-			respButton2.setText(test.getOption2());
-			respButton3.setText(test.getOption3());
-			respButton4.setText(test.getOption4()); 		
+			rb1.setText(test.getOption1());
+			rb2.setText(test.getOption2());
+			rb3.setText(test.getOption3());					
 			//Final de entrenamiento.
 		}
-		else
+		else //Reiniciar
 		{
-			resetTrivial();
+			i=0;
+			training();
 		}
 	}
-
-	private void resetTrivial()
-	{
-		question.setText(R.string.finish);
-		respButton1.setVisibility(View.INVISIBLE);
-		respButton2.setVisibility(View.INVISIBLE);
-		respButton3.setVisibility(View.INVISIBLE);
-		respButton4.setVisibility(View.INVISIBLE);
-		retry.setVisibility(View.VISIBLE);
-	}
-
-	/*
-	private void seeDB()
-	{
-		Iterator it = testList.iterator();
-		Log.v(TAG,"SEEEEE");
-		Log.v(TAG,"Elementos: "+testList.size());
-		Test test;
-		while (it.hasNext())
+	
+	public void showSolution() {
+		// Mostrar la solución buena en rojo.
+		changeColor=true;
+		if (rb1.getText().equals(test.getResponse()))
 		{
-			test = (Test) it.next();
-			Log.v(TAG,test.getOption1()+" "+test.getOption2()+" "+test.getOption3()+" "+test.getOption4());
+				rb1.setTextColor(0xff00ff00);
+		}
+		if (rb2.getText().equals(test.getResponse()))
+		{
+				rb2.setTextColor(0xff00ff00);
+		}
+		if (rb3.getText().equals(test.getResponse()))
+		{
+				rb3.setTextColor(0xff00ff00);
 		}
 	}
-	*/
-
 }
