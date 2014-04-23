@@ -25,7 +25,6 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 	private View mRootView;
 	private TextView question;
 	private int i=0;
-	int trainingAcerts;
 	Test test;
 	RadioGroup rg;
 	RadioButton rb1;
