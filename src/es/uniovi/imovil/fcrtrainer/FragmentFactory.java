@@ -57,9 +57,9 @@ final public class FragmentFactory {
 			return NetworkLayerExerciseFragment.newInstance();
 		case R.string.protocol:
 			return ProtocolExerciseFragment.newInstance();
-			// TODO: return NetworkMaskExerciseFragment.newInstance();
 		case R.string.binary:
-			// TODO: return BinaryExerciseFragment.newInstance();
+			return BinaryExerciseFragment.newInstance();
+			// TODO: return NetworkMaskExerciseFragment.newInstance();
 		case R.string.sign_and_magnitude:
 			// TODO: return SignedMagnitudeExerciseFragment.newInstance();
 		case R.string.floating_point:
