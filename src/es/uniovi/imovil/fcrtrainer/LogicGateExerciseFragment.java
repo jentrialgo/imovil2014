@@ -1,31 +1,33 @@
 package es.uniovi.imovil.fcrtrainer;
 
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import java.util.Random;
+
 import android.content.res.TypedArray;
+
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.Spinner;
 
-public class LogicGateExerciseFragment extends BaseExerciseFragment  implements OnClickListener{
-	Button buttoncheck;
-	String [] logicstring;
-	View rootView;
-	TextView logicgate;
-	int contador;
-	int[] myImageList;
-	TypedArray arrayimage;
-	ImageView imageview;
-	EditText edit;
+public class LogicGateExerciseFragment extends BaseExerciseFragment  implements OnClickListener, OnItemSelectedListener{
+	private Button buttoncheck;
+	private String [] logicstring;
+	private View rootView;
+	private int contador;
+	private TypedArray arrayimage;
+	private ImageView imageview;
+	private Button buttonsolution;
+	private Spinner spinner; 
+	private int n;
+	public static final int RANDOM = 6;
 
 	public static LogicGateExerciseFragment newInstance() {
 
@@ -41,103 +43,99 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment  implements 
 			Bundle savedInstanceState) {
 		//Inicializamos la variable contador con el fin de recorrer el array con las diferentes puertas 
 		//logicas
-		contador=0;
+		contador=RANDOM();
+
+		//Inflamos el Layout
 		rootView = inflater.inflate(R.layout.fragment_logic_gate, container, false);
-		logicgate = (TextView) rootView.findViewById(R.id.logic_gate);
+
 
 		//Cargamos el array con las puertas logicas
 		logicstring= getResources().getStringArray(R.array.logic_gates);
-		buttoncheck=(Button) rootView.findViewById(R.id.buttonlogicgate);
+
+		//Inicializamos las vistas de los botones y sus respectivos Listener
+		buttoncheck=(Button) rootView.findViewById(R.id.cButton);
+		buttonsolution=(Button)rootView.findViewById(R.id.sButton);
 		buttoncheck.setOnClickListener(this);
-		logicgate.setText(logicstring[0]);
+		buttonsolution.setOnClickListener(this);
+
 		//Cargamos un array con las imagenes de las puertas logicas
 		arrayimage = getResources().obtainTypedArray(R.array.logic_gates_images);
+		//Inicializamos las vistas de las imagenes
 		imageview=(ImageView) rootView.findViewById(R.id.imagelogicgate);
+
+		spinner = (Spinner) rootView.findViewById(R.id.spinner_logic_gate);
+		// Create an ArrayAdapter using the string array and a default spinner layout
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity(),
+				R.array.logic_gates, android.R.layout.simple_spinner_item);
+		// Specify the layout to use when the list of choices appears
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		// Apply the adapter to the spinner
+		spinner.setAdapter(adapter);
+		spinner.setOnItemSelectedListener(this);
+		imageview.setImageResource(arrayimage.getResourceId(contador, 0));
+
 
 
 		return rootView;
 	}
-	
+
 	@Override
 	public void onClick(View v) {
-		if(v.getId() == R.id.buttonlogicgate){
-			CompruebaRespuesta();
+		switch(v.getId()){
+		case R.id.cButton:
+			//Metodo que comprueba la respuesta
+			CompruebaRespuesta();	
+			break;
 
+		case R.id.sButton:
+			//Mostramos la solución
+			solutionLogicGate();
+			break;
 		}
 
 	}
-	
-	public void showFailureDialog(){
-
-		//Se crea el alert dialog que mostrara dos botones, uno de comprobar y otro para volver a intentarlo
-		
-		final AlertDialog.Builder alertDialog= new AlertDialog.Builder(getActivity());
-		alertDialog.setTitle(R.string.failed_logic_gate);
-		alertDialog.setMessage(R.string.dialog_try_logic_gate);
-		alertDialog.setCancelable(true);
-		alertDialog.setPositiveButton(R.string.try_again_logic_gate,
-				new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int id) {
-				edit.setText("");
-				dialog.cancel();
-			}
-		});
-		alertDialog.setNegativeButton(R.string.solution_logic_gate,
-				new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int id) {
-				edit.setText(logicstring[contador]);
-				
-			}
-		});
-
-		AlertDialog alert11 = alertDialog.create();
-		alert11.show();
-	}
 
 
-public void CompruebaRespuesta(){
-	//Buscamos el id del textID y cogemos el valor que tiene en ese momento y
-	//lo ponemos en mayúsculas para compararlo
+	public void CompruebaRespuesta(){
+		String textosUpper = spinner.getSelectedItem().toString();
+		if(logicstring[contador].equals(textosUpper)){
 
-	edit=(EditText) rootView.findViewById(R.id.edit);
-	Editable texto= edit.getText();
-	String textos= texto.toString().toUpperCase();
-
-	/*Se comprueba si lo que hay en la posicion del string fijada por el contodar es igual a
-	lo que hay dentro del edittext*/
-
-	if(logicstring[contador].equals(textos)){
-		
-		/*Si el contador es menor que la longitud del string, se aumenta el contador y
-		 * se muestra la siguiente imagen
-		 */
-		
-		if(contador<logicstring.length-1){
-			contador++;
-			logicgate.setText(logicstring[contador]);
-			edit.setText("");
+			showAnimationAnswer(true);
+			//Ponemos el texto en verde y ponemos la imagen de un tic verde.
+			contador=RANDOM();
 			imageview.setImageResource(arrayimage.getResourceId(contador, 0));
 		}
-		
-		// Si no, cuando ya se ha recorrido el string, se pone invisible todo el layout
-		//y solo se muestra un texto de que se ha acabado
-		
-		else {
-			imageview.setVisibility(ImageView.GONE);
-			logicgate.setVisibility(TextView.VISIBLE);
-			buttoncheck.setVisibility(Button.GONE);
-			edit.setVisibility(EditText.GONE);
-			logicgate.setText(R.string.done_logic_gate);
-			arrayimage.recycle();
-		}
-	}
-	
-	//Si no es igual es texto del string con el del editText, se muestra un Alert Dialog
-	
-	else {
-		showFailureDialog();
 
 
+		//Si no es igual es texto del string con el del editText
+
+		else {	
+
+			showAnimationAnswer(false);
+		}	
 	}
+
+	public void solutionLogicGate(){
+		spinner.setSelection(contador);
+	}
+
+	@Override
+	public void onItemSelected(AdapterView<?> parent, View view, int position,
+			long id) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onNothingSelected(AdapterView<?> parent) {
+		// TODO Auto-generated method stub
+
+	}
+	//Metodo para generar un número aleatorio
+	public int RANDOM(){
+		Random ran = new Random();
+		n = ran.nextInt(RANDOM);
+
+		return n;
 	}
 }

@@ -2,38 +2,83 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/mediumgray"
     android:orientation="vertical" >
+ <TextView
+        android:id="@+id/exercisetitle"
+        style="@style/Title2DarkLight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="18dp"
+        android:text="@string/logic_gate_title" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinner_logic_gate"
+        android:layout_marginTop="20dp" >
+
+        <Button
+            android:id="@+id/cButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/check" />
+
+        <Button
+            android:id="@+id/sButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/solution" />
+    </LinearLayout>
+
     <ImageView
         android:id="@+id/imagelogicgate"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@+id/exercisetitle"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/logic_gate_and" />
-
-    <TextView
-        android:id="@+id/logic_gate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/logic_gate"
-        android:visibility="gone" 
-        android:layout_centerHorizontal="true"/>
-
-    <EditText
-        android:id="@+id/edit"
-        android:layout_width="155dp"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/cards"
+        android:padding="10dp"
+        />
+    
+    
+      <Spinner
+        android:id="@+id/spinner_logic_gate"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
         android:layout_below="@+id/imagelogicgate"
+        android:gravity="center"
+        android:ems="5"
         android:layout_centerHorizontal="true"
-        android:ems="10"	
-        android:inputType="textNoSuggestions" />
+        android:layout_margin="15dp"
+        />
 
-    <Button
-        android:id="@+id/buttonlogicgate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/edit"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="42dp"
-        android:text="@string/button_logic_gate" />
+        <!-- Views required by the animation -->
+
+    <RelativeLayout
+        android:id="@+id/result"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@color/pantalla"
+        android:visibility="gone" >
+
+        <ImageView
+            android:id="@+id/resultimage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="140dp" />
+    </RelativeLayout>
+
+    <!-- End of views required by the animation -->
+
+   
 
 </RelativeLayout>
