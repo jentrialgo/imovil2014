@@ -54,7 +54,7 @@ limitations under the License.
      
      <string name="fragment_interpretation">Complemento a 2</string>   
     
-     <string name="btnOk">OK</string>
+     <string name="btnOk">Comprobar</string>
      <string name="btnSolution">Solución</string>
 
 </resources>
