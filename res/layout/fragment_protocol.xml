@@ -4,13 +4,83 @@
     android:layout_height="match_parent" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/exerciseTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:text="Protocol"
-        android:textSize="30pt" />
+        android:text="@string/training"
+        android:textSize="14pt" />
+    
+   <TextView
+        android:id="@+id/exerciseQuestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="220dp"
+        android:text="********Pregunta********"
+        android:textSize="10pt" />
 
+   <Button
+       android:id="@+id/button1"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+
+       android:layout_below="@+id/exerciseQuestion"
+       android:layout_marginTop="60dp"
+       android:height="40dp"
+       android:layout_marginLeft="80dp"
+       android:width="120dp"
+       android:text="Button" 
+       android:onClick="check" />
+
+   <Button
+       android:id="@+id/button3"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+	   android:layout_alignTop="@+id/button1"
+       android:layout_alignRight="@+id/button1"
+       android:height="40dp"
+       android:width="120dp"
+       android:layout_marginLeft="80dp"
+       android:layout_marginTop="70dp"
+       android:text="Button" 
+       android:onClick="check" />
+
+   <Button
+       android:id="@+id/button2"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignBaseline="@+id/button1"
+       android:layout_alignBottom="@+id/button1"
+       android:layout_alignTop="@+id/button1"
+       android:layout_marginLeft="380dp"
+       android:text="Button"
+       android:height="40dp"
+       android:width="120dp"
+       android:onClick="check" />
+
+   <Button
+       android:id="@+id/button4"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignTop="@+id/button2"
+       android:layout_marginTop="70dp"
+       android:layout_alignLeft="@+id/button2"      
+       android:height="40dp"
+       android:width="120dp"
+       android:text="Button" 
+       android:onClick="check" />
+   
+   <Button 
+       android:id="@+id/retry"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+	   android:layout_marginLeft="220dp"
+	   android:visibility="invisible"
+	   android:layout_alignTop="@+id/exerciseQuestion"
+	   android:layout_marginTop="60dp"
+	   android:text="@string/retry"  />   
 </RelativeLayout>

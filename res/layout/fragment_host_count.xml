@@ -62,7 +62,7 @@
         android:layout_marginTop="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/btnSolution"
+        android:text="@string/solution"
         android:layout_toRightOf="@+id/btnOk"
         android:layout_below="@+id/radioAnswers"/>
 
@@ -74,7 +74,7 @@
            android:layout_alignBottom="@+id/btnSolution"
            android:layout_alignLeft="@+id/question"
            android:layout_marginLeft="30dp"
-           android:text="@string/btnOk" />
+           android:text="@string/check" />
 
-</RelativeLayout>
+</RelativeLayout>	
     

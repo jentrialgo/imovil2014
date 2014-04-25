@@ -68,7 +68,7 @@ public class HostCountExerciseFragment extends BaseExerciseFragment{
 		String fullWording;
 		String textWording ="Calcular el numero de hosts de la subred a partir de la mascara de red ";
 		
-		int bitsOne = generateRandom(1,31);
+		int bitsOne = generateRandomNumberOfBits();
 
 		// Generamos el enunciado completo con texto y mascara aleatoria
 		fullWording = generateWording(textWording, bitsOne);
@@ -82,7 +82,7 @@ public class HostCountExerciseFragment extends BaseExerciseFragment{
 		return fullWording;
 	}
 	
-	private int generateRandom(int min, int max) {
+	private int generateRandomNumberOfBits() {
 		Random rn = new Random();
 		// Limite ha de ser 31, pero ponemos 30 para que la funcion nextInt
 		// obtenga aleatorios entre 1 y 31 (al sumar 1 al resultado obtenido)
@@ -130,7 +130,12 @@ public class HostCountExerciseFragment extends BaseExerciseFragment{
 		return fullMask;
 	}
 	
-	public int calculateHosts(String mask, int bitsOne){
+	private int calculateRandomHosts() {
+		int randomNumberOfBits = generateRandomNumberOfBits();
+		return 2 ^ randomNumberOfBits - 2;
+	}
+	
+	private int calculateHosts(String mask, int bitsOne){
 		// Numero de bits a 0
 		int n = 32 - bitsOne;
 		

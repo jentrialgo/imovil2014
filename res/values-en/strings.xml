@@ -5,19 +5,18 @@
     <string name="action_settings">Settings</string>
     <string name="action_help">Help</string>
 
+    
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
-    
     <string name="hello_world">Hello World</string>
-    
     <string name="codes">Codes</string>
     <string name="digital_systems">Digital systems</string>
     <string name="networks">Networks</string>
-    
     <string name="binary">Binary</string>
     <string name="hexadecimal">Hexadecimal</string>
     <string name="sign_and_magnitude">Sign-and-magnitude</string>
     <string name="interpretation">Interpretación</string>
+	<string name="twoscomplement">Twos Complement</string>
     <string name="floating_point">Coma flotante</string>
     <string name="logic_gate">Logic gate</string>
     <string name="logic_operation">Logic operation</string>
@@ -27,14 +26,55 @@
     <string name="network_mask">Network mask</string>
     <string name="network_layer">Network layer</string>
     <string name="protocol">Protocol</string>
-    
     <string name="highscores">Highscores</string>
     <string name="default_user_name">Me</string>
     <string name="error_parsing_highscores">Error al analizar las puntuaciones</string>
     <string name="error_adding_initial_highscores">Error while inserting initial highscores</string>
     <string name="all">All</string>
     
+
     <string name="dummy_exercise">Exercise</string>   
     
+    <string name="initial_clock_value">2:00</string>
+    <string name="error_no_clock">Error: this exercise is not prepared for playing</string>
+    
+    <string name="convert_to_hex">Convert to hex</string>
+    <string name="convert_to_bin">Convert to binary</string>
+    <string name="check">Check</string>
+    <string name="correct">Correct!</string>
+    <string name="not_correct">That\'s not correct!</string>
+    <string name="solution">Solution</string>
+    <string name="change">Change</string>
 
+    <!-- Modulo: Binario -->
+  	<string name="hint_binary">example: 00000000</string>
+  	<string name="hint_2_binary">example: 64</string>
+  	<string name="insert_value_binary">insert a value please.</string>
+	<string name="convert_to_dec">Convert to decimal</string>
+  	<string name="binary_hint">example: 00000000</string>
+    <!-- Fin Modulo: Binario -->
+     <!-- Strings logic gate -->
+     
+     <string name="button_logic_gate">Check</string>
+     <string name="failed_logic_gate">You failed!</string>
+     <string name="dialog_try_logic_gate">Do you want to try again or want to know the solution?</string>
+     <string name="try_again_logic_gate">Try again</string>
+     <string name="solution_logic_gate">Solution</string>
+     <string name="done_logic_gate">You are done</string>
+     
+     <!--  Fin Strings logic gate -->
+     
+     <!-- Modulo: Operaciones Lógicas -->
+  	<string name="LOand">AND</string>
+    <string name="LOor">OR</string>
+    <string name="LOxor">XOR</string>
+    
+    <string name="LOpregunta">¿Which is the solution of this 5-bit logic operation?</string>
+    <!-- Fin Operaciones Lógicas -->
+
+	<!-- Twos Complement -->
+	<string name="convert_to_twoscomplement">Convert to twos complement</string>
+	<string name="convert_to_decimal">Convert from twos complement to decimal</string>
+	<!--  End Twos Complement -->
 </resources>
+
