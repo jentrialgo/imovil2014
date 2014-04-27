@@ -13,9 +13,11 @@ import android.widget.TextView;
 public class HostCountExerciseFragment extends BaseExerciseFragment{
 
 	private View mRootView;
-	private Button prueba;
-	private TextView q;
-	private int[] answers = new int[3];
+	private Button btnCheck;
+	private Button btnSolution;
+	private TextView question;	
+	private TextView answer;
+	int bitsOne = generateRandomNumberOfBits();
 
 	// Constructor
 	public HostCountExerciseFragment() 
@@ -28,34 +30,30 @@ public class HostCountExerciseFragment extends BaseExerciseFragment{
 		return fragment;
 	}
 	
-	/* linearlayout  contenedorRespuestas = getView().findViewById(R.id.contenedor);
-	 * for(i=0;i<numPreguntas;i<0){
-	 * TextView t = new TextView();
-	 * t.setText(respueta[i]);
-	 * contenedor.add(t);
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
-	 */
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {		
 		mRootView=inflater.inflate(R.layout.fragment_host_count, container, false);
 		
-        prueba =  (Button) mRootView.findViewById(R.id.btnOk);
-        
-    	q = (TextView) mRootView.findViewById(R.id.question);
-    	q.setText(generateQuestion());
+        btnCheck =  (Button) mRootView.findViewById(R.id.btnCheckAnswer);
+        btnSolution =  (Button) mRootView.findViewById(R.id.btnSolution);
+    	question = (TextView) mRootView.findViewById(R.id.question);
+    	answer = (TextView) mRootView.findViewById(R.id.answer);
+    	question.setText(generateQuestion());
     	
     	
-        prueba.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v){
-/*                    int bitsOne = generateRandom(1,31);
-                    String textWording = "Prueba de enunciado ";
-                	
-                	Log.d("GENERATE WORDING", generateWording(textWording, bitsOne));*/
-
-                }
+        btnCheck.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+            	checkAnswer((answer.getEditableText().toString()));
             }
-        );
+        });
+        
+        btnSolution.setOnClickListener(new View.OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+				showSolution();
+			}
+		});
         
 		return mRootView;
 	}
@@ -65,21 +63,10 @@ public class HostCountExerciseFragment extends BaseExerciseFragment{
 		// Genera la pregunta con una mascara de subred aleatoria y obtiene las 
 		// 3 posibles respuestas generando un numero de orden al mostrar aleatorio
 		
-		String fullWording;
-		String textWording ="Calcular el numero de hosts de la subred a partir de la mascara de red ";
+		String wording;
+		// Generamos el enunciado con la  mascara aleatoria
+		return wording = bitsToMask();
 		
-		int bitsOne = generateRandomNumberOfBits();
-
-		// Generamos el enunciado completo con texto y mascara aleatoria
-		fullWording = generateWording(textWording, bitsOne);
-		
-		// Generacion de respuestas y su orden (?)
-		/*		for (int i=0; i < answers; i++){
-			do{
-				answer[i] = generateRandom(1,31);
-			}while (answer[i] != bitsOne);
-		}*/
-		return fullWording;
 	}
 	
 	private int generateRandomNumberOfBits() {
@@ -90,19 +77,12 @@ public class HostCountExerciseFragment extends BaseExerciseFragment{
 		
 		// Funcion nextInt devuelve un numero aleatorio entre [0, limite)
 		int x = rn.nextInt(limit)+1;
+		Log.v("X",x+"");
 		return x;
 
 	}
-
-	public String generateWording(String textWording, int bitsOne){
-		// Enunciado completo compuesto por la cadena de texto (constante) y los bits 
-		// que forman la mascara de subred
-		String fullWording = textWording + bitsToMask(bitsOne);
-		return fullWording;
-		
-	}
 	
-	public String bitsToMask(int bitsOne){
+	public String bitsToMask(){
 		// Convierte los bits generados a una mascara de subred válida
 		
 		// Mascara con el primer bit a 1 y el resto 0; 32 bits
@@ -130,19 +110,34 @@ public class HostCountExerciseFragment extends BaseExerciseFragment{
 		return fullMask;
 	}
 	
-	private int calculateRandomHosts() {
-		int randomNumberOfBits = generateRandomNumberOfBits();
-		return 2 ^ randomNumberOfBits - 2;
+	//Metodo para comprobar la respuesta	
+	public void checkAnswer (String answ) {		
+		//Si es correcta, cambia la máscara por una nueva y pone el "EditText" en blanco
+		//Log.v("CHECK_AnSWER_answ", answ);
+		//Log.v("CHECK_AnSWER_HOSTS", calculateHosts(bitsOne));
+		if ((answ == calculateHosts(bitsOne))){
+			showAnimationAnswer(true);
+			question.setText(generateQuestion());
+			answer.setText("");
+			
+			} else
+				showAnimationAnswer(false);		
 	}
 	
-	private int calculateHosts(String mask, int bitsOne){
+	//Metodo para mostrar la solucion
+	public void showSolution() {
+		answer.setText(calculateHosts(bitsOne));		
+	}
+	
+	private String calculateHosts(int bitsOne){
+		Log.v("BITSONE", bitsOne+"");
 		// Numero de bits a 0
-		int n = 32 - bitsOne;
-		
+		int bitsZero = 32 - bitsOne;
+		Log.v("BITSCERO", bitsZero+"");
 		// Numero de hosts = 2^n -2
-		int hosts = 2^n -2;
-		
-		return hosts;
+		long hosts = (long) (Math.pow(2,bitsZero)-2);
+		Log.v("CALCULATEHOSTS", hosts+"");
+		return hosts+"";
 	}
 	
 	

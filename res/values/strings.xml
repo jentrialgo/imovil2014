@@ -124,5 +124,11 @@ limitations under the License.
 	<string name="convert_to_twoscomplement">Convierte a complemento a dos</string>
 	<string name="convert_to_decimal">Convierte de complemento a dos a decimal</string>
   	<!--  End Twos Complement -->
+  	
+  	<!-- Host count exercise -->
+  	<string name="houst_count_title">Calcula el numero de hosts</string>
+  	<string name="check">Comprobar</string>
+  	<string name="solution">Solucion</string>
+  	<!-- End Host count exercise -->
 </resources>
 

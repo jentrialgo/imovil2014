@@ -1,80 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical">
-
-<TextView
-    android:id="@+id/question"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentTop="true"
-    android:layout_marginTop="130dp"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp"
-    android:textSize="30dp" />
-
-<TextView
-    android:id="@+id/tiempo"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentTop="true"
-    android:layout_centerHorizontal="true"
-    android:layout_marginTop="50dp"
-    android:paddingRight="10dip"
-    android:text="00:37"
-    android:textSize="50dp" />
-
-<!--  AÑADIR UN LAYOUT PARA EL CONTENEDOR DE LAS RESPUESTAS, PARA EL ESTILO CREAR UN ESTILO Y ASIGNARLO EN EL CODIGO -->
-
-    <RadioGroup
-        android:id="@+id/radioAnswers"
-        android:layout_marginTop="50dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/question"
-        android:layout_centerHorizontal="true" >
- 
-        <RadioButton
-            android:id="@+id/firstOption"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Respuesta 1" 
-            android:checked="true" />
- 
-        <RadioButton
-            android:id="@+id/secondOption"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Respuesta 2" />
-        
-        <RadioButton
-            android:id="@+id/thirdOption"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Respuesta 3" />
- 
-    </RadioGroup>
-       
-       <Button
-        android:id="@+id/btnSolution"
-        android:layout_marginTop="50dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/solution"
-        android:layout_toRightOf="@+id/btnOk"
-        android:layout_below="@+id/radioAnswers"/>
-
-       <Button
-           android:id="@+id/btnOk"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_alignBaseline="@+id/btnSolution"
-           android:layout_alignBottom="@+id/btnSolution"
-           android:layout_alignLeft="@+id/question"
-           android:layout_marginLeft="30dp"
-           android:text="@string/check" />
-
-</RelativeLayout>	
+    android:layout_height="match_parent"
+    android:background="@color/mediumgray"
+    android:orientation="vertical" >
     
+    <TextView
+       android:id="@+id/exercisetitle"
+       style="@style/Title2DarkLight"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="@string/houst_count_title" 
+       android:layout_centerHorizontal="true"
+       android:layout_marginTop="20dp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/answer"
+            android:layout_marginTop="20dp" >
+
+            <Button
+                android:id="@+id/btnCheckAnswer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/check" />
+
+            <Button
+                android:id="@+id/btnSolution"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/solution" />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/answer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/question"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/cards"
+            android:ems="5"
+            android:inputType="number"
+            android:padding="10dp" >
+
+            <requestFocus />
+        </EditText>
+
+        <TextView
+            android:id="@+id/question"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/exercisetitle"
+            android:layout_margin="15dp"
+            android:background="@drawable/cards"
+            android:gravity="center"
+            android:textSize="25sp" />
+        
+        
+         <!--  Views required by the animation -->
+
+    <RelativeLayout
+        android:id="@+id/result"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@color/pantalla"
+        android:visibility="gone" >
+
+        <ImageView
+            android:id="@+id/resultimage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="140dp"/>
+    </RelativeLayout>
+    
+    <!-- End of views required by the animation -->
+    
+</RelativeLayout>
+
+
