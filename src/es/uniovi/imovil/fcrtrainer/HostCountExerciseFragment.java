@@ -17,7 +17,7 @@ public class HostCountExerciseFragment extends BaseExerciseFragment{
 	private Button btnSolution;
 	private TextView question;	
 	private TextView answer;
-	int bitsOne = generateRandomNumberOfBits();
+	int bitsOne;
 
 	// Constructor
 	public HostCountExerciseFragment() 
@@ -44,7 +44,7 @@ public class HostCountExerciseFragment extends BaseExerciseFragment{
         btnCheck.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-            	checkAnswer((answer.getEditableText().toString()));
+            	checkAnswer((answer.getText().toString()));
             }
         });
         
@@ -62,10 +62,9 @@ public class HostCountExerciseFragment extends BaseExerciseFragment{
 	public String generateQuestion(){
 		// Genera la pregunta con una mascara de subred aleatoria y obtiene las 
 		// 3 posibles respuestas generando un numero de orden al mostrar aleatorio
-		
-		String wording;
+		bitsOne = generateRandomNumberOfBits();
 		// Generamos el enunciado con la  mascara aleatoria
-		return wording = bitsToMask();
+		return bitsToMask();
 		
 	}
 	
@@ -84,11 +83,10 @@ public class HostCountExerciseFragment extends BaseExerciseFragment{
 	
 	public String bitsToMask(){
 		// Convierte los bits generados a una mascara de subred válida
-		
 		// Mascara con el primer bit a 1 y el resto 0; 32 bits
-		int mask = 0x80000000;
+		long mask = 0x80000000;
 		// Mascara resultante despues de realizar operaciones
-		int resultMask = 0;
+		long resultMask = 0;
 		// String con la mascara que será devuelta por la función
 		String fullMask = "0.0.0.0";
 		
@@ -113,9 +111,9 @@ public class HostCountExerciseFragment extends BaseExerciseFragment{
 	//Metodo para comprobar la respuesta	
 	public void checkAnswer (String answ) {		
 		//Si es correcta, cambia la máscara por una nueva y pone el "EditText" en blanco
-		//Log.v("CHECK_AnSWER_answ", answ);
-		//Log.v("CHECK_AnSWER_HOSTS", calculateHosts(bitsOne));
-		if ((answ == calculateHosts(bitsOne))){
+		Log.v("INPUT", answ);
+		Log.v("HOSTS", calculateHosts(bitsOne));
+		if ((answ.toString().equals(calculateHosts(bitsOne).toString()))){
 			showAnimationAnswer(true);
 			question.setText(generateQuestion());
 			answer.setText("");
@@ -130,13 +128,13 @@ public class HostCountExerciseFragment extends BaseExerciseFragment{
 	}
 	
 	private String calculateHosts(int bitsOne){
-		Log.v("BITSONE", bitsOne+"");
+		//Log.v("BITSONE", bitsOne+"");
 		// Numero de bits a 0
 		int bitsZero = 32 - bitsOne;
-		Log.v("BITSCERO", bitsZero+"");
+		//Log.v("BITSCERO", bitsZero+"");
 		// Numero de hosts = 2^n -2
 		long hosts = (long) (Math.pow(2,bitsZero)-2);
-		Log.v("CALCULATEHOSTS", hosts+"");
+		//Log.v("CALCULATEHOSTS", hosts+"");
 		return hosts+"";
 	}
 	
