@@ -156,8 +156,7 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 	/**
 	 * Checks if the answer is correct
 	 * 
-	 * @param answer
-	 *            , the user input
+	 * @param answer the user input
 	 */
 	public void isCorrect(String answer) {
 
@@ -190,5 +189,23 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 		super.onSaveInstanceState(outState);
 		outState.putBoolean("tohex", tohex);
 		outState.putInt("numbertoconvert", numberToConvert);
+	}
+	
+	@Override
+	void startGame() {
+		// TODO Auto-generated method stub
+		super.startGame();
+	}
+
+	@Override
+	void cancelGame() {
+		// TODO Auto-generated method stub
+		super.cancelGame();
+	}
+
+	@Override
+	void endGame() {
+		// TODO Auto-generated method stub
+		super.endGame();
 	}
 }
