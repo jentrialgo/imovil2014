@@ -16,6 +16,7 @@
     <string name="hexadecimal">Hexadecimal</string>
     <string name="sign_and_magnitude">Sign-and-magnitude</string>
     <string name="interpretation">Interpretación</string>
+	<string name="twoscomplement">Twos Complement</string>
     <string name="floating_point">Coma flotante</string>
     <string name="logic_gate">Logic gate</string>
     <string name="logic_operation">Logic operation</string>
@@ -75,5 +76,15 @@
     <string name="LOpregunta">¿Which is the solution of this 5-bit logic operation?</string>
     <!-- Fin Operaciones Lógicas -->
 
+	<!-- Twos Complement -->
+	<string name="convert_to_twoscomplement">Convert to twos complement</string>
+	<string name="convert_to_decimal">Convert from twos complement to decimal</string>
+	<!--  End Twos Complement -->
+	
+ 	<!-- Host count exercise -->
+  	<string name="host_count_title">Calculate number of hosts</string>
+  	<string name="check">Check</string>
+  	<string name="solution">Solution</string>
+  	<!-- End Host count exercise -->
 </resources>
 

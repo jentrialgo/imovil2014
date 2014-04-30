@@ -1,3 +1,4 @@
+
 /*
 
 Copyright 2014 Profesores y alumnos de la asignatura Informática Móvil de la EPI de Gijón
@@ -48,23 +49,25 @@ final public class FragmentFactory {
 			return HexadecimalExerciseFragment.newInstance();
 		case R.string.interpretation:
 			return InterpretationExerciseFragment.newInstance();
+		case R.string.twoscomplement:
+			return TwosComplementExerciseFragment.newInstance();
 		case R.string.cidr:
 			return CidrExerciseFragment.newInstance();
 		case R.string.network_layer:
 			return NetworkLayerExerciseFragment.newInstance();
 		case R.string.protocol:
 			return ProtocolExerciseFragment.newInstance();
-			// TODO: return NetworkMaskExerciseFragment.newInstance();
 		case R.string.binary:
 			return BinaryExerciseFragment.newInstance();
+		case R.string.host_count:
+			return HostCountExerciseFragment.newInstance();
+			// TODO: return NetworkMaskExerciseFragment.newInstance();
 		case R.string.sign_and_magnitude:
 			// TODO: return SignedMagnitudeExerciseFragment.newInstance();
 		case R.string.floating_point:
 			// TODO: return FloatingPointExerciseFragment.newInstance();
 		case R.string.network_address:
 			// TODO: return NetworAddressExerciseFragment.newInstance();
-		case R.string.host_count:
-			// TODO: return HostCountExerciseFragment.newInstance();
 		case R.string.network_mask:
 			// TODO: return NetworkMaskExerciseFragment.newInstance();
 
