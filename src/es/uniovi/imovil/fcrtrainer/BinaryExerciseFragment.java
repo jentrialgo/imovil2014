@@ -20,7 +20,6 @@ package es.uniovi.imovil.fcrtrainer;
 
 import android.os.Bundle;
 import android.text.method.DigitsKeyListener;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,7 +27,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * Ejercicio a modo de prueba que no hace nada particular, solo mostrar una

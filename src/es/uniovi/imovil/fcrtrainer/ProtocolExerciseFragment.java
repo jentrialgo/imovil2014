@@ -2,7 +2,6 @@ package es.uniovi.imovil.fcrtrainer;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Locale;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,7 +12,6 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class ProtocolExerciseFragment extends BaseExerciseFragment {
 
