@@ -51,6 +51,8 @@
   	<string name="insert_value_binary">insert a value please.</string>
 	<string name="convert_to_dec">Convert to decimal</string>
   	<string name="binary_hint">example: 00000000</string>
+  	<string name="game_over">THE END!</string>
+  	<string name="points">Points: </string>
     <!-- Fin Modulo: Binario -->
      <!-- Strings logic gate -->
      

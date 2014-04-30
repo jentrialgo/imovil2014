@@ -113,6 +113,8 @@ limitations under the License.
   	<string name="insert_value_binary">insertar un valor por favor.</string>
 	<string name="convert_to_dec">Convierte a decimal</string>
   	<string name="binary_hint">example: 00000000</string>
+  	<string name="game_over">YA ESTÀ!</string>
+  	<string name="points">Puntos: </string>
   	<!-- Fin Modulo: Binario -->
   	
   	

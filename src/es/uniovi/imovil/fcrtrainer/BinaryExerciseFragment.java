@@ -18,9 +18,16 @@ limitations under the License.
 
 package es.uniovi.imovil.fcrtrainer;
 
+import java.util.Date;
+
+import org.json.JSONException;
+
+import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.method.DigitsKeyListener;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,26 +35,30 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * Ejercicio a modo de prueba que no hace nada particular, solo mostrar una
- * etiqueta.
- * 
+ * etiqueta. TODO: -save instance (rotation) ; gamemode
  */
 public class BinaryExerciseFragment extends BaseExerciseFragment implements
 		OnClickListener {
+	private static final int POINTS_FOR_QUESTION = 10;
+	private static final int MAX_QUESTIONS = 5;
+	private static final long GAME_DURATION_MS = 5*1000*60; //5min
+
 	private BinaryConverter binaryConverter = new BinaryConverter();
 	private View rootView;
 	private String currentQuestion;
 
-	
+	private boolean gameMode = false;
+	private int points;
+	private int currentQuestionCounter = 1;
+
 	private enum MODE_GAME {
 		BINARY_TO_DECIMAL, DECIMAL_TO_BINARY
 	}
 
 	private MODE_GAME modeGame = MODE_GAME.DECIMAL_TO_BINARY;
-
 
 	public static BinaryExerciseFragment newInstance() {
 		BinaryExerciseFragment fragment = new BinaryExerciseFragment();
@@ -62,7 +73,7 @@ public class BinaryExerciseFragment extends BaseExerciseFragment implements
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		
+
 		rootView = inflater.inflate(R.layout.fragment_binary, container, false);
 
 		/**
@@ -87,9 +98,6 @@ public class BinaryExerciseFragment extends BaseExerciseFragment implements
 		userInput.setText("");
 	}
 
-
-
-
 	private void newQuestion() {
 		int questionNumber = binaryConverter.createRandomNumber();
 		TextView question = (TextView) this.rootView
@@ -97,12 +105,13 @@ public class BinaryExerciseFragment extends BaseExerciseFragment implements
 
 		if (modeGame == MODE_GAME.BINARY_TO_DECIMAL)
 			currentQuestion = binaryConverter
-					.convertDecimalToBinary(questionNumber); // returns binary as string
+					.convertDecimalToBinary(questionNumber); // returns binary
+																// as string
 		else
-			this.currentQuestion = "" + questionNumber; // convert decimal to string
+			this.currentQuestion = String.valueOf(questionNumber); 
 
-		question.setText(this.currentQuestion + " = ");
-		
+		question.setText(this.currentQuestion);
+
 	}
 
 	@Override
@@ -113,16 +122,15 @@ public class BinaryExerciseFragment extends BaseExerciseFragment implements
 		if (view.getId() == R.id.seesolution) {
 			showSolution();
 		}
-		
+
 		if (view.getId() == R.id.change) {
 			clearUserInput();
 			changeMode();
 			changeViews();
 			newQuestion();
 		}
-		
+
 	}
-	
 
 	private void changeMode() {
 		if (modeGame == MODE_GAME.BINARY_TO_DECIMAL) {
@@ -131,97 +139,110 @@ public class BinaryExerciseFragment extends BaseExerciseFragment implements
 			modeGame = MODE_GAME.BINARY_TO_DECIMAL;
 		}
 	}
-	
+
 	private void changeViews() {
 		EditText answer = (EditText) rootView.findViewById(R.id.answer);
 		TextView title = (TextView) rootView.findViewById(R.id.exercisetitle);
 
 		if (modeGame == MODE_GAME.BINARY_TO_DECIMAL) {
-			
+
 			title.setText(getResources().getString(R.string.convert_to_dec));
-			
+
 			// User input: 0 to 9
-			answer.setKeyListener(DigitsKeyListener.getInstance(getResources().getString(R.string.digits_available_decimal_binary)));
+			answer.setKeyListener(DigitsKeyListener.getInstance(getResources()
+					.getString(R.string.digits_available_decimal_binary)));
 			answer.setHint(getResources().getString(R.string.hint_2_binary));
-			
+
 		} else {
-			
+
 			title.setText(getResources().getString(R.string.convert_to_bin));
-			
+
 			// DECIMAL TO BINARY: User input: only 0 or 1
-			answer.setKeyListener(DigitsKeyListener.getInstance(getResources().getString(R.string.digits_available_01_binary)));
+			answer.setKeyListener(DigitsKeyListener.getInstance(getResources()
+					.getString(R.string.digits_available_01_binary)));
 			answer.setHint(getResources().getString(R.string.hint_binary));
 		}
-		
-		
-		
+
 	}
-	
-	
+
 	private void showSolution() {
 		EditText solution = (EditText) rootView.findViewById(R.id.answer);
-		
-		if(modeGame == MODE_GAME.DECIMAL_TO_BINARY){
+
+		if (modeGame == MODE_GAME.DECIMAL_TO_BINARY) {
 			solution.setText(convertToBinary(this.currentQuestion));
-		}else{
+		} else {
 			solution.setText(convertToDecimal(this.currentQuestion));
 		}
 	}
 
-
-
-	private String convertToDecimal(String textToDecimal){
+	private String convertToDecimal(String textToDecimal) {
 		return this.binaryConverter.convertBinaryToDecimal(textToDecimal);
 	}
-	
-	private String convertToBinary(String textToBinary) {
-		return this.binaryConverter
-				.convertDecimalToBinary(textToBinary);
-	}
 
+	private String convertToBinary(String textToBinary) {
+		return this.binaryConverter.convertDecimalToBinary(textToBinary);
+	}
 
 	private void checkAnswer() {
 		String answer = answerFromUserInput();
-		
-		//respond on empty inputs with error.
-		if(answer.isEmpty()){
+
+		// respond on empty inputs with error.
+		if (answer.isEmpty()) {
 			super.showAnimationAnswer(false);
 			return;
 		}
-		
+
 		boolean response = false;
 		if (modeGame == MODE_GAME.DECIMAL_TO_BINARY) {
 			response = checkBinaryAnswer(answer);
-		}else{
+		} else {
 			response = checkDecimalAnswer(answer);
 		}
-		
+
 		super.showAnimationAnswer(response);
-		
-		//only create new Question if user has right input
-		if(response){
+
+		// only create new Question if user has right input
+		if (response) {
+			if (gameMode) {
+				increasePoints(POINTS_FOR_QUESTION);
+				currentQuestionCounter++;
+
+				if (currentQuestionCounter > MAX_QUESTIONS) {
+					this.endGame();
+				}
+			}
+
 			newQuestion();
 			clearUserInput();
 		}
 	}
 
-	private String answerFromUserInput(){
-		EditText answerEditText = (EditText) rootView.findViewById(R.id.answer);
-		String answer = answerEditText.getText().toString();
-		
-		System.out.println("answer: " + answer);
-		return answer;
+	private void increasePoints(int val) {
+		points = points + val;
+		updatePointsTextView(points);
 	}
 	
+	private void updatePointsTextView(int p){
+		TextView tvPoints = (TextView) rootView.findViewById(R.id.points);
+		tvPoints.setText(String.valueOf(p));
+	}
 
-	private boolean checkDecimalAnswer(String answer){
+	private String answerFromUserInput() {
+		EditText answerEditText = (EditText) rootView.findViewById(R.id.answer);
+		String answer = answerEditText.getText().toString();
+
+		//System.out.println("answer: " + answer);
+		return answer;
+	}
+
+	private boolean checkDecimalAnswer(String answer) {
 		String answerConverted = convertToBinary(answer);
-		if(answerConverted.equals(currentQuestion)){
+		if (answerConverted.equals(currentQuestion)) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	private boolean checkBinaryAnswer(String answer) {
 		// get answer without zeros in front to compare it easy.
 		answer = binaryConverter.deleteStartingZeroesFromBinaryInput(answer);
@@ -232,5 +253,100 @@ public class BinaryExerciseFragment extends BaseExerciseFragment implements
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public void startGame() {
+		setGameDuration(GAME_DURATION_MS);
+
+		super.startGame();
+		updateToGameMode();
+	}
+
+	private void updateToGameMode() {
+		gameMode = true;
+
+		newQuestion();
+
+		Button solution = (Button) rootView.findViewById(R.id.seesolution);
+		solution.setVisibility(View.INVISIBLE);
+		Button change = (Button) rootView.findViewById(R.id.change);
+		change.setVisibility(View.INVISIBLE);
+
+		TextView points = (TextView) rootView.findViewById(R.id.points);
+		points.setVisibility(View.VISIBLE);
+
+	}
+
+	private void updateToTrainMode() {
+		gameMode = false;
+
+		Button solution = (Button) rootView.findViewById(R.id.seesolution);
+		solution.setVisibility(View.VISIBLE);
+		Button change = (Button) rootView.findViewById(R.id.change);
+		change.setVisibility(View.VISIBLE);
+
+		TextView points = (TextView) rootView.findViewById(R.id.points);
+		points.setVisibility(View.INVISIBLE);
+	}
+	
+
+	@Override
+	public void cancelGame() {
+		super.cancelGame();
+		updateToTrainMode();
+	}
+
+	@Override
+	void endGame() {
+		// every remaining second gives one extra point.
+		int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000; //convert from Milliseconds to Seconds
+		this.points = (int) (this.points + remainingTimeInSeconds); // 1 second == 1 point
+
+		savePoints();
+
+		dialogGameOver();
+
+		super.endGame();
+
+		updateToTrainMode();
+		
+		reset();
+	}
+	
+	private void reset(){
+		points = 0;
+		currentQuestionCounter = 0;
+		
+		updatePointsTextView(0);
+	}
+
+
+	private void savePoints() {
+		String username = getResources().getString(R.string.default_user_name);
+		try {
+
+			HighscoreManager.addScore(getActivity().getApplicationContext(),
+					this.points, 0, new Date(), username);
+
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	//Simple GameOver Dialog
+	private void dialogGameOver() {
+		Builder alert = new AlertDialog.Builder(getActivity());
+		alert.setTitle(getResources().getString(R.string.game_over));
+		alert.setMessage(getResources().getString(R.string.points));
+		alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.cancel();
+				// nothing to do...
+			}
+		});
+		alert.show();
+
 	}
 }
