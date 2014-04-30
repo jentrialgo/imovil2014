@@ -126,7 +126,7 @@ limitations under the License.
   	<!--  End Twos Complement -->
   	
   	<!-- Host count exercise -->
-  	<string name="houst_count_title">Calcula el numero de hosts</string>
+  	<string name="host_count_title">Calcula el numero de hosts</string>
   	<string name="check">Comprobar</string>
   	<string name="solution">Solucion</string>
   	<!-- End Host count exercise -->

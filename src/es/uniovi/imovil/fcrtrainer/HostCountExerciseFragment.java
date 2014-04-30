@@ -8,16 +8,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class HostCountExerciseFragment extends BaseExerciseFragment{
 
+	private static final int RANDOM_NUMBER_LIMIT = 32;
+	
 	private View mRootView;
 	private Button btnCheck;
 	private Button btnSolution;
+	private String [] hostCountQuestions;
+	private String [] hostCountAnswers;
 	private TextView question;	
-	private TextView answer;
-	int bitsOne;
+	EditText answer;
+	int randomNumberQuestion;
 
 	// Constructor
 	public HostCountExerciseFragment() 
@@ -37,8 +42,12 @@ public class HostCountExerciseFragment extends BaseExerciseFragment{
         btnCheck =  (Button) mRootView.findViewById(R.id.btnCheckAnswer);
         btnSolution =  (Button) mRootView.findViewById(R.id.btnSolution);
     	question = (TextView) mRootView.findViewById(R.id.question);
-    	answer = (TextView) mRootView.findViewById(R.id.answer);
-    	question.setText(generateQuestion());
+    	answer = (EditText) mRootView.findViewById(R.id.answer);
+    	hostCountQuestions = getResources().getStringArray(R.array.host_count_questions);
+    	hostCountAnswers = getResources().getStringArray(R.array.host_count_answers);
+    	randomNumberQuestion = generateRandomNumber();
+    	//Carga una de las preguntas del array 
+    	question.setText(hostCountQuestions[randomNumberQuestion]);
     	
     	
         btnCheck.setOnClickListener(new View.OnClickListener(){
@@ -51,71 +60,28 @@ public class HostCountExerciseFragment extends BaseExerciseFragment{
         btnSolution.setOnClickListener(new View.OnClickListener() {			
 			@Override
 			public void onClick(View v) {
-				showSolution();
+				showSolution(randomNumberQuestion);
 			}
 		});
         
 		return mRootView;
 	}
-
 	
-	public String generateQuestion(){
-		// Genera la pregunta con una mascara de subred aleatoria y obtiene las 
-		// 3 posibles respuestas generando un numero de orden al mostrar aleatorio
-		bitsOne = generateRandomNumberOfBits();
-		// Generamos el enunciado con la  mascara aleatoria
-		return bitsToMask();
-		
-	}
-	
-	private int generateRandomNumberOfBits() {
+	private int generateRandomNumber() {
 		Random rn = new Random();
-		// Limite ha de ser 31, pero ponemos 30 para que la funcion nextInt
-		// obtenga aleatorios entre 1 y 31 (al sumar 1 al resultado obtenido)
-		int limit = 30;
 		
 		// Funcion nextInt devuelve un numero aleatorio entre [0, limite)
-		int x = rn.nextInt(limit)+1;
-		Log.v("X",x+"");
+		int x = rn.nextInt(RANDOM_NUMBER_LIMIT);
 		return x;
 
 	}
-	
-	public String bitsToMask(){
-		// Convierte los bits generados a una mascara de subred válida
-		// Mascara con el primer bit a 1 y el resto 0; 32 bits
-		long mask = 0x80000000;
-		// Mascara resultante despues de realizar operaciones
-		long resultMask = 0;
-		// String con la mascara que será devuelta por la función
-		String fullMask = "0.0.0.0";
-		
-		for (int i=32; i > bitsOne; i--){
-			// Operacion OR de la mascara y la mascara resultado
-			resultMask = resultMask | mask;
-			// Desplazamiento del bit a 1 de la mascara al anterior
-			mask = mask >> 1;
-		}
-		
-		// Convertir la cadena de bits en una mascara de subred		
-		fullMask = String.format("%d.%d.%d.%d", 
-				(resultMask & 0x0000000000ff000000L) >> 24, 
-				(resultMask & 0x0000000000ff0000) >> 16, 
-				(resultMask & 0x0000000000ff00) >> 8, 
-				 resultMask & 0xff);
-		
-		// Devuelve una mascara de subred
-		return fullMask;
-	}
-	
-	//Metodo para comprobar la respuesta	
-	public void checkAnswer (String answ) {		
-		//Si es correcta, cambia la máscara por una nueva y pone el "EditText" en blanco
-		Log.v("INPUT", answ);
-		Log.v("HOSTS", calculateHosts(bitsOne));
-		if ((answ.toString().equals(calculateHosts(bitsOne).toString()))){
+
+	public void checkAnswer (String a) {
+		//Si la respuesta es correcta, genera otra nueva pregunta y borra respuesta
+		if ((a.toString().equals(hostCountAnswers[randomNumberQuestion].toString()))){
 			showAnimationAnswer(true);
-			question.setText(generateQuestion());
+			randomNumberQuestion = generateRandomNumber();
+			question.setText(hostCountQuestions[randomNumberQuestion]);
 			answer.setText("");
 			
 			} else
@@ -123,19 +89,8 @@ public class HostCountExerciseFragment extends BaseExerciseFragment{
 	}
 	
 	//Metodo para mostrar la solucion
-	public void showSolution() {
-		answer.setText(calculateHosts(bitsOne));		
-	}
-	
-	private String calculateHosts(int bitsOne){
-		//Log.v("BITSONE", bitsOne+"");
-		// Numero de bits a 0
-		int bitsZero = 32 - bitsOne;
-		//Log.v("BITSCERO", bitsZero+"");
-		// Numero de hosts = 2^n -2
-		long hosts = (long) (Math.pow(2,bitsZero)-2);
-		//Log.v("CALCULATEHOSTS", hosts+"");
-		return hosts+"";
+	public void showSolution(int numberOfQuestion) {
+		answer.setText(hostCountAnswers[numberOfQuestion]);		
 	}
 	
 	

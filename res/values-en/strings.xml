@@ -76,5 +76,11 @@
 	<string name="convert_to_twoscomplement">Convert to twos complement</string>
 	<string name="convert_to_decimal">Convert from twos complement to decimal</string>
 	<!--  End Twos Complement -->
+	
+ 	<!-- Host count exercise -->
+  	<string name="host_count_title">Calculate number of hosts</string>
+  	<string name="check">Check</string>
+  	<string name="solution">Solution</string>
+  	<!-- End Host count exercise -->
 </resources>
 
