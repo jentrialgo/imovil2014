@@ -90,6 +90,16 @@ public abstract class BaseExerciseFragment extends Fragment {
 		resultImage = (ImageView) view.findViewById(R.id.resultimage);
 		super.onViewCreated(view, savedInstanceState);
 	}
+	
+	/**
+	 * Get remaining time in ms.
+	 * 
+	 * @return long
+	 */
+	protected long getRemainingTimeMs(){
+		long nowMs = System.currentTimeMillis();
+		return mDurationMs - (nowMs - mStartMs);
+	}
 
 	private final class TimeUpdater implements Runnable {
 		public void run() {
