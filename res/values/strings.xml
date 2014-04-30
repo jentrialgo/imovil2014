@@ -15,9 +15,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-
-
-
 <resources>
 
     <string name="app_name">FCR</string>
@@ -52,14 +49,10 @@ limitations under the License.
     <string name="training">Entrenamiento</string>
     <string name="retry">Reintentar</string>
     <string name="finish">Entrenamiento finalido.</string>
-    <string name="dummy_exercise">Ejercicio</string>  
     <string name="success">Has acertado</string> 
-    <string name="fail">Has fallado. La respuesta correcta es</string>  
-     
-    <string name="fragment_interpretation">Complemento a 2</string>    
-    
-     <!-- Strings logic gate -->
-     
+    <string name="fail">Has fallado. La respuesta correcta es</string>       
+ 
+    <!-- Strings logic gate -->    
      <string name="button_logic_gate">Comprobar</string>
      <string name="failed_logic_gate">¡Has fallado!</string>
      <string name="dialog_try_logic_gate">¿Quieres probar de nuevo o bien quieres saber la solución?</string>
@@ -69,20 +62,20 @@ limitations under the License.
      <string name="button_logic_gate_solution">Solución</string>
      <string name="logic_gate_title">¿Que puerta lógica es?</string>
      
-     <!--  Fin Strings logic gate -->
+     <!--  Fin Strings logic gate -->    
+    <string name="dummy_exercise">Ejercicio</string>
+    <string name="fragment_interpretation">Complemento a 2</string>
 
     <!-- Strings layer exercise -->
     <string name="layer_tittle">Acierta la capa</string>
     <string name="button_layer_exercise">Comprobar</string>
-    <string name="button_solution">Solución</string>
-    
+    <string name="button_solution">Solución</string>  
     <string name="link_layer">Capa de enlace</string>
     <string name="internet_layer">Capa de internet</string>
     <string name="transport_layer">Capa de transporte</string>
     <string name="application_layer">Capa de aplicación</string>
 
-    <!-- Fin Strings layer exercise -->
-    
+    <!-- Fin Strings layer exercise -->   
     <string name="initial_clock_value">2:00</string>
     <string name="error_no_clock">Error: este ejercicio no está preparado para jugar</string>
     <string name="convert_to_hex">Convierte a hexadecimal</string>
@@ -106,29 +99,24 @@ limitations under the License.
   	<string name="insert_value_binary">insertar un valor por favor.</string>
 	<string name="convert_to_dec">Convierte a decimal</string>
   	<string name="binary_hint">example: 00000000</string>
-  	<!-- Fin Modulo: Binario -->
-  	
-  	
+  	 	
   	<!-- Modulo: Operaciones Lógicas -->
   	<string name="LOand">AND</string>
     <string name="LOor">OR</string>
-    <string name="LOxor">XOR</string>
-    
+    <string name="LOxor">XOR</string>    
     <string name="LOpregunta">¿Cuál es la solución a esta operación lógica de 5 bits?</string>
-    <!-- Fin Operaciones Lógicas -->
 
+    <!--  Modulo: Protocolos -->
+    <string name="protocols">Adivina el protocolo</string>
     <string name="cidr_title">Calcula la notación CIDR</string>
-
     
     <!-- Twos Complement -->
 	<string name="convert_to_twoscomplement">Convierte a complemento a dos</string>
 	<string name="convert_to_decimal">Convierte de complemento a dos a decimal</string>
-  	<!--  End Twos Complement -->
-  	
-  	<!-- Host count exercise -->
+	
+	<!-- Host count exercise -->
   	<string name="host_count_title">Calcula el numero de hosts</string>
   	<string name="check">Comprobar</string>
   	<string name="solution">Solucion</string>
   	<!-- End Host count exercise -->
 </resources>
-
