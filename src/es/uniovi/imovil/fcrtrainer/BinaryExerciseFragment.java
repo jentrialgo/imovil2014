@@ -44,7 +44,9 @@ public class BinaryExerciseFragment extends BaseExerciseFragment implements
 		OnClickListener {
 	private static final int POINTS_FOR_QUESTION = 10;
 	private static final int MAX_QUESTIONS = 5;
-	private static final long GAME_DURATION_MS = 5*1000*60; //5min
+	private static final long GAME_DURATION_MS = 5 * 1000 * 60; // 5min
+
+	private boolean won = false;
 
 	private BinaryConverter binaryConverter = new BinaryConverter();
 	private View rootView;
@@ -108,7 +110,7 @@ public class BinaryExerciseFragment extends BaseExerciseFragment implements
 					.convertDecimalToBinary(questionNumber); // returns binary
 																// as string
 		else
-			this.currentQuestion = String.valueOf(questionNumber); 
+			this.currentQuestion = String.valueOf(questionNumber);
 
 		question.setText(this.currentQuestion);
 
@@ -203,13 +205,8 @@ public class BinaryExerciseFragment extends BaseExerciseFragment implements
 
 		// only create new Question if user has right input
 		if (response) {
-			if (gameMode) {
-				increasePoints(POINTS_FOR_QUESTION);
-				currentQuestionCounter++;
-
-				if (currentQuestionCounter > MAX_QUESTIONS) {
-					this.endGame();
-				}
+			if (this.gameMode) {
+				gameModeControl();
 			}
 
 			newQuestion();
@@ -217,21 +214,39 @@ public class BinaryExerciseFragment extends BaseExerciseFragment implements
 		}
 	}
 
-	private void increasePoints(int val) {
-		points = points + val;
-		updatePointsTextView(points);
+	private void gameModeControl() {
+		increasePoints(POINTS_FOR_QUESTION);
+
+		if (currentQuestionCounter >= MAX_QUESTIONS) {
+			// won
+			this.won = true;
+			this.endGame();
+
+		}
+
+		if (currentQuestionCounter < MAX_QUESTIONS && getRemainingTimeMs() <= 0) {
+			// lost --> no time left...
+			this.won = false;
+			this.endGame();
+		}
+		currentQuestionCounter++;
 	}
-	
-	private void updatePointsTextView(int p){
+
+	private void increasePoints(int val) {
+		this.points = this.points + val;
+		updatePointsTextView(this.points);
+	}
+
+	private void updatePointsTextView(int p) {
 		TextView tvPoints = (TextView) rootView.findViewById(R.id.points);
-		tvPoints.setText(String.valueOf(p));
+		tvPoints.setText(getResources().getString(R.string.points)+ " "+ String.valueOf(p));
 	}
 
 	private String answerFromUserInput() {
 		EditText answerEditText = (EditText) rootView.findViewById(R.id.answer);
 		String answer = answerEditText.getText().toString();
 
-		//System.out.println("answer: " + answer);
+		// System.out.println("answer: " + answer);
 		return answer;
 	}
 
@@ -258,6 +273,9 @@ public class BinaryExerciseFragment extends BaseExerciseFragment implements
 	@Override
 	public void startGame() {
 		setGameDuration(GAME_DURATION_MS);
+		
+		// set starting points of textview
+		updatePointsTextView(0); 
 
 		super.startGame();
 		updateToGameMode();
@@ -289,7 +307,6 @@ public class BinaryExerciseFragment extends BaseExerciseFragment implements
 		TextView points = (TextView) rootView.findViewById(R.id.points);
 		points.setVisibility(View.INVISIBLE);
 	}
-	
 
 	@Override
 	public void cancelGame() {
@@ -299,28 +316,30 @@ public class BinaryExerciseFragment extends BaseExerciseFragment implements
 
 	@Override
 	void endGame() {
-		// every remaining second gives one extra point.
-		int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000; //convert from Milliseconds to Seconds
-		this.points = (int) (this.points + remainingTimeInSeconds); // 1 second == 1 point
+		//convert to seconds
+		int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000; 
+		//every remaining second gives one extra point.
+		this.points = (int) (this.points + remainingTimeInSeconds);
 
-		savePoints();
+		if (this.won)
+			savePoints();
 
 		dialogGameOver();
 
 		super.endGame();
 
 		updateToTrainMode();
-		
+
 		reset();
 	}
-	
-	private void reset(){
-		points = 0;
-		currentQuestionCounter = 0;
-		
+
+	private void reset() {
+		this.points = 0;
+		this.currentQuestionCounter = 0;
+		this.won = false;
+
 		updatePointsTextView(0);
 	}
-
 
 	private void savePoints() {
 		String username = getResources().getString(R.string.default_user_name);
@@ -333,12 +352,20 @@ public class BinaryExerciseFragment extends BaseExerciseFragment implements
 			e.printStackTrace();
 		}
 	}
-	
-	//Simple GameOver Dialog
+
+	// Simple GameOver Dialog
 	private void dialogGameOver() {
+		String message = getResources().getString(R.string.lost);
+
+		if (this.won) {
+			message = getResources().getString(R.string.won) + " "
+					+ getResources().getString(R.string.points) + " "
+					+ this.points;
+		}
+
 		Builder alert = new AlertDialog.Builder(getActivity());
 		alert.setTitle(getResources().getString(R.string.game_over));
-		alert.setMessage(getResources().getString(R.string.points));
+		alert.setMessage(message);
 		alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {

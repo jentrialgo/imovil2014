@@ -52,6 +52,8 @@
 	<string name="convert_to_dec">Convert to decimal</string>
   	<string name="binary_hint">example: 00000000</string>
   	<string name="game_over">THE END!</string>
+  	<string name="won">You won! </string>
+  	<string name="lost">You lost! </string>
   	<string name="points">Points: </string>
     <!-- Fin Modulo: Binario -->
      <!-- Strings logic gate -->

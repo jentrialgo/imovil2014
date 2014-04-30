@@ -45,17 +45,18 @@ limitations under the License.
 
         <TextView
             android:id="@+id/points"
-            style="@style/Title2DarkLight"
+           
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            android:text="0" />
+            android:textSize="20sp"
+            android:text="@string/points" />
 
         <TextView
             android:id="@+id/text_view_clock"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            
             android:text="@string/initial_clock_value"
             android:textSize="20sp"
             android:visibility="gone" />

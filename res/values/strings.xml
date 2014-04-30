@@ -115,6 +115,8 @@ limitations under the License.
   	<string name="binary_hint">example: 00000000</string>
   	<string name="game_over">YA ESTÀ!</string>
   	<string name="points">Puntos: </string>
+  	<string name="won">Has ganado! </string>
+  	<string name="lost">Has perdido! </string>
   	<!-- Fin Modulo: Binario -->
   	
   	
