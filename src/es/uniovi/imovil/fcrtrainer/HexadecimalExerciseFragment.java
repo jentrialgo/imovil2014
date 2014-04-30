@@ -21,6 +21,7 @@ package es.uniovi.imovil.fcrtrainer;
 import java.util.Locale;
 import java.util.Random;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -43,8 +44,6 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 	private int numberToConvert;
 	private boolean tohex = true;
 	private static final int MAX_NUMBER_TO_CONVERT = 1000;
-	private static final int GENERATE_BIN_TO_CONVERT = 0;
-	private static final int GENERATE_HEX_TO_CONVERT = 1;
 
 	public static HexadecimalExerciseFragment newInstance() {
 
@@ -54,6 +53,7 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 
 	public HexadecimalExerciseFragment() {
 	}
+
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,8 +67,7 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 		bChange = (Button) rootView.findViewById(R.id.change);
 		bSolution = (Button) rootView.findViewById(R.id.seesolution);
 		bCheck = (Button) rootView.findViewById(R.id.checkbutton);
-		tvNumberToConvert = (TextView) rootView
-				.findViewById(R.id.numbertoconvert);
+		tvNumberToConvert = (TextView) rootView.findViewById(R.id.numbertoconvert);
 		tvTitle = (TextView) rootView.findViewById(R.id.exercisetitle);
 
 		etAnswer.setOnEditorActionListener(new OnEditorActionListener() {
@@ -108,12 +107,12 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 					etAnswer.setInputType(EditorInfo.TYPE_CLASS_TEXT);
 					tvTitle.setText(getResources().getString(
 							R.string.convert_to_hex));
-					generateRandomNumber(GENERATE_BIN_TO_CONVERT);
+					generateRandomNumber();
 				} else {
 					etAnswer.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
 					tvTitle.setText(getResources().getString(
 							R.string.convert_to_bin));
-					generateRandomNumber(GENERATE_HEX_TO_CONVERT);
+					generateRandomNumber();
 				}
 			}
 		});
@@ -125,27 +124,31 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 				showSolution();
 			}
 		});
-
-		generateRandomNumber(GENERATE_BIN_TO_CONVERT);
+		
+		if(savedInstanceState != null){
+			tohex = savedInstanceState.getBoolean("tohex");
+			numberToConvert = savedInstanceState.getInt("numbertoconvert");
+			updateUI();
+		} else generateRandomNumber();
 
 		return rootView;
 	}
 
-	public void generateRandomNumber(int type) {
+	public void generateRandomNumber() {
 		Random randomGenerator = new Random();
 		numberToConvert = randomGenerator.nextInt(MAX_NUMBER_TO_CONVERT);
-		if (type == GENERATE_BIN_TO_CONVERT)
-			tvNumberToConvert.setText(Integer.toBinaryString(numberToConvert));
-		else
-			tvNumberToConvert.setText(Integer.toHexString(numberToConvert)
-					.toUpperCase(Locale.US));
+		updateUI();
+	}
+	
+	public void updateUI(){
+		if(tohex) tvNumberToConvert.setText(Integer.toBinaryString(numberToConvert));
+		else tvNumberToConvert.setText(Integer.toHexString(numberToConvert).toUpperCase(Locale.US));
 	}
 
 	/**
 	 * Checks if the answer is correct
 	 * 
-	 * @param answer
-	 *            , the user input
+	 * @param answer, the user input
 	 */
 	public void isCorrect(String answer) {
 
@@ -154,13 +157,13 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 		if (tohex) {
 			if (answer.equals(Integer.toHexString(numberToConvert))) {
 				showAnimationAnswer(true);
-				generateRandomNumber(GENERATE_BIN_TO_CONVERT);
+				generateRandomNumber();
 			} else
 				showAnimationAnswer(false);
 		} else {
 			if (answer.equals(Integer.toBinaryString(numberToConvert))) {
 				showAnimationAnswer(true);
-				generateRandomNumber(GENERATE_HEX_TO_CONVERT);
+				generateRandomNumber();
 			} else
 				showAnimationAnswer(false);
 		}
@@ -173,4 +176,10 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 			etAnswer.setText(Integer.toBinaryString(numberToConvert));
 	}
 
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putBoolean("tohex", tohex);
+		outState.putInt("numbertoconvert", numberToConvert);
+	}
 }
