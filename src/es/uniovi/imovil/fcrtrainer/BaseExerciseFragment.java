@@ -67,6 +67,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 
 	private final static int CLOCK_UPDATE_PERIOD_MS = 1000; // 1 s
 	private final static int DEFAULT_GAME_DURATION_MS = 120 * 1000; // 2 min
+	private static final String TAG = null;
 
 	boolean mIsPlaying = false;
 
@@ -222,8 +223,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 	 * 
 	 * @param correct if the answer is correct
 	 */
-	@SuppressLint("NewApi") protected void showAnimationAnswer(boolean correct){
-		
+	@SuppressLint("NewApi") protected void showAnimationAnswer(boolean correct){		
 		// Fade in - fade out
 		result.setVisibility(View.VISIBLE);
 		animation = new AlphaAnimation(0,1);
@@ -233,8 +233,8 @@ public abstract class BaseExerciseFragment extends Fragment {
 		animation.setRepeatCount(Animation.RESTART);
 		animation.setRepeatMode(Animation.REVERSE);
 		result.startAnimation(animation);
-		
-		if(correct) resultImage.setImageDrawable(getResources().getDrawable(R.drawable.correct));
+		if(correct)
+			resultImage.setImageDrawable(getResources().getDrawable(R.drawable.correct));
 		else resultImage.setImageDrawable(getResources().getDrawable(R.drawable.incorrect));
 
 		// This only works in API 12+, so we skip this animation on old devices

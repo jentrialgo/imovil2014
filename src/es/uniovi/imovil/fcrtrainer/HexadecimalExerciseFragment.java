@@ -127,7 +127,6 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 		});
 
 		generateRandomNumber(GENERATE_BIN_TO_CONVERT);
-
 		return rootView;
 	}
 
