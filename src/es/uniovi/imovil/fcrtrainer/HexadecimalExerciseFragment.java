@@ -23,6 +23,7 @@ import java.util.Random;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,7 +55,6 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 	public HexadecimalExerciseFragment() {
 	}
 
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -67,7 +67,8 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 		bChange = (Button) rootView.findViewById(R.id.change);
 		bSolution = (Button) rootView.findViewById(R.id.seesolution);
 		bCheck = (Button) rootView.findViewById(R.id.checkbutton);
-		tvNumberToConvert = (TextView) rootView.findViewById(R.id.numbertoconvert);
+		tvNumberToConvert = (TextView) rootView
+				.findViewById(R.id.numbertoconvert);
 		tvTitle = (TextView) rootView.findViewById(R.id.exercisetitle);
 
 		etAnswer.setOnEditorActionListener(new OnEditorActionListener() {
@@ -124,12 +125,16 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 				showSolution();
 			}
 		});
-		
-		if(savedInstanceState != null){
+
+		Log.i(getClass().getSimpleName(), "onViewCreated");
+
+		if (savedInstanceState != null) {
+			Log.i(getClass().getSimpleName(), "Inside savedInstanceState");
 			tohex = savedInstanceState.getBoolean("tohex");
 			numberToConvert = savedInstanceState.getInt("numbertoconvert");
 			updateUI();
-		} else generateRandomNumber();
+		} else
+			generateRandomNumber();
 
 		return rootView;
 	}
@@ -139,16 +144,20 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 		numberToConvert = randomGenerator.nextInt(MAX_NUMBER_TO_CONVERT);
 		updateUI();
 	}
-	
-	public void updateUI(){
-		if(tohex) tvNumberToConvert.setText(Integer.toBinaryString(numberToConvert));
-		else tvNumberToConvert.setText(Integer.toHexString(numberToConvert).toUpperCase(Locale.US));
+
+	public void updateUI() {
+		if (tohex)
+			tvNumberToConvert.setText(Integer.toBinaryString(numberToConvert));
+		else
+			tvNumberToConvert.setText(Integer.toHexString(numberToConvert)
+					.toUpperCase(Locale.US));
 	}
 
 	/**
 	 * Checks if the answer is correct
 	 * 
-	 * @param answer, the user input
+	 * @param answer
+	 *            , the user input
 	 */
 	public void isCorrect(String answer) {
 
