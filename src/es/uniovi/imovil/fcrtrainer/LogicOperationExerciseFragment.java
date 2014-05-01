@@ -8,9 +8,7 @@ import org.json.JSONException;
 
 import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -149,7 +147,7 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		}
 	}
 
-	// Calcula si la respuesta es correcta
+	// Determina si la respuesta es correcta
 	public void isCorrect(String answer) {
 		String solucion = LOCalcularResultado(tvEntrada1.getText().toString(),
 				tvOperacion.getText().toString(), tvEntrada2.getText()
@@ -164,7 +162,6 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		}
 	}
 
-	// Creación de preguntas aleatorias
 	private void crearPregunta() {
 		String binario;
 		String op;
@@ -179,7 +176,6 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		tvOperacion.setText(op);
 
 		etRespuesta.setText("");
-
 	}
 
 	// Calcula el resultado correcto de la pregunta formulada
@@ -197,24 +193,22 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 			result = entrada1 ^ entrada2;
 
 		solucion = Integer.toBinaryString(result);
-
-		// Rellenar con los 0 que falten por delante
-		int i = solucion.length();
-		while (i < MAX_NUMBER_OF_BITS) {
-			solucion = "0" + solucion;
-			i = solucion.length();
-		}
-
+		// LLenamos la cadena de 0 hasta tener 5 bits
+		solucion = completaNumeroBits(solucion);
 		return solucion;
 	}
 
-	// Generación de un binario aleatorio
 	private String BinarioAleatorio() {
 		Random rnd = new Random();
 		int entero = rnd.nextInt(MAX_INT_NUMBER_TO_BINARY);
 		String binario = Integer.toBinaryString(entero);
 
 		// LLenamos la cadena de 0 hasta tener 5 bits
+		binario = completaNumeroBits(binario);
+		return binario;
+	}
+
+	private String completaNumeroBits(String binario) {
 		int i = binario.length();
 		while (i < MAX_NUMBER_OF_BITS) {
 			binario = "0" + binario;
@@ -223,7 +217,6 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		return binario;
 	}
 
-	// Generación de una operación aleatoria
 	private String OperacionAleatoria() {
 		Random rnd = new Random();
 		int entero = rnd.nextInt(MAX_NUMBER_OF_OPERATIONS);
@@ -252,12 +245,12 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		// guardamos en la variable t el texto del campo EditText
+		// guardamos los campos de los textViews
 		String entrada1 = tvEntrada1.getText().toString();
 		String entrada2 = tvEntrada2.getText().toString();
 		String operacion = tvOperacion.getText().toString();
 		String respuesta = etRespuesta.getText().toString();
-		// lo "guardamos" en el Bundle
+		// lo guardamos en el Bundle
 		outState.putString("LOentrada1", entrada1);
 		outState.putString("LOentrada2", entrada2);
 		outState.putString("LOoperacion", operacion);
@@ -265,7 +258,7 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 	}
 
 	// Inicia el modo entrenamiento
-	private void modoEntrenamiento() {
+	private void vistaModoEntrenamiento() {
 		TextView pregunta = (TextView) mRootView.findViewById(R.id.LOpregunta);
 		pregunta.setText(getResources().getText(R.string.LOpregunta).toString());
 
@@ -278,6 +271,7 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		inicializarTexViews();
 
 		bSolucion.setText(getResources().getText(R.string.solution));
+		etRespuesta.requestFocus();
 
 		mModoJuego = false;
 		mFinJuego = false;
@@ -286,24 +280,48 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 	// ************************ MODO JUEGO *******************************
 	void startGame() {
 		super.startGame();
-
 		// Establecer duracion del juego
 		super.setGameDuration(mDurationMs);
 
-		// Establecer los textViews Visibles
-		inicioJuego();
+		vistaInicioJuego();
 
 		// Inicializar el numero de preguntas y de aciertos
 		mNumeroPregunta = 0;
 		mNumeroAciertos = 0;
+		
 		etRespuesta.setText("");
-
-		mModoJuego = true;
+		etRespuesta.requestFocus();
 	}
 
-	// Funcion que termina el modo juego al pulsar un boton
-	private void clickFin() {
-		modoEntrenamiento();
+	void endGame() {
+		super.endGame();
+		int score = calculaPuntuacion();
+		vistaFinJuego();
+		enviarPuntuacion(score);
+		mModoJuego = false;
+	}
+
+	void cancelGame() {
+		super.cancelGame();
+		vistaModoEntrenamiento();
+	}
+
+	private int calculaPuntuacion() {
+		int aciertos = mNumeroAciertos;
+		long miliseg = getRemainingTimeMs();
+		int segundos = (int) (miliseg / 1000);
+		int score = aciertos + segundos;
+		return score;
+	}
+
+	private void enviarPuntuacion(int score) {
+		HighscoreManager hM = new HighscoreManager();
+		try {
+			hM.addScore(getActivity(), score, R.string.logic_operation,
+					new Date(), null);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void clickJuego(String answer, String entrada1, String operacion,
@@ -320,14 +338,17 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		}
 
 		if (mNumeroPregunta == MAX_NUMBER_LO_QUESTIONS) {
-			mModoJuego = false;
 			bSolucion.setVisibility(View.VISIBLE);
 			endGame();
 		}
 	}
 
-	// Inicia los campos al inicio de un nuevo juego
-	private void inicioJuego() {
+	//Vuelve al modo entrenamiento al finalizar el juego
+	private void clickFin() {
+		vistaModoEntrenamiento();
+	}
+
+	private void vistaInicioJuego() {
 		bSolucion.setVisibility(View.GONE);
 
 		TextView pregunta = (TextView) mRootView.findViewById(R.id.LOpregunta);
@@ -339,46 +360,18 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		bCheck.setVisibility(View.VISIBLE);
 
 		inicializarTexViews();
+		
+		mModoJuego = true;
 	}
 
-	void endGame() {
-		super.endGame();
-
-		int score = calculaPuntuacion();
-
-		//Establecer las vistas de final del juego
-		finJuego();
-
-		// Envío de la puntuación
-		HighscoreManager hM = new HighscoreManager();
-		try {
-			hM.addScore(getActivity(), score, R.string.logic_operation,
-					new Date(), null);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private int calculaPuntuacion() {
-		int aciertos = mNumeroAciertos;
-		int segundos = 1;
-		int score = aciertos + segundos;
-		return score;
-	}
-
-	void cancelGame() {
-		super.cancelGame();
-		modoEntrenamiento();
-	}
-
-	// Establece las vistas del fin del juego
-	private void finJuego() {
+	private void vistaFinJuego() {
 		TextView pregunta = (TextView) mRootView.findViewById(R.id.LOpregunta);
 		pregunta.setText(getResources().getText(R.string.finJuego).toString());
-		
+
 		int score = calculaPuntuacion();
-		
-		tvEntrada1.setText("Has obtenido " + score + " puntos.");
+
+		tvEntrada1.setText(getResources().getText(R.string.puntuacion)
+				.toString() + " " + score);
 		tvEntrada2.setVisibility(View.GONE);
 		tvOperacion.setVisibility(View.GONE);
 		etRespuesta.setVisibility(View.GONE);
@@ -388,5 +381,4 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 
 		mFinJuego = true;
 	}
-
 }

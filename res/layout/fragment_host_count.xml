@@ -1,29 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center_horizontal"
     android:background="@color/mediumgray"
-    android:gravity="center_horizontal" xmlns:android="http://schemas.android.com/apk/res/android">
+    android:gravity="center_horizontal" >
 
     <LinearLayout
         android:id="@+id/LinearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical"
         android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin" >
+   		android:paddingLeft="@dimen/activity_horizontal_margin"
+    	android:paddingRight="@dimen/activity_horizontal_margin"
+    	android:paddingTop="@dimen/activity_vertical_margin" 
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical" >
 
         <TextView
             android:id="@+id/exercisetitle"
             style="@style/Title2DarkLight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/protocols" />
+            android:text="@string/host_count_title" />
 
         <RelativeLayout
             style="@style/cards"
@@ -32,7 +36,7 @@
             android:background="@drawable/cards" >
 
             <TextView
-                android:id="@+id/exerciseQuestion"
+                android:id="@+id/question"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -42,21 +46,25 @@
                 android:textSize="32sp" />
         </RelativeLayout>
 
-        <!-- RADIO BUTTONS AND OPTIONS TEXT VIEW -->
-
         <RelativeLayout
+            style="@style/cards"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:background="@drawable/cards" >
 
-        <RadioGroup
-        android:id="@+id/rg1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true">
-            <RadioButton android:id="@+id/rb1" android:text="Option1" />
-            <RadioButton android:id="@+id/rb2" android:text="ROption2" />
-            <RadioButton android:id="@+id/rb3" android:text="Option3" />
-    </RadioGroup>
+            <EditText
+                android:id="@+id/answer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:ems="10"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:padding="10dp" >
+
+                <requestFocus />
+            </EditText>
         </RelativeLayout>
 
         <LinearLayout
@@ -64,22 +72,25 @@
             android:layout_height="wrap_content" >
 
             <Button
-                android:id="@+id/checkbutton"
+                android:id="@+id/btnCheckAnswer"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/check" />
 
             <Button
-                android:id="@+id/seesolution"
+                android:id="@+id/btnSolution"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/solution" />
+
+
         </LinearLayout>
+
     </LinearLayout>
     
-        <!--  Views required by the animation -->
+    <!--  Views required by the animation -->
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -98,5 +109,10 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="140dp"/>
     </RelativeLayout>
+    
+    <!-- End of views required by the animation -->
 
 </RelativeLayout>
+
+
+

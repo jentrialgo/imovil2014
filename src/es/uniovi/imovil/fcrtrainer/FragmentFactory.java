@@ -59,6 +59,8 @@ final public class FragmentFactory {
 			return ProtocolExerciseFragment.newInstance();
 		case R.string.binary:
 			return BinaryExerciseFragment.newInstance();
+		case R.string.host_count:
+			return HostCountExerciseFragment.newInstance();
 			// TODO: return NetworkMaskExerciseFragment.newInstance();
 		case R.string.sign_and_magnitude:
 			// TODO: return SignedMagnitudeExerciseFragment.newInstance();
@@ -66,8 +68,6 @@ final public class FragmentFactory {
 			// TODO: return FloatingPointExerciseFragment.newInstance();
 		case R.string.network_address:
 			// TODO: return NetworAddressExerciseFragment.newInstance();
-		case R.string.host_count:
-			// TODO: return HostCountExerciseFragment.newInstance();
 		case R.string.network_mask:
 			// TODO: return NetworkMaskExerciseFragment.newInstance();
 

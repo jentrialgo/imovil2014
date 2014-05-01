@@ -70,11 +70,19 @@
     <string name="LOxor">XOR</string>
     
     <string name="LOpregunta">¿Which is the solution of this 5-bit logic operation?</string>
+    
+    <string name="finJuego">End</string>
+    <string name="modoEntrenamiento">Back to training mode</string>
+    <string name="puntuacion">Your score is: </string>
     <!-- Fin Operaciones Lógicas -->
 
 	<!-- Twos Complement -->
 	<string name="convert_to_twoscomplement">Convert to twos complement</string>
 	<string name="convert_to_decimal">Convert from twos complement to decimal</string>
 	<!--  End Twos Complement -->
+	
+ 	<!-- Host count exercise -->
+  	<string name="host_count_title">Calculate number of hosts</string>
+  	<!-- End Host count exercise -->
 </resources>
 
