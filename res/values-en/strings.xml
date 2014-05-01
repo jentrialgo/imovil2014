@@ -83,8 +83,6 @@
 	
  	<!-- Host count exercise -->
   	<string name="host_count_title">Calculate number of hosts</string>
-  	<string name="check">Check</string>
-  	<string name="solution">Solution</string>
   	<!-- End Host count exercise -->
 </resources>
 
