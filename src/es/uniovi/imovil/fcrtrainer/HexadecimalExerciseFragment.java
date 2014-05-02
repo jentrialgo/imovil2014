@@ -55,6 +55,7 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 	private int pointsCounter = 0;
 	private static final int MAX_NUMBER_TO_CONVERT = 1000;
 	private static final int GAMEMODE_MAXQUESTIONS = 5;
+	private Random randomGenerator;
 
 	public static HexadecimalExerciseFragment newInstance() {
 
@@ -81,6 +82,8 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 				.findViewById(R.id.numbertoconvert);
 		tvTitle = (TextView) rootView.findViewById(R.id.exercisetitle);
 		tvPoints = (TextView) rootView.findViewById(R.id.tvpoints);
+		
+		randomGenerator = new Random();
 
 		etAnswer.setOnEditorActionListener(new OnEditorActionListener() {
 
@@ -148,7 +151,6 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 	}
 	
 	public void generateRandomNumber() {
-		Random randomGenerator = new Random();
 		numberToConvert = randomGenerator.nextInt(MAX_NUMBER_TO_CONVERT);
 		updateUI();
 	}
