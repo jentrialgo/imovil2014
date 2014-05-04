@@ -208,30 +208,29 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 		outState.putInt("numbertoconvert", numberToConvert);
 	}
 
-	public void saveScore(int points) {
-		String user = getString(R.string.default_user_name);
-
-		try {
-			HighscoreManager.addScore(getActivity().getApplicationContext(),
-					points, R.string.hexadecimal, new Date(), user);
-		} catch (JSONException e) {
-			Log.v(getClass().getSimpleName(), "Error when saving score");
-		}
-	}
-
+	/**
+	 * Prepares the layout for the training and game mode.
+	 * 
+	 * @param training
+	 *            true if the change is to the training mode
+	 */
 	public void setTrainingMode(boolean training) {
 		if (training) {
 			game = false;
 			bSolution.setVisibility(View.VISIBLE);
 			tvPoints.setVisibility(View.GONE);
-			resetGameState();
 		} else {
 			game = true;
+			resetGameState();
 			bSolution.setVisibility(View.GONE);
 			tvPoints.setVisibility(View.VISIBLE);
 		}
 	}
 
+	/**
+	 * Updates the game stats and if all the questions have been asked it calls
+	 * the endGame() method.
+	 */
 	public void updateGameState() {
 		pointsCounter++;
 		updatePoints(pointsCounter);
@@ -240,14 +239,22 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 	}
 
 	public void resetGameState() {
+		askedQuestions = 0; 
 		pointsCounter = 0;
 		tvPoints.setVisibility(View.GONE);
 	}
 
+	/**
+	 * Updates the points in the UI
+	 * @param points
+	 */
 	public void updatePoints(int points) {
 		tvPoints.setText(String.valueOf(points));
 	}
 
+	/**
+	 * Starts the game and sets the UI
+	 */
 	@Override
 	void startGame() {
 		super.startGame();
@@ -255,12 +262,18 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 		updatePoints(pointsCounter);
 	}
 
+	/**
+	 * Called when the user cancels the game
+	 */
 	@Override
 	void cancelGame() {
 		super.cancelGame();
 		setTrainingMode(true);
 	}
 
+	/**
+	 * Called when the game ends
+	 */
 	@Override
 	void endGame() {
 		super.endGame();
@@ -271,10 +284,14 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 		showEndGameDialog(remainingTime);
 
 		saveScore(pointsCounter);
-		resetGameState();
 		setTrainingMode(true);
 	}
 
+	/**
+	 * Shows a dialog with the game stats when the game is over
+	 * 
+	 * @param remainingTime
+	 */
 	public void showEndGameDialog(int remainingTime) {
 		AlertDialog.Builder abuilder = new AlertDialog.Builder(getActivity());
 		abuilder.setTitle(getString(R.string.gameisover));
@@ -288,6 +305,22 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 					getString(R.string.lost_time_over), pointsCounter));
 
 		abuilder.create().show();
+	}
+
+	/**
+	 * Saves the score using the Highscore Manager.
+	 * 
+	 * @param points
+	 */
+	public void saveScore(int points) {
+		String user = getString(R.string.default_user_name);
+
+		try {
+			HighscoreManager.addScore(getActivity().getApplicationContext(),
+					points, R.string.hexadecimal, new Date(), user);
+		} catch (JSONException e) {
+			Log.v(getClass().getSimpleName(), "Error when saving score");
+		}
 	}
 
 }
