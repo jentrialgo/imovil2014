@@ -99,10 +99,16 @@ limitations under the License.
   	<string name="insert_value_binary">insertar un valor por favor.</string>
 	<string name="convert_to_dec">Convierte a decimal</string>
   	<string name="binary_hint">example: 00000000</string>
-  	<string name="game_over">YA ESTÀ!</string>
+  	
+  	<string name="game_over">¡YA ESTÁ!</string>
   	<string name="points">Puntos: </string>
-  	<string name="won">Has ganado! </string>
-  	<string name="lost">Has perdido! </string>
+  	
+  	<string name="won">¡Has ganado!</string>
+  	<string name="lost">¡Has perdido!</string>
+  	
+  	<string name="gameisover">Fin del juego</string>
+  	<string name="gameisoverexp">¡Has acabado el juego! Te han sobrado %1$d segundos y has obtenido %2$d puntos.</string>
+  	<string name="lost_time_over">Game Over! Se ha acabado el tiempo. Has contestado correctamente %1$d preguntas.</string>
 
   	<!-- Modulo: Operaciones Lógicas -->
   	<string name="LOand">AND</string>

@@ -53,6 +53,7 @@ limitations under the License.
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="TextView"
+                android:textColor="@color/mediumdarkgray"
                 android:visibility="gone" />
 
         </LinearLayout>
