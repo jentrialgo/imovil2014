@@ -1,5 +1,7 @@
 package es.uniovi.imovil.fcrtrainer;
 
+import java.util.Random;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -107,9 +109,8 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 		//Arrays
 		preguntas = getResources().getStringArray(R.array.layer_exercise_questions);
 		respuestas = getResources().getStringArray(R.array.layer_exercise_answers);
-		
-		pregunta.setText(preguntas[indice]);
-		
+		RANDOM();
+		pregunta.setText(preguntas[indice]);	
 		 
 		return rootView;
 	}
@@ -130,19 +131,21 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 		}
 	}
 
-
 	private void CompruebaRespuesta() {
 		if (rb_pressed.equals(respuestas[indice])){
 			showAnimationAnswer(true);
-			if (indice <10){
-				indice++;
-			}
-			else indice=0;
-			
+			RANDOM();			
 			pregunta.setText(preguntas[indice]);
 		}
 		else showAnimationAnswer(false);		
-	}			
+	}
+	
+	//Metodo para generar un número aleatorio
+		public int RANDOM(){
+			Random ran = new Random();
+			indice = ran.nextInt(11);
+			return indice;
+		}
 }
 
 
