@@ -68,14 +68,23 @@ limitations under the License.
         <item>Protocolo POP3</item>
         <item>Protocolo IMAP</item>
         <item>Protocolo ICMP</item>
+        <item>Protocolo DNS</item>
+        <item>Protocolo Ethernet</item>
+        <item>Protocolo ARP</item>
+        <item>Protocolo SSH</item>
+        <item>Protocolo ICMP</item>
     </string-array>
 
-    <!--  hay que poner las capas en orden alfabetico -->
     <string-array name="layer_exercise_answers">
         <item>Capa de internet</item>
         <item>Capa de transporte</item>
         <item>Capa de transporte</item>
         <item>Capa de aplicación</item>
+        <item>Capa de aplicación</item>
+        <item>Capa de internet</item>
+        <item>Capa de aplicación</item>
+        <item>Capa de enlace</item>
+        <item>Capa de enlace</item>
         <item>Capa de aplicación</item>
         <item>Capa de internet</item>
     </string-array>

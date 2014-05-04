@@ -134,7 +134,7 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 	private void CompruebaRespuesta() {
 		if (rb_pressed.equals(respuestas[indice])){
 			showAnimationAnswer(true);
-			if (indice <5){
+			if (indice <10){
 				indice++;
 			}
 			else indice=0;

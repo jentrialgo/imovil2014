@@ -4,22 +4,24 @@
     android:layout_height="match_parent"
     android:background="@color/mediumgray"
     android:orientation="vertical" >
-
-    <TextView
-        android:id="@+id/exercisetitle"
-        style="@style/Title2DarkLight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:text="@string/layer_tittle" />
+    
+	<LinearLayout 
+    	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:orientation="vertical">
+    	<TextView
+        	android:id="@+id/exercisetitle"
+        	style="@style/Title2DarkLight"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_marginLeft="15dp"
+        	android:layout_marginTop="5dp"
+        	android:text="@string/layer_tittle" />
 
     <TextView
         android:id="@+id/textlayer"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@id/exercisetitle"
-        android:layout_centerHorizontal="true"
         android:gravity="center"
         android:background="@drawable/cards"
         android:layout_margin="15dp"
@@ -30,8 +32,6 @@
         android:id="@+id/layer_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textlayer"
-        android:layout_centerHorizontal="true"
         android:background="@drawable/cards"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
@@ -66,26 +66,32 @@
         android:id="@+id/layer_exercise"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:text="@string/logic_gate"
         android:visibility="gone" />
+    
+	<LinearLayout 
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal"
+	    android:layout_marginLeft="15dp"
+	    android:layout_marginRight="15dp">
+        
+    	<Button
+        	android:id="@+id/button_layer"
+        	android:layout_weight="1"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:text="@string/button_layer_exercise"/>
 
-    <Button
-        android:id="@+id/button_layer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textlayer"
-        android:layout_below="@+id/layer_group"
-        android:text="@string/button_layer_exercise"/>
-
-    <Button
-        android:id="@+id/button_solutionlayer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button_layer"
-        android:layout_alignBottom="@+id/button_layer"
-        android:layout_alignRight="@+id/textlayer"
-        android:text="@string/button_solution" />
+    	<Button
+        	android:id="@+id/button_solutionlayer"
+        	android:layout_weight="1"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:text="@string/button_solution" />
+    </LinearLayout>
+        </LinearLayout>
+	
     
        <!--  Views required by the animation -->
 
@@ -107,8 +113,7 @@
             android:layout_marginTop="140dp"/>
     </RelativeLayout>
     
-    <!-- End of views required by the animation -->
-    
+    <!-- End of views required by the animation -->    
 </RelativeLayout>
 
 
