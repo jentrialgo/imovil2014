@@ -54,7 +54,7 @@ limitations under the License.
     <string name="fail">Has fallado. La respuesta correcta es</string>  
      
     <string name="fragment_interpretation">Complemento a 2</string>    
-    
+    <string name="finJuego">Final de Juego</string>
      <!-- Strings logic gate -->
      
      <string name="button_logic_gate">Comprobar</string>
@@ -111,5 +111,7 @@ limitations under the License.
     <!-- Twos Complement -->
 	<string name="convert_to_twoscomplement">Convierte a complemento a dos</string>
 	<string name="convert_to_decimal">Convierte de complemento a dos a decimal</string>
+	 <string name="points01">Has obtenido </string>
+	 <string name="points02"> puntos</string>
   	<!--  End Twos Complement -->
 </resources>

@@ -18,8 +18,13 @@ limitations under the License.
 
 package es.uniovi.imovil.fcrtrainer;
 
+import java.util.Date;
 import java.util.Random;
 
+import org.json.JSONException;
+
+import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
+import android.content.res.Resources.NotFoundException;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +32,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class TwosComplementExerciseFragment  extends BaseExerciseFragment {
@@ -35,10 +41,16 @@ public class TwosComplementExerciseFragment  extends BaseExerciseFragment {
 	private static final int MIN_NUMBER_TO_CONVERT=(int) -(Math.pow(2,NBIT-1));
 	private static final int GENERATE_DECIMAL=0;
 	private static final int GENERATE_BINARY=1;
+	private static final int MAX_QUESTS_GAME=5;
+	private static final int POINTS_CORRECT_ANSWER=10;
 	
+	private RelativeLayout rel_cards;
 	private Button but_check;
 	private Button but_solution;
 	private Button but_setMode;
+	private boolean GameMode = false;
+	private int quests_shown;
+	private int points = 0;
 	private EditText edi_answer;
 	private TextView tex_tittle;
 	private TextView tex_numberToConvert;
@@ -58,9 +70,11 @@ public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	View rootView;
 	rootView = inflater.inflate(R.layout.fragment_twos_complement, container, false);
 	
+	rel_cards = (RelativeLayout) rootView.findViewById(R.id.rel_cards);
 	but_check = (Button) rootView.findViewById(R.id.bCheck);
 	but_solution = (Button) rootView.findViewById(R.id.bSeesolution);	
 	but_setMode = (Button) rootView.findViewById(R.id.bSetconversion);
+	
 	edi_answer = (EditText) rootView.findViewById(R.id.etAnswer);
 	tex_tittle = (TextView) rootView.findViewById(R.id.txTittle);
 	tex_numberToConvert = (TextView) rootView.findViewById(R.id.txNumbertoconvert);
@@ -71,20 +85,30 @@ public View onCreateView(LayoutInflater inflater, ViewGroup container,
 		@Override
 		public void onClick(View arg0) {
 			// TODO Auto-generated method stub
-			if(but_check.getText().equals(getResources().getString((R.string.next_binary))))
+			
+			if(GameMode==false)
 			{
-				edi_answer.setText("");
-				but_check.setText(getResources().getString(R.string.check));
-				if(modeToDecimal)
-					generateRand(GENERATE_BINARY);
+				if(but_check.getText().equals(getResources().getString((R.string.next_binary))))
+				{
+					edi_answer.setText("");
+					but_check.setText(getResources().getString(R.string.check));
+					if(modeToDecimal)
+						generateRand(GENERATE_BINARY);
+					else
+						generateRand(GENERATE_DECIMAL);		
+				}
+						
 				else
-					generateRand(GENERATE_DECIMAL);		
+				{
+					checkAnswer();
+				}
 			}
-					
 			else
+			{
 				checkAnswer();
+				
+			}
 		}
-		
 	});
 	
 	but_solution.setOnClickListener(new OnClickListener() 
@@ -196,7 +220,6 @@ private String toDecimal(String numb) {
 		return ""+Integer.parseInt(numb, 2);
 }
 
-
 private void checkAnswer() {
 	// TODO Auto-generated method stub
 	String correctAnswer;
@@ -208,9 +231,14 @@ private void checkAnswer() {
 		{
 			showAnimationAnswer(true);
 			generateRand(GENERATE_BINARY);
+			if(GameMode)
+			{
+				quests_shown++;
+				points=points+POINTS_CORRECT_ANSWER;
+			}
 		}
 		else
-			showAnimationAnswer(false);
+				showAnimationAnswer(false);
 	}
 	else
 	{
@@ -219,13 +247,33 @@ private void checkAnswer() {
 		{
 			showAnimationAnswer(true);
 			generateRand(GENERATE_DECIMAL);
+			if(GameMode)
+			{
+				quests_shown++;
+				points=points+POINTS_CORRECT_ANSWER;
+			}
 		}
+		
 		else
+		{
 			showAnimationAnswer(false);
+		}
 	}	
 	edi_answer.setText("");
+	
+	if(quests_shown==MAX_QUESTS_GAME)
+	{
+		endGame();
+	}
 }
 
+private int calculatePoints() {
+	//Funciones de tiempo
+	int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000; 
+	//every remaining second gives one extra point.
+	points = (int) (points + remainingTimeInSeconds);
+	return points;
+}
 
 private void seeSolution() {
 	// TODO Auto-generated method stub
@@ -236,6 +284,75 @@ private void seeSolution() {
 		edi_answer.setText(toTwosComplement(numbToConvert));
 	
 	but_check.setText(R.string.next_binary);	
+}
+
+void startGame() {
+
+	points = 0;
+	but_check.setVisibility(View.VISIBLE);
+	rel_cards.setVisibility(View.VISIBLE);
+	but_solution.setVisibility(View.GONE);
+	but_setMode.setVisibility(View.GONE);
+	
+	super.startGame();
+	GameMode=true;
+	quests_shown=1;
+	
+	
+	if(modeToDecimal)
+	{
+		tex_tittle.setText(getResources().getString(R.string.convert_to_decimal));
+		generateRand(GENERATE_BINARY);
+	}
+	else
+	{
+		tex_tittle.setText(getResources().getString(R.string.convert_to_twoscomplement));
+		generateRand(GENERATE_DECIMAL);
+	}
+	
+
+}
+
+void cancelGame() {
+	super.cancelGame();
+	but_check.setVisibility(View.VISIBLE);
+	rel_cards.setVisibility(View.VISIBLE);
+	but_solution.setVisibility(View.VISIBLE);
+	but_setMode.setVisibility(View.VISIBLE);
+	GameMode=false;
+	if(modeToDecimal)
+	{
+		tex_tittle.setText(getResources().getString(R.string.convert_to_decimal));
+		generateRand(GENERATE_BINARY);
+	}
+	else
+	{
+		tex_tittle.setText(getResources().getString(R.string.convert_to_twoscomplement));
+		generateRand(GENERATE_DECIMAL);
+	}
+}
+
+void endGame() {
+	super.endGame();
+	tex_tittle.setText(R.string.finJuego);
+	tex_numberToConvert.setText(getResources().getString(R.string.points01) + calculatePoints() + getResources().getString(R.string.points02));
+	but_check.setVisibility(View.GONE);
+	rel_cards.setVisibility(View.GONE);
+
+	//enviar puntuacion 
+	try {
+
+		HighscoreManager.addScore(getActivity(), points, R.string.twoscomplement, new Date(), null);
+	} catch (NumberFormatException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (NotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (JSONException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 }
 
 }

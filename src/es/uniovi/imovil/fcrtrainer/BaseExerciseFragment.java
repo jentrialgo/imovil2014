@@ -92,6 +92,12 @@ public abstract class BaseExerciseFragment extends Fragment {
 		super.onViewCreated(view, savedInstanceState);
 	}
 
+	
+	protected long getRemainingTimeMs(){
+		long nowMs = System.currentTimeMillis();
+		return mDurationMs - (nowMs - mStartMs);
+	}
+	
 	private final class TimeUpdater implements Runnable {
 		public void run() {
 			mTimerHandler.removeCallbacks(mUpdateTimeTask);
