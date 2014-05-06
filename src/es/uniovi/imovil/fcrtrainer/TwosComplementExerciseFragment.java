@@ -26,6 +26,7 @@ import org.json.JSONException;
 import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
 import android.content.res.Resources.NotFoundException;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -39,23 +40,24 @@ public class TwosComplementExerciseFragment  extends BaseExerciseFragment {
 	private static final int NBIT = 7;
 	private static final int MAX_NUMBER_TO_CONVERT=(int) (Math.pow(2,NBIT-1)-1);
 	private static final int MIN_NUMBER_TO_CONVERT=(int) -(Math.pow(2,NBIT-1));
-	private static final int GENERATE_DECIMAL=0;
-	private static final int GENERATE_BINARY=1;
-	private static final int MAX_QUESTS_GAME=5;
 	private static final int POINTS_CORRECT_ANSWER=10;
+	private static final int MAX_QUESTS_GAME=5;
+
+	private boolean modeToDecimal=false;
+	private boolean GameMode = false;
+	private int quests_shown;
+	private int points = 0;
 	
 	private RelativeLayout rel_cards;
 	private Button but_check;
 	private Button but_solution;
 	private Button but_setMode;
-	private boolean GameMode = false;
-	private int quests_shown;
-	private int points = 0;
 	private EditText edi_answer;
 	private TextView tex_tittle;
 	private TextView tex_numberToConvert;
+	private TextView mClock;
 	private String numbToConvert;
-	private boolean modeToDecimal=false;
+	private String time="";
 	
 public static TwosComplementExerciseFragment newInstance() {
 		
@@ -74,10 +76,10 @@ public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	but_check = (Button) rootView.findViewById(R.id.bCheck);
 	but_solution = (Button) rootView.findViewById(R.id.bSeesolution);	
 	but_setMode = (Button) rootView.findViewById(R.id.bSetconversion);
-	
 	edi_answer = (EditText) rootView.findViewById(R.id.etAnswer);
 	tex_tittle = (TextView) rootView.findViewById(R.id.txTittle);
 	tex_numberToConvert = (TextView) rootView.findViewById(R.id.txNumbertoconvert);
+	mClock = (TextView) rootView.findViewById(R.id.text_view_clock);
 	
 	but_check.setOnClickListener(new OnClickListener() 
 	{
@@ -88,16 +90,12 @@ public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			
 			if(GameMode==false)
 			{
-				if(but_check.getText().equals(getResources().getString((R.string.next_binary))))
+				if(but_check.getText().equals(getResources().getString((R.string.next_numb))))
 				{
 					edi_answer.setText("");
 					but_check.setText(getResources().getString(R.string.check));
-					if(modeToDecimal)
-						generateRand(GENERATE_BINARY);
-					else
-						generateRand(GENERATE_DECIMAL);		
-				}
-						
+					generateRand(modeToDecimal);
+				}	
 				else
 				{
 					checkAnswer();
@@ -106,7 +104,6 @@ public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			else
 			{
 				checkAnswer();
-				
 			}
 		}
 	});
@@ -127,41 +124,64 @@ public View onCreateView(LayoutInflater inflater, ViewGroup container,
 		@Override
 		public void onClick(View arg0) {
 			// TODO Auto-generated method stub
-			modeToDecimal = !modeToDecimal;
-			if(modeToDecimal)
-			{
-				tex_tittle.setText(getResources().getString(R.string.convert_to_decimal));
-				generateRand(GENERATE_BINARY);
-			}
-			else
-			{
-				tex_tittle.setText(getResources().getString(R.string.convert_to_twoscomplement));
-				generateRand(GENERATE_DECIMAL);
-			}
+
+			modeToDecimal = !modeToDecimal;		
+			generateRand(modeToDecimal);
 			edi_answer.setText("");
 		}
 	});
 		
-	generateRand(GENERATE_DECIMAL);
+
+	Log.i(getClass().getSimpleName(), "onViewCreated");
+
+	if (savedInstanceState != null) {
+		Log.i(getClass().getSimpleName(), "Inside savedInstanceState");
+		modeToDecimal = savedInstanceState.getBoolean("modeToDecimal");
+		numbToConvert = savedInstanceState.getString("numbToConvert");
+
+		updateUI();
+	} else
+		generateRand(modeToDecimal);
 	
 	return rootView;
 }
 
-private void generateRand(int mode) {
+private void generateRand(boolean modeToDecimal) {
 	// TODO Auto-generated method stub
 	Random rand = new Random(); //To generate positive or negative numbers, in this case [-64,63]
 	int num_rand= rand.nextInt(MAX_NUMBER_TO_CONVERT-MIN_NUMBER_TO_CONVERT+1)+MIN_NUMBER_TO_CONVERT;
 
-	if (mode==GENERATE_BINARY)
-	{
+	if (modeToDecimal)
 		numbToConvert= toTwosComplement(""+num_rand);
-		tex_numberToConvert.setText(numbToConvert);
-	}
-	else if(mode==GENERATE_DECIMAL)
-	{
+	else
 		numbToConvert=""+num_rand;
+	
+	updateUI();
+}
+
+public void updateUI() {
+	if (modeToDecimal)
+	{
+		tex_tittle.setText(getResources().getString(R.string.convert_to_decimal));
 		tex_numberToConvert.setText(numbToConvert);
 	}
+	else
+	{
+		tex_tittle.setText(getResources().getString(R.string.convert_to_twoscomplement));
+		tex_numberToConvert.setText(numbToConvert);
+	}
+	
+	if(GameMode)
+		mClock.setText(time);
+}
+
+@Override
+public void onSaveInstanceState(Bundle outState) {
+	super.onSaveInstanceState(outState);
+
+	outState.putBoolean("modeToDecimal", modeToDecimal);
+	outState.putString("numbToConvert", numbToConvert);
+
 }
 
 private String toTwosComplement(String numb) {
@@ -230,7 +250,7 @@ private void checkAnswer() {
 		if(correctAnswer.equals(edi_answer.getText().toString()))
 		{
 			showAnimationAnswer(true);
-			generateRand(GENERATE_BINARY);
+			generateRand(modeToDecimal);
 			if(GameMode)
 			{
 				quests_shown++;
@@ -238,7 +258,9 @@ private void checkAnswer() {
 			}
 		}
 		else
-				showAnimationAnswer(false);
+		{
+			showAnimationAnswer(false);
+		}
 	}
 	else
 	{
@@ -246,14 +268,13 @@ private void checkAnswer() {
 		if(correctAnswer.equals(edi_answer.getText().toString()))
 		{
 			showAnimationAnswer(true);
-			generateRand(GENERATE_DECIMAL);
+			generateRand(modeToDecimal);
 			if(GameMode)
 			{
 				quests_shown++;
 				points=points+POINTS_CORRECT_ANSWER;
 			}
 		}
-		
 		else
 		{
 			showAnimationAnswer(false);
@@ -268,9 +289,8 @@ private void checkAnswer() {
 }
 
 private int calculatePoints() {
-	//Funciones de tiempo
+
 	int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000; 
-	//every remaining second gives one extra point.
 	points = (int) (points + remainingTimeInSeconds);
 	return points;
 }
@@ -283,7 +303,7 @@ private void seeSolution() {
 	else
 		edi_answer.setText(toTwosComplement(numbToConvert));
 	
-	but_check.setText(R.string.next_binary);	
+	but_check.setText(R.string.next_numb);	
 }
 
 void startGame() {
@@ -298,18 +318,7 @@ void startGame() {
 	GameMode=true;
 	quests_shown=1;
 	
-	
-	if(modeToDecimal)
-	{
-		tex_tittle.setText(getResources().getString(R.string.convert_to_decimal));
-		generateRand(GENERATE_BINARY);
-	}
-	else
-	{
-		tex_tittle.setText(getResources().getString(R.string.convert_to_twoscomplement));
-		generateRand(GENERATE_DECIMAL);
-	}
-	
+	generateRand(modeToDecimal);
 
 }
 
@@ -320,16 +329,7 @@ void cancelGame() {
 	but_solution.setVisibility(View.VISIBLE);
 	but_setMode.setVisibility(View.VISIBLE);
 	GameMode=false;
-	if(modeToDecimal)
-	{
-		tex_tittle.setText(getResources().getString(R.string.convert_to_decimal));
-		generateRand(GENERATE_BINARY);
-	}
-	else
-	{
-		tex_tittle.setText(getResources().getString(R.string.convert_to_twoscomplement));
-		generateRand(GENERATE_DECIMAL);
-	}
+	generateRand(modeToDecimal);
 }
 
 void endGame() {
@@ -339,7 +339,6 @@ void endGame() {
 	but_check.setVisibility(View.GONE);
 	rel_cards.setVisibility(View.GONE);
 
-	//enviar puntuacion 
 	try {
 
 		HighscoreManager.addScore(getActivity(), points, R.string.twoscomplement, new Date(), null);

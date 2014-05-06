@@ -13,7 +13,6 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-
  */
 
 package es.uniovi.imovil.fcrtrainer;
@@ -68,6 +67,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 
 	private final static int CLOCK_UPDATE_PERIOD_MS = 1000; // 1 s
 	private final static int DEFAULT_GAME_DURATION_MS = 120 * 1000; // 2 min
+	private static final String TAG = null;
 
 	boolean mIsPlaying = false;
 
@@ -91,13 +91,18 @@ public abstract class BaseExerciseFragment extends Fragment {
 		resultImage = (ImageView) view.findViewById(R.id.resultimage);
 		super.onViewCreated(view, savedInstanceState);
 	}
-
 	
+	/**
+	 * Get remaining time in ms.
+	 * 
+	 * @return long
+	 */
 	protected long getRemainingTimeMs(){
 		long nowMs = System.currentTimeMillis();
 		return mDurationMs - (nowMs - mStartMs);
 	}
-	
+
+
 	private final class TimeUpdater implements Runnable {
 		public void run() {
 			mTimerHandler.removeCallbacks(mUpdateTimeTask);
@@ -229,8 +234,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 	 * 
 	 * @param correct if the answer is correct
 	 */
-	@SuppressLint("NewApi") protected void showAnimationAnswer(boolean correct){
-		
+	@SuppressLint("NewApi") protected void showAnimationAnswer(boolean correct){		
 		// Fade in - fade out
 		result.setVisibility(View.VISIBLE);
 		animation = new AlphaAnimation(0,1);
@@ -240,8 +244,8 @@ public abstract class BaseExerciseFragment extends Fragment {
 		animation.setRepeatCount(Animation.RESTART);
 		animation.setRepeatMode(Animation.REVERSE);
 		result.startAnimation(animation);
-		
-		if(correct) resultImage.setImageDrawable(getResources().getDrawable(R.drawable.correct));
+		if(correct)
+			resultImage.setImageDrawable(getResources().getDrawable(R.drawable.correct));
 		else resultImage.setImageDrawable(getResources().getDrawable(R.drawable.incorrect));
 
 		// This only works in API 12+, so we skip this animation on old devices

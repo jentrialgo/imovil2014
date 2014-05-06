@@ -139,14 +139,10 @@ public class DataBaseHelper  extends SQLiteOpenHelper{
         }
 		while (cursor.moveToNext())
 		{
-			Log.v(TAG,"cColumnas: "+cursor.getColumnCount());
-			Log.v(TAG," Filas :"+cursor.getCount());	
-			Log.v(TAG,"Hasta aqui");
 			Test test= new Test(cursor.getString(cursor.getColumnIndex("pregunta")),
 					cursor.getString(cursor.getColumnIndex("respuesta1")),
 					cursor.getString(cursor.getColumnIndex("respuesta2")),
 					cursor.getString(cursor.getColumnIndex("respuesta3")),
-					cursor.getString(cursor.getColumnIndex("respuesta4")),
 					cursor.getString(cursor.getColumnIndex("solucion")));
 			testList.add(test);
 		}
