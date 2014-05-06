@@ -26,7 +26,7 @@ public class BinaryOffsetExerciseFragment extends BaseExerciseFragment {
 	private final int max = 127;
 	private final int min = 0;
 	private int number=0,solvedNumber=0;
-	private boolean isBinary;
+	private boolean isBinary,isNext=false;
 	private  TextView numberToConvertView;
 	private TextView title;
 	private  EditText answerField;
@@ -61,13 +61,27 @@ public class BinaryOffsetExerciseFragment extends BaseExerciseFragment {
 			@Override
 			public void onClick(View v) {
 				
-
-					if(isBinary){		
+					if(isNext){
+						
+						generateRdmNumber();
+						
+						if(isBinary){
+							numberToConvertView.setText(Integer.toBinaryString(number));
+							btnCheck.setText(R.string.check);
+						}else{
+							numberToConvertView.setText(Integer.toString(number));
+							btnCheck.setText(R.string.check);
+						}
+						isNext = !(isNext);
+						
+					}else if(isBinary){		
 						
 						getDecimalFromBinaryOffsetRepresentation();						
 						
 						if(answerField.getText().toString().equals(Integer.toString(solvedNumber))){
 							showAnimationAnswer(true);
+							generateRdmNumber();
+							numberToConvertView.setText(Integer.toBinaryString(number));
 						}else{
 							showAnimationAnswer(false);							
 						}
@@ -78,6 +92,8 @@ public class BinaryOffsetExerciseFragment extends BaseExerciseFragment {
 												
 						if(answerField.getText().toString().equals(Integer.toBinaryString(solvedNumber))){
 							showAnimationAnswer(true);
+							generateRdmNumber();
+							numberToConvertView.setText(Integer.toString(number));
 
 						}else{
 							showAnimationAnswer(false);
@@ -94,13 +110,13 @@ public class BinaryOffsetExerciseFragment extends BaseExerciseFragment {
 				if(isBinary){
 					getDecimalFromBinaryOffsetRepresentation();
 					answerField.setText(Integer.toString(solvedNumber));
-					
+					btnCheck.setText(R.string.next_binary);
 				}else{
 					getBinaryOffsetRepresentationFromDecimal();
 					answerField.setText(Integer.toBinaryString(solvedNumber));
-					
+					btnCheck.setText(R.string.next_binary);					
 				}			
-				
+				isNext = !(isNext);
 			}
 		});
 		
@@ -109,15 +125,15 @@ public class BinaryOffsetExerciseFragment extends BaseExerciseFragment {
 			@Override
 			public void onClick(View v) {
 				
-				isBinary = !(isBinary);
 				generateRdmNumber();
 				if(isBinary){
 					title.setText(R.string.convert_to_dec);
-					numberToConvertView.setText(Integer.toBinaryString(number));
+					numberToConvertView.setText(Integer.toString(number));
 				}else{
 					title.setText(R.string.convert_to_bin_offset);
-					numberToConvertView.setText(Integer.toString(number));
+					numberToConvertView.setText(Integer.toBinaryString(number));
 				}
+				isBinary = !(isBinary);
 				
 			}
 		});

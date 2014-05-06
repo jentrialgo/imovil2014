@@ -24,7 +24,7 @@
         android:textSize="10pt" />
 
    <Button
-       android:id="@+id/button1"
+       android:id="@+id/btn_toggleBinary"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
 
@@ -40,8 +40,8 @@
        android:id="@+id/button3"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
-	   android:layout_alignTop="@+id/button1"
-       android:layout_alignRight="@+id/button1"
+	   android:layout_alignTop="@+id/btn_toggleBinary"
+       android:layout_alignRight="@+id/btn_toggleBinary"
        android:height="40dp"
        android:width="120dp"
        android:layout_marginLeft="80dp"
@@ -53,9 +53,9 @@
        android:id="@+id/button2"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
-       android:layout_alignBaseline="@+id/button1"
-       android:layout_alignBottom="@+id/button1"
-       android:layout_alignTop="@+id/button1"
+       android:layout_alignBaseline="@+id/btn_toggleBinary"
+       android:layout_alignBottom="@+id/btn_toggleBinary"
+       android:layout_alignTop="@+id/btn_toggleBinary"
        android:layout_marginLeft="380dp"
        android:text="Button"
        android:height="40dp"

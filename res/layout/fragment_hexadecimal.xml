@@ -86,21 +86,21 @@ limitations under the License.
             android:layout_height="wrap_content" >
 
             <Button
-                android:id="@+id/checkbutton"
+                android:id="@+id/btn_check"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/check" />
 
             <Button
-                android:id="@+id/seesolution"
+                android:id="@+id/btn_getsolution"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/solution" />
 
             <Button
-                android:id="@+id/change"
+                android:id="@+id/btn_togglebinary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_import_export"

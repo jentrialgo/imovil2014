@@ -15,7 +15,7 @@ import android.widget.Toast;
 public class ProtocolExerciseFragment extends BaseExerciseFragment implements OnClickListener {
 
 	//Problemas al cargar de la BD las preguntas.
-	//Esqueleto m’nimo, pero sin probar la funcionalidad por no cargarse bien la BD.
+	//Esqueleto mï¿½nimo, pero sin probar la funcionalidad por no cargarse bien la BD.
 	private static final String DB_NAME = "protocolFCR.sqlite";
 	private static final int DB_VERSION = 1;
 	private static final String TAG = null;
@@ -47,7 +47,7 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment implements On
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		mRootView=inflater.inflate(R.layout.fragment_protocol, container, false);
         DataBaseHelper db = new DataBaseHelper(this.getActivity(), DB_NAME, null, DB_VERSION);
-        respButton1 = (Button) mRootView.findViewById(R.id.button1);
+        respButton1 = (Button) mRootView.findViewById(R.id.btn_toggleBinary);
         respButton1.setOnClickListener(this);
         respButton2 = (Button) mRootView.findViewById(R.id.button2);
         respButton2.setOnClickListener(this);
@@ -93,7 +93,7 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment implements On
 		int idSelected = v.getId();
 		if (idSelected == retry.getId())
 			retry();
-		else if (idSelected==respButton1.getId()) //Pulsado bot—n 1.
+		else if (idSelected==respButton1.getId()) //Pulsado botï¿½n 1.
 			if (respButton1.getText().equals(test.getResponse()))
 			{
 				Toast.makeText(getActivity(), R.string.success, Toast.LENGTH_SHORT).show();	
@@ -102,7 +102,7 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment implements On
 			{
 				Toast.makeText(getActivity(),  " Fallo. La respuesta es "+ test.getResponse(), Toast.LENGTH_SHORT).show();
 			}
-		else if (idSelected==respButton2.getId()) //Pulsado bot—n 1.
+		else if (idSelected==respButton2.getId()) //Pulsado botï¿½n 1.
 			if (respButton2.getText().equals(test.getResponse()))
 			{
 				Toast.makeText(getActivity(), R.string.success, Toast.LENGTH_SHORT).show();	
@@ -111,7 +111,7 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment implements On
 			{
 				Toast.makeText(getActivity(), " Fallo. La respuesta es "+ test.getResponse(), Toast.LENGTH_SHORT).show();
 			}
-		else if (idSelected==respButton3.getId()) //Pulsado bot—n 1.
+		else if (idSelected==respButton3.getId()) //Pulsado botï¿½n 1.
 			if (respButton3.getText().equals(test.getResponse()))
 			{
 				Toast.makeText(getActivity(), R.string.success, Toast.LENGTH_SHORT).show();	
@@ -123,7 +123,7 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment implements On
 		else
 			if (respButton4.getText().equals(test.getResponse()))
 			{
-				//Acierto. Hacer algo. ÀIncrementar contador?. ÀMostrar mensaje?.
+				//Acierto. Hacer algo. ï¿½Incrementar contador?. ï¿½Mostrar mensaje?.
 				Toast.makeText(getActivity(), R.string.success, Toast.LENGTH_SHORT).show();		    
 			}
 			else 
@@ -131,7 +131,7 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment implements On
 				Toast.makeText(getActivity(), " Fallo. La respuesta es "+ test.getResponse(), Toast.LENGTH_SHORT).show();
 			}
 		i++; //Incrementar la variable global que marca la pregunta.
-		training(); //Se regresa a training. Se pasar‡ a la siguiente pregunta.
+		training(); //Se regresa a training. Se pasarï¿½ a la siguiente pregunta.
 	}
 
 	@Override
