@@ -258,6 +258,7 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 	@Override
 	void startGame() {
 		super.startGame();
+		showGameAnimation();
 		setTrainingMode(false);
 		updatePoints(pointsCounter);
 	}

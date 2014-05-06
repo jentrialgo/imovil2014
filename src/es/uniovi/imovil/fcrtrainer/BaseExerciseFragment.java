@@ -76,14 +76,12 @@ public abstract class BaseExerciseFragment extends Fragment {
 	private TextView mClock;
 	private long mDurationMs = DEFAULT_GAME_DURATION_MS;
 	private long mStartMs;
-	
+
 	private AlphaAnimation animation;
 	private AnticipateOvershootInterpolator antovershoot;
-	
+
 	private View result;
 	private ImageView resultImage;
-
-	
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -91,13 +89,13 @@ public abstract class BaseExerciseFragment extends Fragment {
 		resultImage = (ImageView) view.findViewById(R.id.resultimage);
 		super.onViewCreated(view, savedInstanceState);
 	}
-	
+
 	/**
 	 * Get remaining time in ms.
 	 * 
 	 * @return long
 	 */
-	protected long getRemainingTimeMs(){
+	protected long getRemainingTimeMs() {
 		long nowMs = System.currentTimeMillis();
 		return mDurationMs - (nowMs - mStartMs);
 	}
@@ -224,38 +222,78 @@ public abstract class BaseExerciseFragment extends Fragment {
 			getActivity().supportInvalidateOptionsMenu();
 		}
 	}
-	
+
 	/**
-	 * Shows an animation when the user taps on the check button.
-	 * Currently requires a layout with the id result and an imageview
-	 * with the id resultimage. The implementation of this views can be
-	 * seen in fragment_hexadecimal.xml
+	 * Shows an animation when the user taps on the check button. Currently
+	 * requires a layout with the id result and an imageview with the id
+	 * resultimage. The implementation of this views can be seen in
+	 * fragment_hexadecimal.xml
 	 * 
-	 * @param correct if the answer is correct
+	 * @param correct
+	 *            if the answer is correct
 	 */
-	@SuppressLint("NewApi") protected void showAnimationAnswer(boolean correct){		
+	@SuppressLint("NewApi")
+	protected void showAnimationAnswer(boolean correct) {
 		// Fade in - fade out
 		result.setVisibility(View.VISIBLE);
-		animation = new AlphaAnimation(0,1);
+		animation = new AlphaAnimation(0, 1);
 		animation.setDuration(600);
 		animation.setFillBefore(true);
 		animation.setFillAfter(true);
 		animation.setRepeatCount(Animation.RESTART);
 		animation.setRepeatMode(Animation.REVERSE);
 		result.startAnimation(animation);
-		if(correct)
-			resultImage.setImageDrawable(getResources().getDrawable(R.drawable.correct));
-		else resultImage.setImageDrawable(getResources().getDrawable(R.drawable.incorrect));
+		if (correct)
+			resultImage.setImageDrawable(getResources().getDrawable(
+					R.drawable.correct));
+		else
+			resultImage.setImageDrawable(getResources().getDrawable(
+					R.drawable.incorrect));
 
 		// This only works in API 12+, so we skip this animation on old devices
-		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB_MR2){
-			resultImage.animate().setDuration(700).setInterpolator(antovershoot).scaleX(1.5f).scaleY(1.5f).withEndAction(new Runnable(){
-				@Override
-				public void run() {
-					// Back to its original size after the animation's end
-					resultImage.animate().scaleX(1f).scaleY(1f);
-				}
-			});
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB_MR2) {
+			resultImage.animate().setDuration(700)
+					.setInterpolator(antovershoot).scaleX(1.5f).scaleY(1.5f)
+					.withEndAction(new Runnable() {
+						@Override
+						public void run() {
+							// Back to its original size after the animation's
+							// end
+							resultImage.animate().scaleX(1f).scaleY(1f);
+						}
+					});
+		}
+	}
+
+	/**
+	 * Shows an animation when the game starts 
+	 */
+	@SuppressLint("NewApi")
+	protected void showGameAnimation() {
+		// Fade in - fade out
+		result.setVisibility(View.VISIBLE);
+		animation = new AlphaAnimation(0, 1);
+		animation.setDuration(800);
+		animation.setFillBefore(true);
+		animation.setFillAfter(true);
+		animation.setRepeatCount(Animation.RESTART);
+		animation.setRepeatMode(Animation.REVERSE);
+		result.startAnimation(animation);
+		resultImage.setImageDrawable(getResources().getDrawable(
+				R.drawable.game_start));
+
+		// This only works in API 12+, so we skip this animation on old devices
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB_MR2) {
+			resultImage.animate().setDuration(900)
+					.setInterpolator(antovershoot).scaleX(1.5f).scaleY(1.5f)
+					.withEndAction(new Runnable() {
+						@Override
+						public void run() {
+							// Back to its original size after the animation's
+							// end
+							resultImage.animate().scaleX(1f).scaleY(1f);
+						}
+					});
 		}
 	}
 
