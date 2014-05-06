@@ -51,7 +51,6 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 	private boolean tohex = true;
 	private boolean game = false;
 	private int pointsCounter = 0;
-	private int askedQuestions = 1;
 	private static final int MAX_NUMBER_TO_CONVERT = 1000;
 	private static final int GAMEMODE_MAXQUESTIONS = 5;
 	private Random randomGenerator;
@@ -118,12 +117,12 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 			public void onClick(View arg0) {
 				tohex ^= true;
 				if (tohex) {
-					etAnswer.setInputType(EditorInfo.TYPE_CLASS_TEXT);
+					setKeyboardLayout();
 					tvTitle.setText(getResources().getString(
 							R.string.convert_to_hex));
 					generateRandomNumber();
 				} else {
-					etAnswer.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
+					setKeyboardLayout();
 					tvTitle.setText(getResources().getString(
 							R.string.convert_to_bin));
 					generateRandomNumber();
@@ -143,10 +142,16 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 			tohex = savedInstanceState.getBoolean("tohex");
 			numberToConvert = savedInstanceState.getInt("numbertoconvert");
 			updateUI();
+			setKeyboardLayout();
 		} else
 			generateRandomNumber();
 
 		return rootView;
+	}
+	
+	public void setKeyboardLayout(){
+		if(tohex) etAnswer.setInputType(EditorInfo.TYPE_CLASS_TEXT);
+		else etAnswer.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
 	}
 
 	public void generateRandomNumber() {
@@ -239,7 +244,6 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 	}
 
 	public void resetGameState() {
-		askedQuestions = 0; 
 		pointsCounter = 0;
 		tvPoints.setVisibility(View.GONE);
 	}
@@ -295,7 +299,7 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 	 */
 	public void showEndGameDialog(int remainingTime) {
 		AlertDialog.Builder abuilder = new AlertDialog.Builder(getActivity());
-		abuilder.setTitle(getString(R.string.gameisover));
+		abuilder.setTitle(getString(R.string.game_over));
 
 		if (remainingTime > 0)
 			abuilder.setMessage(String.format(
