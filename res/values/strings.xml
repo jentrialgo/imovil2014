@@ -31,7 +31,8 @@ limitations under the License.
     <string name="hexadecimal">Hexadecimal</string>
     <string name="sign_and_magnitude">Signo-magnitud</string>
     <string name="twoscomplement">Complemento a dos</string>
-    <string name="interpretation">Interpretación</string>
+   <!--  <string name="interpretation">Interpretación</string> -->
+    <string name="offset_binary">Exceso a Z</string>
     <string name="floating_point">Coma flotante</string>
     <string name="logic_gate">Puerta lógica</string>
     <string name="logic_operation">Operación lógica</string>
@@ -112,4 +113,8 @@ limitations under the License.
 	<string name="convert_to_twoscomplement">Convierte a complemento a dos</string>
 	<string name="convert_to_decimal">Convierte de complemento a dos a decimal</string>
   	<!--  End Twos Complement -->
+  	
+  	<!-- Binary Offset -->
+	<string name="convert_to_bin_offset">Convierte a Binario con Offset 128</string>
+	<string name="convert_to_dec">Convierte a Decimal con Offset 128</string>
 </resources>

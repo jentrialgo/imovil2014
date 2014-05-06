@@ -21,7 +21,8 @@ limitations under the License.
         <item>@string/binary</item>
         <item>@string/hexadecimal</item>
         <item>@string/sign_and_magnitude</item>
-        <item>@string/interpretation</item>
+     <!--    <item>@string/interpretation</item> -->
+     	<item>@string/offset_binary</item>
 		<item>@string/twoscomplement</item>
         <item>@string/floating_point</item>
     </array>
