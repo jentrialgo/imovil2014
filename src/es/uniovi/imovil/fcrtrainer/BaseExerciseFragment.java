@@ -83,6 +83,8 @@ public abstract class BaseExerciseFragment extends Fragment {
 	private View result;
 	private ImageView resultImage;
 
+
+
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		result = (View) view.findViewById(R.id.result);
@@ -95,7 +97,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 	 * 
 	 * @return long
 	 */
-	protected long getRemainingTimeMs() {
+	protected long getRemainingTimeMs(){
 		long nowMs = System.currentTimeMillis();
 		return mDurationMs - (nowMs - mStartMs);
 	}
@@ -187,13 +189,21 @@ public abstract class BaseExerciseFragment extends Fragment {
 		}
 
 		mIsPlaying = true;
-		mStartMs = System.currentTimeMillis();
 		setClockVisibility(View.VISIBLE);
 		getActivity().supportInvalidateOptionsMenu();
+		showAnimationGameStart(true);
+		final Handler handler = new Handler();
+		handler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				mStartMs = System.currentTimeMillis();
+				final long updateTime = 0; // Hacer la primera actualización
+				// inmediatamente
+				mTimerHandler.postDelayed(mUpdateTimeTask, updateTime);
+			}
+		}, 1500);
 
-		final long updateTime = 0; // Hacer la primera actualización
-									// inmediatamente
-		mTimerHandler.postDelayed(mUpdateTimeTask, updateTime);
+
 	}
 
 	/**
@@ -224,79 +234,38 @@ public abstract class BaseExerciseFragment extends Fragment {
 	}
 
 	/**
-	 * Shows an animation when the user taps on the check button. Currently
-	 * requires a layout with the id result and an imageview with the id
-	 * resultimage. The implementation of this views can be seen in
-	 * fragment_hexadecimal.xml
+	 * Shows an animation when the user taps on the check button.
+	 * Currently requires a layout with the id result and an imageview
+	 * with the id resultimage. The implementation of this views can be
+	 * seen in fragment_hexadecimal.xml
 	 * 
-	 * @param correct
-	 *            if the answer is correct
+	 * @param correct if the answer is correct
 	 */
-	@SuppressLint("NewApi")
-	protected void showAnimationAnswer(boolean correct) {
+	@SuppressLint("NewApi") protected void showAnimationAnswer(boolean correct){ 
 		// Fade in - fade out
 		result.setVisibility(View.VISIBLE);
-		animation = new AlphaAnimation(0, 1);
+		animation = new AlphaAnimation(0,1);
 		animation.setDuration(600);
 		animation.setFillBefore(true);
 		animation.setFillAfter(true);
 		animation.setRepeatCount(Animation.RESTART);
 		animation.setRepeatMode(Animation.REVERSE);
 		result.startAnimation(animation);
-		if (correct)
-			resultImage.setImageDrawable(getResources().getDrawable(
-					R.drawable.correct));
-		else
-			resultImage.setImageDrawable(getResources().getDrawable(
-					R.drawable.incorrect));
+		if(correct)
+			resultImage.setImageDrawable(getResources().getDrawable(R.drawable.correct));
+		else resultImage.setImageDrawable(getResources().getDrawable(R.drawable.incorrect));
 
 		// This only works in API 12+, so we skip this animation on old devices
-		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB_MR2) {
-			resultImage.animate().setDuration(700)
-					.setInterpolator(antovershoot).scaleX(1.5f).scaleY(1.5f)
-					.withEndAction(new Runnable() {
-						@Override
-						public void run() {
-							// Back to its original size after the animation's
-							// end
-							resultImage.animate().scaleX(1f).scaleY(1f);
-						}
-					});
+		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB_MR2){
+			resultImage.animate().setDuration(700).setInterpolator(antovershoot).scaleX(1.5f).scaleY(1.5f).withEndAction(new Runnable(){
+				@Override
+				public void run() {
+					// Back to its original size after the animation's end
+					resultImage.animate().scaleX(1f).scaleY(1f);
+				}
+			});
 		}
 	}
-
-	/**
-	 * Shows an animation when the game starts 
-	 */
-	@SuppressLint("NewApi")
-	protected void showGameAnimation() {
-		// Fade in - fade out
-		result.setVisibility(View.VISIBLE);
-		animation = new AlphaAnimation(0, 1);
-		animation.setDuration(800);
-		animation.setFillBefore(true);
-		animation.setFillAfter(true);
-		animation.setRepeatCount(Animation.RESTART);
-		animation.setRepeatMode(Animation.REVERSE);
-		result.startAnimation(animation);
-		resultImage.setImageDrawable(getResources().getDrawable(
-				R.drawable.game_start));
-
-		// This only works in API 12+, so we skip this animation on old devices
-		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB_MR2) {
-			resultImage.animate().setDuration(900)
-					.setInterpolator(antovershoot).scaleX(1.5f).scaleY(1.5f)
-					.withEndAction(new Runnable() {
-						@Override
-						public void run() {
-							// Back to its original size after the animation's
-							// end
-							resultImage.animate().scaleX(1f).scaleY(1f);
-						}
-					});
-		}
-	}
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle presses on the action bar items
@@ -312,4 +281,32 @@ public abstract class BaseExerciseFragment extends Fragment {
 			return super.onOptionsItemSelected(item);
 		}
 	}
+	
+	@SuppressLint("NewApi") protected void showAnimationGameStart(boolean correct){ 
+		// Fade in - fade out
+		result.setVisibility(View.VISIBLE);
+		animation = new AlphaAnimation(0,1);
+		animation.setDuration(1000);
+		animation.setFillBefore(true);
+		animation.setFillAfter(true);
+		animation.setRepeatCount(Animation.RESTART);
+		animation.setRepeatMode(Animation.REVERSE);
+		result.startAnimation(animation);
+		if(correct)
+			resultImage.setImageDrawable(getResources().getDrawable(R.drawable.game_start));
+
+
+		// This only works in API 12+, so we skip this animation on old devices
+		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB_MR2){
+			resultImage.animate().setDuration(1100).setInterpolator(antovershoot).scaleX(1.5f).scaleY(1.5f).withEndAction(new Runnable(){
+				@Override
+				public void run() {
+					// Back to its original size after the animation's end
+					resultImage.animate().scaleX(1f).scaleY(1f);
+				}
+			});
+		}
+	}
+	
+	
 }
