@@ -36,6 +36,7 @@ limitations under the License.
 		android:layout_alignParentTop="true"
 		android:orientation="vertical" >
 
+
 		<TextView
 			android:id="@+id/txTittle"
 			style="@style/Title2DarkLight"
@@ -61,6 +62,7 @@ limitations under the License.
 		</RelativeLayout>
 
 		<RelativeLayout
+		    android:id="@+id/rel_cards"
 			style="@style/cards"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
@@ -130,5 +132,18 @@ limitations under the License.
 	</RelativeLayout>
     
 	<!-- End of views required by the animation -->
+	
+	
+	<TextView
+	        android:id="@+id/text_view_clock"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center"
+	        android:text="@string/initial_clock_value"
+	        android:textSize="20sp"
+	        android:visibility="gone" />
+	    
+	    
 
 </RelativeLayout>
+

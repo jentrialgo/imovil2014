@@ -50,9 +50,13 @@ limitations under the License.
     <string name="retry">Reintentar</string>
     <string name="finish">Entrenamiento finalido.</string>
     <string name="success">Has acertado</string> 
-    <string name="fail">Has fallado. La respuesta correcta es</string>       
- 
-    <!-- Strings logic gate -->    
+
+    <string name="fail">Has fallado. La respuesta correcta es</string>  
+     
+    
+    <string name="finJuego">Final de Juego</string>
+     <!-- Strings logic gate -->
+     
      <string name="button_logic_gate">Comprobar</string>
      <string name="failed_logic_gate">¡Has fallado!</string>
      <string name="dialog_try_logic_gate">¿Quieres probar de nuevo o bien quieres saber la solución?</string>
@@ -64,7 +68,7 @@ limitations under the License.
      
      <!--  Fin Strings logic gate -->    
     <string name="dummy_exercise">Ejercicio</string>
-    <string name="fragment_interpretation">Complemento a 2</string>
+
 
     <!-- Strings layer exercise -->
     <string name="layer_tittle">Acierta la capa</string>
@@ -116,6 +120,12 @@ limitations under the License.
     <string name="LOxor">XOR</string>    
     <string name="LOpregunta">¿Cuál es la solución a esta operación lógica de 5 bits?</string>
 
+    <string name="finJuego">Fin del juego</string>
+    <string name="modoEntrenamiento">Volver al modo entrenamiento</string>
+    <string name="puntuacion">Has obtenido una puntuación de: </string>
+    <!-- Fin Operaciones Lógicas -->
+
+
     <!--  Modulo: Protocolos -->
     <string name="protocols">Adivina el protocolo</string>
     <string name="cidr_title">Calcula la notación CIDR</string>
@@ -123,8 +133,14 @@ limitations under the License.
     <!-- Twos Complement -->
 	<string name="convert_to_twoscomplement">Convierte a complemento a dos</string>
 	<string name="convert_to_decimal">Convierte de complemento a dos a decimal</string>
-	
+	<string name="next_numb">Siguiente</string>
+	 <string name="points01">Has obtenido </string>
+	 <string name="points02"> puntos</string>
+  	<!--  End Twos Complement -->
+
+	 <string name="fragment_interpretation">Interpretacion </string>
 	<!-- Host count exercise -->
   	<string name="host_count_title">Calcula el numero de hosts</string>
   	<!-- End Host count exercise -->
+
 </resources>
