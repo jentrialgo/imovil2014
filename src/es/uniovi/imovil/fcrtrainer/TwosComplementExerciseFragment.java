@@ -55,9 +55,7 @@ public class TwosComplementExerciseFragment  extends BaseExerciseFragment {
 	private EditText edi_answer;
 	private TextView tex_tittle;
 	private TextView tex_numberToConvert;
-	private TextView mClock;
 	private String numbToConvert;
-	private String time="";
 	
 public static TwosComplementExerciseFragment newInstance() {
 		
@@ -79,7 +77,6 @@ public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	edi_answer = (EditText) rootView.findViewById(R.id.etAnswer);
 	tex_tittle = (TextView) rootView.findViewById(R.id.txTittle);
 	tex_numberToConvert = (TextView) rootView.findViewById(R.id.txNumbertoconvert);
-	mClock = (TextView) rootView.findViewById(R.id.text_view_clock);
 	
 	but_check.setOnClickListener(new OnClickListener() 
 	{
@@ -170,9 +167,6 @@ public void updateUI() {
 		tex_tittle.setText(getResources().getString(R.string.convert_to_twoscomplement));
 		tex_numberToConvert.setText(numbToConvert);
 	}
-	
-	if(GameMode)
-		mClock.setText(time);
 }
 
 @Override
