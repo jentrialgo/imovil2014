@@ -110,6 +110,12 @@ limitations under the License.
     <string name="LOxor">XOR</string>    
     <string name="LOpregunta">¿Cuál es la solución a esta operación lógica de 5 bits?</string>
 
+    <string name="finJuego">Fin del juego</string>
+    <string name="modoEntrenamiento">Volver al modo entrenamiento</string>
+    <string name="puntuacion">Has obtenido una puntuación de: </string>
+    <!-- Fin Operaciones Lógicas -->
+
+
     <!--  Modulo: Protocolos -->
     <string name="protocols">Adivina el protocolo</string>
     <string name="cidr_title">Calcula la notación CIDR</string>
