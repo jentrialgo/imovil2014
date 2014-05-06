@@ -51,7 +51,7 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 	private boolean tohex = true;
 	private boolean game = false;
 	private int pointsCounter = 0;
-	private static final int MAX_NUMBER_TO_CONVERT = 1000;
+	private static final int MAX_NUMBER_TO_CONVERT = 512;
 	private static final int GAMEMODE_MAXQUESTIONS = 5;
 	private Random randomGenerator;
 
@@ -80,7 +80,6 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 				.findViewById(R.id.numbertoconvert);
 		tvTitle = (TextView) rootView.findViewById(R.id.exercisetitle);
 		tvPoints = (TextView) rootView.findViewById(R.id.tvpoints);
-
 		randomGenerator = new Random();
 
 		etAnswer.setOnEditorActionListener(new OnEditorActionListener() {
@@ -118,15 +117,12 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 				tohex ^= true;
 				if (tohex) {
 					setKeyboardLayout();
-					tvTitle.setText(getResources().getString(
-							R.string.convert_to_hex));
-					generateRandomNumber();
+					setTitle();
 				} else {
 					setKeyboardLayout();
-					tvTitle.setText(getResources().getString(
-							R.string.convert_to_bin));
-					generateRandomNumber();
+					setTitle();
 				}
+				generateRandomNumber();
 			}
 		});
 
@@ -143,6 +139,7 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 			numberToConvert = savedInstanceState.getInt("numbertoconvert");
 			updateUI();
 			setKeyboardLayout();
+			setTitle();
 		} else
 			generateRandomNumber();
 
@@ -152,6 +149,11 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 	public void setKeyboardLayout(){
 		if(tohex) etAnswer.setInputType(EditorInfo.TYPE_CLASS_TEXT);
 		else etAnswer.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
+	}
+	
+	public void setTitle(){
+		if(tohex) tvTitle.setText(getResources().getString(R.string.convert_to_hex));
+		else tvTitle.setText(getResources().getString(R.string.convert_to_bin));
 	}
 
 	public void generateRandomNumber() {
@@ -253,7 +255,7 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 	 * @param points
 	 */
 	public void updatePoints(int points) {
-		tvPoints.setText(String.valueOf(points));
+		tvPoints.setText(getString(R.string.points) + String.valueOf(points));
 	}
 
 	/**

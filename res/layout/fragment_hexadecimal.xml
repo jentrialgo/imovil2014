@@ -45,6 +45,8 @@ limitations under the License.
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:textSize="20sp"
                 android:visibility="gone" />
 
             <TextView
@@ -52,8 +54,9 @@ limitations under the License.
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView"
+                android:gravity="center_horizontal"
                 android:textColor="@color/mediumdarkgray"
+                android:textSize="20sp"
                 android:visibility="gone" />
 
         </LinearLayout>
@@ -78,6 +81,7 @@ limitations under the License.
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.6"
+                android:gravity="center_horizontal"
                 android:padding="10dp"
                 android:textColor="@color/mediumdarkgray"
                 android:textSize="32sp" />

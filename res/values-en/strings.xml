@@ -79,7 +79,7 @@
         <!-- Módulo: Hexadecimal -->
     <string name="convert_to_hex">Convert to hex</string>
     <string name="convert_to_bin">Convert to binary</string>
-  	<string name="gameisoverexp">Game ended! You have %1$d segundos left and obtained %2$d points!</string>
+  	<string name="gameisoverexp">Game ended! You have %1$d seconds left and obtained %2$d points!</string>
   	<string name="lost_time_over">Game Over! Time\'s up! You answered %1$d questions correctly.</string>
     <!-- Fin Hexadecimal -->
 
