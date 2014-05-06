@@ -346,7 +346,7 @@ public class BinaryExerciseFragment extends BaseExerciseFragment implements
 		try {
 
 			HighscoreManager.addScore(getActivity().getApplicationContext(),
-					this.points, 0, new Date(), username);
+					this.points, R.string.binary, new Date(), username);
 
 		} catch (JSONException e) {
 			e.printStackTrace();
