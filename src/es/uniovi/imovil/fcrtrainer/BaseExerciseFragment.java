@@ -189,13 +189,21 @@ public abstract class BaseExerciseFragment extends Fragment {
 		}
 
 		mIsPlaying = true;
-		mStartMs = System.currentTimeMillis();
 		setClockVisibility(View.VISIBLE);
 		getActivity().supportInvalidateOptionsMenu();
+		showAnimationAnswer(3);
+		final Handler handler = new Handler();
+	    handler.postDelayed(new Runnable() {
+	      @Override
+	      public void run() {
+	    	  mStartMs = System.currentTimeMillis();
+	    	  final long updateTime = 0; // Hacer la primera actualización
+				// inmediatamente
+	    	  mTimerHandler.postDelayed(mUpdateTimeTask, updateTime);
+	      }
+	    }, 1500);
 
-		final long updateTime = 0; // Hacer la primera actualización
-									// inmediatamente
-		mTimerHandler.postDelayed(mUpdateTimeTask, updateTime);
+		
 	}
 
 	/**
@@ -233,23 +241,25 @@ public abstract class BaseExerciseFragment extends Fragment {
 	 * 
 	 * @param correct if the answer is correct
 	 */
-	@SuppressLint("NewApi") protected void showAnimationAnswer(boolean correct){		
+	@SuppressLint("NewApi") protected void showAnimationAnswer(int correct){		
 		// Fade in - fade out
 		result.setVisibility(View.VISIBLE);
 		animation = new AlphaAnimation(0,1);
-		animation.setDuration(600);
+		animation.setDuration(1000);
 		animation.setFillBefore(true);
 		animation.setFillAfter(true);
 		animation.setRepeatCount(Animation.RESTART);
 		animation.setRepeatMode(Animation.REVERSE);
 		result.startAnimation(animation);
-		if(correct)
-			resultImage.setImageDrawable(getResources().getDrawable(R.drawable.correct));
-		else resultImage.setImageDrawable(getResources().getDrawable(R.drawable.incorrect));
+		switch(correct){
+		case 1: resultImage.setImageDrawable(getResources().getDrawable(R.drawable.correct));
+		case 2: resultImage.setImageDrawable(getResources().getDrawable(R.drawable.incorrect));
+		case 3:resultImage.setImageDrawable(getResources().getDrawable(R.drawable.game_start));
+		}
 
 		// This only works in API 12+, so we skip this animation on old devices
 		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB_MR2){
-			resultImage.animate().setDuration(700).setInterpolator(antovershoot).scaleX(1.5f).scaleY(1.5f).withEndAction(new Runnable(){
+			resultImage.animate().setDuration(1100).setInterpolator(antovershoot).scaleX(1.5f).scaleY(1.5f).withEndAction(new Runnable(){
 				@Override
 				public void run() {
 					// Back to its original size after the animation's end
