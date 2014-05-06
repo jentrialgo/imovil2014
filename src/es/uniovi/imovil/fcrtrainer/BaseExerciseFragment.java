@@ -252,9 +252,9 @@ public abstract class BaseExerciseFragment extends Fragment {
 		animation.setRepeatMode(Animation.REVERSE);
 		result.startAnimation(animation);
 		switch(correct){
-		case 1: resultImage.setImageDrawable(getResources().getDrawable(R.drawable.correct));
-		case 2: resultImage.setImageDrawable(getResources().getDrawable(R.drawable.incorrect));
-		case 3:resultImage.setImageDrawable(getResources().getDrawable(R.drawable.game_start));
+		case 1: resultImage.setImageDrawable(getResources().getDrawable(R.drawable.correct));break;
+		case 2: resultImage.setImageDrawable(getResources().getDrawable(R.drawable.incorrect));break;
+		case 3:resultImage.setImageDrawable(getResources().getDrawable(R.drawable.game_start));break;
 		}
 
 		// This only works in API 12+, so we skip this animation on old devices
