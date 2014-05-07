@@ -46,23 +46,6 @@ limitations under the License.
     <string name="error_parsing_highscores">Error al analizar las puntuaciones</string>
     <string name="error_adding_initial_highscores">Error al insertar las puntuaciones iniciales</string>
     <string name="all">Todos</string>
-<<<<<<< HEAD
-    
-    <string name="dummy_exercise">Ejercicio</string>   
-     
-     <string name="fragment_interpretation">Complemento a 2</string>   
-     <string name="enunciadomasc">Numero de computadoras en red</string>
-     <string name="solucion">Solucion</string>
-     <string name="comprobar">Comprobar</string>
-     
-     
-     
-    
-     
-     
-     
-     
-=======
     <string name="training">Entrenamiento</string>
     <string name="retry">Reintentar</string>
     <string name="finish">Entrenamiento finalido.</string>
@@ -176,6 +159,5 @@ limitations under the License.
     <!-- Host count exercise -->
     <string name="host_count_title">Calcula el numero de hosts</string>
     <!-- End Host count exercise -->
->>>>>>> refs/remotes/enol/master
 
 </resources>

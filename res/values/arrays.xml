@@ -60,28 +60,6 @@ limitations under the License.
         <item>Walter</item>
     </string-array>
     
-<<<<<<< HEAD
-     <string-array name="preguntas">
-         
-   	 <item>223</item>
-     <item>700</item>
-     <item>1300</item>
-     <item>6007</item>
-     <item>17045</item>
-     </string-array>
-    
-     
-      <string-array name="respuestas">
-         
-   	 <item>255.255.255.0</item>
-     <item>255.255.0.0</item>
-     <item>255.255.0.0</item>
-     <item>255.255.0.0</item>
-     <item>255.255.0.0</item>
-     </string-array>
-     
-</resources>
-=======
     <!-- Arrays layer exercise -->  
     <string-array name="layer_exercise_questions">
         <item>Protocolo IP</item>
@@ -226,4 +204,3 @@ limitations under the License.
 	 <!-- End Array -->
     
 </resources>
->>>>>>> refs/remotes/enol/master
