@@ -92,5 +92,7 @@
  	<!-- Host count exercise -->
   	<string name="host_count_title">Calculate number of hosts</string>
   	<!-- End Host count exercise -->
+  	
+  	<string name="convert_to_bin_offset">Convertir a binario</string>
 </resources>
 
