@@ -99,21 +99,18 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 				// TODO Auto-generated method stub
 				switch(checkedId){
 				case R.id.link_layer:
-					rb_pressed = "Capa de enlace";
+					rb_pressed = getResources().getString(R.string.link_layer);
 					break;
 				case R.id.internet_layer:
-					rb_pressed = "Capa de internet";
+					rb_pressed = getResources().getString(R.string.internet_layer);
 					break;
 				case R.id.transport_layer:
-					rb_pressed = "Capa de transporte";
+					rb_pressed = getResources().getString(R.string.transport_layer);
 					break;
 				case R.id.application_layer:
-					rb_pressed = "Capa de aplicación";
+					rb_pressed = getResources().getString(R.string.application_layer);
 					break;
 				}
-
-				RadioButton checkedRadioButton = (RadioButton)opciones.findViewById(opciones.getCheckedRadioButtonId());
-				boolean checked = checkedRadioButton.isChecked();
 			}
 		});
 
