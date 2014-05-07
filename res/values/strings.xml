@@ -117,6 +117,15 @@ limitations under the License.
   	<string name="points">Puntos: </string>
   	<string name="won">Has ganado! </string>
   	<string name="lost">Has perdido! </string>
+  	
+  	<!-- Módulo: Signo Magnitud -->
+  	<string name="question_sign_magnitude">Convierte el siguiente número representado en signo-magnitud a decimal</string>
+  	<string name="convert_to_signed_magnitude">Convierte de decimal a signo magnitud</string>
+  	<string name="convert_to_dec">Convierte de signo magnitud a decimal</string>
+  	<string name="check_answer">Comprobar</string>
+    <string name="solutionSigned">Solución</string>
+    <string name="signedMagnitudePoints">0</string>
+    <!-- Fin Signo Magnitud -->
 
     <!-- Modulo: Operaciones Lógicas -->
     <string name="LOand">AND</string>
