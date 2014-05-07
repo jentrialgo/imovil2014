@@ -1,9 +1,6 @@
 package es.uniovi.imovil.fcrtrainer;
 
-import org.apache.http.ProtocolVersion;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 
 public class ProtocolTest 
 {
