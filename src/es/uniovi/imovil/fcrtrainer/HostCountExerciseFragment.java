@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 public class HostCountExerciseFragment extends BaseExerciseFragment{
 
-	private static final int RANDOM_NUMBER_LIMIT = 32;
+	private static final int RANDOM_NUMBER_LIMIT = 30;
 	private static final int POINTS_FOR_QUESTION = 10;
 	private static final int MAX_QUESTIONS = 5;
 	private static final long GAME_DURATION_MS = 10 * 1000 * 60; // 10min
