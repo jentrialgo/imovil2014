@@ -36,7 +36,6 @@ limitations under the License.
 		android:layout_alignParentTop="true"
 		android:orientation="vertical" >
 
-
 		<TextView
 			android:id="@+id/txTittle"
 			style="@style/Title2DarkLight"
