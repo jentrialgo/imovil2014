@@ -11,7 +11,6 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,7 +91,6 @@ public class HostCountExerciseFragment extends BaseExerciseFragment{
 		
 		// Funcion nextInt devuelve un numero aleatorio entre [0, limite)
 		int x = rn.nextInt(RANDOM_NUMBER_LIMIT);
-		Log.v("ALEATORIO",x+"");
 		return x;
 
 	}
