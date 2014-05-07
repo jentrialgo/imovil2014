@@ -65,7 +65,7 @@ final public class FragmentFactory {
 		case R.string.sign_and_magnitude:
 			// TODO: return SignedMagnitudeExerciseFragment.newInstance();
 		case R.string.floating_point:
-			// TODO: return FloatingPointExerciseFragment.newInstance();
+			 return FloatingPointExerciseFragment.newInstance();
 		case R.string.network_address:
 			// TODO: return NetworAddressExerciseFragment.newInstance();
 		case R.string.network_mask:

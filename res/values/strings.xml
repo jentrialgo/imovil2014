@@ -150,5 +150,9 @@ limitations under the License.
     <!-- Host count exercise -->
     <string name="host_count_title">Calcula el numero de hosts</string>
     <!-- End Host count exercise -->
+    <string name="convert_to_iee">Convert to IEEE 754 format !</string>
+    <string name="tv_sign">S</string>
+    <string name="tv_exponent">Exp (8 Bit)</string>
+    <string name="tv_mant">Mantissa (23 Bit)</string>
 
 </resources>
