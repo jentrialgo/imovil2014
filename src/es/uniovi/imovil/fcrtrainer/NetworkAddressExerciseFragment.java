@@ -57,10 +57,10 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment impleme
 		tvi = (TextView) rootView.findViewById(R.id.tv_ip);
 		tvm = (TextView) rootView.findViewById(R.id.tv_mask);
 		tv1 = (TextView) rootView.findViewById(R.id.exercisetitleNA);
-		//tv2 = (TextView) rootView.findViewById(R.id.st_tv_mask);
+		
 		
 		et = (EditText) rootView.findViewById(R.id.et_netw);
-		//imageviewsolution=(ImageView) rootView.findViewById(R.id.image_network_address_solution);
+	
 		
 		tvi.setText(ip[i]);
 		tvm.setText(mask[i]);
@@ -90,42 +90,16 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment impleme
 		
 	}
 	
-	/*public void showFailureDialog(){
-
-		//Se crea el alert dialog que mostrara dos botones, uno de comprobar y otro para volver a intentarlo
-		
-		final AlertDialog.Builder alertDialog= new AlertDialog.Builder(getActivity());
-		alertDialog.setTitle(R.string.failed_logic_gate);
-		alertDialog.setMessage(R.string.dialog_try_logic_gate);
-		alertDialog.setCancelable(true);
-		alertDialog.setPositiveButton(R.string.try_again_logic_gate,
-				new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int id) {
-				//et.setText("");
-				dialog.cancel();
-			}
-		});
-		alertDialog.setNegativeButton(R.string.solution_logic_gate,
-				new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int id) {
-				et.setText(net[i]);
-				
-			}
-		});
-
-		AlertDialog alert11 = alertDialog.create();
-		alert11.show();
-	}*/
+	
 	
 	public void checkAnswer(){
 		if(net[i].equals(et.getText().toString())){
 				showAnimationAnswer(true);
-				/*et.setTextColor(Color.GREEN);
-	        	imageviewsolution.setImageResource(R.drawable.correct); */
+				
 	        	if(i<net.length-1){	
 				 handler.postDelayed(new Runnable() {
 			            public void run() {
-			            	//imageviewsolution.setImageResource(0);  
+			            	  
 			            	i++;
 			    			et.setTextColor(Color.BLACK);
 			    			tvi.setText(ip[i]);
@@ -138,17 +112,17 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment impleme
 			else{
 				 handler.postDelayed(new Runnable() {
 			            public void run() {
-			            	//imageviewsolution.setImageResource(0);  
+			            
 			            	banswer.setVisibility(Button.GONE);
 							bsolution.setVisibility(Button.GONE);
 							et.setVisibility(EditText.GONE);
 							tvi.setVisibility(TextView.GONE);
 							tvm.setVisibility(TextView.GONE);
 							
-							//tv1.setVisibility(TextView.GONE);
+							
 							tv1.setText(R.string.end_train);
 							tv1.setTextSize(47);
-							//imageviewsolution.setVisibility(ImageView.GONE);
+							
 			            }
 			        }, 1500);
 				

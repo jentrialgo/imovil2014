@@ -72,7 +72,7 @@
 
     <EditText
         android:id="@+id/et_netw"
-        android:layout_width="130dp"
+        android:layout_width="128dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_mask"
         android:layout_centerHorizontal="true"
