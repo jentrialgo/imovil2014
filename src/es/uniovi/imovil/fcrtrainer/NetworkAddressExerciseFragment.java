@@ -27,7 +27,6 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment impleme
 	TextView tvi;
 	TextView tvm;
 	TextView tv1;
-	TextView tv2;
 	EditText et;
 	ImageView imageviewsolution;
 	Button banswer;
@@ -57,11 +56,11 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment impleme
 		i=0;
 		tvi = (TextView) rootView.findViewById(R.id.tv_ip);
 		tvm = (TextView) rootView.findViewById(R.id.tv_mask);
-		tv1 = (TextView) rootView.findViewById(R.id.st_tv_ip);
-		tv2 = (TextView) rootView.findViewById(R.id.st_tv_mask);
+		tv1 = (TextView) rootView.findViewById(R.id.exercisetitleNA);
+		//tv2 = (TextView) rootView.findViewById(R.id.st_tv_mask);
 		
-		et = (EditText) rootView.findViewById(R.id.et_net);
-		imageviewsolution=(ImageView) rootView.findViewById(R.id.image_network_address_solution);
+		et = (EditText) rootView.findViewById(R.id.et_netw);
+		//imageviewsolution=(ImageView) rootView.findViewById(R.id.image_network_address_solution);
 		
 		tvi.setText(ip[i]);
 		tvm.setText(mask[i]);
@@ -120,12 +119,13 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment impleme
 	
 	public void checkAnswer(){
 		if(net[i].equals(et.getText().toString())){
-				et.setTextColor(Color.GREEN);
-	        	imageviewsolution.setImageResource(R.drawable.correct); 
+				showAnimationAnswer(true);
+				/*et.setTextColor(Color.GREEN);
+	        	imageviewsolution.setImageResource(R.drawable.correct); */
 	        	if(i<net.length-1){	
 				 handler.postDelayed(new Runnable() {
 			            public void run() {
-			            	imageviewsolution.setImageResource(0);  
+			            	//imageviewsolution.setImageResource(0);  
 			            	i++;
 			    			et.setTextColor(Color.BLACK);
 			    			tvi.setText(ip[i]);
@@ -138,16 +138,17 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment impleme
 			else{
 				 handler.postDelayed(new Runnable() {
 			            public void run() {
-			            	imageviewsolution.setImageResource(0);  
+			            	//imageviewsolution.setImageResource(0);  
 			            	banswer.setVisibility(Button.GONE);
 							bsolution.setVisibility(Button.GONE);
 							et.setVisibility(EditText.GONE);
 							tvi.setVisibility(TextView.GONE);
 							tvm.setVisibility(TextView.GONE);
-							tv1.setVisibility(TextView.GONE);
-							tv2.setText(R.string.end_train);
-							tv2.setTextSize(47);
-							imageviewsolution.setVisibility(ImageView.GONE);
+							
+							//tv1.setVisibility(TextView.GONE);
+							tv1.setText(R.string.end_train);
+							tv1.setTextSize(47);
+							//imageviewsolution.setVisibility(ImageView.GONE);
 			            }
 			        }, 1500);
 				
@@ -156,17 +157,18 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment impleme
 			
 		}
 		else {
-			et.setTextColor(Color.RED);
-			imageviewsolution.setImageResource(R.drawable.incorrect);
+			showAnimationAnswer(false);	
+			/*et.setTextColor(Color.RED);
+			imageviewsolution.setImageResource(R.drawable.incorrect);*/
 			 handler.postDelayed(new Runnable() {
 		            public void run() {
 		            	et.setTextColor(Color.BLACK);
-		    			imageviewsolution.setImageResource(0);
+		    			//imageviewsolution.setImageResource(0);
 		            }
 		        }, 1500);
 
 
-	}
+		}
 	}
 	
 	public void solutionNetworkAddress(){

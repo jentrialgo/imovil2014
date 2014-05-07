@@ -70,7 +70,8 @@ limitations under the License.
     <string name="ip_add">Dirección IP:</string>
     <string name="mask">Máscara:</string>
     <string name="text_butt_ans">Comprobar</string>
-    <string name="text_butt_solution">Mostrar respuesta</string>
+    <string name="text_butt_solution">Solución</string>
+    <string name="na_title">Ejercicio Dirección Red</string>
     <!--  <string name="failed_logic_gate">Has fallado</string>
     <string name="dialog_try_logic_gate">¿Reintentar?</string>
     <string name="try_again_logic_gate">Reintentar</string>

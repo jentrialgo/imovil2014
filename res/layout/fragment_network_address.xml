@@ -1,75 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/mediumgray"
     android:orientation="vertical" >
     
-     <LinearLayout
-         android:layout_width="match_parent"
-   		 android:layout_height="wrap_content"
-   		 android:orientation="horizontal" >
-	     
-	     <TextView
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/ip_add"
-	        android:id="@+id/st_tv_ip"/>
-	     
-	      <TextView
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:id="@+id/tv_ip"/>
-     </LinearLayout> 
+    <TextView
+       android:id="@+id/exercisetitleNA"
+       style="@style/Title2DarkLight"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="@string/na_title" 
+       android:layout_centerHorizontal="true"
+       android:layout_marginTop="20dp" />
+
+        <TextView
+            android:id="@+id/tv_ip"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/exercisetitleNA"
+            android:layout_margin="15dp"
+            android:background="@drawable/cards"
+            android:gravity="center"
+            android:textSize="25sp" />
+        
+        
+         <!--  Views required by the animation -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/result"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@color/pantalla"
+        android:visibility="gone" >
+
+        <ImageView
+            android:id="@+id/resultimage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="140dp"/>
+    </RelativeLayout>
     
-     <LinearLayout
-         android:layout_width="wrap_content"
-   		 android:layout_height="wrap_content"
-   		 android:orientation="horizontal">
-	     <TextView
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/mask"
-	        android:layout_gravity="center"
-	        android:id="@+id/st_tv_mask"/>
-	     
-	     <TextView
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:id="@+id/tv_mask"/>
-     </LinearLayout>
-      <LinearLayout
-	         android:layout_width="wrap_content"
-	   		 android:layout_height="wrap_content"
-	   		 android:orientation="horizontal">
-	     <EditText
-	         	android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:inputType="text"
-		        android:id="@+id/et_net"
-		        android:layout_gravity="center"/> 
-		<ImageView
-	        android:id="@+id/image_network_address_solution"
-	        android:layout_width="40dp"
-	        android:layout_height="40dp"/>
-	  </LinearLayout>
-	  <LinearLayout
-	         android:layout_width="wrap_content"
-	   		 android:layout_height="wrap_content"
-	   		 android:orientation="horizontal">
-		 <Button 
-		    	android:layout_width="match_parent"
-		        android:layout_height="match_parent"
-		        android:id="@+id/but_ans"
-		        android:text="@string/text_butt_ans"
-		        android:layout_gravity="center"
-		        android:layout_weight="1"/>
-		  <Button 
-		    	android:layout_width="match_parent"
-		        android:layout_height="match_parent"
-		        android:id="@+id/but_solution"
-		        android:text="@string/text_butt_solution"
-		        android:layout_gravity="center"
-		        android:layout_weight="1"/>
-		 
-	</LinearLayout>
-</LinearLayout>
+    <!-- End of views required by the animation -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/exercisetitleNA"
+        android:layout_marginTop="250dp" >
+
+        <Button
+            android:id="@+id/but_ans"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/text_butt_ans" />
+
+        <Button
+            android:id="@+id/but_solution"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/text_butt_solution" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/et_netw"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_mask"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="37dp"
+        android:background="@drawable/cards"
+        android:ems="5"
+        android:padding="10dp" />
+
+    <TextView
+        android:id="@+id/tv_mask"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/tv_ip"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="15dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/cards"
+        android:gravity="center"
+        android:textSize="25sp" />
+    
+</RelativeLayout>
+
+
