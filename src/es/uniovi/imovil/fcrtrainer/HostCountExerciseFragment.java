@@ -11,6 +11,7 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,7 @@ import android.widget.TextView;
 
 public class HostCountExerciseFragment extends BaseExerciseFragment{
 
-	private static final int RANDOM_NUMBER_LIMIT = 32;
+	private static final int RANDOM_NUMBER_LIMIT = 30;
 	private static final int POINTS_FOR_QUESTION = 10;
 	private static final int MAX_QUESTIONS = 5;
 	private static final long GAME_DURATION_MS = 10 * 1000 * 60; // 10min
@@ -91,6 +92,7 @@ public class HostCountExerciseFragment extends BaseExerciseFragment{
 		
 		// Funcion nextInt devuelve un numero aleatorio entre [0, limite)
 		int x = rn.nextInt(RANDOM_NUMBER_LIMIT);
+		Log.v("ALEATORIO",x+"");
 		return x;
 
 	}
