@@ -33,6 +33,7 @@ limitations under the License.
     <string name="twoscomplement">Complemento a dos</string>
     <string name="interpretation">Interpretación</string>
     <string name="floating_point">Coma flotante</string>
+    <string name="offset_binary">Exceso a Z</string>
     <string name="logic_gate">Puerta lógica</string>
     <string name="logic_operation">Operación lógica</string>
     <string name="network_address">Dirección de red</string>
@@ -101,6 +102,7 @@ limitations under the License.
     <string name="points">Puntos obtenidos: </string>
     <string name="won">Juego terminado. </string>
     <string name="lost">¡Se ha cumplido el tiempo! </string>
+
 	<string name="check_binary">comprobar</string>
 	<string name="next_binary">siguente</string>
 	<string name="title_binary">Binario</string>
@@ -159,5 +161,9 @@ limitations under the License.
     <!-- Host count exercise -->
     <string name="host_count_title">Calcula el numero de hosts</string>
     <!-- End Host count exercise -->
+    
+    <!--  Exceso a Z -->
+  	<string name="convert_to_bin_offset">Convertir de decimal a exceso a Z</string>
+  	<string name="convert_from_bo_to_dec">Convertir de exceso a Z a decimal</string>
 
 </resources>
