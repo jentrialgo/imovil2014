@@ -83,7 +83,7 @@
                 android:layout_centerVertical="true"
                 android:ems="10"
                 android:imeOptions="actionDone"
-                android:inputType="text"
+                android:inputType="number"
                 android:padding="10dp" >
 
                 <requestFocus />
