@@ -64,12 +64,13 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 
 		etRespuesta = (EditText) mRootView.findViewById(R.id.LOrespuesta);
 
+		inicializarButtons();
+		
 		if (savedInstanceState != null) {
 			cargaDatos(savedInstanceState);
 		} else {
 			inicializarTexViews();
 			inicializarEditText();
-			inicializarButtons();
 		}
 
 		return mRootView;
@@ -87,6 +88,9 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 
 		String respuesta = savedInstanceState.getString("LOrespuesta");
 		etRespuesta.setText(respuesta);
+		
+		etRespuesta.setInputType(EditorInfo.TYPE_CLASS_TEXT);
+		
 	}
 
 	private void inicializarTexViews() {
