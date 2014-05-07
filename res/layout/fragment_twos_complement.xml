@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2014 Profesores y alumnos de la asignatura Informática Móvil de la EPI de Gijón
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:layout_gravity="center_horizontal"
+	android:background="@color/mediumgray"
+	android:gravity="center_horizontal" >
+
+	<LinearLayout
+		android:id="@+id/LinearLay1"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:paddingBottom="@dimen/activity_vertical_margin"
+		android:paddingLeft="@dimen/activity_horizontal_margin"
+		android:paddingRight="@dimen/activity_horizontal_margin"
+		android:paddingTop="@dimen/activity_vertical_margin" 
+		android:layout_alignParentBottom="true"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentRight="true"
+		android:layout_alignParentTop="true"
+		android:orientation="vertical" >
+
+		<TextView
+			android:id="@+id/txTittle"
+			style="@style/Title2DarkLight"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/convert_to_twoscomplement" />
+
+		<RelativeLayout
+			style="@style/cards"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/cards" >
+
+			<TextView
+				android:id="@+id/txNumbertoconvert"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerHorizontal="true"
+				android:layout_centerVertical="true"
+				android:padding="10dp"
+				android:textColor="@color/mediumdarkgray"
+				android:textSize="32sp" />
+		</RelativeLayout>
+
+		<RelativeLayout
+		    android:id="@+id/rel_cards"
+			style="@style/cards"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/cards" >
+
+			<EditText
+				android:id="@+id/etAnswer"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerHorizontal="true"
+				android:layout_centerVertical="true"
+				android:ems="10"
+				android:imeOptions="actionDone"
+				android:inputType="number"
+				android:padding="10dp" >
+				<requestFocus />
+			</EditText>
+		</RelativeLayout>
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content" >
+
+			<Button
+				android:id="@+id/bCheck"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="@string/check" />
+
+			<Button
+				android:id="@+id/bSeesolution"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="@string/solution" />
+
+			<Button
+				android:id="@+id/bSetconversion"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:drawableLeft="@drawable/ic_import_export"
+				android:minWidth="48dp" />
+
+		</LinearLayout>
+
+	</LinearLayout>
+    
+    <!--  Views required by the animation -->
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:id="@+id/result"
+		android:layout_alignParentBottom="true"
+		android:layout_alignParentRight="true"
+		android:background="@color/pantalla"
+		android:visibility="gone" >
+
+		<ImageView
+			android:id="@+id/resultimage"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentTop="true"
+			android:layout_centerHorizontal="true"
+			android:layout_marginTop="140dp"/>
+	</RelativeLayout>
+    
+	<!-- End of views required by the animation -->
+
+
+	<TextView
+	        android:id="@+id/text_view_clock"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center"
+	        android:text="@string/initial_clock_value"
+	        android:textSize="20sp"
+	        android:visibility="gone" />
+
+
+
+</RelativeLayout>

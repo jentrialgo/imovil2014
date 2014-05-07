@@ -22,6 +22,7 @@ limitations under the License.
         <item>@string/hexadecimal</item>
         <item>@string/sign_and_magnitude</item>
         <item>@string/interpretation</item>
+		<item>@string/twoscomplement</item>
         <item>@string/floating_point</item>
     </array>
     <array name="digital_systems">
@@ -36,7 +37,7 @@ limitations under the License.
         <item>@string/network_layer</item>
         <item>@string/protocol</item>
     </array>
-
+     
     <array name="highscores">
         <item>@string/highscores</item>
     </array>
@@ -59,6 +60,7 @@ limitations under the License.
         <item>Walter</item>
     </string-array>
     
+<<<<<<< HEAD
      <string-array name="preguntas">
          
    	 <item>223</item>
@@ -79,3 +81,149 @@ limitations under the License.
      </string-array>
      
 </resources>
+=======
+    <!-- Arrays layer exercise -->  
+    <string-array name="layer_exercise_questions">
+        <item>Protocolo IP</item>
+        <item>Protocolo UDP</item>
+        <item>Protocolo TCP</item>
+        <item>Protocolo POP3</item>
+        <item>Protocolo IMAP</item>
+        <item>Protocolo ICMP</item>
+        <item>Protocolo DNS</item>
+        <item>Protocolo Ethernet</item>
+        <item>Protocolo ARP</item>
+        <item>Protocolo SSH</item>
+        <item>Protocolo ICMP</item>
+    </string-array>
+
+    <string-array name="layer_exercise_answers">
+        <item>Capa de internet</item>
+        <item>Capa de transporte</item>
+        <item>Capa de transporte</item>
+        <item>Capa de aplicación</item>
+        <item>Capa de aplicación</item>
+        <item>Capa de internet</item>
+        <item>Capa de aplicación</item>
+        <item>Capa de enlace</item>
+        <item>Capa de enlace</item>
+        <item>Capa de aplicación</item>
+        <item>Capa de internet</item>
+    </string-array>
+    
+    <!-- Arrays logic gate -->
+    
+    <string-array name="logic_gates">
+        <item>AND</item>
+        <item>OR</item>
+        <item>NOT</item>
+        <item>XOR</item>
+        <item>NAND</item>
+        <item>NOR</item>
+    </string-array>
+    
+	<array name="logic_gates_images">
+        <item>@drawable/logic_gate_and</item>
+        <item>@drawable/logic_gate_or</item>
+        <item>@drawable/logic_gate_not</item>
+        <item>@drawable/logic_gate_xor</item>
+        <item>@drawable/logic_gate_nand</item>
+        <item>@drawable/logic_gate_nor</item>
+    </array>
+    
+	 <!-- Fin Arrays logic gate -->
+	 
+	 <!-- Arrays CIDR -->
+	 
+	 <string-array name="mascaras">
+        <item>0.0.0.0</item>
+        <item>255.128.0.0</item>
+        <item>255.240.0.0</item>
+        <item>255.255.0.0</item>
+        <item>255.255.255.0</item>
+        <item>255.255.255.240</item>
+    </string-array>
+    
+	<string-array name="cidr">
+        <item>0</item>
+        <item>9</item>
+        <item>12</item>
+        <item>16</item>
+        <item>24</item>
+        <item>28</item>
+    </string-array>
+    
+	 <!-- Fin Arrays de CIDR -->
+	 
+	 <!-- Array Host Count Exercise Fragment -->
+	 <string-array name="host_count_questions">
+	 	<item>128.0.0.0</item>
+	 	<item>192.0.0.0</item>
+	 	<item>224.0.0.0</item>
+	 	<item>240.0.0.0</item>
+	 	<item>248.0.0.0</item>
+	 	<item>252.0.0.0</item>
+	 	<item>254.0.0.0</item>
+	 	<item>255.0.0.0</item>
+	 	<item>255.128.0.0</item>
+	 	<item>255.192.0.0</item>
+	 	<item>255.224.0.0</item>
+	 	<item>255.240.0.0</item>
+	 	<item>255.248.0.0</item>
+	 	<item>255.252.0.0</item>
+	 	<item>255.254.0.0</item>
+	 	<item>255.255.0.0</item>
+	 	<item>255.255.128.0</item>
+	 	<item>255.255.192.0</item>
+	 	<item>255.255.224.0</item>
+	 	<item>255.255.240.0</item>
+	 	<item>255.255.248.0</item>
+	 	<item>255.255.252.0</item>
+	 	<item>255.255.254.0</item>
+	 	<item>255.255.255.0</item>
+	 	<item>255.255.255.128</item>
+	 	<item>255.255.255.192</item>
+	 	<item>255.255.255.224</item>
+	 	<item>255.255.255.240</item>
+	 	<item>255.255.255.248</item>
+	 	<item>255.255.255.252</item>
+
+	 </string-array>
+	 
+	 <string-array name="host_count_answers">
+	 	<item>2147483646</item>
+	 	<item>1073741822</item>
+	 	<item>536870910</item>
+	 	<item>268435454</item>
+	 	<item>134217726</item>
+	 	<item>67108862</item>
+	 	<item>33554430</item>
+	 	<item>16777214</item>
+	 	<item>8388606</item>
+	 	<item>4194302</item>
+	 	<item>2097150</item>
+	 	<item>1048574</item>
+	 	<item>524286</item>
+	 	<item>262142</item>
+	 	<item>131070</item>
+	 	<item>65534</item>
+	 	<item>32766</item>
+	 	<item>16382</item>
+	 	<item>8190</item>
+	 	<item>4094</item>
+	 	<item>2046</item>
+	 	<item>1022</item>
+	 	<item>510</item>
+	 	<item>254</item>
+	 	<item>126</item>
+	 	<item>62</item>
+	 	<item>30</item>
+	 	<item>14</item>
+	 	<item>6</item>
+	 	<item>2</item>
+    
+	 </string-array>
+	 <!-- End Array -->
+    
+</resources>
+>>>>>>> refs/remotes/enol/master
