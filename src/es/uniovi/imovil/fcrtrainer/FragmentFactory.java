@@ -69,9 +69,9 @@ final public class FragmentFactory {
 		case R.string.network_address:
 			// TODO: return NetworAddressExerciseFragment.newInstance();
 		case R.string.network_mask:
-			// TODO: return NetworkMaskExerciseFragment.newInstance();
+			  return NetworkMaskExerciseFragment.newInstance();
 
-			return DummyExerciseFragment.newInstance();
+//			return DummyExerciseFragment.newInstance();
 
 		default:
 			throw new IllegalStateException();
