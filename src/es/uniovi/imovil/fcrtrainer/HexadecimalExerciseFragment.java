@@ -73,9 +73,9 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 				false);
 
 		etAnswer = (EditText) rootView.findViewById(R.id.answer);
-		bChange = (Button) rootView.findViewById(R.id.btn_togglebinary);
-		bSolution = (Button) rootView.findViewById(R.id.btn_getsolution);
-		bCheck = (Button) rootView.findViewById(R.id.btn_check);
+		bChange = (Button) rootView.findViewById(R.id.change);
+		bSolution = (Button) rootView.findViewById(R.id.seesolution);
+		bCheck = (Button) rootView.findViewById(R.id.checkbutton);
 		tvNumberToConvert = (TextView) rootView
 				.findViewById(R.id.numbertoconvert);
 		tvTitle = (TextView) rootView.findViewById(R.id.exercisetitle);
