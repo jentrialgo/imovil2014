@@ -1,6 +1,6 @@
 /*
 
-Copyright 2014 Profesores y alumnos de la asignatura Inform‡tica M—vil de la EPI de Gij—n
+Copyright 2014 Profesores y alumnos de la asignatura InformÃ¡tica MÃ³vil de la EPI de GijÃ³n
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,10 +18,14 @@ limitations under the License.
 
 package es.uniovi.imovil.fcrtrainer;
 
+import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
 
-import android.content.res.Configuration;
+import org.json.JSONException;
+
+import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -42,9 +46,14 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 	private Button bSolution;
 	private TextView tvNumberToConvert;
 	private TextView tvTitle;
+	private TextView tvPoints;
 	private int numberToConvert;
 	private boolean tohex = true;
-	private static final int MAX_NUMBER_TO_CONVERT = 1000;
+	private boolean game = false;
+	private int pointsCounter = 0;
+	private static final int MAX_NUMBER_TO_CONVERT = 512;
+	private static final int GAMEMODE_MAXQUESTIONS = 5;
+	private Random randomGenerator;
 
 	public static HexadecimalExerciseFragment newInstance() {
 
@@ -70,6 +79,8 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 		tvNumberToConvert = (TextView) rootView
 				.findViewById(R.id.numbertoconvert);
 		tvTitle = (TextView) rootView.findViewById(R.id.exercisetitle);
+		tvPoints = (TextView) rootView.findViewById(R.id.tvpoints);
+		randomGenerator = new Random();
 
 		etAnswer.setOnEditorActionListener(new OnEditorActionListener() {
 
@@ -105,16 +116,13 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 			public void onClick(View arg0) {
 				tohex ^= true;
 				if (tohex) {
-					etAnswer.setInputType(EditorInfo.TYPE_CLASS_TEXT);
-					tvTitle.setText(getResources().getString(
-							R.string.convert_to_hex));
-					generateRandomNumber();
+					setKeyboardLayout();
+					setTitle();
 				} else {
-					etAnswer.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
-					tvTitle.setText(getResources().getString(
-							R.string.convert_to_bin));
-					generateRandomNumber();
+					setKeyboardLayout();
+					setTitle();
 				}
+				generateRandomNumber();
 			}
 		});
 
@@ -126,21 +134,29 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 			}
 		});
 
-		Log.i(getClass().getSimpleName(), "onViewCreated");
-
 		if (savedInstanceState != null) {
-			Log.i(getClass().getSimpleName(), "Inside savedInstanceState");
 			tohex = savedInstanceState.getBoolean("tohex");
 			numberToConvert = savedInstanceState.getInt("numbertoconvert");
 			updateUI();
+			setKeyboardLayout();
+			setTitle();
 		} else
 			generateRandomNumber();
 
 		return rootView;
 	}
+	
+	public void setKeyboardLayout(){
+		if(tohex) etAnswer.setInputType(EditorInfo.TYPE_CLASS_TEXT);
+		else etAnswer.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
+	}
+	
+	public void setTitle(){
+		if(tohex) tvTitle.setText(getResources().getString(R.string.convert_to_hex));
+		else tvTitle.setText(getResources().getString(R.string.convert_to_bin));
+	}
 
 	public void generateRandomNumber() {
-		Random randomGenerator = new Random();
 		numberToConvert = randomGenerator.nextInt(MAX_NUMBER_TO_CONVERT);
 		updateUI();
 	}
@@ -154,9 +170,13 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 	}
 
 	/**
-	 * Checks if the answer is correct
+	 * Checks if the answer is correct. If the game mode is selected checks for
+	 * the number of questions that already has been asked, in case that number
+	 * is equal to the max number allowed calls endGame(). Also it adds a point
+	 * for each correct answer in that mode.
 	 * 
-	 * @param answer the user input
+	 * @param answer
+	 *            the user input
 	 */
 	public void isCorrect(String answer) {
 
@@ -165,12 +185,16 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 		if (tohex) {
 			if (answer.equals(Integer.toHexString(numberToConvert))) {
 				showAnimationAnswer(true);
+				if (game)
+					updateGameState();
 				generateRandomNumber();
 			} else
 				showAnimationAnswer(false);
 		} else {
 			if (answer.equals(Integer.toBinaryString(numberToConvert))) {
 				showAnimationAnswer(true);
+				if (game)
+					updateGameState();
 				generateRandomNumber();
 			} else
 				showAnimationAnswer(false);
@@ -191,21 +215,118 @@ public class HexadecimalExerciseFragment extends BaseExerciseFragment {
 		outState.putInt("numbertoconvert", numberToConvert);
 	}
 
+	/**
+	 * Prepares the layout for the training and game mode.
+	 * 
+	 * @param training
+	 *            true if the change is to the training mode
+	 */
+	public void setTrainingMode(boolean training) {
+		if (training) {
+			game = false;
+			bSolution.setVisibility(View.VISIBLE);
+			tvPoints.setVisibility(View.GONE);
+		} else {
+			game = true;
+			resetGameState();
+			bSolution.setVisibility(View.GONE);
+			tvPoints.setVisibility(View.VISIBLE);
+		}
+	}
+
+	/**
+	 * Updates the game stats and if all the questions have been asked it calls
+	 * the endGame() method.
+	 */
+	public void updateGameState() {
+		pointsCounter++;
+		updatePoints(pointsCounter);
+		if (pointsCounter == GAMEMODE_MAXQUESTIONS)
+			endGame();
+	}
+
+	public void resetGameState() {
+		pointsCounter = 0;
+		tvPoints.setVisibility(View.GONE);
+	}
+
+	/**
+	 * Updates the points in the UI
+	 * @param points
+	 */
+	public void updatePoints(int points) {
+		tvPoints.setText(getString(R.string.points) + String.valueOf(points));
+	}
+
+	/**
+	 * Starts the game and sets the UI
+	 */
 	@Override
 	void startGame() {
-		// TODO Auto-generated method stub
 		super.startGame();
+		setTrainingMode(false);
+		updatePoints(pointsCounter);
 	}
 
+	/**
+	 * Called when the user cancels the game
+	 */
 	@Override
 	void cancelGame() {
-		// TODO Auto-generated method stub
 		super.cancelGame();
+		setTrainingMode(true);
 	}
 
+	/**
+	 * Called when the game ends
+	 */
 	@Override
 	void endGame() {
-		// TODO Auto-generated method stub
 		super.endGame();
+
+		int remainingTime = (int) getRemainingTimeMs() / 1000;
+		pointsCounter = pointsCounter + remainingTime;
+
+		showEndGameDialog(remainingTime);
+
+		saveScore(pointsCounter);
+		setTrainingMode(true);
 	}
+
+	/**
+	 * Shows a dialog with the game stats when the game is over
+	 * 
+	 * @param remainingTime
+	 */
+	public void showEndGameDialog(int remainingTime) {
+		AlertDialog.Builder abuilder = new AlertDialog.Builder(getActivity());
+		abuilder.setTitle(getString(R.string.game_over));
+
+		if (remainingTime > 0)
+			abuilder.setMessage(String.format(
+					getString(R.string.gameisoverexp), remainingTime,
+					pointsCounter));
+		else
+			abuilder.setMessage(String.format(
+					getString(R.string.lost_time_over), pointsCounter));
+
+		abuilder.create().show();
+	}
+
+	/**
+	 * Saves the score using the Highscore Manager.
+	 * 
+	 * @param points
+	 */
+	public void saveScore(int points) {
+		String user = getString(R.string.default_user_name);
+
+		try {
+			HighscoreManager.addScore(getActivity().getApplicationContext(),
+					points, R.string.hexadecimal, new Date(), user);
+		} catch (JSONException e) {
+			Log.v(getClass().getSimpleName(), "Error when saving score");
+		}
+	}
+
 }

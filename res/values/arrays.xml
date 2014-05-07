@@ -21,7 +21,8 @@ limitations under the License.
         <item>@string/binary</item>
         <item>@string/hexadecimal</item>
         <item>@string/sign_and_magnitude</item>
-        <item>@string/interpretation</item>
+     <!--    <item>@string/interpretation</item> -->
+     	<item>@string/offset_binary</item>
 		<item>@string/twoscomplement</item>
         <item>@string/floating_point</item>
     </array>
@@ -68,14 +69,23 @@ limitations under the License.
         <item>Protocolo POP3</item>
         <item>Protocolo IMAP</item>
         <item>Protocolo ICMP</item>
+        <item>Protocolo DNS</item>
+        <item>Protocolo Ethernet</item>
+        <item>Protocolo ARP</item>
+        <item>Protocolo SSH</item>
+        <item>Protocolo ICMP</item>
     </string-array>
 
-    <!--  hay que poner las capas en orden alfabetico -->
     <string-array name="layer_exercise_answers">
         <item>Capa de internet</item>
         <item>Capa de transporte</item>
         <item>Capa de transporte</item>
         <item>Capa de aplicación</item>
+        <item>Capa de aplicación</item>
+        <item>Capa de internet</item>
+        <item>Capa de aplicación</item>
+        <item>Capa de enlace</item>
+        <item>Capa de enlace</item>
         <item>Capa de aplicación</item>
         <item>Capa de internet</item>
     </string-array>
@@ -193,5 +203,26 @@ limitations under the License.
     
 	 </string-array>
 	 <!-- End Array -->
+	 
+	 
+	 
+	 <string-array name="preguntas">
+         
+   	 <item>223</item>
+     <item>700</item>
+     <item>1300</item>
+     <item>6007</item>
+     <item>17045</item>
+     </string-array>
+    
+     
+      <string-array name="respuestas">
+         
+   	 <item>255.255.255.0</item>
+     <item>255.255.0.0</item>
+     <item>255.255.0.0</item>
+     <item>255.255.0.0</item>
+     <item>255.255.0.0</item>
+     </string-array>
     
 </resources>

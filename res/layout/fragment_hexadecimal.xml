@@ -36,6 +36,31 @@ limitations under the License.
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin" >
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@id/text_view_clock"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:textSize="20sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tvpoints"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:textColor="@color/mediumdarkgray"
+                android:textSize="20sp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
         <TextView
             android:id="@+id/exercisetitle"
             style="@style/Title2DarkLight"
@@ -56,6 +81,7 @@ limitations under the License.
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.6"
+                android:gravity="center_horizontal"
                 android:padding="10dp"
                 android:textColor="@color/mediumdarkgray"
                 android:textSize="32sp" />
@@ -96,6 +122,7 @@ limitations under the License.
                 android:drawableLeft="@drawable/ic_import_export"
                 android:minWidth="48dp" />
         </LinearLayout>
+
     </LinearLayout>
 
     <!-- Views required by the animation -->

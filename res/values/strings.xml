@@ -33,6 +33,7 @@ limitations under the License.
     <string name="twoscomplement">Complemento a dos</string>
     <string name="interpretation">Interpretación</string>
     <string name="floating_point">Coma flotante</string>
+    <string name="offset_binary">Exceso a Z</string>
     <string name="logic_gate">Puerta lógica</string>
     <string name="logic_operation">Operación lógica</string>
     <string name="network_address">Dirección de red</string>
@@ -49,37 +50,39 @@ limitations under the License.
     <string name="training">Entrenamiento</string>
     <string name="retry">Reintentar</string>
     <string name="finish">Entrenamiento finalido.</string>
-    <string name="success">Has acertado</string> 
-    <string name="fail">Has fallado. La respuesta correcta es</string>       
- 
-    <!-- Strings logic gate -->    
-     <string name="button_logic_gate">Comprobar</string>
-     <string name="failed_logic_gate">¡Has fallado!</string>
-     <string name="dialog_try_logic_gate">¿Quieres probar de nuevo o bien quieres saber la solución?</string>
-     <string name="try_again_logic_gate">Reintentar</string>
-     <string name="solution_logic_gate">Solución</string>
-     <string name="done_logic_gate">Has acabado</string>
-     <string name="button_logic_gate_solution">Solución</string>
-     <string name="logic_gate_title">¿Que puerta lógica es?</string>
-     
-     <!--  Fin Strings logic gate -->    
+    <string name="success">Has acertado</string>
+    <string name="fail">Has fallado. La respuesta correcta es</string>
+    <string name="finJuego">Final de Juego</string>
+    
+    <!-- Strings logic gate -->
+
+    <string name="button_logic_gate">Comprobar</string>
+    <string name="failed_logic_gate">¡Has fallado!</string>
+    <string name="dialog_try_logic_gate">¿Quieres probar de nuevo o bien quieres saber la solución?</string>
+    <string name="try_again_logic_gate">Reintentar</string>
+    <string name="solution_logic_gate">Solución</string>
+    <string name="done_logic_gate">Has acabado</string>
+    <string name="button_logic_gate_solution">Solución</string>
+    <string name="logic_gate_title">¿Que puerta lógica es?</string>
+     <string name="points_final">Tu puntuacion es de </string>
+    <string name="end_game">Has terminado</string>
+    <string name="title_puntuacion">Puntuación: </string>
+
+    <!-- Fin Strings logic gate -->
     <string name="dummy_exercise">Ejercicio</string>
-    <string name="fragment_interpretation">Complemento a 2</string>
 
     <!-- Strings layer exercise -->
     <string name="layer_tittle">Acierta la capa</string>
     <string name="button_layer_exercise">Comprobar</string>
-    <string name="button_solution">Solución</string>  
+    <string name="button_solution">Solución</string>
     <string name="link_layer">Capa de enlace</string>
     <string name="internet_layer">Capa de internet</string>
     <string name="transport_layer">Capa de transporte</string>
     <string name="application_layer">Capa de aplicación</string>
 
-    <!-- Fin Strings layer exercise -->   
+    <!-- Fin Strings layer exercise -->
     <string name="initial_clock_value">2:00</string>
     <string name="error_no_clock">Error: este ejercicio no está preparado para jugar</string>
-    <string name="convert_to_hex">Convierte a hexadecimal</string>
-    <string name="convert_to_bin">Convierte a binario</string>
     <string name="check">Comprobar</string>
     <string name="correct">¡Correcto!</string>
     <string name="not_correct">¡No es correcto!</string>
@@ -87,38 +90,73 @@ limitations under the License.
     <string name="change">Cambiar</string>
 
     <!-- Modulo: Binario -->
-	<string name="check_binary">comprobar</string>
-	<string name="next_binary">siguente</string>
-	<string name="title_binary">Binario</string>
-	<string name="correct_binary">correcto</string>
-	<string name="wrong_binary">falso</string>
-	<string name="digits_available_decimal_binary">0123456789</string>
-	<string name="digits_available_01_binary">01</string>
-  	<string name="hint_binary">ejemplo: 00000000</string>
-  	<string name="hint_2_binary">ejemplo: 64</string>
-  	<string name="insert_value_binary">insertar un valor por favor.</string>
-	<string name="convert_to_dec">Convierte a decimal</string>
-  	<string name="binary_hint">example: 00000000</string>
-  	<string name="game_over">YA ESTÀ!</string>
-  	<string name="points">Puntos: </string>
-  	<string name="won">Has ganado! </string>
-  	<string name="lost">Has perdido! </string>
+    <string name="check_binary">comprobar</string>
+    <string name="next_binary">siguente</string>
+    <string name="title_binary">Binario</string>
+    <string name="correct_binary">correcto</string>
+    <string name="wrong_binary">falso</string>
+    <string name="digits_available_decimal_binary">0123456789</string>
+    <string name="digits_available_01_binary">01</string>
+    <string name="hint_binary">ejemplo: 00000000</string>
+    <string name="hint_2_binary">ejemplo: 64</string>
+    <string name="insert_value_binary">insertar un valor por favor.</string>
+    <string name="convert_to_dec">Convierte a decimal</string>
+    <string name="binary_hint">example: 00000000</string>
+    <string name="game_over">Juego finalizado</string>
+    <string name="points">Puntos obtenidos: </string>
+    <string name="won">Juego terminado. </string>
+    <string name="lost">¡Se ha cumplido el tiempo! </string>
 
-  	<!-- Modulo: Operaciones Lógicas -->
-  	<string name="LOand">AND</string>
+	
+  	<!-- Módulo: Signo Magnitud -->
+  	<string name="question_sign_magnitude">Convierte el siguiente número representado en signo-magnitud a decimal</string>
+  	<string name="convert_to_signed_magnitude">Convierte de decimal a signo magnitud</string>
+  	
+  	<string name="check_answer">Comprobar</string>
+    <string name="solutionSigned">Solución</string>
+    <string name="signedMagnitudePoints">0</string>
+    <!-- Fin Signo Magnitud -->
+
+    <!-- Modulo: Operaciones Lógicas -->
+    <string name="LOand">AND</string>
     <string name="LOor">OR</string>
-    <string name="LOxor">XOR</string>    
+    <string name="LOxor">XOR</string>
     <string name="LOpregunta">¿Cuál es la solución a esta operación lógica de 5 bits?</string>
+    <string name="modoEntrenamiento">Volver al modo entrenamiento</string>
+    <string name="puntuacion">Has obtenido una puntuación de: </string>
+    <!-- Fin Operaciones Lógicas -->
 
-    <!--  Modulo: Protocolos -->
+    <!-- Módulo: Hexadecimal -->
+    <string name="convert_to_hex">Convierte a hexadecimal</string>
+    <string name="convert_to_bin">Convierte a binario</string>
+    <string name="gameisoverexp">¡Has acabado el juego! Te han sobrado %1$d segundos y has obtenido %2$d puntos.</string>
+    <string name="lost_time_over">Game Over! Se ha acabado el tiempo. Has contestado correctamente %1$d preguntas.</string>
+    <!-- Fin Hexadecimal -->
+
+    <!-- Modulo: Protocolos -->
     <string name="protocols">Adivina el protocolo</string>
     <string name="cidr_title">Calcula la notación CIDR</string>
-    
+
     <!-- Twos Complement -->
-	<string name="convert_to_twoscomplement">Convierte a complemento a dos</string>
-	<string name="convert_to_decimal">Convierte de complemento a dos a decimal</string>
-	
-	<!-- Host count exercise -->
-  	<string name="host_count_title">Calcula el numero de hosts</string>
-  	<!-- End Host count exercise -->
+    <string name="convert_to_twoscomplement">Convierte a complemento a dos</string>
+    <string name="convert_to_decimal">Convierte de complemento a dos a decimal</string>
+    <string name="next_numb">Siguiente</string>
+    <string name="points01">Has obtenido </string>
+    <string name="points02"> puntos</string>
+    <!-- End Twos Complement -->
+
+    <string name="fragment_interpretation">Interpretacion </string>
+    <!-- Host count exercise -->
+    <string name="host_count_title">Calcula el numero de hosts</string>
+    <!-- End Host count exercise -->
+    
+    <!--  Exceso a Z -->
+  	<string name="convert_to_bin_offset">Convertir de decimal a exceso a Z</string>
+  	<string name="convert_from_bo_to_dec">Convertir de exceso a Z a decimal</string>
+
+	<!-- Máscara de red -->
+    <string name="enunciadomasc">Numero de computadoras en red</string>
+	<string name="solucion">Solucion</string>
+    <string name="comprobar">Comprobar</string>
+    <!-- Fin Máscara de red -->
 </resources>
