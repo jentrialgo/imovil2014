@@ -1,7 +1,5 @@
 package es.uniovi.imovil.fcrtrainer;
 
-
-
 public class ProtocolTest 
 {
 
