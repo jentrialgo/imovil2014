@@ -53,6 +53,7 @@ limitations under the License.
     <string name="success">Has acertado</string>
     <string name="fail">Has fallado. La respuesta correcta es</string>
     <string name="finJuego">Final de Juego</string>
+    
     <!-- Strings logic gate -->
 
     <string name="button_logic_gate">Comprobar</string>
@@ -63,6 +64,9 @@ limitations under the License.
     <string name="done_logic_gate">Has acabado</string>
     <string name="button_logic_gate_solution">Solución</string>
     <string name="logic_gate_title">¿Que puerta lógica es?</string>
+     <string name="points_final">Tu puntuacion es de </string>
+    <string name="end_game">Has terminado</string>
+    <string name="title_puntuacion">Puntuación: </string>
 
     <!-- Fin Strings logic gate -->
     <string name="dummy_exercise">Ejercicio</string>

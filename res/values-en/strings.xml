@@ -54,7 +54,7 @@
   	<string name="points">Points: </string>
     <!-- Fin Modulo: Binario -->
 	
-     <!-- Strings logic gate -->
+       <!-- Strings logic gate -->
      
      <string name="button_logic_gate">Check</string>
      <string name="failed_logic_gate">You failed!</string>
@@ -62,6 +62,13 @@
      <string name="try_again_logic_gate">Try again</string>
      <string name="solution_logic_gate">Solution</string>
      <string name="done_logic_gate">You are done</string>
+    <string name="button_logic_gate_solution">Solution</string>
+    <string name="logic_gate_title">¿What is this logic gate?</string>
+    <string name="points_final">Your score is </string>
+    <string name="end_game">End game</string>
+    <string name="title_puntuacion">Score: </string>
+     
+     <!--  Fin Strings logic gate -->
      
      <!--  Fin Strings logic gate -->
      
