@@ -12,6 +12,7 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,17 +28,13 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 
 	static public int NUMBER_OF_ANSWERS = 4;
 	private static final int POINTS_FOR_QUESTION = 10;
-	private static final int REST_FOR_FAIL = 2;
+	private static final int REST_FOR_FAIL = 3;
 	private static final int MAX_QUESTIONS = 5;
-	
-	//Problemas al cargar de la BD las preguntas.
-	//Esqueleto m’nimo, pero sin probar la funcionalidad por no cargarse bien la BD.
 	private static final String DB_NAME = "protocolFCR.sqlite";
 	private static final int DB_VERSION = 2;
 
-	protected static final int TOP = 4;
 
-	private static final long GAME_DURATION_MS = 120 * 1000; //2 minutos de juego.
+	private static final long GAME_DURATION_MS = 3 * 1000; //2 minutos de juego.
 	private ArrayList<ProtocolTest> testList=null;
 	private View mRootView;
 	private View mCardView;
@@ -53,6 +50,7 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 	private int partialPoints;
 	private int totalFails=0;
 	private boolean gameMode = false;
+	private  boolean flag;
 
 	public static ProtocolExerciseFragment newInstance() 
 	{
@@ -69,34 +67,42 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
         addAnswerRadioButtons();
         seeSolution = (Button) mRootView.findViewById(R.id.seesolution);
         check = (Button) mRootView.findViewById(R.id.checkbutton);
+        //Manejador del evento de mostrar solución (solo en modo entrenamiento).
         seeSolution.setOnClickListener( new OnClickListener() 
         {
+			private Object TAG;
+
 			@Override
 			public void onClick(View arg0) 
 			{
+
+				flag = false;
 				int i = 0;
 				while (i<NUMBER_OF_ANSWERS)
 				{
-					if (respRadioButton[i].getText().equals(test.getResponse()))
+					if ((respRadioButton[i].getText().equals(test.getResponse())) && (!flag))
 					{
 						respRadioButton[i].setChecked(true);						
-						i=TOP; 
+						flag=true;
 					}
 					i++;
 				}
 
     	     }
 		 });
+        //Manejador del botón de comprobación de respuesta.
         check.setOnClickListener( new OnClickListener() 
         {
 			@Override
 			public void onClick(View arg0) 
 			{
+				flag = false;
 				int index = 0;
-				while (index<NUMBER_OF_ANSWERS)
+				while ((index<NUMBER_OF_ANSWERS) && (!flag))
 				{
 					if (respRadioButton[index].isChecked()) {
 						checkIfButtonClickedIsCorrectAnswer(index);
+						flag = true;
 					}
 					index++;
 				}
@@ -113,10 +119,8 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
         	Toast.makeText(this.getActivity(), "Error al abrir la base de datos",
         			Toast.LENGTH_LONG).show();
         }
-        //Cargar la bd con las preguntas y respuestas en un array-list.
+
         testList=db.loadData();
-        //Lanzar el entrenamiento.
-		//seeDB();
         newQuestion();               
 		return mRootView;
 	}
@@ -175,8 +179,8 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 
 	private void newQuestion()	{
 		rg.clearCheck();
-		partialPoints = POINTS_FOR_QUESTION;
-		test = testList.get((int)(Math.random()*(14-0))+0);
+		partialPoints = POINTS_FOR_QUESTION; //Puntos parciales (al fallar se resta 2 puntos).
+		test = testList.get((int)(Math.random()*(14-0))+0); 
      	//Mostrar pregunta y opciones.
 		question.setText(test.getQuestion());
 		for (int i = 0; i < NUMBER_OF_ANSWERS; i++) {
@@ -212,7 +216,7 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 		newQuestion();
 
 		Button solution = (Button) mRootView.findViewById(R.id.seesolution);
-		solution.setVisibility(View.INVISIBLE);
+		solution.setVisibility(View.GONE);
 		TextView points = (TextView) mRootView.findViewById(R.id.points);
 		points.setVisibility(View.VISIBLE);
 
@@ -225,17 +229,15 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 		solution.setVisibility(View.VISIBLE);
 
 		TextView points = (TextView) mRootView.findViewById(R.id.points);
-		points.setVisibility(View.INVISIBLE);
+		points.setVisibility(View.GONE);
 	}
 	
 	private void gameModeControl() {
 		increasePoints(partialPoints);
 		
 		if (currentQuestionCounter >= MAX_QUESTIONS) {
-			// won
 			this.won = true;
 			this.endGame();
-
 		}
 
 		if (currentQuestionCounter < MAX_QUESTIONS && getRemainingTimeMs() <= 0) {
@@ -251,7 +253,6 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 	void endGame() {
 		//convert to seconds
 		int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000; 
-		//every remaining second gives one extra point.
 		this.points = (int) (this.points + remainingTimeInSeconds);
 
 		if (this.won)
@@ -268,15 +269,15 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 	}
 	
 	private void increasePoints(int val) {
-		this.points = this.points + val;
-		updatePointsTextView(this.points);
+		points = points + val;
+		updatePointsTextView(points);
 	}
 	
 	// Simple GameOver Dialog
 	private void dialogGameOver() {
 		String message = getResources().getString(R.string.lost);
 
-		if (this.won) {
+		if (won) {
 			message = getResources().getString(R.string.won) + " "
 					+ getResources().getString(R.string.points) + " "
 					+ this.points;
@@ -309,9 +310,9 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 	}
 	
 	private void reset() {
-		this.points = 0;
-		this.currentQuestionCounter = 0;
-		this.won = false;
+		points = 0;
+		currentQuestionCounter = 0;
+		won = false;
 		updatePointsTextView(0);
 	}
 
