@@ -103,27 +103,11 @@ limitations under the License.
     <string name="won">Juego terminado. </string>
     <string name="lost">¡Se ha cumplido el tiempo! </string>
 
-	<string name="check_binary">comprobar</string>
-	<string name="next_binary">siguente</string>
-	<string name="title_binary">Binario</string>
-	<string name="correct_binary">correcto</string>
-	<string name="wrong_binary">falso</string>
-	<string name="digits_available_decimal_binary">0123456789</string>
-	<string name="digits_available_01_binary">01</string>
-  	<string name="hint_binary">ejemplo: 00000000</string>
-  	<string name="hint_2_binary">ejemplo: 64</string>
-  	<string name="insert_value_binary">insertar un valor por favor.</string>
-	<string name="convert_to_dec">Convierte a decimal</string>
-  	<string name="binary_hint">example: 00000000</string>
-  	<string name="game_over">Se ha acabado el juego</string>
-  	<string name="points">Puntos: </string>
-  	<string name="won">Has ganado! </string>
-  	<string name="lost">Has perdido! </string>
-  	
+	
   	<!-- Módulo: Signo Magnitud -->
   	<string name="question_sign_magnitude">Convierte el siguiente número representado en signo-magnitud a decimal</string>
   	<string name="convert_to_signed_magnitude">Convierte de decimal a signo magnitud</string>
-  	<string name="convert_to_dec">Convierte de signo magnitud a decimal</string>
+  	
   	<string name="check_answer">Comprobar</string>
     <string name="solutionSigned">Solución</string>
     <string name="signedMagnitudePoints">0</string>
@@ -166,4 +150,9 @@ limitations under the License.
   	<string name="convert_to_bin_offset">Convertir de decimal a exceso a Z</string>
   	<string name="convert_from_bo_to_dec">Convertir de exceso a Z a decimal</string>
 
+	<!-- Máscara de red -->
+    <string name="enunciadomasc">Numero de computadoras en red</string>
+	<string name="solucion">Solucion</string>
+    <string name="comprobar">Comprobar</string>
+    <!-- Fin Máscara de red -->
 </resources>
