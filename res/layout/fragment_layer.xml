@@ -2,103 +2,126 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/mediumgray"
-    android:orientation="vertical" >
-    
-	<LinearLayout 
-    	android:layout_width="fill_parent"
-    	android:layout_height="fill_parent"
-    	android:orientation="vertical">
-    	<TextView
-        	android:id="@+id/exercisetitle"
-        	style="@style/Title2DarkLight"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:layout_marginLeft="15dp"
-        	android:layout_marginTop="5dp"
-        	android:text="@string/layer_tittle" />
+    android:background="@color/mediumgray" >
 
-    <TextView
-        android:id="@+id/textlayer"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center"
-        android:background="@drawable/cards"
-        android:layout_margin="15dp"
-        android:textSize="20sp" />
-   
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
 
-    <RadioGroup
-        android:id="@+id/layer_group"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/cards"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:padding="10dp" >
-
-        <RadioButton
-            android:id="@+id/link_layer"
+        <TextView
+            android:id="@+id/exercisetitle"
+            style="@style/Title2DarkLight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/link_layer" />
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/layer_tittle" />
 
-        <RadioButton
-            android:id="@+id/internet_layer"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/internet_layer" />
+            android:orientation="horizontal" >
 
-        <RadioButton
-            android:id="@+id/transport_layer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/transport_layer" />
+            <TextView
+                android:id="@+id/text_view_clock"
+                style="@style/Title2DarkLight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                android:visibility="gone" />
 
-        <RadioButton
-            android:id="@+id/application_layer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/application_layer" />
-    </RadioGroup>
-
-    <TextView
-        android:id="@+id/layer_exercise"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/logic_gate"
-        android:visibility="gone" />
-    
-	<LinearLayout 
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:orientation="horizontal"
-	    android:layout_marginLeft="15dp"
-	    android:layout_marginRight="15dp">
-        
-    	<Button
-        	android:id="@+id/button_layer"
-        	android:layout_weight="1"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:text="@string/button_layer_exercise"/>
-
-    	<Button
-        	android:id="@+id/button_solutionlayer"
-        	android:layout_weight="1"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:text="@string/button_solution" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/points_layer"
+                style="@style/Title2DarkLight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/points"
+                android:visibility="gone" />
         </LinearLayout>
-	
-    
-       <!--  Views required by the animation -->
+
+        <TextView
+            android:id="@+id/textlayer"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="15dp"
+            android:background="@drawable/cards"
+            android:gravity="center"
+            android:textSize="20sp" />
+
+        <RadioGroup
+            android:id="@+id/layer_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/cards"
+            android:padding="10dp" >
+
+            <RadioButton
+                android:id="@+id/link_layer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/link_layer" />
+
+            <RadioButton
+                android:id="@+id/internet_layer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/internet_layer" />
+
+            <RadioButton
+                android:id="@+id/transport_layer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/transport_layer" />
+
+            <RadioButton
+                android:id="@+id/application_layer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/application_layer" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/layer_exercise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/logic_gate"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/button_layer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/button_layer_exercise" />
+
+            <Button
+                android:id="@+id/button_solutionlayer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/button_solution" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Views required by the animation -->
 
     <RelativeLayout
+        android:id="@+id/result"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/result"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:background="@color/pantalla"
@@ -110,11 +133,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="140dp"/>
+            android:layout_marginTop="140dp" />
     </RelativeLayout>
-    
-    <!-- End of views required by the animation -->    
+
+    <!-- End of views required by the animation -->
+
 </RelativeLayout>
-
-
-
