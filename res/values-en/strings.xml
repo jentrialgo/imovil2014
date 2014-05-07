@@ -14,7 +14,8 @@
     <string name="binary">Binary</string>
     <string name="hexadecimal">Hexadecimal</string>
     <string name="sign_and_magnitude">Sign-and-magnitude</string>
-    <string name="interpretation">Interpretación</string>
+ <!--    <string name="interpretation">Interpretación</string> -->
+ 	<string name="offset_binary">Binary Offset</string>
 	<string name="twoscomplement">Twos Complement</string>
     <string name="floating_point">Coma flotante</string>
     <string name="logic_gate">Logic gate</string>
@@ -91,5 +92,10 @@
  	<!-- Host count exercise -->
   	<string name="host_count_title">Calculate number of hosts</string>
   	<!-- End Host count exercise -->
+  	
+  	<!--  Exceso a Z -->
+  	<string name="convert_to_bin_offset">Convert from decimal to binary offset</string>
+  	<string name="convert_from_bo_to_dec">Convert from binary offset to decimal</string>
+  	
 </resources>
 

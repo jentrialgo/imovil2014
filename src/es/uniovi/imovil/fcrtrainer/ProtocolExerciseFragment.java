@@ -34,7 +34,6 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 	//Esqueleto m’nimo, pero sin probar la funcionalidad por no cargarse bien la BD.
 	private static final String DB_NAME = "protocolFCR.sqlite";
 	private static final int DB_VERSION = 2;
-	private static final String TAG = null;
 
 	protected static final int TOP = 4;
 
@@ -224,7 +223,6 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 
 		Button solution = (Button) mRootView.findViewById(R.id.seesolution);
 		solution.setVisibility(View.VISIBLE);
-		Button change = (Button) mRootView.findViewById(R.id.change);
 
 		TextView points = (TextView) mRootView.findViewById(R.id.points);
 		points.setVisibility(View.INVISIBLE);
