@@ -102,7 +102,8 @@ public class HighscoreManager {
 	 *            Puntos obtenidos
 	 * @param exercise
 	 *            Ejercicio donde se han obtenido. Debe ser una de las
-	 *            constantes en ExerciseFragmentFactory
+	 *            constantes usadas en FragmentFactory para lanzar el fragmento,
+	 *            por ejemplo, R.string.logic_gate
 	 * @param date
 	 *            Fecha en la que se obtuvo la puntuación
 	 * @param userName

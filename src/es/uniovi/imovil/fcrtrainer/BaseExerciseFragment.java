@@ -13,7 +13,6 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-
  */
 
 package es.uniovi.imovil.fcrtrainer;
@@ -68,6 +67,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 
 	private final static int CLOCK_UPDATE_PERIOD_MS = 1000; // 1 s
 	private final static int DEFAULT_GAME_DURATION_MS = 120 * 1000; // 2 min
+	private static final String TAG = null;
 
 	boolean mIsPlaying = false;
 
@@ -76,20 +76,30 @@ public abstract class BaseExerciseFragment extends Fragment {
 	private TextView mClock;
 	private long mDurationMs = DEFAULT_GAME_DURATION_MS;
 	private long mStartMs;
-	
+
 	private AlphaAnimation animation;
 	private AnticipateOvershootInterpolator antovershoot;
-	
+
 	private View result;
 	private ImageView resultImage;
 
-	
+
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		result = (View) view.findViewById(R.id.result);
 		resultImage = (ImageView) view.findViewById(R.id.resultimage);
 		super.onViewCreated(view, savedInstanceState);
+	}
+
+	/**
+	 * Get remaining time in ms.
+	 * 
+	 * @return long
+	 */
+	protected long getRemainingTimeMs(){
+		long nowMs = System.currentTimeMillis();
+		return mDurationMs - (nowMs - mStartMs);
 	}
 
 	private final class TimeUpdater implements Runnable {
@@ -179,13 +189,21 @@ public abstract class BaseExerciseFragment extends Fragment {
 		}
 
 		mIsPlaying = true;
-		mStartMs = System.currentTimeMillis();
 		setClockVisibility(View.VISIBLE);
 		getActivity().supportInvalidateOptionsMenu();
+		showAnimationGameStart(true);
+		final Handler handler = new Handler();
+		handler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				mStartMs = System.currentTimeMillis();
+				final long updateTime = 0; // Hacer la primera actualización
+				// inmediatamente
+				mTimerHandler.postDelayed(mUpdateTimeTask, updateTime);
+			}
+		}, 1500);
 
-		final long updateTime = 0; // Hacer la primera actualización
-									// inmediatamente
-		mTimerHandler.postDelayed(mUpdateTimeTask, updateTime);
+
 	}
 
 	/**
@@ -214,7 +232,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 			getActivity().supportInvalidateOptionsMenu();
 		}
 	}
-	
+
 	/**
 	 * Shows an animation when the user taps on the check button.
 	 * Currently requires a layout with the id result and an imageview
@@ -223,8 +241,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 	 * 
 	 * @param correct if the answer is correct
 	 */
-	@SuppressLint("NewApi") protected void showAnimationAnswer(boolean correct){
-		
+	@SuppressLint("NewApi") protected void showAnimationAnswer(boolean correct){ 
 		// Fade in - fade out
 		result.setVisibility(View.VISIBLE);
 		animation = new AlphaAnimation(0,1);
@@ -234,8 +251,8 @@ public abstract class BaseExerciseFragment extends Fragment {
 		animation.setRepeatCount(Animation.RESTART);
 		animation.setRepeatMode(Animation.REVERSE);
 		result.startAnimation(animation);
-		
-		if(correct) resultImage.setImageDrawable(getResources().getDrawable(R.drawable.correct));
+		if(correct)
+			resultImage.setImageDrawable(getResources().getDrawable(R.drawable.correct));
 		else resultImage.setImageDrawable(getResources().getDrawable(R.drawable.incorrect));
 
 		// This only works in API 12+, so we skip this animation on old devices
@@ -249,7 +266,6 @@ public abstract class BaseExerciseFragment extends Fragment {
 			});
 		}
 	}
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle presses on the action bar items
@@ -265,4 +281,32 @@ public abstract class BaseExerciseFragment extends Fragment {
 			return super.onOptionsItemSelected(item);
 		}
 	}
+	
+	@SuppressLint("NewApi") protected void showAnimationGameStart(boolean correct){ 
+		// Fade in - fade out
+		result.setVisibility(View.VISIBLE);
+		animation = new AlphaAnimation(0,1);
+		animation.setDuration(1000);
+		animation.setFillBefore(true);
+		animation.setFillAfter(true);
+		animation.setRepeatCount(Animation.RESTART);
+		animation.setRepeatMode(Animation.REVERSE);
+		result.startAnimation(animation);
+		if(correct)
+			resultImage.setImageDrawable(getResources().getDrawable(R.drawable.game_start));
+
+
+		// This only works in API 12+, so we skip this animation on old devices
+		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB_MR2){
+			resultImage.animate().setDuration(1100).setInterpolator(antovershoot).scaleX(1.5f).scaleY(1.5f).withEndAction(new Runnable(){
+				@Override
+				public void run() {
+					// Back to its original size after the animation's end
+					resultImage.animate().scaleX(1f).scaleY(1f);
+				}
+			});
+		}
+	}
+	
+	
 }

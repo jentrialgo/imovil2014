@@ -88,7 +88,9 @@ public class MainActivity extends ActionBarActivity implements
 		}
 
 		// Cargo el fragmento con el contenido
-		updateContentFragment();
+
+		if (savedInstanceState == null)
+			updateContentFragment();
 
 		initializeDrawer(fromSavedInstanceState);
 	}
@@ -180,7 +182,8 @@ public class MainActivity extends ActionBarActivity implements
 				.createExercise(mExerciseResIndex);
 		FragmentTransaction fragmentTransaction = getSupportFragmentManager()
 				.beginTransaction();
-		fragmentTransaction.replace(R.id.content_frame, fragment);
+
+		fragmentTransaction.replace(R.id.content_frame, fragment, "Hola");
 		fragmentTransaction.commit();
 	}
 
