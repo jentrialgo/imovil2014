@@ -91,5 +91,10 @@
  	<!-- Host count exercise -->
   	<string name="host_count_title">Calculate number of hosts</string>
   	<!-- End Host count exercise -->
+  	
+  	    <!-- Help activity -->
+    <string name="developed_by">Application developed by Informática Móvil students, 2013-2014 promotion.</string>
+    <!-- End Help activity -->
+    
 </resources>
 
