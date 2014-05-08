@@ -61,37 +61,47 @@ limitations under the License.
         </RelativeLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
             <EditText
                 android:id="@+id/ed_solution1"
-                android:layout_width="19dp"
+                android:layout_width="0dp"
+                android:layout_weight="12"
                 android:layout_height="wrap_content"
-                android:ems="10"
                 android:imeOptions="actionDone"
                 android:inputType="text"
-                android:padding="10dp" >
+                android:text="0"
+                android:textSize="@dimen/small_font"
+                android:gravity="left"
+                >
+
             </EditText>
 
             <EditText
                 android:id="@+id/ed_solution2"
-                android:layout_width="87dp"
+                android:layout_width="0dp"
+                android:layout_weight="33"
                 android:layout_height="wrap_content"
-                android:ems="10"
                 android:imeOptions="actionDone"
                 android:inputType="text"
-                android:padding="10dp" />
+                android:text="00000000"
+                android:textSize="@dimen/small_font"
+                android:gravity="left"
+                 />
 
             <EditText
                 android:id="@+id/ed_solution3"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="65"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
                 android:imeOptions="actionDone"
                 android:inputType="text"
-                android:padding="10dp" />
+                android:text="00000000000000000000000"
+                android:textSize="@dimen/small_font"
+                android:gravity="left"
+                 />
+
         </LinearLayout>
 
         <LinearLayout
@@ -102,20 +112,22 @@ limitations under the License.
                 android:id="@+id/tv_s"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
+                android:layout_marginLeft="10dp"
                 android:text="@string/tv_sign" />
 
             <TextView
                 android:id="@+id/tv_exp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="7dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="40dp"
                 android:text="@string/tv_exponent" />
 
             <TextView
                 android:id="@+id/tv_mant"
-                android:layout_width="122dp"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="right"
                 android:layout_marginLeft="30dp"
                 android:text="@string/tv_mant" />
 

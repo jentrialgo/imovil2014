@@ -67,8 +67,6 @@ public abstract class BaseExerciseFragment extends Fragment {
 
 	private final static int CLOCK_UPDATE_PERIOD_MS = 1000; // 1 s
 	private final static int DEFAULT_GAME_DURATION_MS = 120 * 1000; // 2 min
-	private static final String TAG = null;
-
 	boolean mIsPlaying = false;
 
 	private Handler mTimerHandler = new Handler();

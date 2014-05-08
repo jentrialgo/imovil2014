@@ -36,7 +36,6 @@ limitations under the License.
 		android:layout_alignParentTop="true"
 		android:orientation="vertical" >
 
-
 		<TextView
 			android:id="@+id/txTittle"
 			style="@style/Title2DarkLight"
@@ -76,7 +75,7 @@ limitations under the License.
 				android:layout_centerVertical="true"
 				android:ems="10"
 				android:imeOptions="actionDone"
-				android:inputType="text"
+				android:inputType="number"
 				android:padding="10dp" >
 				<requestFocus />
 			</EditText>
@@ -85,7 +84,7 @@ limitations under the License.
 		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content" >
-			
+
 			<Button
 				android:id="@+id/bCheck"
 				android:layout_width="0dp"
@@ -132,8 +131,8 @@ limitations under the License.
 	</RelativeLayout>
     
 	<!-- End of views required by the animation -->
-	
-	
+
+
 	<TextView
 	        android:id="@+id/text_view_clock"
 	        android:layout_width="match_parent"
@@ -142,8 +141,7 @@ limitations under the License.
 	        android:text="@string/initial_clock_value"
 	        android:textSize="20sp"
 	        android:visibility="gone" />
-	    
-	    
+
+
 
 </RelativeLayout>
-

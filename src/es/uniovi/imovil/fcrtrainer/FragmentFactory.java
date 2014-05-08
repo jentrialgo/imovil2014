@@ -1,7 +1,7 @@
 
 /*
 
-Copyright 2014 Profesores y alumnos de la asignatura Informática Móvil de la EPI de Gijón
+Copyright 2014 Profesores y alumnos de la asignatura Informï¿½tica Mï¿½vil de la EPI de Gijï¿½n
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -22,18 +22,18 @@ package es.uniovi.imovil.fcrtrainer;
 import android.support.v4.app.Fragment;
 
 /**
- * Clase factoría para crear los diferentes fragmentos de los ejercicios. Cada
- * alumno debería insertar la llamada a su fragmento.newInstance() donde le
+ * Clase factorï¿½a para crear los diferentes fragmentos de los ejercicios. Cada
+ * alumno deberï¿½a insertar la llamada a su fragmento.newInstance() donde le
  * corresponda.
  * 
  */
 final public class FragmentFactory {
 
 	/**
-	 * Crea el fragmento de un ejercicio a partir de un índice. Este índice
-	 * coincide con el índice de la opción correspondiente en el Drawer.
+	 * Crea el fragmento de un ejercicio a partir de un ï¿½ndice. Este ï¿½ndice
+	 * coincide con el ï¿½ndice de la opciï¿½n correspondiente en el Drawer.
 	 * 
-	 * @param índice
+	 * @param ï¿½ndice
 	 *            del ejercicio en el Drawer.
 	 * @return el fragmento del ejercicio.
 	 */
@@ -47,8 +47,8 @@ final public class FragmentFactory {
 			return LogicOperationExerciseFragment.newInstance();
 		case R.string.hexadecimal:
 			return HexadecimalExerciseFragment.newInstance();
-		case R.string.interpretation:
-			return InterpretationExerciseFragment.newInstance();
+		case R.string.offset_binary:
+			return BinaryOffsetExerciseFragment.newInstance();
 		case R.string.twoscomplement:
 			return TwosComplementExerciseFragment.newInstance();
 		case R.string.cidr:
@@ -63,15 +63,15 @@ final public class FragmentFactory {
 			return HostCountExerciseFragment.newInstance();
 			// TODO: return NetworkMaskExerciseFragment.newInstance();
 		case R.string.sign_and_magnitude:
-			// TODO: return SignedMagnitudeExerciseFragment.newInstance();
+			return SignedMagnitudeExerciseFragment.newInstance();
 		case R.string.floating_point:
 			 return FloatingPointExerciseFragment.newInstance();
 		case R.string.network_address:
 			// TODO: return NetworAddressExerciseFragment.newInstance();
 		case R.string.network_mask:
-			// TODO: return NetworkMaskExerciseFragment.newInstance();
+			  return NetworkMaskExerciseFragment.newInstance();
 
-			return DummyExerciseFragment.newInstance();
+//			return DummyExerciseFragment.newInstance();
 
 		default:
 			throw new IllegalStateException();
