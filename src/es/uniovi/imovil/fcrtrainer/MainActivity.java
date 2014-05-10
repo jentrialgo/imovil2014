@@ -1,6 +1,6 @@
 /*
 
-Copyright 2014 Profesores y alumnos de la asignatura Informática Móvil de la EPI de Gijón
+Copyright 2014 Profesores y alumnos de la asignatura InformÃ¡tica MÃ³vil de la EPI de GijÃ³n
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ package es.uniovi.imovil.fcrtrainer;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
@@ -46,11 +47,11 @@ public class MainActivity extends ActionBarActivity implements
 	 */
 	private static final String PREFERENCES = "preferences";
 	/**
-	 * Preferencia donde se almacena el ïúltimo ejercicio accedido.
+	 * Preferencia donde se almacena el Ãºltimo ejercicio accedido.
 	 */
 	private static final String LAST_EXERCISE = "last_exercise";
 	/**
-	 * Preferencia que indica que el usuario sabe manejar el drawer. La guía de
+	 * Preferencia que indica que el usuario sabe manejar el drawer. La guÃ­a de
 	 * Android recomienda mostrar el Drawer abierto hasta que el usuario lo haya
 	 * desplegado al menos una vez.
 	 */
@@ -74,7 +75,7 @@ public class MainActivity extends ActionBarActivity implements
 		boolean fromSavedInstanceState = false;
 
 		if (savedInstanceState != null) {
-			// Recuperar el estado tras una interrupción
+			// Recuperar el estado tras una interrupciÃ³n
 			mExerciseResIndex = savedInstanceState.getInt(LAST_EXERCISE);
 			mUserLearnedDrawer = savedInstanceState
 					.getBoolean(USER_LEARNED_DRAWER);
@@ -119,10 +120,10 @@ public class MainActivity extends ActionBarActivity implements
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflar el menú		
+		// Inflar el menÃº		
 		if (isDrawerOpen()) {
-			// TODO: Si el Drawer está desplegado no deben mostrarse iconos de
-			// acción
+			// TODO: Si el Drawer estÃ¡ desplegado no deben mostrarse iconos de
+			// acciÃ³n
 			getMenuInflater().inflate(R.menu.main, menu);
 		} else {
 			getMenuInflater().inflate(R.menu.main, menu);
@@ -141,10 +142,15 @@ public class MainActivity extends ActionBarActivity implements
 		if (mDrawerToggle.onOptionsItemSelected(item)) {
 			return true;
 		}
-		// TODO: Manejar otras acciones del Action Bar
-
-		boolean father = super.onOptionsItemSelected(item);
-		return father;
+		
+		switch(item.getItemId()){
+		case R.id.action_help:
+			Intent goToHelp = new Intent(this, HelpActivity.class);
+			startActivity(goToHelp);
+			break;
+		}
+		
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override

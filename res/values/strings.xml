@@ -126,12 +126,14 @@ limitations under the License.
     <string name="puntuacion">Has obtenido una puntuación de: </string>
     <!-- Fin Operaciones Lógicas -->
 
+
     <!-- Módulo: Hexadecimal -->
     <string name="convert_to_hex">Convierte a hexadecimal</string>
     <string name="convert_to_bin">Convierte a binario</string>
     <string name="gameisoverexp">¡Has acabado el juego! Te han sobrado %1$d segundos y has obtenido %2$d puntos.</string>
     <string name="lost_time_over">Game Over! Se ha acabado el tiempo. Has contestado correctamente %1$d preguntas.</string>
     <!-- Fin Hexadecimal -->
+
 
     <!-- Modulo: Protocolos -->
     <string name="protocols">Adivina el protocolo</string>
@@ -153,6 +155,11 @@ limitations under the License.
     <!--  Exceso a Z -->
   	<string name="convert_to_bin_offset">Convertir de decimal a exceso a Z</string>
   	<string name="convert_from_bo_to_dec">Convertir de exceso a Z a decimal</string>
+
+    <!-- Help activity -->
+    <string name="developed_by">Aplicación desarrollada por los alumnos de Informática Móvil, promoción 2013-2014.</string>
+    <!-- End Help activity -->
+
 
 	<!-- Máscara de red -->
     <string name="enunciadomasc">Numero de computadoras en red</string>
