@@ -151,7 +151,7 @@ limitations under the License.
     <!-- End Host count exercise -->
     
     <!--  Punto Flotante -->
-    <string name="convert_to_iee">Convierte a IEEE 754 formato !</string>
+    <string name="convert_to_iee">Convierte a IEEE 754/binario formato !</string>
     <string name="tv_sign">S</string>
     <string name="tv_exponent">Exp (8 Bit)</string>
     <string name="tv_mant">Mantissa (23 Bit)</string>
@@ -166,4 +166,5 @@ limitations under the License.
 	<string name="solucion">Solucion</string>
     <string name="comprobar">Comprobar</string>
     <!-- Fin Máscara de red -->
+    <string name="tv_decimal">decimal number</string>
 </resources>
