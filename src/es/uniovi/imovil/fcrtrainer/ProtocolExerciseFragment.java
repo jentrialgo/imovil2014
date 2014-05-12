@@ -2,9 +2,17 @@ package es.uniovi.imovil.fcrtrainer;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Locale;
+import java.util.Date;
 
+import org.json.JSONException;
+
+import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
+
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,28 +20,37 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class ProtocolExerciseFragment extends BaseExerciseFragment {
 
-	//Problemas al cargar de la BD las preguntas.
-	//Esqueleto m’nimo, pero sin probar la funcionalidad por no cargarse bien la BD.
+	static public int NUMBER_OF_ANSWERS = 4;
+	private static final int POINTS_FOR_QUESTION = 10;
+	private static final int REST_FOR_FAIL = 3;
+	private static final int MAX_QUESTIONS = 5;
 	private static final String DB_NAME = "protocolFCR.sqlite";
-	private static final int DB_VERSION = 1;
-	private ArrayList<Test> testList=null;
+	private static final int DB_VERSION = 2;
+
+
+	private static final long GAME_DURATION_MS = 3 * 1000; //2 minutos de juego.
+	private ArrayList<ProtocolTest> testList=null;
 	private View mRootView;
+	private View mCardView;
+	private RadioButton[] respRadioButton;
+	private Button seeSolution;
+	private Button check;
 	private TextView question;
-	private int i=0;
-	Test test;
-	RadioGroup rg;
-	RadioButton rb1;
-	RadioButton rb2;
-	RadioButton rb3;
-	Button bCheck;
-	Button bSolution;
-	int rbSelected;
-	private boolean changeColor=false;
+	private ProtocolTest test;
+	private RadioGroup rg;
+	private int currentQuestionCounter = 1;
+	private boolean won = false;
+	private int points;
+	private int partialPoints;
+	private int totalFails=0;
+	private boolean gameMode = false;
+	private  boolean flag;
 
 	public static ProtocolExerciseFragment newInstance() 
 	{
@@ -41,152 +58,262 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 		return fragment;
 	}
 
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) 
-	{
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		mRootView=inflater.inflate(R.layout.fragment_protocol, container, false);
-        DataBaseHelper db = new DataBaseHelper(this.getActivity(), DB_NAME, null, DB_VERSION);
-        rb1 = (RadioButton) mRootView.findViewById(R.id.rb1);
-        rb2 = (RadioButton) mRootView.findViewById(R.id.rb2);
-        rb3 = (RadioButton) mRootView.findViewById(R.id.rb3);
-        rg = (RadioGroup) mRootView.findViewById(R.id.rg1);
-        question = (TextView) mRootView.findViewById(R.id.exerciseQuestion); 
-        bCheck = (Button) mRootView.findViewById(R.id.checkbutton);
-		bSolution = (Button) mRootView.findViewById(R.id.seesolution);
+        ProtocolDataBaseHelper db = new ProtocolDataBaseHelper(this.getActivity(), DB_NAME, null, DB_VERSION);
+        question = (TextView) mRootView.findViewById(R.id.exerciseQuestion);
+        mCardView = (RelativeLayout) mRootView.findViewById(R.id.card);
+        rg = new RadioGroup (getActivity());
+        addAnswerRadioButtons();
+        seeSolution = (Button) mRootView.findViewById(R.id.seesolution);
+        check = (Button) mRootView.findViewById(R.id.checkbutton);
+        //Manejador del evento de mostrar solución (solo en modo entrenamiento).
+        seeSolution.setOnClickListener( new OnClickListener() 
+        {
+			private Object TAG;
+
+			@Override
+			public void onClick(View arg0) 
+			{
+
+				flag = false;
+				int i = 0;
+				while (i<NUMBER_OF_ANSWERS)
+				{
+					if ((respRadioButton[i].getText().equals(test.getResponse())) && (!flag))
+					{
+						respRadioButton[i].setChecked(true);						
+						flag=true;
+					}
+					i++;
+				}
+
+    	     }
+		 });
+        //Manejador del botón de comprobación de respuesta.
+        check.setOnClickListener( new OnClickListener() 
+        {
+			@Override
+			public void onClick(View arg0) 
+			{
+				flag = false;
+				int index = 0;
+				while ((index<NUMBER_OF_ANSWERS) && (!flag))
+				{
+					if (respRadioButton[index].isChecked()) {
+						checkIfButtonClickedIsCorrectAnswer(index);
+						flag = true;
+					}
+					index++;
+				}
+				if (!gameMode)
+					newQuestion();
+    	     }
+        });
         try 
         {
             db.createDataBase();
             db.openDataBase();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        	// TODO: extraer cadenas a recursos
+        	Toast.makeText(this.getActivity(), "Error al abrir la base de datos",
+        			Toast.LENGTH_LONG).show();
         }
-        //Cargar la bd con las preguntas y respuestas en un array-list.
-        testList=db.loadData();
-        //Lanzar el entrenamiento.
-		//seeDB();
-        training(); 
-	    //Raccionar a eventos del RadioGroup
-	    rb1.setOnClickListener(new RadioButton.OnClickListener(){
-	        @Override
-	        public void onClick(View v) {
-	            rbSelected=1;
-	        }
-	    });
-	    
-	    rb2.setOnClickListener(new RadioButton.OnClickListener(){
-	        @Override
-	        public void onClick(View v) {
-	            rbSelected=2;
-	        }
-	    });
-	    
-	    rb3.setOnClickListener(new RadioButton.OnClickListener(){
-	        @Override
-	        public void onClick(View v) {
-	            rbSelected=3;
-	        }
-	    });
-	    
-	    //Eventos del botón de comprobar la solución.
-		bCheck.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				changeColor=false;
-				switch(rbSelected)
-				{
-				case 1:
-					if (rb1.getText().equals(test.getResponse()))
-						showAnimationAnswer(true);
-					else 
-						showAnimationAnswer(false);
-					rb1.setChecked(false);
-					reset();
-					training();
-					return;
-				case 2:
-					if (rb2.getText().equals(test.getResponse()))
-						showAnimationAnswer(true);
-					else
-						showAnimationAnswer(false);
-					if (!changeColor)
-						rb2.setTextColor(0xff000000);
-					rb2.setChecked(false);
-					reset();
-					training();
-					return;
-				case 3:
-					if (rb3.getText().equals(test.getResponse()))
-						showAnimationAnswer(true);
-					else 
-						showAnimationAnswer(false);
-					rb3.setChecked(false);
-					reset();
-					training();	
-					return;
-				default:
-					reset();
-					training();
-					return;
-				}				
-			}
 
-			private void reset() {
-				// TODO Auto-generated method stub
-				rbSelected=0;
-				i++;
-				if (!changeColor)
-				{
-					rb1.setTextColor(0xff000000);
-					rb2.setTextColor(0xff000000);
-					rb3.setTextColor(0xff000000);
-				}			
-			}
-		});
-		
-		//Botón de mostrar solución.
-		bSolution.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-					showSolution();
-			}
-		});
-		return mRootView;		
+        testList=db.loadData();
+        newQuestion();               
+		return mRootView;
+	}
+	
+
+	private void addAnswerRadioButtons() {
+		respRadioButton = new RadioButton[NUMBER_OF_ANSWERS];
+		for (int i = 0; i < NUMBER_OF_ANSWERS; i++) {
+			addAnswerRadioButton(i,rg); //Añadir respueta al array.
+		}
+		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+				RelativeLayout.LayoutParams.WRAP_CONTENT,
+				RelativeLayout.LayoutParams.WRAP_CONTENT);
+
+		params.addRule(RelativeLayout.ALIGN_LEFT);
+		TextView question = (TextView) mRootView.findViewById(R.id.exerciseQuestion); //Obtener pregunta.
+		params.addRule(RelativeLayout.BELOW, question.getId());	 //Debajo de la pregunta.
+		((RelativeLayout) mCardView).addView(rg, params);
 	}
 
+	private void addAnswerRadioButton(int index, RadioGroup rg) {
+		respRadioButton[index] = new RadioButton(this.getActivity());
+		rg.addView(respRadioButton[index]);
+	}
+	
 
-	private void training()
-	{
-		if (i<testList.size()) //Completar todas las preguntas de la Base de Datos.
+	private void checkIfButtonClickedIsCorrectAnswer(int index) {
+		boolean response = false;
+		if (respRadioButton[index].getText().equals(test.getResponse())) 
 		{
-			test = testList.get(i);				
-			//Mostrar pregunta y opciones.
-			question.setText(test.getQuestion());
-			rb1.setText(test.getOption1());
-			rb2.setText(test.getOption2());
-			rb3.setText(test.getOption3());					
-			//Final de entrenamiento.
+			response = true;
 		}
-		else //Reiniciar
+		else 
 		{
-			i=0;
-			training();
+			response = false;
+		}
+		super.showAnimationAnswer(response);
+		// only create new Question if user has right input
+		if (this.gameMode) {
+			if (response) {
+				gameModeControl();
+				newQuestion();
+			}
+			else if (totalFails<3) {
+			totalFails++;
+			partialPoints = partialPoints - REST_FOR_FAIL;
+			}
+			else 
+			{
+				partialPoints = 0;
+				gameModeControl();
+				newQuestion();
+			}
+		}
+	}
+
+	private void newQuestion()	{
+		rg.clearCheck();
+		partialPoints = POINTS_FOR_QUESTION; //Puntos parciales (al fallar se resta 2 puntos).
+		test = testList.get((int)(Math.random()*(14-0))+0); 
+     	//Mostrar pregunta y opciones.
+		question.setText(test.getQuestion());
+		for (int i = 0; i < NUMBER_OF_ANSWERS; i++) {
+			respRadioButton[i].setText(test.getOption(i));
 		}
 	}
 	
-	public void showSolution() {
-		// Mostrar la solución buena en rojo.
-		changeColor=true;
-		if (rb1.getText().equals(test.getResponse()))
-		{
-				rb1.setTextColor(0xff00ff00);
+	private void updatePointsTextView(int p) {
+		TextView tvPoints = (TextView) mRootView.findViewById(R.id.points);
+		tvPoints.setText(getResources().getString(R.string.points)+ " "+ String.valueOf(p));
+	}
+	
+	@Override
+	public void startGame() {
+		setGameDuration(GAME_DURATION_MS);
+		
+		// set starting points of textview
+		updatePointsTextView(0); 
+
+		super.startGame();
+		updateToGameMode();
+	}
+	
+	@Override
+	public void cancelGame() {
+		super.cancelGame();
+		updateToTrainMode();
+	}
+	
+	private void updateToGameMode() {
+		gameMode  = true;
+
+		newQuestion();
+
+		Button solution = (Button) mRootView.findViewById(R.id.seesolution);
+		solution.setVisibility(View.GONE);
+		TextView points = (TextView) mRootView.findViewById(R.id.points);
+		points.setVisibility(View.VISIBLE);
+
+	}
+	
+	private void updateToTrainMode() {
+		gameMode = false;
+
+		Button solution = (Button) mRootView.findViewById(R.id.seesolution);
+		solution.setVisibility(View.VISIBLE);
+
+		TextView points = (TextView) mRootView.findViewById(R.id.points);
+		points.setVisibility(View.GONE);
+	}
+	
+	private void gameModeControl() {
+		increasePoints(partialPoints);
+		
+		if (currentQuestionCounter >= MAX_QUESTIONS) {
+			this.won = true;
+			this.endGame();
 		}
-		if (rb2.getText().equals(test.getResponse()))
-		{
-				rb2.setTextColor(0xff00ff00);
+
+		if (currentQuestionCounter < MAX_QUESTIONS && getRemainingTimeMs() <= 0) {
+			// lost --> no time left...
+			this.won = false;
+			this.endGame();
 		}
-		if (rb3.getText().equals(test.getResponse()))
-		{
-				rb3.setTextColor(0xff00ff00);
+		currentQuestionCounter++;
+		totalFails=0;
+	}
+	
+	@Override
+	void endGame() {
+		//convert to seconds
+		int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000; 
+		this.points = (int) (this.points + remainingTimeInSeconds);
+
+		if (this.won)
+			savePoints();
+
+		dialogGameOver();
+
+		super.endGame();
+
+		updateToTrainMode();
+
+		reset();
+	
+	}
+	
+	private void increasePoints(int val) {
+		points = points + val;
+		updatePointsTextView(points);
+	}
+	
+	// Simple GameOver Dialog
+	private void dialogGameOver() {
+		String message = getResources().getString(R.string.lost);
+
+		if (won) {
+			message = getResources().getString(R.string.won) + " "
+					+ getResources().getString(R.string.points) + " "
+					+ this.points;
+		}
+
+		Builder alert = new AlertDialog.Builder(getActivity());
+		alert.setTitle(getResources().getString(R.string.game_over));
+		alert.setMessage(message);
+		alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.cancel();
+				// nothing to do...
+			}
+		});
+		alert.show();
+
+	}
+	
+	private void savePoints() {
+		String username = getResources().getString(R.string.default_user_name);
+		try {
+
+			HighscoreManager.addScore(getActivity().getApplicationContext(),
+					this.points, R.string.protocol, new Date(), username);
+
+		} catch (JSONException e) {
+			e.printStackTrace();
 		}
 	}
+	
+	private void reset() {
+		points = 0;
+		currentQuestionCounter = 0;
+		won = false;
+		updatePointsTextView(0);
+	}
+
 }

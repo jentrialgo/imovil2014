@@ -2,8 +2,6 @@ package es.uniovi.imovil.fcrtrainer;
 
 import java.util.Random;
 
- 
-
 public class BinaryConverter{
 	private static final int MAX_RANDOM_NUMBER = 128;
 	private static final int MIN_RANDOM_NUMBER = 1;

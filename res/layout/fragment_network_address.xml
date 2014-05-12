@@ -6,12 +6,21 @@
     android:orientation="vertical" >
 
     <TextView
+        android:id="@+id/text_view_clock"
+        style="@style/Title2DarkLight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+    />
+    
+    <TextView
         android:id="@+id/exercisetitleNA"
         style="@style/Title2DarkLight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_below="@+id/text_view_clock"
         android:text="@string/na_title" />
 
     <TextView
@@ -23,28 +32,6 @@
         android:background="@drawable/cards"
         android:gravity="center"
         android:textSize="25sp" />
-
-    <!-- Views required by the animation -->
-
-    <RelativeLayout
-        android:id="@+id/result"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:background="@color/pantalla"
-        android:visibility="gone" >
-
-        <ImageView
-            android:id="@+id/resultimage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="140dp" />
-    </RelativeLayout>
-
-    <!-- End of views required by the animation -->
 
     <LinearLayout
         android:id="@+id/linearLayout1"
@@ -71,13 +58,12 @@
 
     <EditText
         android:id="@+id/et_netw"
-        android:layout_width="128dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_mask"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="37dp"
         android:background="@drawable/cards"
-        android:ems="5"
+        android:layout_margin="15dp"
         android:padding="10dp" />
 
     <TextView
@@ -103,5 +89,27 @@
         android:layout_marginTop="14dp"
         android:text="@string/points"
         android:textSize="20sp" />
+
+        <!-- Views required by the animation -->
+
+    <RelativeLayout
+        android:id="@+id/result"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@color/pantalla"
+        android:visibility="gone" >
+
+        <ImageView
+            android:id="@+id/resultimage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="140dp" />
+    </RelativeLayout>
+
+    <!-- End of views required by the animation -->
 
 </RelativeLayout>

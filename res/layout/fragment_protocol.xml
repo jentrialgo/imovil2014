@@ -6,7 +6,7 @@
     android:background="@color/mediumgray"
     android:gravity="center_horizontal" xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
+       <LinearLayout
         android:id="@+id/LinearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,69 +17,70 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin" >
-
-        <TextView
-            android:id="@+id/exercisetitle"
-            style="@style/Title2DarkLight"
-            android:layout_width="wrap_content"
+    		<TextView
+        		android:id="@+id/exerciseTitle"
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
+				style="@style/Title2DarkLight"
+       		    android:text="@string/protocols"/>
+    		
+          <TextView
+            android:id="@+id/points"           
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/protocols" />
-
-        <RelativeLayout
-            style="@style/cards"
+            android:visibility="gone"
+            android:textSize="20sp"
+            android:text="@string/points" />
+          
+          <TextView
+            android:id="@+id/text_view_clock"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/cards" >
+            android:layout_height="wrap_content"            
+            android:text="@string/initial_clock_value"
+            android:textSize="20sp"
+            android:visibility="gone" />
+    		
+    		
+       		 <RelativeLayout
+            	android:id="@+id/card"
+            	style="@style/cards"
+            	android:layout_width="match_parent"
+            	android:layout_height="wrap_content"
+            	android:background="@drawable/cards" >
 
-            <TextView
-                android:id="@+id/exerciseQuestion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:padding="10dp"
-                android:textColor="@color/mediumdarkgray"
-                android:textSize="32sp" />
-        </RelativeLayout>
+            	<TextView
+                	android:id="@+id/exerciseQuestion"
+                	android:layout_width="wrap_content"
+                	android:layout_height="wrap_content"
+                	android:layout_centerHorizontal="true"
+                	android:layout_alignParentTop="true"
+                	android:padding="10dp"
+                	android:textColor="@color/mediumdarkgray"
+                	android:textSize="32sp" />
+        	</RelativeLayout>
 
-        <!-- RADIO BUTTONS AND OPTIONS TEXT VIEW -->
+        	<LinearLayout
+            	android:layout_width="match_parent"
+            	android:layout_height="wrap_content" >
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            	<Button
+                	android:id="@+id/checkbutton"
+                	android:layout_width="0dp"
+                	android:layout_height="wrap_content"
+                	android:layout_weight="1"
+                	android:text="@string/check"/>
 
-        <RadioGroup
-        android:id="@+id/rg1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true">
-            <RadioButton android:id="@+id/rb1" android:text="Option1" />
-            <RadioButton android:id="@+id/rb2" android:text="ROption2" />
-            <RadioButton android:id="@+id/rb3" android:text="Option3" />
-    </RadioGroup>
-        </RelativeLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <Button
-                android:id="@+id/checkbutton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/check" />
-
-            <Button
-                android:id="@+id/seesolution"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/solution" />
-        </LinearLayout>
-    </LinearLayout>
-    
-        <!--  Views required by the animation -->
+            	<Button
+                	android:id="@+id/seesolution"
+                	android:layout_width="0dp"
+                	android:layout_height="wrap_content"
+                	android:layout_weight="1"
+                	android:text="@string/solution"/>
+        	</LinearLayout>
+        
+   		</LinearLayout> 
+   		
+               <!--  Views required by the animation -->
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -98,5 +99,4 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="140dp"/>
     </RelativeLayout>
-
 </RelativeLayout>

@@ -38,7 +38,7 @@
         android:id="@+id/imagelogicgate"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_below="@+id/exercisetitle"
+        android:layout_below="@+id/puntuacion"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:background="@drawable/cards"
@@ -79,6 +79,31 @@
 
     <!-- End of views required by the animation -->
 
-   
+    <TextView
+        android:id="@+id/text_view_clock"
+        style="@style/Title2DarkLight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/puntuacion"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/exercisetitle"
+         />
 
+    <TextView
+        android:id="@+id/title_puntuacion"
+        style="@style/Title2DarkLight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/imagelogicgate"
+        android:layout_toLeftOf="@+id/text_view_clock"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/puntuacion"
+        style="@style/Title2DarkLight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/text_view_clock"
+        android:layout_below="@+id/exercisetitle"
+        android:visibility="gone" />
 </RelativeLayout>
