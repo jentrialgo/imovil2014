@@ -108,4 +108,13 @@
     <string name="developed_by">Application developed by Informática Móvil students, 2013-2014 promotion.</string>
     <!-- End Help activity -->
     
+    <!--  Strings Network Address -->
+    <string name="ip_add">IP address:</string>
+    <string name="mask">Mask:</string>
+    <string name="text_butt_ans">Check</string>
+    <string name="text_butt_solution">Solution</string>
+    <string name="na_title">Network address exercise</string>
+    <string name="end_train">Training finished</string>
+    <!--  Fin Strings Network Address -->
+    
 </resources>
