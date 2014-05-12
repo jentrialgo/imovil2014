@@ -40,8 +40,8 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment
 	String[] ip;
 	String[] mask;
 	String[] net;
-	TextView tvi;
-	TextView tvm;
+	TextView textViewIp;
+	TextView textViewMask;
 	TextView tv1;
 	EditText solutionEditText;
 	ImageView imageviewsolution;
@@ -69,8 +69,8 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment
 		ip = getResources().getStringArray(R.array.ips);
 		mask = getResources().getStringArray(R.array.masks);
 		net = getResources().getStringArray(R.array.nets);
-		tvi = (TextView) rootView.findViewById(R.id.tv_ip);
-		tvm = (TextView) rootView.findViewById(R.id.tv_mask);
+		textViewIp = (TextView) rootView.findViewById(R.id.tv_ip);
+		textViewMask = (TextView) rootView.findViewById(R.id.tv_mask);
 		tv1 = (TextView) rootView.findViewById(R.id.exercisetitleNA);
 		random = new Random();
 
@@ -120,8 +120,8 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment
 							banswer.setVisibility(Button.GONE);
 							bsolution.setVisibility(Button.GONE);
 							solutionEditText.setVisibility(EditText.GONE);
-							tvi.setVisibility(TextView.GONE);
-							tvm.setVisibility(TextView.GONE);
+							textViewIp.setVisibility(TextView.GONE);
+							textViewMask.setVisibility(TextView.GONE);
 
 							tv1.setText(R.string.end_train);
 							tv1.setTextSize(47);
@@ -147,8 +147,8 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment
 
 		questionIndex = random.nextInt(ip.length);
 
-		tvi.setText(ip[questionIndex]);
-		tvm.setText(mask[questionIndex]);
+		textViewIp.setText(ip[questionIndex]);
+		textViewMask.setText(mask[questionIndex]);
 	}
 
 	// /--------------------- Modo Jugar -----------------------
