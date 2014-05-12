@@ -42,7 +42,6 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment
 	String[] net;
 	TextView textViewIp;
 	TextView textViewMask;
-	TextView tv1;
 	EditText solutionEditText;
 	ImageView imageviewsolution;
 	Button banswer;
@@ -71,7 +70,6 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment
 		net = getResources().getStringArray(R.array.nets);
 		textViewIp = (TextView) rootView.findViewById(R.id.tv_ip);
 		textViewMask = (TextView) rootView.findViewById(R.id.tv_mask);
-		tv1 = (TextView) rootView.findViewById(R.id.exercisetitleNA);
 		random = new Random();
 
 		solutionEditText = (EditText) rootView.findViewById(R.id.et_netw);
@@ -105,36 +103,11 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment
 			showAnimationAnswer(true);
 			if (this.gameMode) {
 				gameModeControl();
-				solutionEditText.setText("");
-				GenerarPregunta();
-			} else {
-				if (currentQuestionCounter < MAX_QUESTIONS) {
-					currentQuestionCounter++;
-					solutionEditText.setText("");
-					GenerarPregunta();
-				} else {
-					currentQuestionCounter = 1;
-					handler.postDelayed(new Runnable() {
-						public void run() {
-
-							banswer.setVisibility(Button.GONE);
-							bsolution.setVisibility(Button.GONE);
-							solutionEditText.setVisibility(EditText.GONE);
-							textViewIp.setVisibility(TextView.GONE);
-							textViewMask.setVisibility(TextView.GONE);
-
-							tv1.setText(R.string.end_train);
-							tv1.setTextSize(47);
-
-						}
-					}, 1500);
-
-				}
-
 			}
+			solutionEditText.setText("");
+			GenerarPregunta();
 		} else {
 			showAnimationAnswer(false);
-
 		}
 	}
 
