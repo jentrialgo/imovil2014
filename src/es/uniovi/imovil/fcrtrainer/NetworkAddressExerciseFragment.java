@@ -131,6 +131,7 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment
 
 		if (currentQuestionCounter >= MAX_QUESTIONS) {
 			// won
+			solutionEditText.setText("");
 			this.won = true;
 			this.endGame();
 
@@ -138,6 +139,7 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment
 
 		if (currentQuestionCounter < MAX_QUESTIONS && getRemainingTimeMs() <= 0) {
 			// lost --> no time left...
+			solutionEditText.setText("");
 			this.won = false;
 			this.endGame();
 		}
@@ -166,6 +168,7 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment
 	}
 
 	private void updateToGameMode() {
+		solutionEditText.setText("");
 		gameMode = true;
 
 		GenerarPregunta();
@@ -180,6 +183,7 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment
 
 	private void updateToTrainMode() {
 		gameMode = false;
+		solutionEditText.setText("");
 
 		Button solution = (Button) rootView.findViewById(R.id.but_solution);
 		solution.setVisibility(View.VISIBLE);
@@ -190,12 +194,14 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment
 
 	@Override
 	public void cancelGame() {
+		solutionEditText.setText("");
 		super.cancelGame();
 		updateToTrainMode();
 	}
 
 	@Override
 	void endGame() {
+		
 		// convert to seconds
 		int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000;
 		// every remaining second gives one extra point.

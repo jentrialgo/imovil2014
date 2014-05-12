@@ -64,7 +64,8 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/cards"
         android:layout_margin="15dp"
-        android:padding="10dp" />
+        android:padding="10dp"
+        android:gravity="center" />
 
     <TextView
         android:id="@+id/tv_mask"
