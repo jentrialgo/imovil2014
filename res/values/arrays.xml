@@ -110,6 +110,12 @@ limitations under the License.
         <item>178.35.85.96</item>
         <item>192.168.52.1</item>
         <item>168.75.84.17</item>
+        <item>155.25.65.42</item>
+        <item>212.34.62.148</item>
+        <item>158.52.24.2</item>
+        <item>175.128.127.45</item>
+        <item>121.4.5.6</item>
+        
      </string-array>
      
      <string-array name="masks">
@@ -118,6 +124,11 @@ limitations under the License.
         <item>255.0.0.0</item>
         <item>255.255.240.0</item>
         <item>255.224.0.0</item>
+        <item>255.255.128.0</item>
+        <item>255.252.0.0</item>
+        <item>255.255.255.224</item>
+        <item>255.255.255.248</item>
+        <item>255.255.255.252</item>
      </string-array>
      
      <string-array name="nets">
@@ -126,6 +137,11 @@ limitations under the License.
         <item>178.0.0.0</item>
         <item>192.168.48.0</item>
         <item>168.64.0.0</item>
+         <item>155.25.0.0</item>
+        <item>212.32.0.0</item>
+        <item>158.52.24.0</item>
+        <item>175.128.127.40</item>
+        <item>121.4.5.4</item>
      </string-array>
 	<!-- Fin Arrays NetworkAddress -->
      

@@ -1,37 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/mediumgray"
     android:orientation="vertical" >
-    
-    <TextView
-       android:id="@+id/exercisetitleNA"
-       style="@style/Title2DarkLight"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:text="@string/na_title" 
-       android:layout_centerHorizontal="true"
-       android:layout_marginTop="20dp" />
 
-        <TextView
-            android:id="@+id/tv_ip"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_below="@+id/exercisetitleNA"
-            android:layout_margin="15dp"
-            android:background="@drawable/cards"
-            android:gravity="center"
-            android:textSize="25sp" />
-        
-        
-         <!--  Views required by the animation -->
+    <TextView
+        android:id="@+id/exercisetitleNA"
+        style="@style/Title2DarkLight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="@string/na_title" />
+
+    <TextView
+        android:id="@+id/tv_ip"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/exercisetitleNA"
+        android:layout_margin="15dp"
+        android:background="@drawable/cards"
+        android:gravity="center"
+        android:textSize="25sp" />
+
+    <!-- Views required by the animation -->
 
     <RelativeLayout
+        android:id="@+id/result"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/result"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:background="@color/pantalla"
@@ -43,12 +41,13 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="140dp"/>
+            android:layout_marginTop="140dp" />
     </RelativeLayout>
-    
+
     <!-- End of views required by the animation -->
 
     <LinearLayout
+        android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -92,7 +91,17 @@
         android:background="@drawable/cards"
         android:gravity="center"
         android:textSize="25sp" />
-    
+
+    <TextView
+        android:id="@+id/puntos_NA"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout1"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:layout_margin="40dp"
+        android:layout_marginTop="14dp"
+        android:text="@string/points"
+        android:textSize="20sp" />
+
 </RelativeLayout>
-
-

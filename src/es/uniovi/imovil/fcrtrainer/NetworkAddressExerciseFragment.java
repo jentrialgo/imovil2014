@@ -2,7 +2,14 @@ package es.uniovi.imovil.fcrtrainer;
 
 
 
+import java.util.Date;
+import java.util.Random;
+
+import org.json.JSONException;
+
+import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -18,6 +25,19 @@ import android.widget.TextView;
 
 public class NetworkAddressExerciseFragment extends BaseExerciseFragment implements View.OnClickListener {
 	
+	private static final int POINTS_FOR_QUESTION = 10; // 10 puntos por pregunta
+	private static final int MAX_QUESTIONS = 5;		  //  El juego consta de 5 preguntas
+	private static final long GAME_DURATION_MS = 1 * 1000 * 60; // 1 minuto de juego
+	private boolean gameMode = false;
+
+
+	private boolean won = false;
+
+	private int puntos;
+	private int currentQuestionCounter = 1;
+	
+	
+	
 	View rootView;
 	int n;
 	int i;
@@ -32,6 +52,7 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment impleme
 	Button banswer;
 	Button bsolution;
 	Handler handler;
+	Random r;
 	
 
 	public static NetworkAddressExerciseFragment newInstance() {
@@ -52,8 +73,7 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment impleme
 		ip=getResources().getStringArray(R.array.ips);
 		mask=getResources().getStringArray(R.array.masks);
 		net=getResources().getStringArray(R.array.nets);
-		n=ip.length;
-		i=0;
+		//i=r.nextInt(ip.length);
 		tvi = (TextView) rootView.findViewById(R.id.tv_ip);
 		tvm = (TextView) rootView.findViewById(R.id.tv_mask);
 		tv1 = (TextView) rootView.findViewById(R.id.exercisetitleNA);
@@ -62,8 +82,7 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment impleme
 		et = (EditText) rootView.findViewById(R.id.et_netw);
 	
 		
-		tvi.setText(ip[i]);
-		tvm.setText(mask[i]);
+		GenerarPregunta();
 		
 		banswer = (Button) rootView.findViewById(R.id.but_ans);
 		banswer.setOnClickListener(this);
@@ -95,23 +114,21 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment impleme
 	public void checkAnswer(){
 		if(net[i].equals(et.getText().toString())){
 				showAnimationAnswer(true);
-				
-	        	if(i<net.length-1){	
-				 handler.postDelayed(new Runnable() {
-			            public void run() {
-			            	  
-			            	i++;
-			    			et.setTextColor(Color.BLACK);
-			    			tvi.setText(ip[i]);
-			    			tvm.setText(mask[i]);
-			    			et.setText("");
-			    			
-			            }
-			        }, 1500);
-			}	
-			else{
-				 handler.postDelayed(new Runnable() {
-			            public void run() {
+				if(this.gameMode){
+					gameModeControl();
+					et.setText("");
+	    			GenerarPregunta();
+				}
+				else{
+					if(currentQuestionCounter < MAX_QUESTIONS){	
+						currentQuestionCounter++;
+						et.setText("");
+			    		GenerarPregunta();
+			    }	
+					else{
+							currentQuestionCounter=1;
+							handler.postDelayed(new Runnable() {
+							public void run() {
 			            
 			            	banswer.setVisibility(Button.GONE);
 							bsolution.setVisibility(Button.GONE);
@@ -130,18 +147,10 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment impleme
 			}
 			
 		}
+		}
 		else {
 			showAnimationAnswer(false);	
-			/*et.setTextColor(Color.RED);
-			imageviewsolution.setImageResource(R.drawable.incorrect);*/
-			 handler.postDelayed(new Runnable() {
-		            public void run() {
-		            	et.setTextColor(Color.BLACK);
-		    			//imageviewsolution.setImageResource(0);
-		            }
-		        }, 1500);
-
-
+			
 		}
 	}
 	
@@ -149,6 +158,147 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment impleme
 		et.setTextColor(Color.BLACK);
 		et.setText(net[i]);
 	}
+	
+	public void GenerarPregunta(){
+
+		i=r.nextInt(ip.length);
+		
+		tvi.setText(ip[i]);
+		tvm.setText(mask[i]);
+	}
+	
+	///--------------------- Modo Jugar -----------------------
+
+		private void gameModeControl() {
+			increasePoints(POINTS_FOR_QUESTION);
+
+			if (currentQuestionCounter >= MAX_QUESTIONS) {
+				// won
+				this.won = true;
+				this.endGame();
+
+			}
+
+			if (currentQuestionCounter < MAX_QUESTIONS && getRemainingTimeMs() <= 0) {
+				// lost --> no time left...
+				this.won = false;
+				this.endGame();
+			}
+			currentQuestionCounter++;
+		}
+
+		private void increasePoints(int val) {
+			this.puntos = this.puntos + val;
+			updatePointsTextView(this.puntos);
+		}
+
+		private void updatePointsTextView(int p) {
+			TextView tvPoints = (TextView) rootView.findViewById(R.id.puntos_NA);
+			tvPoints.setText(getResources().getString(R.string.points)+ " "+ String.valueOf(p));
+		}
+
+
+		@Override
+		public void startGame() {
+			super.startGame();
+			super.setGameDuration(GAME_DURATION_MS);
+
+			// set starting points of textview
+			updatePointsTextView(0); 
+			updateToGameMode();
+		}
+
+		private void updateToGameMode() {
+			gameMode = true;
+
+			GenerarPregunta();
+
+			Button solution = (Button) rootView.findViewById(R.id.but_solution);
+			solution.setVisibility(View.INVISIBLE); 
+
+			TextView points = (TextView) rootView.findViewById(R.id.puntos_NA);
+			points.setVisibility(View.VISIBLE);
+
+		}
+
+		private void updateToTrainMode() {
+			gameMode = false;
+
+			Button solution = (Button) rootView.findViewById(R.id.but_solution);
+			solution.setVisibility(View.VISIBLE);
+
+			TextView points = (TextView) rootView.findViewById(R.id.puntos_NA);
+			points.setVisibility(View.INVISIBLE);
+		}
+
+		@Override
+		public void cancelGame() {
+			super.cancelGame();
+			updateToTrainMode();
+		}
+
+		@Override
+		void endGame() {
+			//convert to seconds
+			int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000; 
+			//every remaining second gives one extra point.
+			this.puntos = (int) (this.puntos + remainingTimeInSeconds);
+
+			if (this.won)
+				savePoints();
+
+			dialogGameOver();
+
+			super.endGame();
+
+			updateToTrainMode();
+
+			reset();
+		}
+
+		private void reset() {
+			this.puntos = 0;
+			this.currentQuestionCounter = 0;
+			this.won = false;
+
+			updatePointsTextView(0);
+		}
+
+		private void savePoints() {
+			String username = getResources().getString(R.string.default_user_name);
+			try {
+
+				HighscoreManager.addScore(getActivity().getApplicationContext(),
+						this.puntos, 0, new Date(), username);
+
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+
+		// Simple GameOver Dialog
+		private void dialogGameOver() {
+			String message = getResources().getString(R.string.lost);
+
+			if (this.won) {
+				message = getResources().getString(R.string.won) + " "
+						+ getResources().getString(R.string.points) + " "
+						+ this.puntos;
+			}
+
+			Builder alert = new AlertDialog.Builder(getActivity());
+			alert.setTitle(getResources().getString(R.string.game_over));
+			alert.setMessage(message);
+			alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.cancel();
+					// nothing to do...
+				}
+			});
+			alert.show();
+
+		}
 }
 
 
