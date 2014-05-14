@@ -159,6 +159,13 @@ limitations under the License.
     <string name="host_count_title">Calcula el numero de hosts</string>
     <!-- End Host count exercise -->
     
+    <!--  Punto Flotante -->
+    <string name="convert_to_iee">Convierte a IEEE 754/binario formato !</string>
+    <string name="tv_sign">S</string>
+    <string name="tv_exponent">Exp (8 Bit)</string>
+    <string name="tv_mant">Mantissa (23 Bit)</string>
+	<!--  Fin Punto Flotante -->
+    
     <!--  Exceso a Z -->
   	<string name="convert_to_bin_offset">Convertir de decimal a exceso a Z</string>
   	<string name="convert_from_bo_to_dec">Convertir de exceso a Z a decimal</string>
@@ -173,4 +180,5 @@ limitations under the License.
 	<string name="solucion">Solucion</string>
     <string name="comprobar">Comprobar</string>
     <!-- Fin Máscara de red -->
+    <string name="tv_decimal">decimal number</string>
 </resources>
