@@ -68,7 +68,7 @@ final public class FragmentFactory {
 		case R.string.network_address:
 			return NetworkAddressExerciseFragment.newInstance();
 		case R.string.network_mask:
-			  return NetworkMaskExerciseFragment.newInstance();
+			return NetworkMaskExerciseFragment.newInstance();
 
 //			return DummyExerciseFragment.newInstance();
 
