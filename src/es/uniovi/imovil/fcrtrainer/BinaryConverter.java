@@ -53,4 +53,22 @@ public class BinaryConverter{
 		return "" + Integer.parseInt(binary, 2);
 	}
 
+	/**
+	 * Returns a string with the representation of number with N bits in two's
+	 * complement. It assumes N is less or equal than 32 and that it is possible
+	 * to do it
+	 */
+	public static String binaryToStringWithNbits(int number, int N) {
+		String formatString = "%" + N + "s";
+		String bits = String.format(formatString, Integer.toBinaryString(number))
+				.replace(' ', '0');
+		
+		if (number >= 0) {
+			return bits;
+		} else {
+			return bits.substring(32 - N);
+		}
+	}
+	
 }
+
