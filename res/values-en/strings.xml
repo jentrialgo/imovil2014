@@ -14,7 +14,6 @@
     <string name="binary">Binary</string>
     <string name="hexadecimal">Hexadecimal</string>
     <string name="sign_and_magnitude">Sign-and-magnitude</string>
- <!--    <string name="interpretation">Interpretación</string> -->
  	<string name="offset_binary">Binary Offset</string>
 	<string name="twoscomplement">Twos Complement</string>
     <string name="floating_point">Coma flotante</string>
@@ -31,9 +30,9 @@
     <string name="error_parsing_highscores">Error al analizar las puntuaciones</string>
     <string name="error_adding_initial_highscores">Error while inserting initial highscores</string>
     <string name="all">All</string>
-    
+
     <string name="dummy_exercise">Exercise</string>   
-    
+
     <string name="initial_clock_value">2:00</string>
     <string name="error_no_clock">Error: this exercise is not prepared for playing</string>
     <string name="check">Check</string>
@@ -42,19 +41,36 @@
     <string name="solution">Solution</string>
     <string name="change">Change</string>
 
-    <!-- Modulo: Binario -->
-  	<string name="hint_binary">example: 00000000</string>
-  	<string name="hint_2_binary">example: 64</string>
-  	<string name="insert_value_binary">insert a value please.</string>
-	<string name="convert_to_dec">Convert to decimal</string>
-  	<string name="binary_hint">example: 00000000</string>
-  	<string name="game_over">THE END!</string>
-  	<string name="won">You won! </string>
-  	<string name="lost">You lost! </string>
-  	<string name="points">Points: </string>
-    <!-- Fin Modulo: Binario -->
-	
-       <!-- Strings logic gate -->
+	<!-- Cadenas comunes a varios módulos -->
+	<string name="game_over">Game over</string>
+    <string name="points">Points: </string>
+    <string name="won">Game over. </string>
+    <string name="lost">Time\'s up! </string>
+    <string name="next_binary">Next</string>
+    <string name="gameisoverexp">Game ended! You have %1$d seconds left and obtained %2$d points!</string>
+    <string name="lost_time_over">Game Over! Time\'s up! You answered %1$d questions correctly.</string>
+
+    <!-- Módulo: Binario -->
+    <string name="convert_bin_to_dec">Convert natural binary to decimal</string>
+    <string name="convert_dec_to_bin">Convert decimal to natural binary</string>
+
+    <!-- Módulo: Hexadecimal -->
+    <string name="convert_bin_to_hex">Convert from decimal to hexadecimal</string>
+    <string name="convert_hex_to_bin">Convert from hexadecimal to binary</string>
+
+    <!--  Módulo: Signo y magnitud -->
+    <string name="convert_sign_and_magnitude_to_dec">Convert from decimal to sign-and-magnitude with %1$d bits</string>
+    <string name="convert_dec_to_sign_and_magnitude">Convert from sign-and-magnitude with %1$d bits to decimal</string>
+
+    <!--  Exceso a Z -->
+    <string name="convert_dec_to_bin_offset">Convert from decimal to binary offset with offset %1$d and %2$d bits</string>
+    <string name="convert_bin_offset_to_dec">Convert from binary offset with offset %1$d and %2$d bits to decimal</string>
+
+	<!-- Twos Complement -->
+    <string name="convert_dec_to_twos_complement">Convert from decimal to two\'s complement with %1$d bits</string>
+    <string name="convert_twos_complement_to_dec">Convert from two\'s complement with %1$d bits to decimal</string>
+    
+    <!-- Strings logic gate -->
      
      <string name="button_logic_gate">Check</string>
      <string name="failed_logic_gate">You failed!</string>
@@ -63,12 +79,10 @@
      <string name="solution_logic_gate">Solution</string>
      <string name="done_logic_gate">You are done</string>
     <string name="button_logic_gate_solution">Solution</string>
-    <string name="logic_gate_title">¿What is this logic gate?</string>
+    <string name="logic_gate_title">What is this logic gate?</string>
     <string name="points_final">Your score is </string>
     <string name="end_game">End game</string>
     <string name="title_puntuacion">Score: </string>
-     
-     <!--  Fin Strings logic gate -->
      
      <!--  Fin Strings logic gate -->
      
@@ -77,32 +91,16 @@
     <string name="LOor">OR</string>
     <string name="LOxor">XOR</string>
     
-    <string name="LOpregunta">¿Which is the solution of this 5-bit logic operation?</string>
+    <string name="LOpregunta">Which is the solution of this 5-bit logic operation?</string>
     
     <string name="finJuego">End</string>
     <string name="modoEntrenamiento">Back to training mode</string>
     <string name="puntuacion">Your score is: </string>
     <!-- Fin Operaciones Lógicas -->
     
-        <!-- Módulo: Hexadecimal -->
-    <string name="convert_to_hex">Convert to hex</string>
-    <string name="convert_to_bin">Convert to binary</string>
-  	<string name="gameisoverexp">Game ended! You have %1$d seconds left and obtained %2$d points!</string>
-  	<string name="lost_time_over">Game Over! Time\'s up! You answered %1$d questions correctly.</string>
-    <!-- Fin Hexadecimal -->
-
-	<!-- Twos Complement -->
-	<string name="convert_to_twoscomplement">Convert to twos complement</string>
-	<string name="convert_to_decimal">Convert from twos complement to decimal</string>
-	<!--  End Twos Complement -->
-	
  	<!-- Host count exercise -->
   	<string name="host_count_title">Calculate number of hosts</string>
   	<!-- End Host count exercise -->
-  	
-  	<!--  Exceso a Z -->
-  	<string name="convert_to_bin_offset">Convert from decimal to binary offset</string>
-  	<string name="convert_from_bo_to_dec">Convert from binary offset to decimal</string>
   	
   	    <!-- Help activity -->
     <string name="developed_by">Application developed by Informática Móvil students, 2013-2014 promotion.</string>
