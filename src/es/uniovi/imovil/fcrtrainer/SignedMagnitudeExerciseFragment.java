@@ -37,7 +37,7 @@ public class SignedMagnitudeExerciseFragment extends
 	}
 
 	@Override
-	protected int getExerciseId() {
+	protected int obtainExerciseId() {
 		return R.string.sign_and_magnitude;
 	}
 
@@ -75,7 +75,7 @@ public class SignedMagnitudeExerciseFragment extends
 	}
 
 	@Override
-	protected String getTitleString() {
+	protected String titleString() {
 		int formatStringId;
 		if (mDirectConversion) {
 			formatStringId = R.string.convert_dec_to_sign_and_magnitude;
@@ -87,7 +87,7 @@ public class SignedMagnitudeExerciseFragment extends
 	}
 
 	@Override
-	protected String getSolution() {
+	protected String obtainSolution() {
 		return mCorrectAnswer;
 	}
 

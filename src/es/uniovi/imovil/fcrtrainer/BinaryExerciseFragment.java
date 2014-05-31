@@ -67,7 +67,7 @@ public class BinaryExerciseFragment extends BaseNumericalExerciseFragment {
 	}
 
 	@Override
-	protected int getExerciseId() {
+	protected int obtainExerciseId() {
 		return R.string.binary;
 	}
 
@@ -77,7 +77,7 @@ public class BinaryExerciseFragment extends BaseNumericalExerciseFragment {
 	}
 
 	@Override
-	protected String getTitleString() {
+	protected String titleString() {
 		if (mDirectConversion) {
 			return getResources().getString(R.string.convert_dec_to_bin);
 		} else {
@@ -97,7 +97,7 @@ public class BinaryExerciseFragment extends BaseNumericalExerciseFragment {
 	}
 
 	@Override
-	protected String getSolution() {
+	protected String obtainSolution() {
 		if (mDirectConversion) {
 			return convertToBinary(mNumberToConvert);
 		} else {
