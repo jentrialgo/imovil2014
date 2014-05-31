@@ -34,7 +34,7 @@ public class HexadecimalExerciseFragment extends BaseNumericalExerciseFragment {
 	public HexadecimalExerciseFragment() {
 	}
 
-	protected int getExerciseId() {
+	protected int obtainExerciseId() {
 		return R.string.hexadecimal;
 	}
 
@@ -48,7 +48,7 @@ public class HexadecimalExerciseFragment extends BaseNumericalExerciseFragment {
 	}
 
 	@Override
-	protected String getTitleString() {
+	protected String titleString() {
 		if (mDirectConversion) {
 			return getResources().getString(R.string.convert_bin_to_hex);
 		} else {
@@ -57,7 +57,7 @@ public class HexadecimalExerciseFragment extends BaseNumericalExerciseFragment {
 	}
 
 	@Override
-	protected String getSolution() {
+	protected String obtainSolution() {
 		if (mDirectConversion) {
 			return Integer.toHexString(mNumberToConvert).toUpperCase(Locale.US);
 		} else {
@@ -82,7 +82,7 @@ public class HexadecimalExerciseFragment extends BaseNumericalExerciseFragment {
 
 	@Override
 	protected boolean isCorrect(String answer) {
-		return getSolution().equals(answer.toUpperCase(Locale.US));
+		return obtainSolution().equals(answer.toUpperCase(Locale.US));
 	}
 
 }

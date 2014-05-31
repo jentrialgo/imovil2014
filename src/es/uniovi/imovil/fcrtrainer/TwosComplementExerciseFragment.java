@@ -31,7 +31,7 @@ public class TwosComplementExerciseFragment extends
 	}
 
 	@Override
-	protected int getExerciseId() {
+	protected int obtainExerciseId() {
 		return R.string.twoscomplement;
 	}
 
@@ -41,7 +41,7 @@ public class TwosComplementExerciseFragment extends
 	}
 
 	@Override
-	protected String getTitleString() {
+	protected String titleString() {
 		int formatStringId;
 		if (mDirectConversion) {
 			formatStringId = R.string.convert_dec_to_twos_complement;
@@ -68,7 +68,7 @@ public class TwosComplementExerciseFragment extends
 	}
 
 	@Override
-	protected String getSolution() {
+	protected String obtainSolution() {
 		if (mDirectConversion) {
 			return BinaryConverter.binaryToStringWithNbits(mNumberToConvert,
 					mNumberOfBits);
@@ -79,7 +79,7 @@ public class TwosComplementExerciseFragment extends
 
 	@Override
 	protected boolean isCorrect(String answer) {
-		return answer.equals(getSolution());
+		return answer.equals(obtainSolution());
 	}
 
 	@Override

@@ -150,7 +150,7 @@ public abstract class BaseNumericalExerciseFragment extends
 	}
 
 	private void setTitle() {
-		mTitleTextView.setText(getTitleString());
+		mTitleTextView.setText(titleString());
 	}
 
 	private void generateRandomQuestion() {
@@ -188,7 +188,7 @@ public abstract class BaseNumericalExerciseFragment extends
 	}
 
 	private void showSolution() {
-		mAnswerTextView.setText(getSolution());
+		mAnswerTextView.setText(obtainSolution());
 	}
 
 	@Override
@@ -318,7 +318,7 @@ public abstract class BaseNumericalExerciseFragment extends
 
 		try {
 			HighscoreManager.addScore(getActivity().getApplicationContext(),
-					points, getExerciseId(), new Date(), user);
+					points, obtainExerciseId(), new Date(), user);
 		} catch (JSONException e) {
 			Log.v(getClass().getSimpleName(), "Error when saving score");
 		}
@@ -328,7 +328,7 @@ public abstract class BaseNumericalExerciseFragment extends
 	 * Debe retornar la constante usada en FragmentFactory para lanzar el
 	 * fragmento, por ejemplo, R.string.logic_gate
 	 */
-	protected abstract int getExerciseId();
+	protected abstract int obtainExerciseId();
 
 	/**
 	 * Debe retornar true si el resultado está compuesto sólo de números entre 0
@@ -339,7 +339,7 @@ public abstract class BaseNumericalExerciseFragment extends
 	/**
 	 * Debe retornar una cadena con el título del ejercicio actual
 	 */
-	protected abstract String getTitleString();
+	protected abstract String titleString();
 
 	/**
 	 * Generar un número aleatorio teniendo en cuenta la dirección actual del
@@ -350,7 +350,7 @@ public abstract class BaseNumericalExerciseFragment extends
 	/**
 	 * Debe retornar una cadena con la solución
 	 */
-	protected abstract String getSolution();
+	protected abstract String obtainSolution();
 
 	/**
 	 * Debe retornar true si la solución es correcta
