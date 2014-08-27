@@ -75,18 +75,16 @@ public abstract class BaseExerciseFragment extends Fragment {
 	private long mDurationMs = DEFAULT_GAME_DURATION_MS;
 	private long mStartMs;
 
-	private AlphaAnimation animation;
-	private AnticipateOvershootInterpolator antovershoot;
+	private AlphaAnimation mAnimation;
+	private AnticipateOvershootInterpolator mAntovershoot;
 
-	private View result;
-	private ImageView resultImage;
-
-
+	private View mResult;
+	private ImageView mResultImage;
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
-		result = (View) view.findViewById(R.id.result);
-		resultImage = (ImageView) view.findViewById(R.id.resultimage);
+		mResult = (View) view.findViewById(R.id.result);
+		mResultImage = (ImageView) view.findViewById(R.id.resultimage);
 		super.onViewCreated(view, savedInstanceState);
 	}
 
@@ -241,25 +239,25 @@ public abstract class BaseExerciseFragment extends Fragment {
 	 */
 	@SuppressLint("NewApi") protected void showAnimationAnswer(boolean correct){ 
 		// Fade in - fade out
-		result.setVisibility(View.VISIBLE);
-		animation = new AlphaAnimation(0,1);
-		animation.setDuration(600);
-		animation.setFillBefore(true);
-		animation.setFillAfter(true);
-		animation.setRepeatCount(Animation.RESTART);
-		animation.setRepeatMode(Animation.REVERSE);
-		result.startAnimation(animation);
+		mResult.setVisibility(View.VISIBLE);
+		mAnimation = new AlphaAnimation(0,1);
+		mAnimation.setDuration(600);
+		mAnimation.setFillBefore(true);
+		mAnimation.setFillAfter(true);
+		mAnimation.setRepeatCount(Animation.RESTART);
+		mAnimation.setRepeatMode(Animation.REVERSE);
+		mResult.startAnimation(mAnimation);
 		if(correct)
-			resultImage.setImageDrawable(getResources().getDrawable(R.drawable.correct));
-		else resultImage.setImageDrawable(getResources().getDrawable(R.drawable.incorrect));
+			mResultImage.setImageDrawable(getResources().getDrawable(R.drawable.correct));
+		else mResultImage.setImageDrawable(getResources().getDrawable(R.drawable.incorrect));
 
 		// This only works in API 12+, so we skip this animation on old devices
 		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB_MR2){
-			resultImage.animate().setDuration(700).setInterpolator(antovershoot).scaleX(1.5f).scaleY(1.5f).withEndAction(new Runnable(){
+			mResultImage.animate().setDuration(700).setInterpolator(mAntovershoot).scaleX(1.5f).scaleY(1.5f).withEndAction(new Runnable(){
 				@Override
 				public void run() {
 					// Back to its original size after the animation's end
-					resultImage.animate().scaleX(1f).scaleY(1f);
+					mResultImage.animate().scaleX(1f).scaleY(1f);
 				}
 			});
 		}
@@ -282,25 +280,25 @@ public abstract class BaseExerciseFragment extends Fragment {
 	
 	@SuppressLint("NewApi") protected void showAnimationGameStart(boolean correct){ 
 		// Fade in - fade out
-		result.setVisibility(View.VISIBLE);
-		animation = new AlphaAnimation(0,1);
-		animation.setDuration(1000);
-		animation.setFillBefore(true);
-		animation.setFillAfter(true);
-		animation.setRepeatCount(Animation.RESTART);
-		animation.setRepeatMode(Animation.REVERSE);
-		result.startAnimation(animation);
+		mResult.setVisibility(View.VISIBLE);
+		mAnimation = new AlphaAnimation(0,1);
+		mAnimation.setDuration(1000);
+		mAnimation.setFillBefore(true);
+		mAnimation.setFillAfter(true);
+		mAnimation.setRepeatCount(Animation.RESTART);
+		mAnimation.setRepeatMode(Animation.REVERSE);
+		mResult.startAnimation(mAnimation);
 		if(correct)
-			resultImage.setImageDrawable(getResources().getDrawable(R.drawable.game_start));
+			mResultImage.setImageDrawable(getResources().getDrawable(R.drawable.game_start));
 
 
 		// This only works in API 12+, so we skip this animation on old devices
 		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB_MR2){
-			resultImage.animate().setDuration(1100).setInterpolator(antovershoot).scaleX(1.5f).scaleY(1.5f).withEndAction(new Runnable(){
+			mResultImage.animate().setDuration(1100).setInterpolator(mAntovershoot).scaleX(1.5f).scaleY(1.5f).withEndAction(new Runnable(){
 				@Override
 				public void run() {
 					// Back to its original size after the animation's end
-					resultImage.animate().scaleX(1f).scaleY(1f);
+					mResultImage.animate().scaleX(1f).scaleY(1f);
 				}
 			});
 		}
