@@ -20,15 +20,16 @@ public class ProtocolDataBaseHelper extends SQLiteOpenHelper {
 
 	private static final String DB_NAME = "protocolFCR.sqlite";
 	private static final String TAG = null;
-	private final Context myContext;
-	private SQLiteDatabase myDataBase;
-	private File myDatabaseFile;
+	
+	private final Context mContext;
+	private SQLiteDatabase mDataBase;
+	private File mDatabaseFile;
 
 	public ProtocolDataBaseHelper(Context context, String nombre,
 			CursorFactory factory, int version) {
 		super(context, nombre, factory, version);
-		this.myContext = context;
-		myDatabaseFile = myContext.getDatabasePath(DB_NAME);
+		mContext = context;
+		mDatabaseFile = mContext.getDatabasePath(DB_NAME);
 	}
 
 	@Override
@@ -44,7 +45,6 @@ public class ProtocolDataBaseHelper extends SQLiteOpenHelper {
 	}
 
 	public void createDataBase() throws IOException {
-
 		boolean dbExist = checkDataBase();
 
 		if (dbExist) {
@@ -61,7 +61,7 @@ public class ProtocolDataBaseHelper extends SQLiteOpenHelper {
 	private boolean checkDataBase() {
 		boolean checkdb = false;
 		try {
-			String myPath = myContext.getDatabasePath(DB_NAME).getAbsolutePath();
+			String myPath = mContext.getDatabasePath(DB_NAME).getAbsolutePath();
 			
 			File dbfile = new File(myPath);
 			checkdb = dbfile.exists();
@@ -74,19 +74,19 @@ public class ProtocolDataBaseHelper extends SQLiteOpenHelper {
 
 	private void copyDataBase() throws IOException {	
 		// Create database folder
-		File parent = myDatabaseFile.getParentFile();
+		File parent = mDatabaseFile.getParentFile();
 		if (!parent.exists()) {
 		    parent.mkdir();
 		}
 
 		OutputStream databaseOutputStream = new FileOutputStream(
-				myDatabaseFile.getAbsolutePath());
+				mDatabaseFile.getAbsolutePath());
 		InputStream databaseInputStream;
 		Log.v(TAG, "Copiando base de datos");
 		byte[] buffer = new byte[1024];
 		int length;
 
-		databaseInputStream = myContext.getAssets().open("protocolFCR.sqlite");
+		databaseInputStream = mContext.getAssets().open("protocolFCR.sqlite");
 		while ((length = databaseInputStream.read(buffer)) > 0) {
 			databaseOutputStream.write(buffer);
 		}
@@ -97,17 +97,16 @@ public class ProtocolDataBaseHelper extends SQLiteOpenHelper {
 	}
 
 	public void openDataBase() throws SQLException {
-		myDataBase = SQLiteDatabase.openDatabase(
-				myDatabaseFile.getAbsolutePath(), null,
+		mDataBase = SQLiteDatabase.openDatabase(
+				mDatabaseFile.getAbsolutePath(), null,
 				SQLiteDatabase.OPEN_READONLY);
 		Log.v(TAG, "Abriendo base de datos");
 	}
 
 	@Override
 	public synchronized void close() {
-
-		if (myDataBase != null)
-			myDataBase.close();
+		if (mDataBase != null)
+			mDataBase.close();
 
 		super.close();
 	}
