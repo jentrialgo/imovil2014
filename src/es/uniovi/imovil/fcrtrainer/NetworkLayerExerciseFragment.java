@@ -1,6 +1,6 @@
 /*
 
-Copyright 2014 Profesores y alumnos de la asignatura Informática Móvil de la EPI de Gijón
+Copyright 2014 Profesores y alumnos de la asignatura Informï¿½tica MÃ³vil de la EPI de GijÃ³n
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -38,30 +38,31 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
-	private View rootView;		
-	private TextView pregunta;
-	private TextView layerPoints;
-	private RadioGroup opciones;
+	private final static int POINTS_FOR_QUESTION = 10;
+	private final static int MAX_QUESTIONS = 5;
+	private final static long GAME_DURATION_MS = 1 * 1000 * 60; // 1min
 
-	private RadioButton rb_layer;
-	private RadioButton rb_network;
-	private RadioButton rb_transport;
-	private RadioButton rb_application;
+	private View mRootView;		
+	private TextView mQuestion;
+	private TextView mLayerPoints;
+	private RadioGroup mOptions;
 
-	private Button comprobar;
-	private Button solucion;
-	private String[] preguntas;
-	private String[] respuestas;
-	private String rb_pressed="";
-	private int indice =0;
+	private RadioButton mRblayer;
+	private RadioButton mRbnetwork;
+	private RadioButton mRbTransport;
+	private RadioButton mRbAplication;
 
-	private final int POINTS_FOR_QUESTION = 10;
-	private final int MAX_QUESTIONS = 5;
-	private final long GAME_DURATION_MS = 1 * 1000 * 60; // 1min
-	private int currentQuestionCounter = 0;
-	private boolean won = false;
+	private Button mCheck;
+	private Button mSolution;
+	private String[] mQuestions;
+	private String[] mAnswers;
+	private String mRbPressed="";
+	private int mIndex =0;
 
-	private int points;
+	private int mPoints;
+
+	private int mCurrentQuestionCounter = 0;
+	private boolean mWon = false;
 
 	//constructores
 	public NetworkLayerExerciseFragment() 
@@ -79,46 +80,44 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, 
 			Bundle savedInstanceState) {
 
-		rootView =inflater.inflate(R.layout.fragment_layer, container, false);
+		mRootView =inflater.inflate(R.layout.fragment_layer, container, false);
 		//TextView para mostrar la pregunta
-		pregunta = (TextView) rootView.findViewById(R.id.textlayer);
+		mQuestion = (TextView) mRootView.findViewById(R.id.textlayer);
 		//TextView para los puntos en el modo jugar
-		layerPoints = (TextView) rootView.findViewById(R.id.points_layer);
+		mLayerPoints = (TextView) mRootView.findViewById(R.id.points_layer);
 
 		//Radiogrup
-		opciones = (RadioGroup) rootView.findViewById(R.id.layer_group);
-		rb_layer = (RadioButton) rootView.findViewById(R.id.link_layer);
-		rb_network = (RadioButton) rootView.findViewById(R.id.internet_layer);
-		rb_transport = (RadioButton) rootView.findViewById(R.id.transport_layer);
-		rb_application = (RadioButton) rootView.findViewById(R.id.application_layer);
+		mOptions = (RadioGroup) mRootView.findViewById(R.id.layer_group);
+		mRblayer = (RadioButton) mRootView.findViewById(R.id.link_layer);
+		mRbnetwork = (RadioButton) mRootView.findViewById(R.id.internet_layer);
+		mRbTransport = (RadioButton) mRootView.findViewById(R.id.transport_layer);
+		mRbAplication = (RadioButton) mRootView.findViewById(R.id.application_layer);
 
-
-		opciones.setOnCheckedChangeListener( new RadioGroup.OnCheckedChangeListener() {
+		mOptions.setOnCheckedChangeListener( new RadioGroup.OnCheckedChangeListener() {
 			public void onCheckedChanged(RadioGroup rGroup, int checkedId)
 			{
-				// TODO Auto-generated method stub
 				switch(checkedId){
 				case R.id.link_layer:
-					rb_pressed = getResources().getString(R.string.link_layer);
+					mRbPressed = getResources().getString(R.string.link_layer);
 					break;
 				case R.id.internet_layer:
-					rb_pressed = getResources().getString(R.string.internet_layer);
+					mRbPressed = getResources().getString(R.string.internet_layer);
 					break;
 				case R.id.transport_layer:
-					rb_pressed = getResources().getString(R.string.transport_layer);
+					mRbPressed = getResources().getString(R.string.transport_layer);
 					break;
 				case R.id.application_layer:
-					rb_pressed = getResources().getString(R.string.application_layer);
+					mRbPressed = getResources().getString(R.string.application_layer);
 					break;
 				}
 			}
 		});
 
 		//Buttons
-		comprobar = (Button) rootView.findViewById(R.id.button_layer);
-		solucion = (Button) rootView.findViewById(R.id.button_solutionlayer);
+		mCheck = (Button) mRootView.findViewById(R.id.button_layer);
+		mSolution = (Button) mRootView.findViewById(R.id.button_solutionlayer);
 
-		comprobar.setOnClickListener(new OnClickListener() {
+		mCheck.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				if(v.getId() == R.id.button_layer){
 					CompruebaRespuesta();
@@ -126,7 +125,7 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 			}
 		});
 
-		solucion.setOnClickListener(new OnClickListener() {
+		mSolution.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				if(v.getId() == R.id.button_solutionlayer){
 					Solucion();
@@ -135,73 +134,73 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 		});
 
 		//Arrays
-		preguntas = getResources().getStringArray(R.array.layer_exercise_questions);
-		respuestas = getResources().getStringArray(R.array.layer_exercise_answers);
-		RANDOM();
-		pregunta.setText(preguntas[indice]);	
+		mQuestions = getResources().getStringArray(R.array.layer_exercise_questions);
+		mAnswers = getResources().getStringArray(R.array.layer_exercise_answers);
+		random();
+		mQuestion.setText(mQuestions[mIndex]);	
 
-		return rootView;
+		return mRootView;
 	}
 
 	protected void Solucion() {
-		if (respuestas[indice].equals("Capa de enlace")){
-			rb_layer.setChecked(true);
+		if (mAnswers[mIndex].equals("Capa de enlace")){
+			mRblayer.setChecked(true);
 		}
-		else if (respuestas[indice].equals("Capa de internet")){
-			rb_network.setChecked(true);
+		else if (mAnswers[mIndex].equals("Capa de internet")){
+			mRbnetwork.setChecked(true);
 		}
-		else if (respuestas[indice].equals("Capa de transporte")){
-			rb_transport.setChecked(true);
+		else if (mAnswers[mIndex].equals("Capa de transporte")){
+			mRbTransport.setChecked(true);
 		}
 		else {
-			rb_application.setChecked(true);
+			mRbAplication.setChecked(true);
 		}
 	}
 
 	private void CompruebaRespuesta() {
-		if (rb_pressed.equals(respuestas[indice])){
+		if (mRbPressed.equals(mAnswers[mIndex])){
 			showAnimationAnswer(true);
 			if (mIsPlaying){
 				gameModeControl();
 			}
-			RANDOM();			
-			pregunta.setText(preguntas[indice]);
+			random();			
+			mQuestion.setText(mQuestions[mIndex]);
 		}
 		else showAnimationAnswer(false);		
 	}
 
-	//Metodo para generar un número aleatorio
-	public int RANDOM(){
+	//Metodo para generar un nÃºmero aleatorio
+	public int random(){
 		Random ran = new Random();
-		indice = ran.nextInt(11);
-		return indice;
+		mIndex = ran.nextInt(11);
+		return mIndex;
 	}
 
 	private void increasePoints(int val) {
-		this.points = this.points + val;
-		updatePointsTextView(this.points);
+		this.mPoints = this.mPoints + val;
+		updatePointsTextView(this.mPoints);
 	}
 
 	private void updatePointsTextView(int p) {		
-		layerPoints.setText(getResources().getString(R.string.points)+ " "+ String.valueOf(p));
+		mLayerPoints.setText(getResources().getString(R.string.points)+ " "+ String.valueOf(p));
 	}
 
 	private void gameModeControl() {
 		increasePoints(POINTS_FOR_QUESTION);
 
-		if (currentQuestionCounter >= MAX_QUESTIONS) {
+		if (mCurrentQuestionCounter >= MAX_QUESTIONS) {
 			// won
-			this.won = true;
+			this.mWon = true;
 			this.endGame();
 
 		}
 
-		if (currentQuestionCounter < MAX_QUESTIONS && getRemainingTimeMs() <= 0) {
+		if (mCurrentQuestionCounter < MAX_QUESTIONS && getRemainingTimeMs() <= 0) {
 			// lost --> no time left...
-			this.won = false;
+			this.mWon = false;
 			this.endGame();
 		}
-		currentQuestionCounter++;
+		mCurrentQuestionCounter++;
 	}
 
 	@Override
@@ -214,8 +213,8 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 	}
 
 	private void updateToGameMode() {
-		solucion.setVisibility(View.INVISIBLE);
-		layerPoints.setVisibility(View.VISIBLE);
+		mSolution.setVisibility(View.INVISIBLE);
+		mLayerPoints.setVisibility(View.VISIBLE);
 	}
 
 	@Override
@@ -225,18 +224,18 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 	}
 
 	private void updateToTrainMode() {
-		solucion.setVisibility(View.VISIBLE);
-		layerPoints.setVisibility(View.GONE);
+		mSolution.setVisibility(View.VISIBLE);
+		mLayerPoints.setVisibility(View.GONE);
 	}
 
 	// Simple GameOver Dialog
 	private void dialogGameOver() {
 		String message = getResources().getString(R.string.lost);
 
-		if (this.won) {
+		if (this.mWon) {
 			message = getResources().getString(R.string.won) + " "
 					+ getResources().getString(R.string.points) + " "
-					+ this.points;
+					+ this.mPoints;
 		}
 
 		Builder alert = new AlertDialog.Builder(getActivity());
@@ -258,13 +257,13 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 		//convert to seconds
 		int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000; 
 		//every remaining second gives one extra point.
-		this.points = (int) (this.points + remainingTimeInSeconds);
+		this.mPoints = (int) (this.mPoints + remainingTimeInSeconds);
 
-		if (this.won){
+		if (this.mWon){
 			String username = getResources().getString(R.string.default_user_name);
 			try {
 				HighscoreManager.addScore(getActivity().getApplicationContext(),
-						this.points, R.string.network_layer, new Date(), username);
+						this.mPoints, R.string.network_layer, new Date(), username);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -272,14 +271,9 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 		dialogGameOver();
 		super.endGame();
 		updateToTrainMode();
-		this.points = 0;
-		this.currentQuestionCounter = 0;
-		this.won = false;
+		this.mPoints = 0;
+		this.mCurrentQuestionCounter = 0;
+		this.mWon = false;
 	}
 
 }
-
-
-
-
-
