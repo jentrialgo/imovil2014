@@ -39,8 +39,8 @@ public class HelpActivity extends ActionBarActivity {
 	 * HelpFragment fragment with the information about the developers
 	 */
 	public static class HelpFragment extends Fragment {
-		private ImageView epiLogo;
-		private ImageView groupImage;
+		private ImageView mEpiLogo;
+		private ImageView mGroupImage;
 
 		public HelpFragment() {
 		}
@@ -51,17 +51,17 @@ public class HelpActivity extends ActionBarActivity {
 			View rootView = inflater.inflate(R.layout.fragment_help, container,
 					false);
 			
-			epiLogo = (ImageView) rootView.findViewById(R.id.epilogo);
-			groupImage = (ImageView) rootView.findViewById(R.id.groupphoto);
+			mEpiLogo = (ImageView) rootView.findViewById(R.id.epilogo);
+			mGroupImage = (ImageView) rootView.findViewById(R.id.groupphoto);
 					
-			epiLogo.setOnClickListener(new OnClickListener(){
+			mEpiLogo.setOnClickListener(new OnClickListener(){
 
 				@Override
 				public void onClick(View arg0) {
-					if(groupImage.getVisibility() == View.GONE)
-						groupImage.setVisibility(View.VISIBLE);
+					if(mGroupImage.getVisibility() == View.GONE)
+						mGroupImage.setVisibility(View.VISIBLE);
 					else 
-						groupImage.setVisibility(View.GONE);
+						mGroupImage.setVisibility(View.GONE);
 					
 				}
 				
