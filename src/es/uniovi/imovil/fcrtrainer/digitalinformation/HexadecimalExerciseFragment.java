@@ -16,9 +16,11 @@ limitations under the License.
 
  */
 
-package es.uniovi.imovil.fcrtrainer;
+package es.uniovi.imovil.fcrtrainer.digitalinformation;
 
 import java.util.Locale;
+
+import es.uniovi.imovil.fcrtrainer.R;
 
 public class HexadecimalExerciseFragment extends BaseNumericalExerciseFragment {
 	private static final int MAX_NUMBER_TO_CONVERT = 512;

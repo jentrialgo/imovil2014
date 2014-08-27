@@ -16,13 +16,15 @@ limitations under the License.
 
  */
 
-package es.uniovi.imovil.fcrtrainer;
+package es.uniovi.imovil.fcrtrainer.networks;
 
 import java.util.Date;
 import java.util.Random;
 
 import org.json.JSONException;
 
+import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
+import es.uniovi.imovil.fcrtrainer.R;
 import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
 
 import android.os.Bundle;
@@ -213,7 +215,7 @@ public class NetworkMaskExerciseFragment extends BaseExerciseFragment implements
 	}
 
 	@Override
-	void endGame() {
+	protected void endGame() {
 		// convert to seconds
 		int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000;
 

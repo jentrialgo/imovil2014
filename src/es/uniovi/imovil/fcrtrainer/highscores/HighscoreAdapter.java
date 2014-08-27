@@ -16,11 +16,11 @@ limitations under the License.
 
  */
 
-package es.uniovi.imovil.fcrtrainer;
+package es.uniovi.imovil.fcrtrainer.highscores;
 
 import java.util.ArrayList;
 
-import es.uniovi.imovil.fcrtrainer.highscores.Highscore;
+import es.uniovi.imovil.fcrtrainer.R;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

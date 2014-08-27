@@ -16,7 +16,9 @@ limitations under the License.
 
  */
 
-package es.uniovi.imovil.fcrtrainer;
+package es.uniovi.imovil.fcrtrainer.digitalinformation;
+
+import es.uniovi.imovil.fcrtrainer.R;
 
 
 /**

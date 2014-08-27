@@ -67,7 +67,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 
 	private final static int CLOCK_UPDATE_PERIOD_MS = 1000; // 1 s
 	private final static int DEFAULT_GAME_DURATION_MS = 120 * 1000; // 2 min
-	boolean mIsPlaying = false;
+	protected boolean mIsPlaying = false;
 
 	private Handler mTimerHandler = new Handler();
 	private Runnable mUpdateTimeTask = new TimeUpdater();
@@ -165,7 +165,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 		}
 	}
 
-	void setGameDuration(long durationMs) {
+	protected void setGameDuration(long durationMs) {
 		mDurationMs = durationMs;
 	}
 
@@ -176,7 +176,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 	 * setGameDuration(). Las clases derivadas deben redifinirla, llamando al
 	 * padre, para ñadir lo necesario a cada juego particular
 	 */
-	void startGame() {
+	protected void startGame() {
 		mClock = (TextView) getView().findViewById(R.id.text_view_clock);
 		if (mClock == null) {
 			Toast.makeText(getActivity(), getString(R.string.error_no_clock),
@@ -207,7 +207,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 	 * derivadas deben redifinirla, llamando al padre, para añadir lo necesario
 	 * a cada juego particular
 	 */
-	void cancelGame() {
+	protected void cancelGame() {
 		stopPlaying();
 	}
 
@@ -216,7 +216,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 	 * reloj. Las clases derivadas deben redifinirla, llamando al padre, para
 	 * añadir lo necesario a cada juego particular
 	 */
-	void endGame() {
+	protected void endGame() {
 		stopPlaying();
 	}
 

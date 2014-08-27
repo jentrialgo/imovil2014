@@ -16,7 +16,7 @@ limitations under the License.
 
  */
 
-package es.uniovi.imovil.fcrtrainer;
+package es.uniovi.imovil.fcrtrainer.digitalsystems;
 
 import java.util.Date;
 import java.util.Locale;
@@ -24,6 +24,8 @@ import java.util.Random;
 
 import org.json.JSONException;
 
+import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
+import es.uniovi.imovil.fcrtrainer.R;
 import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
 
 import android.os.Bundle;
@@ -302,7 +304,7 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 	}
 
 	// ************************ MODO JUEGO *******************************
-	void startGame() {
+	protected void startGame() {
 		super.startGame();
 		// Establecer duracion del juego
 		super.setGameDuration(mDurationMs);
@@ -317,7 +319,7 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		mEtRespuesta.requestFocus();
 	}
 
-	void endGame() {
+	protected void endGame() {
 		super.endGame();
 		int score = calculaPuntuacion();
 		vistaFinJuego();
@@ -325,7 +327,7 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		mModoJuego = false;
 	}
 
-	void cancelGame() {
+	protected void cancelGame() {
 		super.cancelGame();
 		vistaModoEntrenamiento();
 	}

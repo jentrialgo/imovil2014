@@ -16,13 +16,15 @@ limitations under the License.
 
  */
 
-package es.uniovi.imovil.fcrtrainer;
+package es.uniovi.imovil.fcrtrainer.networks;
 
 import java.util.Date;
 import java.util.Random;
 
 import org.json.JSONException;
 
+import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
+import es.uniovi.imovil.fcrtrainer.R;
 import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -253,7 +255,7 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 	}
 
 	@Override
-	void endGame() {
+	protected void endGame() {
 		//convert to seconds
 		int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000; 
 		//every remaining second gives one extra point.

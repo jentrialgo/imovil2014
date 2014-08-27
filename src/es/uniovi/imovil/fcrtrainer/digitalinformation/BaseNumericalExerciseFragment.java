@@ -16,7 +16,7 @@ limitations under the License.
 
  */
 
-package es.uniovi.imovil.fcrtrainer;
+package es.uniovi.imovil.fcrtrainer.digitalinformation;
 
 import java.util.Date;
 import java.util.Locale;
@@ -24,6 +24,8 @@ import java.util.Random;
 
 import org.json.JSONException;
 
+import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
+import es.uniovi.imovil.fcrtrainer.R;
 import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -257,7 +259,7 @@ public abstract class BaseNumericalExerciseFragment extends
 	 * Starts the game and sets the UI
 	 */
 	@Override
-	void startGame() {
+	protected void startGame() {
 		super.startGame();
 		setTrainingMode(false);
 		newQuestion();
@@ -268,7 +270,7 @@ public abstract class BaseNumericalExerciseFragment extends
 	 * Called when the user cancels the game
 	 */
 	@Override
-	void cancelGame() {
+	protected void cancelGame() {
 		super.cancelGame();
 		setTrainingMode(true);
 	}
@@ -277,7 +279,7 @@ public abstract class BaseNumericalExerciseFragment extends
 	 * Called when the game ends
 	 */
 	@Override
-	void endGame() {
+	protected void endGame() {
 		super.endGame();
 
 		int remainingTime = (int) getRemainingTimeMs() / 1000;

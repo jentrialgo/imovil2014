@@ -16,7 +16,7 @@ limitations under the License.
 
  */
 
-package es.uniovi.imovil.fcrtrainer;
+package es.uniovi.imovil.fcrtrainer.digitalinformation;
 
 import java.util.Random;
 

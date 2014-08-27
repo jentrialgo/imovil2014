@@ -16,7 +16,7 @@ limitations under the License.
 
  */
 
-package es.uniovi.imovil.fcrtrainer;
+package es.uniovi.imovil.fcrtrainer.digitalinformation;
 
 import java.util.Date;
 import java.util.Random;
@@ -33,6 +33,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
+import es.uniovi.imovil.fcrtrainer.R;
 import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
 
 public class FloatingPointExerciseFragment extends BaseExerciseFragment {
@@ -343,7 +345,7 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 	 * Starts the game and sets the UI
 	 */
 	@Override
-	void startGame() {
+	protected void startGame() {
 		super.startGame();
 		setTrainingMode(false);
 		updatePoints(mPointsCounter);
@@ -353,7 +355,7 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 	 * Called when the user cancels the game
 	 */
 	@Override
-	void cancelGame() {
+	protected void cancelGame() {
 		super.cancelGame();
 		setTrainingMode(true);
 	}
@@ -362,7 +364,7 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 	 * Called when the game ends
 	 */
 	@Override
-	void endGame() {
+	protected void endGame() {
 		super.endGame();
 
 		int remainingTime = (int) getRemainingTimeMs() / 1000;

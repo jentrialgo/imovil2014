@@ -16,27 +16,25 @@ limitations under the License.
 
  */
 
-package es.uniovi.imovil.fcrtrainer;
+package es.uniovi.imovil.fcrtrainer.digitalinformation;
 
-public class BinaryOffsetExerciseFragment extends BaseNumericalExerciseFragment {
+import es.uniovi.imovil.fcrtrainer.R;
 
+public class TwosComplementExerciseFragment extends
+		BaseNumericalExerciseFragment {
 	private static final int POINTS_FOR_QUESTION = 10;
+
 	private int mNumberOfBits = 6;
-	private int mOffset = 32;
-	private String mCorrectAnswer;
+	private int mNumberToConvert;
 
-	public static BinaryOffsetExerciseFragment newInstance() {
-
-		BinaryOffsetExerciseFragment fragment = new BinaryOffsetExerciseFragment();
+	public static TwosComplementExerciseFragment newInstance() {
+		TwosComplementExerciseFragment fragment = new TwosComplementExerciseFragment();
 		return fragment;
-	}
-
-	public BinaryOffsetExerciseFragment() {
 	}
 
 	@Override
 	protected int obtainExerciseId() {
-		return R.string.offset_binary;
+		return R.string.twoscomplement;
 	}
 
 	@Override
@@ -48,38 +46,42 @@ public class BinaryOffsetExerciseFragment extends BaseNumericalExerciseFragment 
 	protected String titleString() {
 		int formatStringId;
 		if (mDirectConversion) {
-			formatStringId = R.string.convert_dec_to_bin_offset;
+			formatStringId = R.string.convert_dec_to_twos_complement;
 		} else {
-			formatStringId = R.string.convert_bin_offset_to_dec;
+			formatStringId = R.string.convert_twos_complement_to_dec;
 		}
 		String formatString = getResources().getString(formatStringId);
-		return String.format(formatString, mOffset, mNumberOfBits);
+		return String.format(formatString, mNumberOfBits);
 	}
 
 	@Override
 	protected String generateRandomNumber() {
-		int maxInNaturalBinary = ((int) Math.pow(2, mNumberOfBits));
-		int numberInOffset = mRandomGenerator.nextInt(maxInNaturalBinary);
+		int min = (int) -(Math.pow(2, mNumberOfBits - 1));
+		int max = (int) (Math.pow(2, mNumberOfBits - 1)) - 1;
+
+		mNumberToConvert = mRandomGenerator.nextInt(max - min + 1) + min;
 
 		if (mDirectConversion) {
-			mCorrectAnswer = BinaryConverter.binaryToStringWithNbits(
-					numberInOffset, mNumberOfBits);
-			return Integer.toString(numberInOffset - mOffset);
+			return Integer.toString(mNumberToConvert);
 		} else {
-			mCorrectAnswer = Integer.toString(numberInOffset - mOffset);
-			return BinaryConverter.binaryToStringWithNbits(numberInOffset,
+			return BinaryConverter.binaryToStringWithNbits(mNumberToConvert,
 					mNumberOfBits);
 		}
 	}
 
 	@Override
 	protected String obtainSolution() {
-		return mCorrectAnswer;
+		if (mDirectConversion) {
+			return BinaryConverter.binaryToStringWithNbits(mNumberToConvert,
+					mNumberOfBits);
+		} else {
+			return Integer.toString(mNumberToConvert);
+		}
 	}
 
 	@Override
 	protected boolean isCorrect(String answer) {
-		return answer.equals(mCorrectAnswer);
+		return answer.equals(obtainSolution());
 	}
 
 	@Override

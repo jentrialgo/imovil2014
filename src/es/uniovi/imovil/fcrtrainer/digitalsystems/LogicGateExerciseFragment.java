@@ -16,7 +16,7 @@ limitations under the License.
 
  */
 
-package es.uniovi.imovil.fcrtrainer;
+package es.uniovi.imovil.fcrtrainer.digitalsystems;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,6 +24,8 @@ import java.util.Random;
 
 import org.json.JSONException;
 
+import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
+import es.uniovi.imovil.fcrtrainer.R;
 import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -200,7 +202,7 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 	}
 
 	@Override
-	void startGame() {
+	protected void startGame() {
 		super.startGame();
 
 		// Fijamos el contador en 1 minuto
@@ -220,7 +222,7 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 	}
 
 	@Override
-	void cancelGame() {
+	protected void cancelGame() {
 		super.cancelGame();
 
 		// Cambiamos el layout y lo dejamos otra vez como el modo ejercicio
@@ -235,7 +237,7 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 	 * reloj. Las clases derivadas deben redifinirla, llamando al padre, para
 	 * añadir lo necesario a cada juego particular
 	 */
-	void endGame() {
+	protected void endGame() {
 		super.endGame();
 
 		// convert to seconds

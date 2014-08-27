@@ -18,6 +18,21 @@ limitations under the License.
 
 package es.uniovi.imovil.fcrtrainer;
 
+import es.uniovi.imovil.fcrtrainer.digitalinformation.BinaryExerciseFragment;
+import es.uniovi.imovil.fcrtrainer.digitalinformation.BinaryOffsetExerciseFragment;
+import es.uniovi.imovil.fcrtrainer.digitalinformation.FloatingPointExerciseFragment;
+import es.uniovi.imovil.fcrtrainer.digitalinformation.HexadecimalExerciseFragment;
+import es.uniovi.imovil.fcrtrainer.digitalinformation.SignedMagnitudeExerciseFragment;
+import es.uniovi.imovil.fcrtrainer.digitalinformation.TwosComplementExerciseFragment;
+import es.uniovi.imovil.fcrtrainer.digitalsystems.LogicGateExerciseFragment;
+import es.uniovi.imovil.fcrtrainer.digitalsystems.LogicOperationExerciseFragment;
+import es.uniovi.imovil.fcrtrainer.highscores.HighscoresFragment;
+import es.uniovi.imovil.fcrtrainer.networks.CidrExerciseFragment;
+import es.uniovi.imovil.fcrtrainer.networks.HostCountExerciseFragment;
+import es.uniovi.imovil.fcrtrainer.networks.NetworkAddressExerciseFragment;
+import es.uniovi.imovil.fcrtrainer.networks.NetworkLayerExerciseFragment;
+import es.uniovi.imovil.fcrtrainer.networks.NetworkMaskExerciseFragment;
+import es.uniovi.imovil.fcrtrainer.networks.ProtocolExerciseFragment;
 import android.support.v4.app.Fragment;
 
 /**
