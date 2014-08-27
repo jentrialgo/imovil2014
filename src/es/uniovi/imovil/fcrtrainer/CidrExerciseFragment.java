@@ -38,7 +38,7 @@ public class CidrExerciseFragment extends BaseExerciseFragment implements
 	private String[] mMascaras;
 	private String[] mRespuestas;
 	private TextView mMascara;
-	int mN;
+	int mMaskIndex;
 	EditText mAnswer;
 	public int mMask;
 	public View mRootView;
@@ -88,7 +88,7 @@ public class CidrExerciseFragment extends BaseExerciseFragment implements
 
 		}
 		if (view.getId() == R.id.sButton) {
-			showSolution(mN);
+			showSolution(mMaskIndex);
 		}
 
 	}
@@ -133,9 +133,9 @@ public class CidrExerciseFragment extends BaseExerciseFragment implements
 	// Metodo para generar un número aleatorio
 	public int random() {
 		Random ran = new Random();
-		mN = ran.nextInt(RANDOM_MASK);
+		mMaskIndex = ran.nextInt(RANDOM_MASK);
 
-		return mN;
+		return mMaskIndex;
 	}
 
 	public void GenerarPregunta() {
