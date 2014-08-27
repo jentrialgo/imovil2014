@@ -12,7 +12,6 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -32,186 +31,179 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 	private static final int MAX_QUESTIONS = 5;
 	private static final String DB_NAME = "protocolFCR.sqlite";
 	private static final int DB_VERSION = 2;
+	private static final long GAME_DURATION_MS = 3 * 1000; // 2 minutos de
+															// juego.
 
-
-	private static final long GAME_DURATION_MS = 3 * 1000; //2 minutos de juego.
-	private ArrayList<ProtocolTest> testList=null;
+	private ArrayList<ProtocolTest> mTestList = null;
 	private View mRootView;
 	private View mCardView;
-	private RadioButton[] respRadioButton;
-	private Button seeSolution;
-	private Button check;
-	private TextView question;
-	private ProtocolTest test;
-	private RadioGroup rg;
-	private int currentQuestionCounter = 1;
-	private boolean won = false;
-	private int points;
-	private int partialPoints;
-	private int totalFails=0;
-	private boolean gameMode = false;
-	private  boolean flag;
+	private RadioButton[] mRadioButtonAnswers;
+	private Button mSeeSolutionButton;
+	private Button mCheckSolutionButton;
+	private TextView mQuestion;
+	private ProtocolTest mTest;
+	private RadioGroup mRadioGroup;
+	private int mCurrentQuestionCounter = 1;
+	private boolean mWon = false;
+	private int mPoints;
+	private int mPartialPoints;
+	private int mTotalFails = 0;
+	private boolean mGameMode = false;
+	private boolean mFlag;
 
-	public static ProtocolExerciseFragment newInstance() 
-	{
+	public static ProtocolExerciseFragment newInstance() {
 		ProtocolExerciseFragment fragment = new ProtocolExerciseFragment();
 		return fragment;
 	}
 
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		mRootView=inflater.inflate(R.layout.fragment_protocol, container, false);
-        ProtocolDataBaseHelper db = new ProtocolDataBaseHelper(this.getActivity(), DB_NAME, null, DB_VERSION);
-        question = (TextView) mRootView.findViewById(R.id.exerciseQuestion);
-        mCardView = (RelativeLayout) mRootView.findViewById(R.id.card);
-        rg = new RadioGroup (getActivity());
-        addAnswerRadioButtons();
-        seeSolution = (Button) mRootView.findViewById(R.id.seesolution);
-        check = (Button) mRootView.findViewById(R.id.checkbutton);
-        //Manejador del evento de mostrar solución (solo en modo entrenamiento).
-        seeSolution.setOnClickListener( new OnClickListener() 
-        {
-			private Object TAG;
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		mRootView = inflater.inflate(R.layout.fragment_protocol, container,
+				false);
+		ProtocolDataBaseHelper db = new ProtocolDataBaseHelper(
+				this.getActivity(), DB_NAME, null, DB_VERSION);
+		mQuestion = (TextView) mRootView.findViewById(R.id.exerciseQuestion);
+		mCardView = (RelativeLayout) mRootView.findViewById(R.id.card);
+		mRadioGroup = new RadioGroup(getActivity());
+		addAnswerRadioButtons();
+		mSeeSolutionButton = (Button) mRootView.findViewById(R.id.seesolution);
+		mCheckSolutionButton = (Button) mRootView
+				.findViewById(R.id.checkbutton);
 
+		// Manejador del evento de mostrar soluciÃ³n (solo en modo
+		// entrenamiento).
+		mSeeSolutionButton.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View arg0) 
-			{
-
-				flag = false;
+			public void onClick(View arg0) {
+				mFlag = false;
 				int i = 0;
-				while (i<NUMBER_OF_ANSWERS)
-				{
-					if ((respRadioButton[i].getText().equals(test.getResponse())) && (!flag))
-					{
-						respRadioButton[i].setChecked(true);						
-						flag=true;
+				while (i < NUMBER_OF_ANSWERS) {
+					if ((mRadioButtonAnswers[i].getText().equals(mTest
+							.getResponse())) && (!mFlag)) {
+						mRadioButtonAnswers[i].setChecked(true);
+						mFlag = true;
 					}
 					i++;
 				}
 
-    	     }
-		 });
-        //Manejador del botón de comprobación de respuesta.
-        check.setOnClickListener( new OnClickListener() 
-        {
+			}
+		});
+		// Manejador del botÃ³n de comprobaciÃ³n de respuesta.
+		mCheckSolutionButton.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View arg0) 
-			{
-				flag = false;
+			public void onClick(View arg0) {
+				mFlag = false;
 				int index = 0;
-				while ((index<NUMBER_OF_ANSWERS) && (!flag))
-				{
-					if (respRadioButton[index].isChecked()) {
+				while ((index < NUMBER_OF_ANSWERS) && (!mFlag)) {
+					if (mRadioButtonAnswers[index].isChecked()) {
 						checkIfButtonClickedIsCorrectAnswer(index);
-						flag = true;
+						mFlag = true;
 					}
 					index++;
 				}
-				if (!gameMode)
+				if (!mGameMode)
 					newQuestion();
-    	     }
-        });
-        try 
-        {
-            db.createDataBase();
-            db.openDataBase();
-        } catch (IOException e) {
-        	// TODO: extraer cadenas a recursos
-        	Toast.makeText(this.getActivity(), "Error al abrir la base de datos",
-        			Toast.LENGTH_LONG).show();
-        }
+			}
+		});
+		try {
+			db.createDataBase();
+			db.openDataBase();
+		} catch (IOException e) {
+			// TODO: extraer cadenas a recursos
+			Toast.makeText(this.getActivity(),
+					"Error al abrir la base de datos", Toast.LENGTH_LONG)
+					.show();
+		}
 
-        testList=db.loadData();
-        newQuestion();               
+		mTestList = db.loadData();
+		newQuestion();
 		return mRootView;
 	}
-	
 
 	private void addAnswerRadioButtons() {
-		respRadioButton = new RadioButton[NUMBER_OF_ANSWERS];
+		mRadioButtonAnswers = new RadioButton[NUMBER_OF_ANSWERS];
 		for (int i = 0; i < NUMBER_OF_ANSWERS; i++) {
-			addAnswerRadioButton(i,rg); //Añadir respueta al array.
+			addAnswerRadioButton(i, mRadioGroup); // AÃ±adir respueta al array.
 		}
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
 				RelativeLayout.LayoutParams.WRAP_CONTENT,
 				RelativeLayout.LayoutParams.WRAP_CONTENT);
 
 		params.addRule(RelativeLayout.ALIGN_LEFT);
-		TextView question = (TextView) mRootView.findViewById(R.id.exerciseQuestion); //Obtener pregunta.
-		params.addRule(RelativeLayout.BELOW, question.getId());	 //Debajo de la pregunta.
-		((RelativeLayout) mCardView).addView(rg, params);
+		TextView question = (TextView) mRootView
+				.findViewById(R.id.exerciseQuestion); // Obtener pregunta.
+		params.addRule(RelativeLayout.BELOW, question.getId()); // Debajo de la
+																// pregunta.
+		((RelativeLayout) mCardView).addView(mRadioGroup, params);
 	}
 
 	private void addAnswerRadioButton(int index, RadioGroup rg) {
-		respRadioButton[index] = new RadioButton(this.getActivity());
-		rg.addView(respRadioButton[index]);
+		mRadioButtonAnswers[index] = new RadioButton(this.getActivity());
+		rg.addView(mRadioButtonAnswers[index]);
 	}
-	
 
 	private void checkIfButtonClickedIsCorrectAnswer(int index) {
 		boolean response = false;
-		if (respRadioButton[index].getText().equals(test.getResponse())) 
-		{
+		if (mRadioButtonAnswers[index].getText().equals(mTest.getResponse())) {
 			response = true;
-		}
-		else 
-		{
+		} else {
 			response = false;
 		}
 		super.showAnimationAnswer(response);
 		// only create new Question if user has right input
-		if (this.gameMode) {
+		if (this.mGameMode) {
 			if (response) {
 				gameModeControl();
 				newQuestion();
-			}
-			else if (totalFails<3) {
-			totalFails++;
-			partialPoints = partialPoints - REST_FOR_FAIL;
-			}
-			else 
-			{
-				partialPoints = 0;
+			} else if (mTotalFails < 3) {
+				mTotalFails++;
+				mPartialPoints = mPartialPoints - REST_FOR_FAIL;
+			} else {
+				mPartialPoints = 0;
 				gameModeControl();
 				newQuestion();
 			}
 		}
 	}
 
-	private void newQuestion()	{
-		rg.clearCheck();
-		partialPoints = POINTS_FOR_QUESTION; //Puntos parciales (al fallar se resta 2 puntos).
-		test = testList.get((int)(Math.random()*(14-0))+0); 
-     	//Mostrar pregunta y opciones.
-		question.setText(test.getQuestion());
+	private void newQuestion() {
+		mRadioGroup.clearCheck();
+		mPartialPoints = POINTS_FOR_QUESTION; // Puntos parciales (al fallar se
+												// resta 2 puntos).
+		mTest = mTestList.get((int) (Math.random() * (14 - 0)) + 0);
+
+		// Mostrar pregunta y opciones.
+		mQuestion.setText(mTest.getQuestion());
 		for (int i = 0; i < NUMBER_OF_ANSWERS; i++) {
-			respRadioButton[i].setText(test.getOption(i));
+			mRadioButtonAnswers[i].setText(mTest.getOption(i));
 		}
 	}
-	
+
 	private void updatePointsTextView(int p) {
 		TextView tvPoints = (TextView) mRootView.findViewById(R.id.points);
-		tvPoints.setText(getResources().getString(R.string.points)+ " "+ String.valueOf(p));
+		tvPoints.setText(getResources().getString(R.string.points) + " "
+				+ String.valueOf(p));
 	}
-	
+
 	@Override
 	public void startGame() {
 		setGameDuration(GAME_DURATION_MS);
-		
+
 		// set starting points of textview
-		updatePointsTextView(0); 
+		updatePointsTextView(0);
 
 		super.startGame();
 		updateToGameMode();
 	}
-	
+
 	@Override
 	public void cancelGame() {
 		super.cancelGame();
 		updateToTrainMode();
 	}
-	
+
 	private void updateToGameMode() {
-		gameMode  = true;
+		mGameMode = true;
 
 		newQuestion();
 
@@ -221,9 +213,9 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 		points.setVisibility(View.VISIBLE);
 
 	}
-	
+
 	private void updateToTrainMode() {
-		gameMode = false;
+		mGameMode = false;
 
 		Button solution = (Button) mRootView.findViewById(R.id.seesolution);
 		solution.setVisibility(View.VISIBLE);
@@ -231,31 +223,32 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 		TextView points = (TextView) mRootView.findViewById(R.id.points);
 		points.setVisibility(View.GONE);
 	}
-	
+
 	private void gameModeControl() {
-		increasePoints(partialPoints);
-		
-		if (currentQuestionCounter >= MAX_QUESTIONS) {
-			this.won = true;
+		increasePoints(mPartialPoints);
+
+		if (mCurrentQuestionCounter >= MAX_QUESTIONS) {
+			this.mWon = true;
 			this.endGame();
 		}
 
-		if (currentQuestionCounter < MAX_QUESTIONS && getRemainingTimeMs() <= 0) {
+		if (mCurrentQuestionCounter < MAX_QUESTIONS
+				&& getRemainingTimeMs() <= 0) {
 			// lost --> no time left...
-			this.won = false;
+			this.mWon = false;
 			this.endGame();
 		}
-		currentQuestionCounter++;
-		totalFails=0;
+		mCurrentQuestionCounter++;
+		mTotalFails = 0;
 	}
-	
+
 	@Override
 	void endGame() {
-		//convert to seconds
-		int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000; 
-		this.points = (int) (this.points + remainingTimeInSeconds);
+		// convert to seconds
+		int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000;
+		this.mPoints = (int) (this.mPoints + remainingTimeInSeconds);
 
-		if (this.won)
+		if (this.mWon)
 			savePoints();
 
 		dialogGameOver();
@@ -265,22 +258,22 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 		updateToTrainMode();
 
 		reset();
-	
+
 	}
-	
+
 	private void increasePoints(int val) {
-		points = points + val;
-		updatePointsTextView(points);
+		mPoints = mPoints + val;
+		updatePointsTextView(mPoints);
 	}
-	
+
 	// Simple GameOver Dialog
 	private void dialogGameOver() {
 		String message = getResources().getString(R.string.lost);
 
-		if (won) {
+		if (mWon) {
 			message = getResources().getString(R.string.won) + " "
 					+ getResources().getString(R.string.points) + " "
-					+ this.points;
+					+ this.mPoints;
 		}
 
 		Builder alert = new AlertDialog.Builder(getActivity());
@@ -296,23 +289,22 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 		alert.show();
 
 	}
-	
+
 	private void savePoints() {
 		String username = getResources().getString(R.string.default_user_name);
 		try {
-
 			HighscoreManager.addScore(getActivity().getApplicationContext(),
-					this.points, R.string.protocol, new Date(), username);
+					this.mPoints, R.string.protocol, new Date(), username);
 
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void reset() {
-		points = 0;
-		currentQuestionCounter = 0;
-		won = false;
+		mPoints = 0;
+		mCurrentQuestionCounter = 0;
+		mWon = false;
 		updatePointsTextView(0);
 	}
 
