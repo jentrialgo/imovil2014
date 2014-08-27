@@ -1,73 +1,69 @@
 package es.uniovi.imovil.fcrtrainer;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Random;
 
 import org.json.JSONException;
 
-import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
-import android.R.string;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.*;
-
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
 
 public class FloatingPointExerciseFragment extends BaseExerciseFragment {
-	
 
-	private TextView Values;
-	private TextView Iee_binary;
-	private TextView Tv_Decimal;
-	private TextView Tv_Sign;
-	private TextView Tv_Exponent;
-	private TextView Tv_Mantissa;
-	private TextView Tv_Points;
-	private EditText Decimal;
-	private EditText Sign;
-	private EditText Exponent;
-	private EditText Mantissa;
-	private EditText Response;
-	private Button Check;
-	private Button Toggle;
-	private Button Solution;
-	boolean isBinary = true;
-	boolean convert = true;
-	boolean game = false;
-	int minX = -50; 
-	int maxX = 50; 
-	int minY = 0;
-	int maxY = 15;
-	int finalX = 0;
-	int fraction_helper = 0;
-	float decimal_value_f = 0.0f;
-	int x = 0;
-	int mantissa;
-	int sign,exp;
-	int s= 0;    // signbit
-	int realexp = 0; // exponent
-	int mlastOne = 0;
-	int pointsCounter = 0;
-	String ComparisonString, CheckString;
-	String mantissaAsString;
-	String shortMantissa;
-	
-	int fAsIntBits;
-	String fAsBinaryString;
-//	String fAsBinaryStringPos;
-//	String fAsBinaryStringDel;
-//	String fAsBinaryStringPosDel;
-	String bitRepresentationDel;
-	String bitRepresentation;
-	String bitRepresentationDivided;
+	private TextView mValues;
+	private TextView mIeeeBinary;
+	private TextView mTvDecimal;
+	private TextView mTvSign;
+	private TextView mTvExponent;
+	private TextView mTvMantissa;
+	private TextView mTvPoints;
+	private EditText mEtDecimal;
+	private EditText mEtSign;
+	private EditText mEtExponent;
+	private EditText mEtMantissa;
+	private Button mCheck;
+	private Button mToggle;
+	private Button mSolution;
+	boolean mIsBinary = true;
+	boolean mConvert = true;
+	boolean mGame = false;
+	int mMinX = -50;
+	int mMaxX = 50;
+	int mMinY = 0;
+	int mMaxY = 15;
+	int mFinalX = 0;
+	int mFractionHelper = 0;
+	float mDecimalValueF = 0.0f;
+	int mX = 0;
+	int mMantissa;
+	int mSign;
+	int mExp;
+	int mSignBit = 0; // signbit
+	int mRealExp = 0; // exponent
+	int mLastOne = 0;
+	int mPointsCounter = 0;
+	String mComparisonString;
+	String mCheckString;
+	String mMantissaAsString;
+	String mShortMantissa;
+
+	int mfAsIntBits;
+	String mfAsBinaryString;
+	String mBitRepresentationDel;
+	String mBitRepresentation;
+	String mBitRepresentationDivided;
 
 	private static final int GAMEMODE_MAXQUESTIONS = 5;
-	
-	
+
 	public static FloatingPointExerciseFragment newInstance() {
 
 		FloatingPointExerciseFragment fragment = new FloatingPointExerciseFragment();
@@ -77,7 +73,6 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 	public FloatingPointExerciseFragment() {
 	}
 
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -86,319 +81,302 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 		rootView = inflater.inflate(R.layout.fragment_floatingpoint, container,
 				false);
 
-		
-     	Values = (TextView) rootView.findViewById(R.id.converting_value);
-    	Tv_Decimal = (TextView) rootView.findViewById(R.id.tv_decimal);
-    	Tv_Sign = (TextView) rootView.findViewById(R.id.tv_s);
-    	Tv_Exponent = (TextView) rootView.findViewById(R.id.tv_exp);
-    	Tv_Mantissa = (TextView) rootView.findViewById(R.id.tv_mant);
-    	Tv_Points = (TextView) rootView.findViewById(R.id.tv_points);
-     	Iee_binary = (TextView) rootView.findViewById(R.id.theme);
-     	Decimal = (EditText) rootView.findViewById(R.id.ed_decimal);
-		Sign = (EditText) rootView.findViewById(R.id.ed_sign);
-		Exponent = (EditText) rootView.findViewById(R.id.ed_exponent);
-		Mantissa = (EditText) rootView.findViewById(R.id.ed_mantissa);
-		Check = (Button) rootView.findViewById(R.id.btn_check);
-		Solution= (Button) rootView.findViewById(R.id.btn_getsolution);
-		Toggle = (Button) rootView.findViewById(R.id.btn_togglebinary);
-		
-		Sign.setText(null);
-		Exponent.setText(null);
-		Mantissa.setText(null);
-		
+		mValues = (TextView) rootView.findViewById(R.id.converting_value);
+		mTvDecimal = (TextView) rootView.findViewById(R.id.tv_decimal);
+		mTvSign = (TextView) rootView.findViewById(R.id.tv_s);
+		mTvExponent = (TextView) rootView.findViewById(R.id.tv_exp);
+		mTvMantissa = (TextView) rootView.findViewById(R.id.tv_mant);
+		mTvPoints = (TextView) rootView.findViewById(R.id.tv_points);
+		mIeeeBinary = (TextView) rootView.findViewById(R.id.theme);
+		mEtDecimal = (EditText) rootView.findViewById(R.id.ed_decimal);
+		mEtSign = (EditText) rootView.findViewById(R.id.ed_sign);
+		mEtExponent = (EditText) rootView.findViewById(R.id.ed_exponent);
+		mEtMantissa = (EditText) rootView.findViewById(R.id.ed_mantissa);
+		mCheck = (Button) rootView.findViewById(R.id.btn_check);
+		mSolution = (Button) rootView.findViewById(R.id.btn_getsolution);
+		mToggle = (Button) rootView.findViewById(R.id.btn_togglebinary);
+
+		mEtSign.setText(null);
+		mEtExponent.setText(null);
+		mEtMantissa.setText(null);
+
 		// OnCreate
 		generateRandomNumbers();
 		RemoveZeroes();
-		Values.setText(Float.toString(decimal_value_f));
-		isBinary = false;
-		
-		fAsIntBits = Float.floatToRawIntBits(decimal_value_f); 
-		Decimal.setVisibility(View.GONE);
-		Tv_Decimal.setVisibility(View.GONE);
-		
-		bitRepresentationDivided = bitRepresentationDel.substring(0, 1) + " " + 
-				  bitRepresentationDel.substring(1, 9) + " " +
-				  bitRepresentationDel.substring(9);
-		
-		
-			Check.setOnClickListener(new OnClickListener() {
-			
+		mValues.setText(Float.toString(mDecimalValueF));
+		mIsBinary = false;
+
+		mfAsIntBits = Float.floatToRawIntBits(mDecimalValueF);
+		mEtDecimal.setVisibility(View.GONE);
+		mTvDecimal.setVisibility(View.GONE);
+
+		mBitRepresentationDivided = mBitRepresentationDel.substring(0, 1) + " "
+				+ mBitRepresentationDel.substring(1, 9) + " "
+				+ mBitRepresentationDel.substring(9);
+
+		mCheck.setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
-				
+
 				// Check: EditText Fields empty?
-//				if ((Sign.getEditableText().toString() != "") &
-//				    (Exponent.getEditableText().toString() != "") &
-//				    (Mantissa.getEditableText().toString() != ""))
-				
-					RemoveZeroes();
-					
-					if (isBinary == true){
-						
-						
-//						CheckString = Integer.toString(sign) + Integer.toString(exp)
-//										+ Integer.toString(mantissa);
-						
-						//CheckString = Integer.toString(sign) + Integer.toString(exp)
-						//		+ shortMantissa;
-					
-						
-						ComparisonString = Decimal.getEditableText().toString().trim();
-						 
-						
-						if (ComparisonString.equals(Float.toString(decimal_value_f)))
-						{
-							showAnimationAnswer(true);
-							if (game)
-								updateGameState();
-							generateRandomNumbers();
-							RemoveZeroes();
-							
-							bitRepresentationDivided = bitRepresentationDel.substring(0, 1) + " " + 
-									  bitRepresentationDel.substring(1, 9) + " " +
-									  bitRepresentationDel.substring(9);
+				// if ((Sign.getEditableText().toString() != "") &
+				// (Exponent.getEditableText().toString() != "") &
+				// (Mantissa.getEditableText().toString() != ""))
 
-							Values.setText(bitRepresentationDivided);
-							Decimal.setText(null);
-							
-						} else 
-							showAnimationAnswer(false);
-						
-								
-					} else {
-						
-//						CheckString = Integer.toBinaryString(sign) + Integer.toBinaryString(exp)
-//								+ Integer.toBinaryString(mantissa);
-//					
-//					
-//						ComparisonString = Sign.getText().toString() + 
-//								   Exponent.getText().toString() +
-//								   Mantissa.getText().toString();
-						
-					
-						
-					//	CheckString = Integer.toBinaryString(sign) + Integer.toBinaryString(exp)
-						//		+ shortMantissa;
-						
-				
-				ComparisonString = Sign.getEditableText().toString().trim() + 
-						   		   Exponent.getEditableText().toString().trim() +
-						   		   Mantissa.getEditableText().toString().trim();	
-				
-				if (bitRepresentationDel.equals(ComparisonString) || bitRepresentation.equals(ComparisonString)) 
-				{
-					showAnimationAnswer(true);
-					if (game)
-						updateGameState();
-					generateRandomNumbers();
-					RemoveZeroes();
-					Values.setText(Float.toString(decimal_value_f));
-					Sign.setText(null);
-					Exponent.setText(null);
-					Mantissa.setText(null);
-					
-				} else 
-					showAnimationAnswer(false);		
-				
-					}
+				RemoveZeroes();
 
-				
-		
-			}});
+				if (mIsBinary == true) {
 
-			Solution.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-				
-				
-				if(isBinary){
-					Decimal.setText(Float.toString(decimal_value_f));
+					// CheckString = Integer.toString(sign) +
+					// Integer.toString(exp)
+					// + Integer.toString(mantissa);
+
+					// CheckString = Integer.toString(sign) +
+					// Integer.toString(exp)
+					// + shortMantissa;
+
+					mComparisonString = mEtDecimal.getEditableText().toString()
+							.trim();
+
+					if (mComparisonString.equals(Float.toString(mDecimalValueF))) {
+						showAnimationAnswer(true);
+						if (mGame)
+							updateGameState();
+						generateRandomNumbers();
+						RemoveZeroes();
+
+						mBitRepresentationDivided = mBitRepresentationDel
+								.substring(0, 1)
+								+ " "
+								+ mBitRepresentationDel.substring(1, 9)
+								+ " "
+								+ mBitRepresentationDel.substring(9);
+
+						mValues.setText(mBitRepresentationDivided);
+						mEtDecimal.setText(null);
+
+					} else
+						showAnimationAnswer(false);
+
+				} else {
+
+					// CheckString = Integer.toBinaryString(sign) +
+					// Integer.toBinaryString(exp)
+					// + Integer.toBinaryString(mantissa);
+					//
+					//
+					// ComparisonString = Sign.getText().toString() +
+					// Exponent.getText().toString() +
+					// Mantissa.getText().toString();
+
+					// CheckString = Integer.toBinaryString(sign) +
+					// Integer.toBinaryString(exp)
+					// + shortMantissa;
+
+					mComparisonString = mEtSign.getEditableText().toString().trim()
+							+ mEtExponent.getEditableText().toString().trim()
+							+ mEtMantissa.getEditableText().toString().trim();
+
+					if (mBitRepresentationDel.equals(mComparisonString)
+							|| mBitRepresentation.equals(mComparisonString)) {
+						showAnimationAnswer(true);
+						if (mGame)
+							updateGameState();
+						generateRandomNumbers();
+						RemoveZeroes();
+						mValues.setText(Float.toString(mDecimalValueF));
+						mEtSign.setText(null);
+						mEtExponent.setText(null);
+						mEtMantissa.setText(null);
+
+					} else
+						showAnimationAnswer(false);
+
 				}
-				else {
-					Sign.setText(bitRepresentationDel.substring(0, 1));
-					Exponent.setText(bitRepresentationDel.substring(1, 9));
-					Mantissa.setText(bitRepresentationDel.substring(9));
-				}
-		
-				
-			}});
-			
-		
-		Toggle.setOnClickListener(new OnClickListener() {
-			
+
+			}
+		});
+
+		mSolution.setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
-			
-			generateRandomNumbers();
-			RemoveZeroes();
-			
-			
-			if(isBinary)
-			{
-//				float f = -18.4f;
-				
-				//int fAsIntBits = Float.floatToIntBits(decimal_value_f); 
-				
-				
-//				Sign.setText(Integer.toBinaryString(sign)); 
-//				Exponent.setText(Integer.toBinaryString(exp)); 
-//				Mantissa.setText(Integer.toBinaryString(mantissa));
-				
-				
-				
-				
-				Values.setText(Float.toString(decimal_value_f));
-				Iee_binary.setText("Convierte a IEE 754/binario formato!");
-				
-				Decimal.setVisibility(View.GONE);
-				Tv_Decimal.setVisibility(View.GONE);
-				Sign.setVisibility(View.VISIBLE);
-				Exponent.setVisibility(View.VISIBLE);
-				Mantissa.setVisibility(View.VISIBLE);
-				Tv_Sign.setVisibility(View.VISIBLE);
-				Tv_Exponent.setVisibility(View.VISIBLE);
-				Tv_Mantissa.setVisibility(View.VISIBLE);
-				
-				Sign.setText(null);
-				Exponent.setText(null);
-				Mantissa.setText(null);
-				
-//				DecimalToBinary();
-//				setResultSeperate();
-				isBinary=false;
-			} else
-			{
-//				DecimalToBinary();
-//				setResultIEE();
-				
-//				  float f = 43.0f;
-				 
-//			 	int sign = ((fAsIntBits &  0x80000000) >> 31) & 0x1;
-//				int exp = (fAsIntBits &  0x7f800000) >> 23;
-//				int mantissa = (fAsIntBits &  0x007fffff); 
-			
-					
-//					Sign.setText(Integer.toBinaryString(sign)); 
-//					Exponent.setText(Integer.toBinaryString(exp)); 
-//					Mantissa.setText(Integer.toBinaryString(mantissa));
-					//fAsIntBits = Float.floatToIntBits(decimal_value_f); 
-					
-					bitRepresentationDivided = bitRepresentationDel.substring(0, 1) + " " + 
-													  bitRepresentationDel.substring(1, 9) + " " +
-													  bitRepresentationDel.substring(9);
-				
-					Values.setText(bitRepresentationDivided);
-					
-					Iee_binary.setText("Convierte a decimal formato!");
-					
-					Decimal.setVisibility(View.VISIBLE);
-					Tv_Decimal.setVisibility(View.VISIBLE);
-					Sign.setVisibility(View.GONE);
-					Exponent.setVisibility(View.GONE);
-					Mantissa.setVisibility(View.GONE);
-					Tv_Sign.setVisibility(View.GONE);
-					Tv_Exponent.setVisibility(View.GONE);
-					Tv_Mantissa.setVisibility(View.GONE);
-					
-					Decimal.setText(null);
-					
-					
-//				Sign.setText(Integer.toString(s)); 
-//				Exponent.setText(Integer.toString(realexp)); 
-//				Mantissa.setText(Integer.toString(mantissa).substring(1)); 
-				isBinary=true;
+
+				if (mIsBinary) {
+					mEtDecimal.setText(Float.toString(mDecimalValueF));
+				} else {
+					mEtSign.setText(mBitRepresentationDel.substring(0, 1));
+					mEtExponent.setText(mBitRepresentationDel.substring(1, 9));
+					mEtMantissa.setText(mBitRepresentationDel.substring(9));
+				}
+
 			}
-			
-			}});
+		});
 
+		mToggle.setOnClickListener(new OnClickListener() {
 
-		
-	return rootView;
-}
-	
-//	public void isRight(String response) {
-//		
-//		if (isBinary) {
-//			if (response.equals(Float.toString(decimal_value_f))) {
-//				showAnimationAnswer(true);
-////				if (game)
-////					updateGameState();
-//				generateRandomNumbers();
-//			} else
-//				showAnimationAnswer(false);
-//		} else {
-//			if (response.equals(fAsIntBits)) {
-//				showAnimationAnswer(true);
-////				if (game)
-////					updateGameState();
-//				generateRandomNumbers();
-//			} else
-//				showAnimationAnswer(false);
-//		}
-//	}
+			@Override
+			public void onClick(View v) {
 
-//	public void showSolution() {
-//		if (isBinary){
-//			Sign.setText(fAsIntBits);
-//			Exponent.setText(fAsIntBits);
-//			Mantissa.setText(fAsIntBits);
-//		}
-//			
-//		else
-//			Sign.setText(Float.toString(decimal_value_f));
-//			Exponent.setText(Float.toString(decimal_value_f));
-//			Mantissa.setText(Float.toString(decimal_value_f));
-//	}
-	
-	public void RemoveZeroes(){
-		
-	//mantissaAsString = Integer.toBinaryString(mantissa);
-	 
-	// Remove trailing zeroes
-		 int lastSignificant = bitRepresentation.length() -1 ;
-		 
-		  while (bitRepresentation.charAt(lastSignificant) == '0') {
-			    lastSignificant--;
-			  }
-			  lastSignificant++;
+				generateRandomNumbers();
+				RemoveZeroes();
 
-			  bitRepresentationDel = bitRepresentation.substring(0,
-			      lastSignificant);
-	  
+				if (mIsBinary) {
+					// float f = -18.4f;
+
+					// int fAsIntBits = Float.floatToIntBits(decimal_value_f);
+
+					// Sign.setText(Integer.toBinaryString(sign));
+					// Exponent.setText(Integer.toBinaryString(exp));
+					// Mantissa.setText(Integer.toBinaryString(mantissa));
+
+					mValues.setText(Float.toString(mDecimalValueF));
+					mIeeeBinary.setText("Convierte a IEE 754/binario formato!");
+
+					mEtDecimal.setVisibility(View.GONE);
+					mTvDecimal.setVisibility(View.GONE);
+					mEtSign.setVisibility(View.VISIBLE);
+					mEtExponent.setVisibility(View.VISIBLE);
+					mEtMantissa.setVisibility(View.VISIBLE);
+					mTvSign.setVisibility(View.VISIBLE);
+					mTvExponent.setVisibility(View.VISIBLE);
+					mTvMantissa.setVisibility(View.VISIBLE);
+
+					mEtSign.setText(null);
+					mEtExponent.setText(null);
+					mEtMantissa.setText(null);
+
+					// DecimalToBinary();
+					// setResultSeperate();
+					mIsBinary = false;
+				} else {
+					// DecimalToBinary();
+					// setResultIEE();
+
+					// float f = 43.0f;
+
+					// int sign = ((fAsIntBits & 0x80000000) >> 31) & 0x1;
+					// int exp = (fAsIntBits & 0x7f800000) >> 23;
+					// int mantissa = (fAsIntBits & 0x007fffff);
+
+					// Sign.setText(Integer.toBinaryString(sign));
+					// Exponent.setText(Integer.toBinaryString(exp));
+					// Mantissa.setText(Integer.toBinaryString(mantissa));
+					// fAsIntBits = Float.floatToIntBits(decimal_value_f);
+
+					mBitRepresentationDivided = mBitRepresentationDel.substring(
+							0, 1)
+							+ " "
+							+ mBitRepresentationDel.substring(1, 9)
+							+ " " + mBitRepresentationDel.substring(9);
+
+					mValues.setText(mBitRepresentationDivided);
+
+					mIeeeBinary.setText("Convierte a decimal formato!");
+
+					mEtDecimal.setVisibility(View.VISIBLE);
+					mTvDecimal.setVisibility(View.VISIBLE);
+					mEtSign.setVisibility(View.GONE);
+					mEtExponent.setVisibility(View.GONE);
+					mEtMantissa.setVisibility(View.GONE);
+					mTvSign.setVisibility(View.GONE);
+					mTvExponent.setVisibility(View.GONE);
+					mTvMantissa.setVisibility(View.GONE);
+
+					mEtDecimal.setText(null);
+
+					// Sign.setText(Integer.toString(s));
+					// Exponent.setText(Integer.toString(realexp));
+					// Mantissa.setText(Integer.toString(mantissa).substring(1));
+					mIsBinary = true;
+				}
+
+			}
+		});
+
+		return rootView;
 	}
-	
-	public void generateRandomNumbers(){
-		
-	// Random numbers in range of: 0-50
-	Random rand = new Random(); 
-	finalX = rand.nextInt(maxX - minX)  + minX;
-	
-	// Random numbers in range of: 0-15
-	Random rand_helper = new Random(); 
-	fraction_helper = rand_helper.nextInt(maxY - minY) + minY;
-	decimal_value_f = fraction_helper * 0.125f + finalX;
-	// decimal_value_f = random(0-15)*0.125 + random(0-50)
-	
-	fAsIntBits = Float.floatToRawIntBits(decimal_value_f); 
-	
-	fAsBinaryString = Integer.toBinaryString(fAsIntBits);
-	
-	// IMPORTANT: Representation of the float number in binary form
-	bitRepresentation = String.format("%32s", fAsBinaryString).replace(' ', '0');
-	
-//		if(decimal_value_f > 0)
-//		fAsBinaryStringPos = "0" + fAsBinaryString;
-	
-	 sign = ((fAsIntBits &  0x80000000) >> 31) & 0x1;
-	 exp = (fAsIntBits &  0x7f800000) >> 23;
-	 mantissa = (fAsIntBits &  0x007fffff); 
 
-	
+	// public void isRight(String response) {
+	//
+	// if (isBinary) {
+	// if (response.equals(Float.toString(decimal_value_f))) {
+	// showAnimationAnswer(true);
+	// // if (game)
+	// // updateGameState();
+	// generateRandomNumbers();
+	// } else
+	// showAnimationAnswer(false);
+	// } else {
+	// if (response.equals(fAsIntBits)) {
+	// showAnimationAnswer(true);
+	// // if (game)
+	// // updateGameState();
+	// generateRandomNumbers();
+	// } else
+	// showAnimationAnswer(false);
+	// }
+	// }
+
+	// public void showSolution() {
+	// if (isBinary){
+	// Sign.setText(fAsIntBits);
+	// Exponent.setText(fAsIntBits);
+	// Mantissa.setText(fAsIntBits);
+	// }
+	//
+	// else
+	// Sign.setText(Float.toString(decimal_value_f));
+	// Exponent.setText(Float.toString(decimal_value_f));
+	// Mantissa.setText(Float.toString(decimal_value_f));
+	// }
+
+	public void RemoveZeroes() {
+
+		// mantissaAsString = Integer.toBinaryString(mantissa);
+
+		// Remove trailing zeroes
+		int lastSignificant = mBitRepresentation.length() - 1;
+
+		while (mBitRepresentation.charAt(lastSignificant) == '0') {
+			lastSignificant--;
+		}
+		lastSignificant++;
+
+		mBitRepresentationDel = mBitRepresentation.substring(0, lastSignificant);
+
 	}
-	
-	
-	
+
+	public void generateRandomNumbers() {
+
+		// Random numbers in range of: 0-50
+		Random rand = new Random();
+		mFinalX = rand.nextInt(mMaxX - mMinX) + mMinX;
+
+		// Random numbers in range of: 0-15
+		Random rand_helper = new Random();
+		mFractionHelper = rand_helper.nextInt(mMaxY - mMinY) + mMinY;
+		mDecimalValueF = mFractionHelper * 0.125f + mFinalX;
+		// decimal_value_f = random(0-15)*0.125 + random(0-50)
+
+		mfAsIntBits = Float.floatToRawIntBits(mDecimalValueF);
+
+		mfAsBinaryString = Integer.toBinaryString(mfAsIntBits);
+
+		// IMPORTANT: Representation of the float number in binary form
+		mBitRepresentation = String.format("%32s", mfAsBinaryString).replace(' ',
+				'0');
+
+		// if(decimal_value_f > 0)
+		// fAsBinaryStringPos = "0" + fAsBinaryString;
+
+		mSign = ((mfAsIntBits & 0x80000000) >> 31) & 0x1;
+		mExp = (mfAsIntBits & 0x7f800000) >> 23;
+		mMantissa = (mfAsIntBits & 0x007fffff);
+
+	}
+
 	/**
 	 * Prepares the layout for the training and game mode.
 	 * 
@@ -407,14 +385,14 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 	 */
 	public void setTrainingMode(boolean training) {
 		if (training) {
-			game = false;
-			Solution.setVisibility(View.VISIBLE);
-			Tv_Points.setVisibility(View.GONE);
+			mGame = false;
+			mSolution.setVisibility(View.VISIBLE);
+			mTvPoints.setVisibility(View.GONE);
 		} else {
-			game = true;
+			mGame = true;
 			resetGameState();
-			Solution.setVisibility(View.GONE);
-			Tv_Points.setVisibility(View.VISIBLE);
+			mSolution.setVisibility(View.GONE);
+			mTvPoints.setVisibility(View.VISIBLE);
 		}
 	}
 
@@ -423,23 +401,24 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 	 * the endGame() method.
 	 */
 	public void updateGameState() {
-		pointsCounter++;
-		updatePoints(pointsCounter);
-		if (pointsCounter == GAMEMODE_MAXQUESTIONS)
+		mPointsCounter++;
+		updatePoints(mPointsCounter);
+		if (mPointsCounter == GAMEMODE_MAXQUESTIONS)
 			endGame();
 	}
 
 	public void resetGameState() {
-		pointsCounter = 0;
-		Tv_Points.setVisibility(View.GONE);
+		mPointsCounter = 0;
+		mTvPoints.setVisibility(View.GONE);
 	}
 
 	/**
 	 * Updates the points in the UI
+	 * 
 	 * @param points
 	 */
 	public void updatePoints(int points) {
-		Tv_Points.setText(getString(R.string.points) + String.valueOf(points));
+		mTvPoints.setText(getString(R.string.points) + String.valueOf(points));
 	}
 
 	/**
@@ -449,7 +428,7 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 	void startGame() {
 		super.startGame();
 		setTrainingMode(false);
-		updatePoints(pointsCounter);
+		updatePoints(mPointsCounter);
 	}
 
 	/**
@@ -469,11 +448,11 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 		super.endGame();
 
 		int remainingTime = (int) getRemainingTimeMs() / 1000;
-		pointsCounter = pointsCounter + remainingTime;
+		mPointsCounter = mPointsCounter + remainingTime;
 
 		showEndGameDialog(remainingTime);
 
-		saveScore(pointsCounter);
+		saveScore(mPointsCounter);
 		setTrainingMode(true);
 	}
 
@@ -489,10 +468,10 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 		if (remainingTime > 0)
 			abuilder.setMessage(String.format(
 					getString(R.string.gameisoverexp), remainingTime,
-					pointsCounter));
+					mPointsCounter));
 		else
 			abuilder.setMessage(String.format(
-					getString(R.string.lost_time_over), pointsCounter));
+					getString(R.string.lost_time_over), mPointsCounter));
 
 		abuilder.create().show();
 	}
@@ -513,104 +492,101 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 		}
 	}
 
-		
-//		public void DecimalToBinary(){
-//			
-//			int exp;	  
-//			int excess = 0;
-//			int j = 0;		// counter var for EXP
-//			
-//			
-//			// Check: -x? & set Signbit
-//			if (decimal_value_f<0)
-//			  {
-//				s=1;
-//				decimal_value_f = decimal_value_f*-1;
-//			  }
-//			else s=0;
-//			
-//			exp = (int)decimal_value_f;
-//			
-//			float nachkommateil = decimal_value_f - exp;
-//			
-//			mantissa = 0;
-//			
-//			// Value of the real Exponent
-//			// Excess + Exponent
-//			
-//			//Excess : 2^(n-1) - 1
-//			excess = 127;
-//			
-//			
-//			// integer value of the float: decimal_value_f
-//			realexp = (int) decimal_value_f;  
-//			
-//			
-//			do {
-//				if (realexp == 0)
-//					break;
-//				realexp = realexp / 2;
-//				j++;
-//			} while (realexp > 0);
-//			// Find out the Exponent
-//			
-//			realexp = excess + j-1;
-//			// Exp = 127 + the number of 2^j
-//			
-//			
-//			mantissa = (int)decimal_value_f;
-//			
-//						
-//			for(int i=1;i<24;i++)
-//			{
-//				
-//				if(mantissa == 0)
-//					break;
-//				// If the fraction part is 0.0 then break the loop
-//				
-//				nachkommateil = nachkommateil*2;
-//				// * 2 the fraction: e.g. 0.3*2 = 0.6
-//				
-//				if(nachkommateil<1)
-//				{
-//					mantissa = mantissa * 2;
-//					// When its lower 1 -> leftshift mantissa: 100[0]
-//					
-//				} else if(nachkommateil>1)
-//				{
-//					mantissa = mantissa * 2 + 1 ;
-//					nachkommateil = nachkommateil - 1;
-//					// if its greater then: reduce nachkommateil by 1 and : mantissa: 100[1]
-//					
-//				} else if(nachkommateil==1)
-//				{
-//					mantissa = mantissa * 2 + 1;
-//					nachkommateil = nachkommateil - 1;
-//					// if we have nachkommateil = 1 -> break and mantissa like nachkommateil >1 
-//					break;
-//				}
-//			}
-//			
-////			mlastOne = 0;
-////		
-////				mlastOne = Integer.toBinaryString(mantissa).lastIndexOf("1");
-////			
-//		}
-		
-		
-//		// routine for setting the result in the editText boxes
-//		public void setResultSeperate(){
-//						// Set the results in the editboxes
-//						Sign.setText(Integer.toBinaryString(s)); 
-//						Exponent.setText(Integer.toBinaryString(realexp)); 
-//						if (mantissa ==0){
-//							Mantissa.setText("");
-//						}
-//						else {
-//							Mantissa.setText(Integer.toBinaryString(mantissa).substring(1));
-//						}
-//						
-//		}
-	}
+	// public void DecimalToBinary(){
+	//
+	// int exp;
+	// int excess = 0;
+	// int j = 0; // counter var for EXP
+	//
+	//
+	// // Check: -x? & set Signbit
+	// if (decimal_value_f<0)
+	// {
+	// s=1;
+	// decimal_value_f = decimal_value_f*-1;
+	// }
+	// else s=0;
+	//
+	// exp = (int)decimal_value_f;
+	//
+	// float nachkommateil = decimal_value_f - exp;
+	//
+	// mantissa = 0;
+	//
+	// // Value of the real Exponent
+	// // Excess + Exponent
+	//
+	// //Excess : 2^(n-1) - 1
+	// excess = 127;
+	//
+	//
+	// // integer value of the float: decimal_value_f
+	// realexp = (int) decimal_value_f;
+	//
+	//
+	// do {
+	// if (realexp == 0)
+	// break;
+	// realexp = realexp / 2;
+	// j++;
+	// } while (realexp > 0);
+	// // Find out the Exponent
+	//
+	// realexp = excess + j-1;
+	// // Exp = 127 + the number of 2^j
+	//
+	//
+	// mantissa = (int)decimal_value_f;
+	//
+	//
+	// for(int i=1;i<24;i++)
+	// {
+	//
+	// if(mantissa == 0)
+	// break;
+	// // If the fraction part is 0.0 then break the loop
+	//
+	// nachkommateil = nachkommateil*2;
+	// // * 2 the fraction: e.g. 0.3*2 = 0.6
+	//
+	// if(nachkommateil<1)
+	// {
+	// mantissa = mantissa * 2;
+	// // When its lower 1 -> leftshift mantissa: 100[0]
+	//
+	// } else if(nachkommateil>1)
+	// {
+	// mantissa = mantissa * 2 + 1 ;
+	// nachkommateil = nachkommateil - 1;
+	// // if its greater then: reduce nachkommateil by 1 and : mantissa: 100[1]
+	//
+	// } else if(nachkommateil==1)
+	// {
+	// mantissa = mantissa * 2 + 1;
+	// nachkommateil = nachkommateil - 1;
+	// // if we have nachkommateil = 1 -> break and mantissa like nachkommateil
+	// >1
+	// break;
+	// }
+	// }
+	//
+	// // mlastOne = 0;
+	// //
+	// // mlastOne = Integer.toBinaryString(mantissa).lastIndexOf("1");
+	// //
+	// }
 
-
+	// // routine for setting the result in the editText boxes
+	// public void setResultSeperate(){
+	// // Set the results in the editboxes
+	// Sign.setText(Integer.toBinaryString(s));
+	// Exponent.setText(Integer.toBinaryString(realexp));
+	// if (mantissa ==0){
+	// Mantissa.setText("");
+	// }
+	// else {
+	// Mantissa.setText(Integer.toBinaryString(mantissa).substring(1));
+	// }
+	//
+	// }
+}
