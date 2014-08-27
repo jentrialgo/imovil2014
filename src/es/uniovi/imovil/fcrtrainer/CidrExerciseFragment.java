@@ -18,211 +18,191 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class CidrExerciseFragment extends BaseExerciseFragment implements OnClickListener{
-	
+public class CidrExerciseFragment extends BaseExerciseFragment implements
+		OnClickListener {
+
 	private static final int POINTS_FOR_QUESTION = 10;
 	private static final int MAX_QUESTIONS = 5;
 	private static final long GAME_DURATION_MS = 1 * 1000 * 60; // 1min
-	private boolean gameMode = false;
+	private static final int RANDOM_MASK = 5;
 
-	
-	private boolean won = false;
-	
-	private int puntos;
-	private int currentQuestionCounter = 1;
-	
-	private Button bCheck;
-	private Button bSol;
-	private String [] mascaras;
-	private String [] respuestas;
-	private TextView mascara;
-	int n;
-	EditText answer;
-	public int mask;
-	public static final int RANDOM_MASK = 5;
-	public View rootView;
-	
+	private boolean mGameMode = false;
+
+	private boolean mWon = false;
+
+	private int mPuntos;
+	private int mCurrentQuestionCounter = 1;
+
+	private Button mButtonCheck;
+	private Button mButtonSol;
+	private String[] mMascaras;
+	private String[] mRespuestas;
+	private TextView mMascara;
+	int mN;
+	EditText mAnswer;
+	public int mMask;
+	public View mRootView;
 
 	public static CidrExerciseFragment newInstance() {
-		
 		CidrExerciseFragment fragment = new CidrExerciseFragment();
 		return fragment;
 	}
-	
+
 	public CidrExerciseFragment() {
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		
-		
-		rootView = inflater.inflate(R.layout.fragment_cidr, container, false);
-		
-		//Cargar los views
-		
+		mRootView = inflater.inflate(R.layout.fragment_cidr, container, false);
+
+		// Cargar los views
 		CargaViews();
-		
-		bCheck=(Button) rootView.findViewById(R.id.cButton);
-		bCheck.setOnClickListener(this);
 
-		bSol=(Button) rootView.findViewById(R.id.sButton);
-		bSol.setOnClickListener(this);
+		mButtonCheck = (Button) mRootView.findViewById(R.id.cButton);
+		mButtonCheck.setOnClickListener(this);
 
+		mButtonSol = (Button) mRootView.findViewById(R.id.sButton);
+		mButtonSol.setOnClickListener(this);
 
 		GenerarPregunta();
-	
-		
-		
-		//Usamos listeners para los botones "Comprobar" y "Solucion"
-		
-		bCheck.setOnClickListener((OnClickListener) this);
-		
-		bSol.setOnClickListener(new OnClickListener() {
 
+		// Usamos listeners para los botones "Comprobar" y "Solucion"
+		mButtonCheck.setOnClickListener((OnClickListener) this);
+
+		mButtonSol.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				showSolution(mask);
+				showSolution(mMask);
 			}
 		});
-		
-		
-		return rootView;
+
+		return mRootView;
 	}
-	
+
 	@Override
 	public void onClick(View view) {
 		if (view.getId() == R.id.cButton) {
-			checkAnswer((answer.getEditableText().toString()));
+			checkAnswer((mAnswer.getEditableText().toString()));
 			clearUserInput();
 
 		}
 		if (view.getId() == R.id.sButton) {
-			showSolution(n);
+			showSolution(mN);
 		}
 
 	}
-	
+
 	private void clearUserInput() {
-		EditText userInput = (EditText) rootView.findViewById(R.id.respuesta);
+		EditText userInput = (EditText) mRootView.findViewById(R.id.respuesta);
 		userInput.setText("");
 	}
-	
-	public void CargaViews(){
-		
-		mascaras = getResources().getStringArray(R.array.mascaras);
-		mascara = (TextView) rootView.findViewById(R.id.mascara);
-		answer = (EditText) rootView.findViewById(R.id.respuesta);
-		respuestas = getResources().getStringArray(R.array.cidr);
-		
+
+	public void CargaViews() {
+		mMascaras = getResources().getStringArray(R.array.mascaras);
+		mMascara = (TextView) mRootView.findViewById(R.id.mascara);
+		mAnswer = (EditText) mRootView.findViewById(R.id.respuesta);
+		mRespuestas = getResources().getStringArray(R.array.cidr);
 	}
-	
-	//Metodo para comprobar la respuesta
-	
-	
-	public void checkAnswer (String ans) {
-		
+
+	// Metodo para comprobar la respuesta
+	public void checkAnswer(String ans) {
 		if (ans.isEmpty()) {
 			super.showAnimationAnswer(false);
 			return;
 		}
-		//Si es correcta, cambia la m�scara por una nueva y pone el "EditText" en blanco
-		if ((ans.toString().equals(respuestas[mask].toString()))){
+		// Si es correcta, cambia la máscara por una nueva y pone el "EditText"
+		// en blanco
+		if ((ans.toString().equals(mRespuestas[mMask].toString()))) {
 			showAnimationAnswer(true);
-			if (this.gameMode) {
+			if (this.mGameMode) {
 				gameModeControl();
 			}
 
 			GenerarPregunta();
-					
-			} else
-				showAnimationAnswer(false);		
+		} else {
+			showAnimationAnswer(false);
+		}
 	}
-	
-	//Metodo para mostrar la solucion
+
+	// Metodo para mostrar la solucion
 	public void showSolution(int n) {
-		
-		answer.setText(respuestas[n]);
-		
+		mAnswer.setText(mRespuestas[n]);
 	}
-	
-	//Metodo para generar un n�mero aleatorio
-	public int RANDOM(){
 
+	// Metodo para generar un número aleatorio
+	public int random() {
 		Random ran = new Random();
-		n = ran.nextInt(RANDOM_MASK);
+		mN = ran.nextInt(RANDOM_MASK);
 
-		return n;
+		return mN;
 	}
-	
-	public void GenerarPregunta(){
-		
-		mask = RANDOM();
-		mascara.setText(mascaras[mask]);
-		
+
+	public void GenerarPregunta() {
+		mMask = random();
+		mMascara.setText(mMascaras[mMask]);
 	}
-	
-	///--------------------- Modo Jugar -----------------------
-	
+
+	// /--------------------- Modo Jugar -----------------------
+
 	private void gameModeControl() {
 		increasePoints(POINTS_FOR_QUESTION);
 
-		if (currentQuestionCounter >= MAX_QUESTIONS) {
+		if (mCurrentQuestionCounter >= MAX_QUESTIONS) {
 			// won
-			this.won = true;
+			this.mWon = true;
 			this.endGame();
-
 		}
 
-		if (currentQuestionCounter < MAX_QUESTIONS && getRemainingTimeMs() <= 0) {
+		if (mCurrentQuestionCounter < MAX_QUESTIONS
+				&& getRemainingTimeMs() <= 0) {
 			// lost --> no time left...
-			this.won = false;
+			this.mWon = false;
 			this.endGame();
 		}
-		currentQuestionCounter++;
+		mCurrentQuestionCounter++;
 	}
-	
+
 	private void increasePoints(int val) {
-		this.puntos = this.puntos + val;
-		updatePointsTextView(this.puntos);
+		this.mPuntos = this.mPuntos + val;
+		updatePointsTextView(this.mPuntos);
 	}
 
 	private void updatePointsTextView(int p) {
-		TextView tvPoints = (TextView) rootView.findViewById(R.id.puntos);
-		tvPoints.setText(getResources().getString(R.string.points)+ " "+ String.valueOf(p));
+		TextView tvPoints = (TextView) mRootView.findViewById(R.id.puntos);
+		tvPoints.setText(getResources().getString(R.string.points) + " "
+				+ String.valueOf(p));
 	}
-	
 
 	@Override
 	public void startGame() {
 		super.startGame();
 		super.setGameDuration(GAME_DURATION_MS);
-		
+
 		// set starting points of textview
-		updatePointsTextView(0); 
+		updatePointsTextView(0);
 		updateToGameMode();
 	}
 
 	private void updateToGameMode() {
-		gameMode = true;
+		mGameMode = true;
 
 		GenerarPregunta();
 
-		Button solution = (Button) rootView.findViewById(R.id.sButton);
+		Button solution = (Button) mRootView.findViewById(R.id.sButton);
 		solution.setVisibility(View.INVISIBLE);
 
-		TextView points = (TextView) rootView.findViewById(R.id.puntos);
+		TextView points = (TextView) mRootView.findViewById(R.id.puntos);
 		points.setVisibility(View.VISIBLE);
-
 	}
 
 	private void updateToTrainMode() {
-		gameMode = false;
+		mGameMode = false;
 
-		Button solution = (Button) rootView.findViewById(R.id.sButton);
+		Button solution = (Button) mRootView.findViewById(R.id.sButton);
 		solution.setVisibility(View.VISIBLE);
 
-		TextView points = (TextView) rootView.findViewById(R.id.puntos);
+		TextView points = (TextView) mRootView.findViewById(R.id.puntos);
 		points.setVisibility(View.INVISIBLE);
 	}
 
@@ -234,13 +214,14 @@ public class CidrExerciseFragment extends BaseExerciseFragment implements OnClic
 
 	@Override
 	void endGame() {
-		//convert to seconds
-		int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000; 
-		//every remaining second gives one extra point.
-		this.puntos = (int) (this.puntos + remainingTimeInSeconds);
+		// convert to seconds
+		int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000;
+		// every remaining second gives one extra point.
+		this.mPuntos = (int) (this.mPuntos + remainingTimeInSeconds);
 
-		if (this.won)
+		if (this.mWon) {
 			savePoints();
+		}
 
 		dialogGameOver();
 
@@ -252,9 +233,9 @@ public class CidrExerciseFragment extends BaseExerciseFragment implements OnClic
 	}
 
 	private void reset() {
-		this.puntos = 0;
-		this.currentQuestionCounter = 0;
-		this.won = false;
+		this.mPuntos = 0;
+		this.mCurrentQuestionCounter = 0;
+		this.mWon = false;
 
 		updatePointsTextView(0);
 	}
@@ -264,8 +245,7 @@ public class CidrExerciseFragment extends BaseExerciseFragment implements OnClic
 		try {
 
 			HighscoreManager.addScore(getActivity().getApplicationContext(),
-					this.puntos, 0, new Date(), username);
-
+					this.mPuntos, 0, new Date(), username);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -275,10 +255,10 @@ public class CidrExerciseFragment extends BaseExerciseFragment implements OnClic
 	private void dialogGameOver() {
 		String message = getResources().getString(R.string.lost);
 
-		if (this.won) {
+		if (this.mWon) {
 			message = getResources().getString(R.string.won) + " "
 					+ getResources().getString(R.string.points) + " "
-					+ this.puntos;
+					+ this.mPuntos;
 		}
 
 		Builder alert = new AlertDialog.Builder(getActivity());
@@ -292,7 +272,5 @@ public class CidrExerciseFragment extends BaseExerciseFragment implements OnClic
 			}
 		});
 		alert.show();
-
 	}
 }
-
