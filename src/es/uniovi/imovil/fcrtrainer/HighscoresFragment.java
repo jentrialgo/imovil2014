@@ -1,6 +1,6 @@
 /*
 
-Copyright 2014 Profesores y alumnos de la asignatura Informática Móvil de la EPI de Gijón
+Copyright 2014 Profesores y alumnos de la asignatura Informï¿½tica MÃ³vil de la EPI de GijÃ³n
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -86,7 +86,7 @@ public class HighscoresFragment extends Fragment implements
 	}
 
 	private void initializeExerciseSpinner() {
-		// La idea de esta función es crear los elementos del spinner utilizando
+		// La idea de esta funciÃ³n es crear los elementos del spinner utilizando
 		// los arrays definidos en los recursos
 
 		mExercises = new ArrayList<Exercise>();
@@ -166,7 +166,7 @@ public class HighscoresFragment extends Fragment implements
 					getActivity().getString(R.string.error_parsing_highscores),
 					Toast.LENGTH_LONG).show();
 
-			// Las puntuaciones estarán vacías
+			// Las puntuaciones estarÃ¡n vacÃ­as
 		}
 		return highscores;
 	}
