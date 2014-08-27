@@ -18,31 +18,15 @@ limitations under the License.
 package es.uniovi.imovil.fcrtrainer;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
-public enum Level {
-	BEGINNER(4),
-	INTERMEDIATE(6),
-	PROFICIENCY(8);
-
-	private final int mNumberOfBits;
-
-	Level(int numberOfBits) {
-		mNumberOfBits = numberOfBits;
-	}
-
-	public int numberOfBits() {
-		return mNumberOfBits;
-	}
-
-	public static Level fromString(Context context, String string) {
-		String[] levelNames = context.getResources().getStringArray(
-				R.array.pref_level_values);
-		for (int i = 0; i < levelNames.length; i++) {
-			if (string.equalsIgnoreCase(levelNames[i])) {
-				return Level.values()[i];
-			}
-		}
-
-		throw new IllegalArgumentException();
+public class PreferenceUtils {
+	static public Level getLevel(Context context) {
+		SharedPreferences prefs =
+				PreferenceManager.getDefaultSharedPreferences(context);
+		String levelPreferenceKey = context.getString(R.string.pref_level_key);
+		String levelAsString = prefs.getString(levelPreferenceKey, "");
+		return Level.fromString(context, levelAsString);
 	}
 }
