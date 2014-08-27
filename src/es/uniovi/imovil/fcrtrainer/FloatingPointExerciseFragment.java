@@ -118,24 +118,9 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 
 			@Override
 			public void onClick(View v) {
-
-				// Check: EditText Fields empty?
-				// if ((Sign.getEditableText().toString() != "") &
-				// (Exponent.getEditableText().toString() != "") &
-				// (Mantissa.getEditableText().toString() != ""))
-
 				RemoveZeroes();
 
 				if (mIsBinary == true) {
-
-					// CheckString = Integer.toString(sign) +
-					// Integer.toString(exp)
-					// + Integer.toString(mantissa);
-
-					// CheckString = Integer.toString(sign) +
-					// Integer.toString(exp)
-					// + shortMantissa;
-
 					mComparisonString = mEtDecimal.getEditableText().toString()
 							.trim();
 
@@ -160,20 +145,6 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 						showAnimationAnswer(false);
 
 				} else {
-
-					// CheckString = Integer.toBinaryString(sign) +
-					// Integer.toBinaryString(exp)
-					// + Integer.toBinaryString(mantissa);
-					//
-					//
-					// ComparisonString = Sign.getText().toString() +
-					// Exponent.getText().toString() +
-					// Mantissa.getText().toString();
-
-					// CheckString = Integer.toBinaryString(sign) +
-					// Integer.toBinaryString(exp)
-					// + shortMantissa;
-
 					mComparisonString = mEtSign.getEditableText().toString().trim()
 							+ mEtExponent.getEditableText().toString().trim()
 							+ mEtMantissa.getEditableText().toString().trim();
@@ -190,11 +161,10 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 						mEtExponent.setText(null);
 						mEtMantissa.setText(null);
 
-					} else
+					} else {
 						showAnimationAnswer(false);
-
+					}
 				}
-
 			}
 		});
 
@@ -223,14 +193,6 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 				RemoveZeroes();
 
 				if (mIsBinary) {
-					// float f = -18.4f;
-
-					// int fAsIntBits = Float.floatToIntBits(decimal_value_f);
-
-					// Sign.setText(Integer.toBinaryString(sign));
-					// Exponent.setText(Integer.toBinaryString(exp));
-					// Mantissa.setText(Integer.toBinaryString(mantissa));
-
 					mValues.setText(Float.toString(mDecimalValueF));
 					mIeeeBinary.setText("Convierte a IEE 754/binario formato!");
 
@@ -247,24 +209,8 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 					mEtExponent.setText(null);
 					mEtMantissa.setText(null);
 
-					// DecimalToBinary();
-					// setResultSeperate();
 					mIsBinary = false;
 				} else {
-					// DecimalToBinary();
-					// setResultIEE();
-
-					// float f = 43.0f;
-
-					// int sign = ((fAsIntBits & 0x80000000) >> 31) & 0x1;
-					// int exp = (fAsIntBits & 0x7f800000) >> 23;
-					// int mantissa = (fAsIntBits & 0x007fffff);
-
-					// Sign.setText(Integer.toBinaryString(sign));
-					// Exponent.setText(Integer.toBinaryString(exp));
-					// Mantissa.setText(Integer.toBinaryString(mantissa));
-					// fAsIntBits = Float.floatToIntBits(decimal_value_f);
-
 					mBitRepresentationDivided = mBitRepresentationDel.substring(
 							0, 1)
 							+ " "
@@ -286,9 +232,6 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 
 					mEtDecimal.setText(null);
 
-					// Sign.setText(Integer.toString(s));
-					// Exponent.setText(Integer.toString(realexp));
-					// Mantissa.setText(Integer.toString(mantissa).substring(1));
 					mIsBinary = true;
 				}
 
@@ -298,45 +241,7 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 		return rootView;
 	}
 
-	// public void isRight(String response) {
-	//
-	// if (isBinary) {
-	// if (response.equals(Float.toString(decimal_value_f))) {
-	// showAnimationAnswer(true);
-	// // if (game)
-	// // updateGameState();
-	// generateRandomNumbers();
-	// } else
-	// showAnimationAnswer(false);
-	// } else {
-	// if (response.equals(fAsIntBits)) {
-	// showAnimationAnswer(true);
-	// // if (game)
-	// // updateGameState();
-	// generateRandomNumbers();
-	// } else
-	// showAnimationAnswer(false);
-	// }
-	// }
-
-	// public void showSolution() {
-	// if (isBinary){
-	// Sign.setText(fAsIntBits);
-	// Exponent.setText(fAsIntBits);
-	// Mantissa.setText(fAsIntBits);
-	// }
-	//
-	// else
-	// Sign.setText(Float.toString(decimal_value_f));
-	// Exponent.setText(Float.toString(decimal_value_f));
-	// Mantissa.setText(Float.toString(decimal_value_f));
-	// }
-
 	public void RemoveZeroes() {
-
-		// mantissaAsString = Integer.toBinaryString(mantissa);
-
-		// Remove trailing zeroes
 		int lastSignificant = mBitRepresentation.length() - 1;
 
 		while (mBitRepresentation.charAt(lastSignificant) == '0') {
@@ -349,7 +254,6 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 	}
 
 	public void generateRandomNumbers() {
-
 		// Random numbers in range of: 0-50
 		Random rand = new Random();
 		mFinalX = rand.nextInt(mMaxX - mMinX) + mMinX;
@@ -358,7 +262,6 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 		Random rand_helper = new Random();
 		mFractionHelper = rand_helper.nextInt(mMaxY - mMinY) + mMinY;
 		mDecimalValueF = mFractionHelper * 0.125f + mFinalX;
-		// decimal_value_f = random(0-15)*0.125 + random(0-50)
 
 		mfAsIntBits = Float.floatToRawIntBits(mDecimalValueF);
 
@@ -368,13 +271,9 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 		mBitRepresentation = String.format("%32s", mfAsBinaryString).replace(' ',
 				'0');
 
-		// if(decimal_value_f > 0)
-		// fAsBinaryStringPos = "0" + fAsBinaryString;
-
 		mSign = ((mfAsIntBits & 0x80000000) >> 31) & 0x1;
 		mExp = (mfAsIntBits & 0x7f800000) >> 23;
 		mMantissa = (mfAsIntBits & 0x007fffff);
-
 	}
 
 	/**
@@ -403,8 +302,9 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 	public void updateGameState() {
 		mPointsCounter++;
 		updatePoints(mPointsCounter);
-		if (mPointsCounter == GAMEMODE_MAXQUESTIONS)
+		if (mPointsCounter == GAMEMODE_MAXQUESTIONS) {
 			endGame();
+		}
 	}
 
 	public void resetGameState() {
@@ -465,13 +365,14 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 		AlertDialog.Builder abuilder = new AlertDialog.Builder(getActivity());
 		abuilder.setTitle(getString(R.string.game_over));
 
-		if (remainingTime > 0)
+		if (remainingTime > 0) {
 			abuilder.setMessage(String.format(
 					getString(R.string.gameisoverexp), remainingTime,
 					mPointsCounter));
-		else
+		} else {
 			abuilder.setMessage(String.format(
 					getString(R.string.lost_time_over), mPointsCounter));
+		}
 
 		abuilder.create().show();
 	}
@@ -492,101 +393,4 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 		}
 	}
 
-	// public void DecimalToBinary(){
-	//
-	// int exp;
-	// int excess = 0;
-	// int j = 0; // counter var for EXP
-	//
-	//
-	// // Check: -x? & set Signbit
-	// if (decimal_value_f<0)
-	// {
-	// s=1;
-	// decimal_value_f = decimal_value_f*-1;
-	// }
-	// else s=0;
-	//
-	// exp = (int)decimal_value_f;
-	//
-	// float nachkommateil = decimal_value_f - exp;
-	//
-	// mantissa = 0;
-	//
-	// // Value of the real Exponent
-	// // Excess + Exponent
-	//
-	// //Excess : 2^(n-1) - 1
-	// excess = 127;
-	//
-	//
-	// // integer value of the float: decimal_value_f
-	// realexp = (int) decimal_value_f;
-	//
-	//
-	// do {
-	// if (realexp == 0)
-	// break;
-	// realexp = realexp / 2;
-	// j++;
-	// } while (realexp > 0);
-	// // Find out the Exponent
-	//
-	// realexp = excess + j-1;
-	// // Exp = 127 + the number of 2^j
-	//
-	//
-	// mantissa = (int)decimal_value_f;
-	//
-	//
-	// for(int i=1;i<24;i++)
-	// {
-	//
-	// if(mantissa == 0)
-	// break;
-	// // If the fraction part is 0.0 then break the loop
-	//
-	// nachkommateil = nachkommateil*2;
-	// // * 2 the fraction: e.g. 0.3*2 = 0.6
-	//
-	// if(nachkommateil<1)
-	// {
-	// mantissa = mantissa * 2;
-	// // When its lower 1 -> leftshift mantissa: 100[0]
-	//
-	// } else if(nachkommateil>1)
-	// {
-	// mantissa = mantissa * 2 + 1 ;
-	// nachkommateil = nachkommateil - 1;
-	// // if its greater then: reduce nachkommateil by 1 and : mantissa: 100[1]
-	//
-	// } else if(nachkommateil==1)
-	// {
-	// mantissa = mantissa * 2 + 1;
-	// nachkommateil = nachkommateil - 1;
-	// // if we have nachkommateil = 1 -> break and mantissa like nachkommateil
-	// >1
-	// break;
-	// }
-	// }
-	//
-	// // mlastOne = 0;
-	// //
-	// // mlastOne = Integer.toBinaryString(mantissa).lastIndexOf("1");
-	// //
-	// }
-
-	// // routine for setting the result in the editText boxes
-	// public void setResultSeperate(){
-	// // Set the results in the editboxes
-	// Sign.setText(Integer.toBinaryString(s));
-	// Exponent.setText(Integer.toBinaryString(realexp));
-	// if (mantissa ==0){
-	// Mantissa.setText("");
-	// }
-	// else {
-	// Mantissa.setText(Integer.toBinaryString(mantissa).substring(1));
-	// }
-	//
-	// }
 }
