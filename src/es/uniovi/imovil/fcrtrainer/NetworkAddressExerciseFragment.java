@@ -28,29 +28,28 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment
 												// preguntas
 	private static final long GAME_DURATION_MS = 2 * 1000 * 60; // 1 minuto de
 																// juego
-	private boolean gameMode = false;
+	private boolean mGameMode = false;
 
-	private boolean won = false;
+	private boolean mWon = false;
 
-	private int puntos;
+	private int mPoints;
 	private int currentQuestionCounter = 1;
 
-	View rootView;
-	int questionIndex; // Índice en los arrays de recursos
-	String[] ip;
-	String[] mask;
-	String[] net;
-	TextView textViewIp;
-	TextView textViewMask;
-	EditText solutionEditText;
-	ImageView imageviewsolution;
-	Button banswer;
-	Button bsolution;
-	Handler handler;
-	Random random;
+	View mRootView;
+	int mQuestionIndex; // ï¿½ndice en los arrays de recursos
+	String[] mIp;
+	String[] mMask;
+	String[] mNet;
+	TextView mTextViewIp;
+	TextView mTextViewMask;
+	EditText mSolutionEditText;
+	ImageView mImageviewsolution;
+	Button mButtonanswer;
+	Button mButtonSolution;
+	Handler mHandler;
+	Random mRandom;
 
 	public static NetworkAddressExerciseFragment newInstance() {
-
 		NetworkAddressExerciseFragment fragment = new NetworkAddressExerciseFragment();
 		return fragment;
 	}
@@ -62,30 +61,29 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		rootView = inflater.inflate(R.layout.fragment_network_address,
+		mRootView = inflater.inflate(R.layout.fragment_network_address,
 				container, false);
 
-		ip = getResources().getStringArray(R.array.ips);
-		mask = getResources().getStringArray(R.array.masks);
-		net = getResources().getStringArray(R.array.nets);
-		textViewIp = (TextView) rootView.findViewById(R.id.tv_ip);
-		textViewMask = (TextView) rootView.findViewById(R.id.tv_mask);
-		random = new Random();
+		mIp = getResources().getStringArray(R.array.ips);
+		mMask = getResources().getStringArray(R.array.masks);
+		mNet = getResources().getStringArray(R.array.nets);
+		mTextViewIp = (TextView) mRootView.findViewById(R.id.tv_ip);
+		mTextViewMask = (TextView) mRootView.findViewById(R.id.tv_mask);
+		mRandom = new Random();
 
-		solutionEditText = (EditText) rootView.findViewById(R.id.et_netw);
+		mSolutionEditText = (EditText) mRootView.findViewById(R.id.et_netw);
 
 		GenerarPregunta();
 
-		banswer = (Button) rootView.findViewById(R.id.but_ans);
-		banswer.setOnClickListener(this);
+		mButtonanswer = (Button) mRootView.findViewById(R.id.but_ans);
+		mButtonanswer.setOnClickListener(this);
 
-		bsolution = (Button) rootView.findViewById(R.id.but_solution);
-		bsolution.setOnClickListener(this);
+		mButtonSolution = (Button) mRootView.findViewById(R.id.but_solution);
+		mButtonSolution.setOnClickListener(this);
 
-		handler = new Handler();
+		mHandler = new Handler();
 
-		return rootView;
-
+		return mRootView;
 	}
 
 	@Override
@@ -99,12 +97,12 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment
 	}
 
 	public void checkAnswer() {
-		if (net[questionIndex].equals(solutionEditText.getText().toString())) {
+		if (mNet[mQuestionIndex].equals(mSolutionEditText.getText().toString())) {
 			showAnimationAnswer(true);
-			if (this.gameMode) {
+			if (this.mGameMode) {
 				gameModeControl();
 			}
-			solutionEditText.setText("");
+			mSolutionEditText.setText("");
 			GenerarPregunta();
 		} else {
 			showAnimationAnswer(false);
@@ -112,16 +110,15 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment
 	}
 
 	public void solutionNetworkAddress() {
-		solutionEditText.setTextColor(Color.BLACK);
-		solutionEditText.setText(net[questionIndex]);
+		mSolutionEditText.setTextColor(Color.BLACK);
+		mSolutionEditText.setText(mNet[mQuestionIndex]);
 	}
 
 	public void GenerarPregunta() {
+		mQuestionIndex = mRandom.nextInt(mIp.length);
 
-		questionIndex = random.nextInt(ip.length);
-
-		textViewIp.setText(ip[questionIndex]);
-		textViewMask.setText(mask[questionIndex]);
+		mTextViewIp.setText(mIp[mQuestionIndex]);
+		mTextViewMask.setText(mMask[mQuestionIndex]);
 	}
 
 	// /--------------------- Modo Jugar -----------------------
@@ -131,28 +128,28 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment
 
 		if (currentQuestionCounter >= MAX_QUESTIONS) {
 			// won
-			solutionEditText.setText("");
-			this.won = true;
+			mSolutionEditText.setText("");
+			this.mWon = true;
 			this.endGame();
 
 		}
 
 		if (currentQuestionCounter < MAX_QUESTIONS && getRemainingTimeMs() <= 0) {
 			// lost --> no time left...
-			solutionEditText.setText("");
-			this.won = false;
+			mSolutionEditText.setText("");
+			this.mWon = false;
 			this.endGame();
 		}
 		currentQuestionCounter++;
 	}
 
 	private void increasePoints(int val) {
-		this.puntos = this.puntos + val;
-		updatePointsTextView(this.puntos);
+		this.mPoints = this.mPoints + val;
+		updatePointsTextView(this.mPoints);
 	}
 
 	private void updatePointsTextView(int p) {
-		TextView tvPoints = (TextView) rootView.findViewById(R.id.puntos_NA);
+		TextView tvPoints = (TextView) mRootView.findViewById(R.id.puntos_NA);
 		tvPoints.setText(getResources().getString(R.string.points) + " "
 				+ String.valueOf(p));
 	}
@@ -168,47 +165,46 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment
 	}
 
 	private void updateToGameMode() {
-		solutionEditText.setText("");
-		gameMode = true;
+		mSolutionEditText.setText("");
+		mGameMode = true;
 
 		GenerarPregunta();
 
-		Button solution = (Button) rootView.findViewById(R.id.but_solution);
+		Button solution = (Button) mRootView.findViewById(R.id.but_solution);
 		solution.setVisibility(View.INVISIBLE);
 
-		TextView points = (TextView) rootView.findViewById(R.id.puntos_NA);
+		TextView points = (TextView) mRootView.findViewById(R.id.puntos_NA);
 		points.setVisibility(View.VISIBLE);
-
 	}
 
 	private void updateToTrainMode() {
-		gameMode = false;
-		solutionEditText.setText("");
+		mGameMode = false;
+		mSolutionEditText.setText("");
 
-		Button solution = (Button) rootView.findViewById(R.id.but_solution);
+		Button solution = (Button) mRootView.findViewById(R.id.but_solution);
 		solution.setVisibility(View.VISIBLE);
 
-		TextView points = (TextView) rootView.findViewById(R.id.puntos_NA);
+		TextView points = (TextView) mRootView.findViewById(R.id.puntos_NA);
 		points.setVisibility(View.INVISIBLE);
 	}
 
 	@Override
 	public void cancelGame() {
-		solutionEditText.setText("");
+		mSolutionEditText.setText("");
 		super.cancelGame();
 		updateToTrainMode();
 	}
 
 	@Override
 	void endGame() {
-		
 		// convert to seconds
 		int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000;
 		// every remaining second gives one extra point.
-		this.puntos = (int) (this.puntos + remainingTimeInSeconds);
+		this.mPoints = (int) (this.mPoints + remainingTimeInSeconds);
 
-		if (this.won)
+		if (this.mWon) {
 			savePoints();
+		}
 
 		dialogGameOver();
 
@@ -220,9 +216,9 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment
 	}
 
 	private void reset() {
-		this.puntos = 0;
+		this.mPoints = 0;
 		this.currentQuestionCounter = 0;
-		this.won = false;
+		this.mWon = false;
 
 		updatePointsTextView(0);
 	}
@@ -230,9 +226,8 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment
 	private void savePoints() {
 		String username = getResources().getString(R.string.default_user_name);
 		try {
-
 			HighscoreManager.addScore(getActivity().getApplicationContext(),
-					this.puntos, R.string.network_address, new Date(), username);
+					this.mPoints, R.string.network_address, new Date(), username);
 
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -243,10 +238,10 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment
 	private void dialogGameOver() {
 		String message = getResources().getString(R.string.lost);
 
-		if (this.won) {
+		if (this.mWon) {
 			message = getResources().getString(R.string.won) + " "
 					+ getResources().getString(R.string.points) + " "
-					+ this.puntos;
+					+ this.mPoints;
 		}
 
 		Builder alert = new AlertDialog.Builder(getActivity());
@@ -260,6 +255,5 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment
 			}
 		});
 		alert.show();
-
 	}
 }
