@@ -23,28 +23,29 @@ import android.widget.TextView.OnEditorActionListener;
 public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		implements OnClickListener {
 
-	private View mRootView;
-	private TextView tvEntrada1;
-	private TextView tvEntrada2;
-	private TextView tvOperacion;
-	private EditText etRespuesta;
-	private Button bCheck;
-	private Button bSolucion;
 	private static final int MAX_NUMBER_OF_BITS = 5;
 	private static final int BASE_BINARIA = 2;
 	private static final int MAX_INT_NUMBER_TO_BINARY = 32;
 	private static final int MAX_NUMBER_OF_OPERATIONS = 3;
 
+	private static final int MAX_NUMBER_LO_QUESTIONS = 5;
+
+	private View mRootView;
+	private TextView mTvEntrada1;
+	private TextView mTvEntrada2;
+	private TextView mTvOperacion;
+	private EditText mEtRespuesta;
+	private Button mButtonCheck;
+	private Button mButtonSolucion;
+
 	// Juego
 	private long mDurationMs = 60 * 1000; // 1 min
-	private static final int MAX_NUMBER_LO_QUESTIONS = 5;
 	private Boolean mModoJuego = false;
 	int mNumeroAciertos = 0;
 	int mNumeroPregunta = 0;
 	private Boolean mFinJuego = false;
 
 	public static LogicOperationExerciseFragment newInstance() {
-
 		LogicOperationExerciseFragment fragment = new LogicOperationExerciseFragment();
 		return fragment;
 	}
@@ -58,14 +59,14 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		mRootView = inflater.inflate(R.layout.fragmen_logic_operation,
 				container, false);
 
-		tvEntrada1 = (TextView) mRootView.findViewById(R.id.LOentrada1);
-		tvEntrada2 = (TextView) mRootView.findViewById(R.id.LOentrada2);
-		tvOperacion = (TextView) mRootView.findViewById(R.id.LOoperacion);
+		mTvEntrada1 = (TextView) mRootView.findViewById(R.id.LOentrada1);
+		mTvEntrada2 = (TextView) mRootView.findViewById(R.id.LOentrada2);
+		mTvOperacion = (TextView) mRootView.findViewById(R.id.LOoperacion);
 
-		etRespuesta = (EditText) mRootView.findViewById(R.id.LOrespuesta);
+		mEtRespuesta = (EditText) mRootView.findViewById(R.id.LOrespuesta);
 
 		inicializarButtons();
-		
+
 		if (savedInstanceState != null) {
 			cargaDatos(savedInstanceState);
 		} else {
@@ -78,41 +79,40 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 
 	private void cargaDatos(Bundle savedInstanceState) {
 		String entrada1 = savedInstanceState.getString("LOentrada1");
-		tvEntrada1.setText(entrada1);
+		mTvEntrada1.setText(entrada1);
 
 		String entrada2 = savedInstanceState.getString("LOentrada2");
-		tvEntrada2.setText(entrada2);
+		mTvEntrada2.setText(entrada2);
 
 		String operacion = savedInstanceState.getString("LOoperacion");
-		tvOperacion.setText(operacion);
+		mTvOperacion.setText(operacion);
 
 		String respuesta = savedInstanceState.getString("LOrespuesta");
-		etRespuesta.setText(respuesta);
-		
-		etRespuesta.setInputType(EditorInfo.TYPE_CLASS_TEXT);
-		
+		mEtRespuesta.setText(respuesta);
+
+		mEtRespuesta.setInputType(EditorInfo.TYPE_CLASS_TEXT);
 	}
 
 	private void inicializarTexViews() {
 		String binario;
 
 		binario = BinarioAleatorio();
-		tvEntrada1.setText(binario);
+		mTvEntrada1.setText(binario);
 
 		binario = BinarioAleatorio();
-		tvEntrada2.setText(binario);
+		mTvEntrada2.setText(binario);
 
 		String operacion = OperacionAleatoria();
-		tvOperacion.setText(operacion);
+		mTvOperacion.setText(operacion);
 	}
 
 	private void inicializarEditText() {
-		etRespuesta.setOnEditorActionListener(new OnEditorActionListener() {
+		mEtRespuesta.setOnEditorActionListener(new OnEditorActionListener() {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId,
 					KeyEvent event) {
 				if (EditorInfo.IME_ACTION_DONE == actionId) {
-					isCorrect(etRespuesta.getEditableText().toString().trim()
+					isCorrect(mEtRespuesta.getEditableText().toString().trim()
 							.toLowerCase(Locale.US));
 				}
 				return false;
@@ -121,28 +121,28 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 	}
 
 	private void inicializarButtons() {
-		bCheck = (Button) mRootView.findViewById(R.id.LObCalcular);
-		bCheck.setOnClickListener(this);
+		mButtonCheck = (Button) mRootView.findViewById(R.id.LObCalcular);
+		mButtonCheck.setOnClickListener(this);
 
-		bSolucion = (Button) mRootView.findViewById(R.id.LObSolucion);
-		bSolucion.setOnClickListener(this);
+		mButtonSolucion = (Button) mRootView.findViewById(R.id.LObSolucion);
+		mButtonSolucion.setOnClickListener(this);
 	}
 
 	@Override
 	public void onClick(View v) {
-		String respuesta = etRespuesta.getText().toString();
-		String entrada1 = tvEntrada1.getText().toString();
-		String entrada2 = tvEntrada2.getText().toString();
-		String operacion = tvOperacion.getText().toString();
+		String respuesta = mEtRespuesta.getText().toString();
+		String entrada1 = mTvEntrada1.getText().toString();
+		String entrada2 = mTvEntrada2.getText().toString();
+		String operacion = mTvOperacion.getText().toString();
 
-		if (v.getId() == bCheck.getId()) {
-			isCorrect(etRespuesta.getEditableText().toString().trim());
+		if (v.getId() == mButtonCheck.getId()) {
+			isCorrect(mEtRespuesta.getEditableText().toString().trim());
 			if (mModoJuego) {
 				clickJuego(respuesta, entrada1, operacion, entrada2);
 			}
 		}
 
-		if (v.getId() == bSolucion.getId()) {
+		if (v.getId() == mButtonSolucion.getId()) {
 			if (!mFinJuego) {
 				showSolution();
 			} else {
@@ -153,13 +153,13 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 
 	// Determina si la respuesta es correcta
 	public void isCorrect(String answer) {
-		String solucion = LOCalcularResultado(tvEntrada1.getText().toString(),
-				tvOperacion.getText().toString(), tvEntrada2.getText()
+		String solucion = LOCalcularResultado(mTvEntrada1.getText().toString(),
+				mTvOperacion.getText().toString(), mTvEntrada2.getText()
 						.toString());
 
 		if (answer.equals(solucion)) {
 			showAnimationAnswer(true);
-			// si se acertó la respuesta, crear otra pregunta
+			// si se acertï¿½ la respuesta, crear otra pregunta
 			crearPregunta();
 		} else {
 			showAnimationAnswer(false);
@@ -171,15 +171,15 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		String op;
 
 		binario = BinarioAleatorio();
-		tvEntrada1.setText(binario);
+		mTvEntrada1.setText(binario);
 
 		binario = BinarioAleatorio();
-		tvEntrada2.setText(binario);
+		mTvEntrada2.setText(binario);
 
 		op = OperacionAleatoria();
-		tvOperacion.setText(op);
+		mTvOperacion.setText(op);
 
-		etRespuesta.setText("");
+		mEtRespuesta.setText("");
 	}
 
 	// Calcula el resultado correcto de la pregunta formulada
@@ -197,6 +197,7 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 			result = entrada1 ^ entrada2;
 
 		solucion = Integer.toBinaryString(result);
+
 		// LLenamos la cadena de 0 hasta tener 5 bits
 		solucion = completaNumeroBits(solucion);
 		return solucion;
@@ -240,20 +241,21 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 	}
 
 	private void showSolution() {
-		String solucion = LOCalcularResultado(tvEntrada1.getText().toString(),
-				tvOperacion.getText().toString(), tvEntrada2.getText()
+		String solucion = LOCalcularResultado(mTvEntrada1.getText().toString(),
+				mTvOperacion.getText().toString(), mTvEntrada2.getText()
 						.toString());
-		etRespuesta.setText(solucion);
+		mEtRespuesta.setText(solucion);
 	}
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		// guardamos los campos de los textViews
-		String entrada1 = tvEntrada1.getText().toString();
-		String entrada2 = tvEntrada2.getText().toString();
-		String operacion = tvOperacion.getText().toString();
-		String respuesta = etRespuesta.getText().toString();
+		String entrada1 = mTvEntrada1.getText().toString();
+		String entrada2 = mTvEntrada2.getText().toString();
+		String operacion = mTvOperacion.getText().toString();
+		String respuesta = mEtRespuesta.getText().toString();
+
 		// lo guardamos en el Bundle
 		outState.putString("LOentrada1", entrada1);
 		outState.putString("LOentrada2", entrada2);
@@ -266,16 +268,16 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		TextView pregunta = (TextView) mRootView.findViewById(R.id.LOpregunta);
 		pregunta.setText(getResources().getText(R.string.LOpregunta).toString());
 
-		tvEntrada2.setVisibility(View.VISIBLE);
-		tvOperacion.setVisibility(View.VISIBLE);
-		etRespuesta.setVisibility(View.VISIBLE);
-		bCheck.setVisibility(View.VISIBLE);
-		bSolucion.setVisibility(View.VISIBLE);
+		mTvEntrada2.setVisibility(View.VISIBLE);
+		mTvOperacion.setVisibility(View.VISIBLE);
+		mEtRespuesta.setVisibility(View.VISIBLE);
+		mButtonCheck.setVisibility(View.VISIBLE);
+		mButtonSolucion.setVisibility(View.VISIBLE);
 
 		inicializarTexViews();
 
-		bSolucion.setText(getResources().getText(R.string.solution));
-		etRespuesta.requestFocus();
+		mButtonSolucion.setText(getResources().getText(R.string.solution));
+		mEtRespuesta.requestFocus();
 
 		mModoJuego = false;
 		mFinJuego = false;
@@ -292,9 +294,9 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		// Inicializar el numero de preguntas y de aciertos
 		mNumeroPregunta = 0;
 		mNumeroAciertos = 0;
-		
-		etRespuesta.setText("");
-		etRespuesta.requestFocus();
+
+		mEtRespuesta.setText("");
+		mEtRespuesta.requestFocus();
 	}
 
 	void endGame() {
@@ -319,10 +321,9 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 	}
 
 	private void enviarPuntuacion(int score) {
-		HighscoreManager hM = new HighscoreManager();
 		try {
-			hM.addScore(getActivity(), score, R.string.logic_operation,
-					new Date(), null);
+			HighscoreManager.addScore(getActivity(), score,
+					R.string.logic_operation, new Date(), null);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -342,29 +343,29 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		}
 
 		if (mNumeroPregunta == MAX_NUMBER_LO_QUESTIONS) {
-			bSolucion.setVisibility(View.VISIBLE);
+			mButtonSolucion.setVisibility(View.VISIBLE);
 			endGame();
 		}
 	}
 
-	//Vuelve al modo entrenamiento al finalizar el juego
+	// Vuelve al modo entrenamiento al finalizar el juego
 	private void clickFin() {
 		vistaModoEntrenamiento();
 	}
 
 	private void vistaInicioJuego() {
-		bSolucion.setVisibility(View.GONE);
+		mButtonSolucion.setVisibility(View.GONE);
 
 		TextView pregunta = (TextView) mRootView.findViewById(R.id.LOpregunta);
 		pregunta.setText(getResources().getText(R.string.LOpregunta).toString());
 
-		tvEntrada2.setVisibility(View.VISIBLE);
-		tvOperacion.setVisibility(View.VISIBLE);
-		etRespuesta.setVisibility(View.VISIBLE);
-		bCheck.setVisibility(View.VISIBLE);
+		mTvEntrada2.setVisibility(View.VISIBLE);
+		mTvOperacion.setVisibility(View.VISIBLE);
+		mEtRespuesta.setVisibility(View.VISIBLE);
+		mButtonCheck.setVisibility(View.VISIBLE);
 
 		inicializarTexViews();
-		
+
 		mModoJuego = true;
 	}
 
@@ -374,14 +375,15 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 
 		int score = calculaPuntuacion();
 
-		tvEntrada1.setText(getResources().getText(R.string.puntuacion)
+		mTvEntrada1.setText(getResources().getText(R.string.puntuacion)
 				.toString() + " " + score);
-		tvEntrada2.setVisibility(View.GONE);
-		tvOperacion.setVisibility(View.GONE);
-		etRespuesta.setVisibility(View.GONE);
-		bCheck.setVisibility(View.GONE);
-		bSolucion.setVisibility(View.VISIBLE);
-		bSolucion.setText(getResources().getText(R.string.modoEntrenamiento));
+		mTvEntrada2.setVisibility(View.GONE);
+		mTvOperacion.setVisibility(View.GONE);
+		mEtRespuesta.setVisibility(View.GONE);
+		mButtonCheck.setVisibility(View.GONE);
+		mButtonSolucion.setVisibility(View.VISIBLE);
+		mButtonSolucion.setText(getResources().getText(
+				R.string.modoEntrenamiento));
 
 		mFinJuego = true;
 	}
