@@ -1,6 +1,6 @@
 /*
 
-Copyright 2014 Profesores y alumnos de la asignatura Informática Móvil de la EPI de Gijón
+Copyright 2014 Profesores y alumnos de la asignatura Informï¿½tica MÃ³vil de la EPI de GijÃ³n
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
