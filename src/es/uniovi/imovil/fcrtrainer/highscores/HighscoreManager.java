@@ -1,6 +1,6 @@
 /*
 
-Copyright 2014 Profesores y alumnos de la asignatura Informática Móvil de la EPI de Gijón
+Copyright 2014 Profesores y alumnos de la asignatura InformÃ¡tica MÃ³vil de la EPI de GijÃ³n
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -94,7 +94,7 @@ public class HighscoreManager {
 	}
 
 	/**
-	 * Añade una puntuación a los datos de mejores puntuaciones
+	 * Aï¿½ade una puntuaciï¿½n a los datos de mejores puntuaciones
 	 * 
 	 * @param context
 	 *            Contexto para gestionar recursos
@@ -105,12 +105,12 @@ public class HighscoreManager {
 	 *            constantes usadas en FragmentFactory para lanzar el fragmento,
 	 *            por ejemplo, R.string.logic_gate
 	 * @param date
-	 *            Fecha en la que se obtuvo la puntuación
+	 *            Fecha en la que se obtuvo la puntuaciï¿½n
 	 * @param userName
-	 *            Nombre del usuario que obtuvo la puntuación. Si se pasa null,
-	 *            será el nombre de usuario por defecto
+	 *            Nombre del usuario que obtuvo la puntuaciï¿½n. Si se pasa null,
+	 *            serï¿½ el nombre de usuario por defecto
 	 * @throws JSONException
-	 *             Cuando no se puede pasar a JSON o de JSON una puntuación
+	 *             Cuando no se puede pasar a JSON o de JSON una puntuaciï¿½n
 	 */
 	public static void addScore(Context context, int score, int exercise,
 			Date date, String userName) throws JSONException {
@@ -123,7 +123,7 @@ public class HighscoreManager {
 		try {
 			highscores = loadHighscores(context);
 		} catch (JSONException e) {
-			Log.d(TAG, "Error al leer las puntuaciones para añadir una nueva: "
+			Log.d(TAG, "Error al leer las puntuaciones para aï¿½adir una nueva: "
 					+ e.getMessage());
 		}
 		highscores.add(highscore);
@@ -157,9 +157,9 @@ public class HighscoreManager {
 	}
 
 	/**
-	 * Añade un array de puntuaciones. Está pensado para ser utilizado
+	 * Aï¿½ade un array de puntuaciones. Estï¿½ pensado para ser utilizado
 	 * inicialmente cuando se rellenan con las puntuaciones iniciales para ser
-	 * más rápido que añadirlas una a una
+	 * mï¿½s rï¿½pido que aï¿½adirlas una a una
 	 * 
 	 * @param activity
 	 * @param highscores
@@ -171,7 +171,7 @@ public class HighscoreManager {
 		try {
 			highscores = loadHighscores(context);
 		} catch (JSONException e) {
-			Log.d(TAG, "Error al leer las puntuaciones para añadir una nueva: "
+			Log.d(TAG, "Error al leer las puntuaciones para aï¿½adir una nueva: "
 					+ e.getMessage());
 		}
 		highscores.addAll(newHighscores);

@@ -1,6 +1,6 @@
 /*
 
-Copyright 2014 Profesores y alumnos de la asignatura Informática Móvil de la EPI de Gijón
+Copyright 2014 Profesores y alumnos de la asignatura InformÃ¡tica MÃ³vil de la EPI de GijÃ³n
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-*/
+ */
 
 package es.uniovi.imovil.fcrtrainer.highscores;
 
@@ -24,7 +24,7 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * Clase que representa una puntuación
+ * Clase que representa una puntuaciï¿½n
  * 
  */
 public class Highscore implements Comparable<Highscore> {
