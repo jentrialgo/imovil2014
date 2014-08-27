@@ -267,5 +267,17 @@ limitations under the License.
      <item>255.255.0.0</item>
      <item>255.255.0.0</item>
      </string-array>
-    
+
+     <string-array name="pref_level_entries">
+         <item>Aprendiz</item>
+         <item>Iniciado</item>
+         <item>Maestro</item>
+     </string-array>
+     
+     <string-array name="pref_level_values">
+         <item>Aprendiz</item>
+         <item>Iniciado</item>
+         <item>Maestro</item>
+     </string-array>
+     
 </resources>

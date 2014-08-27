@@ -144,6 +144,10 @@ public class MainActivity extends ActionBarActivity implements
 		}
 		
 		switch(item.getItemId()){
+		case R.id.action_settings:
+			Intent intent = new Intent(this, SettingsActivity.class);
+			startActivity(intent);
+			break;
 		case R.id.action_help:
 			Intent goToHelp = new Intent(this, HelpActivity.class);
 			startActivity(goToHelp);
