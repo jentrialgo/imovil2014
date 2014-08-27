@@ -18,116 +18,118 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class HostCountExerciseFragment extends BaseExerciseFragment{
+public class HostCountExerciseFragment extends BaseExerciseFragment {
 
 	private static final int RANDOM_NUMBER_LIMIT = 30;
 	private static final int POINTS_FOR_QUESTION = 10;
 	private static final int MAX_QUESTIONS = 5;
 	private static final long GAME_DURATION_MS = 10 * 1000 * 60; // 10min
-	
-	private boolean won = false;
-	private boolean gameMode = false;
-	private int points;
-	private int currentQuestionCounter = 1;
-	
+
+	private boolean mWon = false;
+	private boolean mGameMode = false;
+	private int mPoints;
+	private int mCurrentQuestionCounter = 1;
+
 	private View mRootView;
-	private Button btnCheck;
-	private Button btnSolution;
-	private String [] hostCountQuestions;
-	private String [] hostCountAnswers;
-	private TextView question;	
-	EditText answer;
-	int randomNumberQuestion;
+	private Button mBtnCheck;
+	private Button mBtnSolution;
+	private String[] mHostCountQuestions;
+	private String[] mHostCountAnswers;
+	private TextView mQuestion;
+	EditText mAnswer;
+	int mRandomNumberQuestion;
 
 	// Constructor
-	public HostCountExerciseFragment() 
-	{
+	public HostCountExerciseFragment() {
 	}
-	
-	public static HostCountExerciseFragment newInstance() 
-	{
+
+	public static HostCountExerciseFragment newInstance() {
 		HostCountExerciseFragment fragment = new HostCountExerciseFragment();
 		return fragment;
 	}
-	
-	
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {		
-		mRootView=inflater.inflate(R.layout.fragment_host_count, container, false);
-		
-        btnCheck =  (Button) mRootView.findViewById(R.id.btnCheckAnswer);
-        btnSolution =  (Button) mRootView.findViewById(R.id.btnSolution);
-    	question = (TextView) mRootView.findViewById(R.id.question);
-    	answer = (EditText) mRootView.findViewById(R.id.answer);
-    	hostCountQuestions = getResources().getStringArray(R.array.host_count_questions);
-    	hostCountAnswers = getResources().getStringArray(R.array.host_count_answers);
-    	randomNumberQuestion = generateRandomNumber();
-    	//Carga una de las preguntas del array 
-    	newQuestion();
-    	
-    	
-        btnCheck.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-            	checkAnswer((answer.getText().toString()));
-            }
-        });
-        
-        btnSolution.setOnClickListener(new View.OnClickListener() {			
+
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		mRootView = inflater.inflate(R.layout.fragment_host_count, container,
+				false);
+
+		mBtnCheck = (Button) mRootView.findViewById(R.id.btnCheckAnswer);
+		mBtnSolution = (Button) mRootView.findViewById(R.id.btnSolution);
+		mQuestion = (TextView) mRootView.findViewById(R.id.question);
+		mAnswer = (EditText) mRootView.findViewById(R.id.answer);
+		mHostCountQuestions = getResources().getStringArray(
+				R.array.host_count_questions);
+		mHostCountAnswers = getResources().getStringArray(
+				R.array.host_count_answers);
+		mRandomNumberQuestion = generateRandomNumber();
+		// Carga una de las preguntas del array
+		newQuestion();
+
+		mBtnCheck.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				showSolution(randomNumberQuestion);
+				checkAnswer((mAnswer.getText().toString()));
 			}
 		});
-        
+
+		mBtnSolution.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				showSolution(mRandomNumberQuestion);
+			}
+		});
+
 		return mRootView;
 	}
-	
-	public void newQuestion(){
-		question.setText(hostCountQuestions[randomNumberQuestion]);
+
+	public void newQuestion() {
+		mQuestion.setText(mHostCountQuestions[mRandomNumberQuestion]);
 	}
-	
+
 	private int generateRandomNumber() {
 		Random rn = new Random();
-		
+
 		// Funcion nextInt devuelve un numero aleatorio entre [0, limite)
 		int x = rn.nextInt(RANDOM_NUMBER_LIMIT);
 		return x;
 
 	}
 
-	public void checkAnswer (String a) {
-		//Si la respuesta es correcta, genera otra nueva pregunta y borra respuesta
-		if ((a.toString().equals(hostCountAnswers[randomNumberQuestion].toString()))){
+	public void checkAnswer(String a) {
+		// Si la respuesta es correcta, genera otra nueva pregunta y borra
+		// respuesta
+		if ((a.toString().equals(mHostCountAnswers[mRandomNumberQuestion]
+				.toString()))) {
 			showAnimationAnswer(true);
-			randomNumberQuestion = generateRandomNumber();
-			question.setText(hostCountQuestions[randomNumberQuestion]);
-			if (this.gameMode) {
+			mRandomNumberQuestion = generateRandomNumber();
+			mQuestion.setText(mHostCountQuestions[mRandomNumberQuestion]);
+			if (this.mGameMode) {
 				gameModeControl();
 			}
-			answer.setText("");
-			
-			} else
-				showAnimationAnswer(false);		
+			mAnswer.setText("");
+
+		} else
+			showAnimationAnswer(false);
 
 	}
-	
-	//Metodo para mostrar la solucion
+
+	// Método para mostrar la solución
 	public void showSolution(int numberOfQuestion) {
-		answer.setText(hostCountAnswers[numberOfQuestion]);		
+		mAnswer.setText(mHostCountAnswers[numberOfQuestion]);
 	}
-	
+
 	public void startGame() {
 		setGameDuration(GAME_DURATION_MS);
-		
+
 		// set starting points of textview
-		updatePointsTextView(0); 
+		updatePointsTextView(0);
 
 		super.startGame();
 		updateToGameMode();
 	}
 
 	private void updateToGameMode() {
-		gameMode = true;
+		mGameMode = true;
 
 		newQuestion();
 
@@ -140,7 +142,7 @@ public class HostCountExerciseFragment extends BaseExerciseFragment{
 	}
 
 	private void updateToTrainMode() {
-		gameMode = false;
+		mGameMode = false;
 
 		Button solution = (Button) mRootView.findViewById(R.id.btnSolution);
 		solution.setVisibility(View.VISIBLE);
@@ -157,12 +159,12 @@ public class HostCountExerciseFragment extends BaseExerciseFragment{
 
 	@Override
 	void endGame() {
-		//convert to seconds
-		int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000; 
-		//every remaining second gives one extra point.
-		this.points = (int) (this.points + remainingTimeInSeconds);
+		// convert to seconds
+		int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000;
+		// every remaining second gives one extra point.
+		this.mPoints = (int) (this.mPoints + remainingTimeInSeconds);
 
-		if (this.won)
+		if (this.mWon)
 			savePoints();
 
 		dialogGameOver();
@@ -172,9 +174,9 @@ public class HostCountExerciseFragment extends BaseExerciseFragment{
 	}
 
 	private void reset() {
-		this.points = 0;
-		this.currentQuestionCounter = 0;
-		this.won = false;
+		this.mPoints = 0;
+		this.mCurrentQuestionCounter = 0;
+		this.mWon = false;
 
 		updatePointsTextView(0);
 	}
@@ -183,49 +185,50 @@ public class HostCountExerciseFragment extends BaseExerciseFragment{
 		String username = getResources().getString(R.string.default_user_name);
 		try {
 			HighscoreManager.addScore(getActivity().getApplicationContext(),
-					this.points, R.string.host_count, new Date(), username);
+					this.mPoints, R.string.host_count, new Date(), username);
 
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void gameModeControl() {
 		increasePoints(POINTS_FOR_QUESTION);
 
-		if (currentQuestionCounter >= MAX_QUESTIONS) {
+		if (mCurrentQuestionCounter >= MAX_QUESTIONS) {
 			// won
-			this.won = true;
+			this.mWon = true;
 			this.endGame();
-
 		}
 
-		if (currentQuestionCounter < MAX_QUESTIONS && getRemainingTimeMs() <= 0) {
+		if (mCurrentQuestionCounter < MAX_QUESTIONS
+				&& getRemainingTimeMs() <= 0) {
 			// lost --> no time left...
-			this.won = false;
+			this.mWon = false;
 			this.endGame();
 		}
-		currentQuestionCounter++;
+		mCurrentQuestionCounter++;
 	}
-	
+
 	private void increasePoints(int val) {
-		this.points = this.points + val;
-		updatePointsTextView(this.points);
+		this.mPoints = this.mPoints + val;
+		updatePointsTextView(this.mPoints);
 	}
-	
+
 	private void updatePointsTextView(int p) {
 		TextView tvPoints = (TextView) mRootView.findViewById(R.id.points);
-		tvPoints.setText(getResources().getString(R.string.points)+ " "+ String.valueOf(p));
+		tvPoints.setText(getResources().getString(R.string.points) + " "
+				+ String.valueOf(p));
 	}
 
 	// Simple GameOver Dialog
 	private void dialogGameOver() {
 		String message = getResources().getString(R.string.lost);
 
-		if (this.won) {
+		if (this.mWon) {
 			message = getResources().getString(R.string.won) + " "
 					+ getResources().getString(R.string.points) + " "
-					+ this.points;
+					+ this.mPoints;
 		}
 
 		Builder alert = new AlertDialog.Builder(getActivity());
@@ -241,5 +244,5 @@ public class HostCountExerciseFragment extends BaseExerciseFragment{
 		alert.show();
 
 	}
-	
+
 }
