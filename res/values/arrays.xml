@@ -269,15 +269,15 @@ limitations under the License.
      </string-array>
 
      <string-array name="pref_level_entries">
-         <item>Aprendiz</item>
-         <item>Iniciado</item>
-         <item>Maestro</item>
+         <item>@string/pref_level1_name</item>
+         <item>@string/pref_level2_name</item>
+         <item>@string/pref_level3_name</item>
      </string-array>
      
      <string-array name="pref_level_values">
-         <item>Aprendiz</item>
-         <item>Iniciado</item>
-         <item>Maestro</item>
+         <item>@string/pref_level1_name</item>
+         <item>@string/pref_level2_name</item>
+         <item>@string/pref_level3_name</item>
      </string-array>
      
 </resources>

@@ -167,4 +167,8 @@ limitations under the License.
     <!-- Preferences -->
     <string name="pref_level_key" translatable="false">PREF_LEVEL</string>
     <string name="pref_level_title">Nivel</string>
+    
+    <string name="pref_level1_name">Aprendiz</string>
+    <string name="pref_level2_name">Iniciado</string>
+    <string name="pref_level3_name">Maestro</string>
 </resources>

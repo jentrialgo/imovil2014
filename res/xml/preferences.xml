@@ -5,7 +5,7 @@
         android:title="@string/pref_level_title"
         android:entries="@array/pref_level_entries"
         android:entryValues="@array/pref_level_values"
-        android:defaultValue="Aprendiz" />
+        android:defaultValue="@string/pref_level1_name" />
     
 
 </PreferenceScreen>
