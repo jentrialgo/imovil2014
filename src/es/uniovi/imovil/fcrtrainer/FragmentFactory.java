@@ -60,7 +60,6 @@ final public class FragmentFactory {
 			return BinaryExerciseFragment.newInstance();
 		case R.string.host_count:
 			return HostCountExerciseFragment.newInstance();
-			// TODO: return NetworkMaskExerciseFragment.newInstance();
 		case R.string.sign_and_magnitude:
 			return SignedMagnitudeExerciseFragment.newInstance();
 		case R.string.floating_point:
@@ -69,9 +68,6 @@ final public class FragmentFactory {
 			return NetworkAddressExerciseFragment.newInstance();
 		case R.string.network_mask:
 			return NetworkMaskExerciseFragment.newInstance();
-
-//			return DummyExerciseFragment.newInstance();
-
 		default:
 			throw new IllegalStateException();
 		}
