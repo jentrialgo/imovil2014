@@ -1,6 +1,5 @@
 package es.uniovi.imovil.fcrtrainer;
 
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
@@ -26,27 +25,30 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-public class LogicGateExerciseFragment extends BaseExerciseFragment  implements OnClickListener, OnItemSelectedListener{
-	private Button buttoncheck;
-	private String [] logicstring;
-	private View rootView;
-	private int pregunta_actual;
-	private TypedArray arrayimage;
-	private ImageView imageview;
-	private Button buttonsolution;
-	private Spinner spinner; 
-	private int n;
-	private TextView mClock;
-	private int fin_juego=0;
-	public static final int RANDOM = 6;
-	private int valorInicial=0;
-	private int valorFinal=5;
-	private ArrayList<Integer> listaNumero = new ArrayList<Integer>();
+public class LogicGateExerciseFragment extends BaseExerciseFragment implements
+		OnClickListener, OnItemSelectedListener {
+	private static final int RANDOM = 6;
 	private static final int POINTS_FOR_QUESTION = 10;
-	private int puntos;
-	private TextView puntuacion;
-	private TextView title_puntuacion;
-	private static final long GAME_DURATION_MS = 1 * 1000 * 60;//1 min
+	private static final long GAME_DURATION_MS = 1 * 1000 * 60;// 1 min
+
+	private Button mButtoncheck;
+	private String[] mLogicstring;
+	private View mRootView;
+	private int mCurrentQuestion;
+	private TypedArray mImageArray;
+	private ImageView mImageView;
+	private Button mSolutionButton;
+	private Spinner mSpinner;
+	private int mN;
+	private TextView mClock;
+	private int mGameEnd = 0;
+	private int mInitialValue = 0;
+	private int mFinalValue = 5;
+	private ArrayList<Integer> mNumberList = new ArrayList<Integer>();
+	private int mPoints;
+	private TextView mScore;
+	private TextView mScoreTitle;
+
 	public static LogicGateExerciseFragment newInstance() {
 
 		LogicGateExerciseFragment fragment = new LogicGateExerciseFragment();
@@ -59,84 +61,87 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment  implements 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		//Inicializamos la variable contador con el fin de recorrer el array con las diferentes puertas 
-		//logicas
-		pregunta_actual=RANDOM();
+		// Inicializamos la variable contador con el fin de recorrer el array
+		// con las diferentes puertas l√≥gicas
+		mCurrentQuestion = random();
 
-		//Inflamos el Layout
-		rootView = inflater.inflate(R.layout.fragment_logic_gate, container, false);
+		// Inflamos el Layout
+		mRootView = inflater.inflate(R.layout.fragment_logic_gate, container,
+				false);
 
+		// Cargamos el array con las puertas logicas
+		mLogicstring = getResources().getStringArray(R.array.logic_gates);
 
-		//Cargamos el array con las puertas logicas
-		logicstring= getResources().getStringArray(R.array.logic_gates);
+		// Inicializamos las vistas de los botones y sus respectivos Listener
+		mButtoncheck = (Button) mRootView.findViewById(R.id.cButton);
+		mSolutionButton = (Button) mRootView.findViewById(R.id.sButton);
+		mButtoncheck.setOnClickListener(this);
+		mSolutionButton.setOnClickListener(this);
 
-		//Inicializamos las vistas de los botones y sus respectivos Listener
-		buttoncheck=(Button) rootView.findViewById(R.id.cButton);
-		buttonsolution=(Button)rootView.findViewById(R.id.sButton);
-		buttoncheck.setOnClickListener(this);
-		buttonsolution.setOnClickListener(this);
+		// Cargamos un array con las imagenes de las puertas logicas
+		mImageArray = getResources().obtainTypedArray(
+				R.array.logic_gates_images);
 
-		//Cargamos un array con las imagenes de las puertas logicas
-		arrayimage = getResources().obtainTypedArray(R.array.logic_gates_images);
-		//Inicializamos las vistas de las imagenes
-		imageview=(ImageView) rootView.findViewById(R.id.imagelogicgate);
-		imageview.setImageResource(arrayimage.getResourceId(pregunta_actual, 0));
-		//Inicializamos el spinner y le cargamos los  elementos
-		spinner = (Spinner) rootView.findViewById(R.id.spinner_logic_gate);
-		// Create an ArrayAdapter using the string array and a default spinner layout
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity(),
-				R.array.logic_gates, android.R.layout.simple_spinner_item);
+		// Inicializamos las vistas de las imagenes
+		mImageView = (ImageView) mRootView.findViewById(R.id.imagelogicgate);
+		mImageView.setImageResource(mImageArray.getResourceId(mCurrentQuestion,
+				0));
+
+		// Inicializamos el spinner y le cargamos los elementos
+		mSpinner = (Spinner) mRootView.findViewById(R.id.spinner_logic_gate);
+
+		// Create an ArrayAdapter using the string array and a default spinner
+		// layout
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+				this.getActivity(), R.array.logic_gates,
+				android.R.layout.simple_spinner_item);
+
 		// Specify the layout to use when the list of choices appears
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		// Apply the adapter to the spinner
-		spinner.setAdapter(adapter);
-		spinner.setOnItemSelectedListener(this);
-		
-		//Inicializamos views para el modo juego
-		mClock=(TextView)rootView.findViewById(R.id.text_view_clock);
-		puntuacion=(TextView)rootView.findViewById(R.id.puntuacion);
-		title_puntuacion=(TextView)rootView.findViewById(R.id.title_puntuacion);
 
-		return rootView;
+		// Apply the adapter to the spinner
+		mSpinner.setAdapter(adapter);
+		mSpinner.setOnItemSelectedListener(this);
+
+		// Inicializamos views para el modo juego
+		mClock = (TextView) mRootView.findViewById(R.id.text_view_clock);
+		mScore = (TextView) mRootView.findViewById(R.id.puntuacion);
+		mScoreTitle = (TextView) mRootView.findViewById(R.id.title_puntuacion);
+
+		return mRootView;
 	}
 
 	@Override
 	public void onClick(View v) {
-		switch(v.getId()){
+		switch (v.getId()) {
 		case R.id.cButton:
-			//Metodo que comprueba la respuesta
-			CompruebaRespuesta();	
+			checkAnswer();
 			break;
 
 		case R.id.sButton:
-			//Mostramos la solución
+			// Mostramos la soluci√≥n
 			solutionLogicGate();
 			break;
 		}
 
 	}
 
-
-	public void CompruebaRespuesta(){
-		if(mIsPlaying){
-			if(fin_juego<logicstring.length-1){
-				compruebaModo(pregunta_actual);
-			}
-			else {
-
+	public void checkAnswer() {
+		if (mIsPlaying) {
+			if (mGameEnd < mLogicstring.length - 1) {
+				compruebaModo(mCurrentQuestion);
+			} else {
 				endGame();
 				dialogGameOver();
 			}
-		}
-
-		else {
-			compruebaModo(pregunta_actual);
+		} else {
+			compruebaModo(mCurrentQuestion);
 		}
 	}
 
-	//Metodo para seleccionar en el spinner la respuesta.
-	public void solutionLogicGate(){
-		spinner.setSelection(pregunta_actual);
+	// Metodo para seleccionar en el spinner la respuesta.
+	public void solutionLogicGate() {
+		mSpinner.setSelection(mCurrentQuestion);
 	}
 
 	@Override
@@ -151,12 +156,13 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment  implements 
 		// TODO Auto-generated method stub
 
 	}
-	//Metodo para generar un número aleatorio
-	public int RANDOM(){
-		Random ran = new Random();
-		n = ran.nextInt(RANDOM);
 
-		return n;
+	// Metodo para generar un nÔøΩmero aleatorio
+	private int random() {
+		Random ran = new Random();
+		mN = ran.nextInt(RANDOM);
+
+		return mN;
 	}
 
 	@Override
@@ -177,133 +183,137 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment  implements 
 
 	@Override
 	void startGame() {
-		// TODO Auto-generated method stub
 		super.startGame();
-		//Fijamos el contador en 1 minuto
+
+		// Fijamos el contador en 1 minuto
 		setGameDuration(GAME_DURATION_MS);
-		//Cambiamos el layout y se adapta al modo juego
-		buttonsolution.setVisibility(View.GONE);
-		buttoncheck.setText("Ok");
-		puntos=0;
-		pregunta_actual=generar();
-		imageview.setImageResource(arrayimage.getResourceId(pregunta_actual, 0));
-		puntuacion.setVisibility(View.VISIBLE);
-		title_puntuacion.setVisibility(View.VISIBLE);
-		title_puntuacion.setText(R.string.title_puntuacion);
-		puntuacion.setText("0");
+
+		// Cambiamos el layout y se adapta al modo juego
+		mSolutionButton.setVisibility(View.GONE);
+		mButtoncheck.setText("Ok");
+		mPoints = 0;
+		mCurrentQuestion = generar();
+		mImageView.setImageResource(mImageArray.getResourceId(mCurrentQuestion,
+				0));
+		mScore.setVisibility(View.VISIBLE);
+		mScoreTitle.setVisibility(View.VISIBLE);
+		mScoreTitle.setText(R.string.title_puntuacion);
+		mScore.setText("0");
 	}
+
 	@Override
 	void cancelGame() {
 		super.cancelGame();
-		//Cambiamos el layout  y lo dejamos otra vez como el modo ejercicio
-		puntuacion.setVisibility(View.GONE);
-		title_puntuacion.setVisibility(View.GONE);
-		buttonsolution.setVisibility(View.VISIBLE);
-		buttoncheck.setText("Comprobar");
+
+		// Cambiamos el layout y lo dejamos otra vez como el modo ejercicio
+		mScore.setVisibility(View.GONE);
+		mScoreTitle.setVisibility(View.GONE);
+		mSolutionButton.setVisibility(View.VISIBLE);
+		mButtoncheck.setText("Comprobar");
 	}
 
 	/**
-	 * Esta funcion se llama al finalizar el juego, parando y ocultando el
+	 * Esta funci√≥n se llama al finalizar el juego, parando y ocultando el
 	 * reloj. Las clases derivadas deben redifinirla, llamando al padre, para
-	 * añadir lo necesario a cada juego particular
+	 * a√±adir lo necesario a cada juego particular
 	 */
 	void endGame() {
 		super.endGame();
-		//convert to seconds
-		int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000; 
-		//every remaining second gives one extra point.
-		puntos = (int) (puntos + remainingTimeInSeconds);
-		//Guardamos los puntos
+
+		// convert to seconds
+		int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000;
+
+		// every remaining second gives one extra point.
+		mPoints = (int) (mPoints + remainingTimeInSeconds);
+
+		// Guardamos los puntos
 		savePoints();
-		//Vaciamos la lista que contiene todos los resultados posibles del metodo generar()
-		listaNumero.clear();
-		//Cambiamos el layout para dejarlo en modo ejercicio
-		title_puntuacion.setVisibility(View.GONE);
-		puntuacion.setVisibility(View.GONE);
+
+		// Vaciamos la lista que contiene todos los resultados posibles del
+		// metodo generar()
+		mNumberList.clear();
+
+		// Cambiamos el layout para dejarlo en modo ejercicio
+		mScoreTitle.setVisibility(View.GONE);
+		mScore.setVisibility(View.GONE);
 		mClock.setVisibility(View.GONE);
-		buttonsolution.setVisibility(View.VISIBLE);
-		buttoncheck.setText("Comprobar");
-		fin_juego=0;
-		
+		mSolutionButton.setVisibility(View.VISIBLE);
+		mButtoncheck.setText("Comprobar");
+		mGameEnd = 0;
 	}
 
-	//Metodo para añadir los puntos a la tabla de highscore
+	// M√©todo para aÔøΩadir los puntos a la tabla de highscore
 	private void savePoints() {
 		String username = getResources().getString(R.string.default_user_name);
 		try {
-
 			HighscoreManager.addScore(getActivity().getApplicationContext(),
-					this.puntos, R.string.logic_gate, new Date(), username);
+					this.mPoints, R.string.logic_gate, new Date(), username);
 
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 	}
 
-	//Metodo para generar numeros aleatorios sin repetir numeros.
-	public int generar(){
-		if(listaNumero.size() < (valorFinal - valorInicial) +1){
-			//Aun no se han generado todos los numeros
-			int numero = numeroAleatorio();//genero un numero
-			if(listaNumero.isEmpty()){//si la lista esta vacia
-				listaNumero.add(numero);
+	// Metodo para generar numeros aleatorios sin repetir numeros.
+	public int generar() {
+		if (mNumberList.size() < (mFinalValue - mInitialValue) + 1) {
+			// Aun no se han generado todos los numeros
+			int numero = numeroAleatorio();// genero un numero
+			if (mNumberList.isEmpty()) {// si la lista esta vacia
+				mNumberList.add(numero);
 				return numero;
-			}else{//si no esta vacia
-				if(listaNumero.contains(numero)){//Si el numero que generé esta contenido en la lista
-					return generar();//recursivamente lo mando a generar otra vez
-				}else{//Si no esta contenido en la lista
-					listaNumero.add(numero);
+			} else {// si no esta vacia
+				if (mNumberList.contains(numero)) {// Si el numero que generÔøΩ
+													// esta contenido en la
+													// lista
+					return generar();// recursivamente lo mando a generar otra
+										// vez
+				} else {// Si no esta contenido en la lista
+					mNumberList.add(numero);
 					return numero;
 				}
 			}
-		}else{// ya se generaron todos los numeros
+		} else {// ya se generaron todos los numeros
 			return -1;
 		}
 	}
 
-	//Genera un numero aleatorio
-	private int numeroAleatorio(){
-
-		return (int)(Math.random()*(valorFinal-valorInicial+1)+valorInicial);
-
+	// Genera un numero aleatorio
+	private int numeroAleatorio() {
+		return (int) (Math.random() * (mFinalValue - mInitialValue + 1) + mInitialValue);
 	}
 
-	//Metodo para comprobar el modo en el que se ecuentra (juego o ejercicio) y segun el modo
-	//Si estas en modo juego genera solo 6 numeros aleatorios sin repetir y si no, genera numeros
-	//aleatorios infinitos
-	public void compruebaModo(int pregunta){
-		String textosUpper = spinner.getSelectedItem().toString();
-		if(logicstring[pregunta].equals(textosUpper)){
-			fin_juego++;
+	// Metodo para comprobar el modo en el que se ecuentra (juego o ejercicio) y
+	// segun el modo
+	// Si estas en modo juego genera solo 6 numeros aleatorios sin repetir y si
+	// no, genera numeros aleatorios infinitos
+	public void compruebaModo(int pregunta) {
+		String textosUpper = mSpinner.getSelectedItem().toString();
+		if (mLogicstring[pregunta].equals(textosUpper)) {
+			mGameEnd++;
 			showAnimationAnswer(true);
-			//Ponemos el texto en verde y ponemos la imagen de un tic verde.
-			if(mIsPlaying){
-				pregunta=generar();
-				pregunta_actual=pregunta;
-				puntos+=POINTS_FOR_QUESTION;
-				puntuacion.setText(Integer.toString(puntos));
+			// Ponemos el texto en verde y ponemos la imagen de un tic verde.
+			if (mIsPlaying) {
+				pregunta = generar();
+				mCurrentQuestion = pregunta;
+				mPoints += POINTS_FOR_QUESTION;
+				mScore.setText(Integer.toString(mPoints));
+			} else {
+				pregunta = random();
+				mCurrentQuestion = pregunta;
 			}
-			else {
-				pregunta=RANDOM();
-				pregunta_actual = pregunta;
-			}
-			imageview.setImageResource(arrayimage.getResourceId(pregunta, 0));
-		}
-
-
-		//Si no es igual es texto del string con el del editText
-
-		else {	
-
+			mImageView.setImageResource(mImageArray.getResourceId(pregunta, 0));
+		} else {
+			// Si no es igual es texto del string con el del editText
 			showAnimationAnswer(false);
-		}	
+		}
 	}
 
 	// Simple GameOver Dialog
 	private void dialogGameOver() {
 		String message = getResources().getString(R.string.lost);
 		message = getResources().getString(R.string.points_final) + " "
-				+ puntos +" "+"puntos";
+				+ mPoints + " " + "puntos";
 
 		Builder alert = new AlertDialog.Builder(getActivity());
 		alert.setTitle(getResources().getString(R.string.end_game));
@@ -317,7 +327,7 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment  implements 
 		alert.show();
 
 	}
-	
+
 	@Override
 	public void onPause() {
 		super.onPause();
