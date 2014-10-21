@@ -99,8 +99,8 @@ limitations under the License.
     <string name="lost_time_over">Game Over! Se ha acabado el tiempo. Has contestado correctamente %1$d preguntas.</string>
 
     <!-- Módulo: Binario -->
-    <string name="convert_bin_to_dec">Convierte de binario natural a decimal</string>
-    <string name="convert_dec_to_bin">Convierte de decimal a binario natural</string>
+    <string name="convert_bin_to_dec">Convierte de binario natural con %1$d bits a decimal</string>
+    <string name="convert_dec_to_bin">Convierte de decimal a binario natural con %1$d bits</string>
 
     <!-- Módulo: Hexadecimal -->
     <string name="convert_bin_to_hex">Convierte de binario a hexadecimal</string>

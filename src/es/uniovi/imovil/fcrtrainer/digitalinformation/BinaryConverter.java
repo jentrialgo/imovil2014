@@ -20,10 +20,11 @@ package es.uniovi.imovil.fcrtrainer.digitalinformation;
 
 import java.util.Random;
 
+import android.util.Log;
+
 public class BinaryConverter{
-	private static final int MAX_RANDOM_NUMBER = 128;
-	private static final int MIN_RANDOM_NUMBER = 1;
-	
+	private Random mRandom = new Random();
+
 	public boolean isStringEmpty(String string) {
 		if (string.matches("") || !string.contains("1")) {
 			return true;
@@ -53,9 +54,11 @@ public class BinaryConverter{
 		return binaryText.substring(lastPosition);
 	}
 	
-	public int createRandomNumber() {
-		Random r = new Random();
-		return r.nextInt(MAX_RANDOM_NUMBER - MIN_RANDOM_NUMBER) + MIN_RANDOM_NUMBER;
+	public int createRandomNumber(int numberOfBits) {
+		double x = Math.pow(2, numberOfBits - 1);
+		Log.d("borrame", "number of bits: " + numberOfBits + " x: " + x);
+		int maxNumber = (int) x;
+		return mRandom.nextInt(maxNumber);
 	}
 
 	public String convertDecimalToBinary(int decimalNumber) {

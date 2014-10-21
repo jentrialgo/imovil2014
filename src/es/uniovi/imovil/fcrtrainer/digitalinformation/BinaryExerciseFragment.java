@@ -18,6 +18,11 @@ limitations under the License.
 
 package es.uniovi.imovil.fcrtrainer.digitalinformation;
 
+import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import es.uniovi.imovil.fcrtrainer.Level;
+import es.uniovi.imovil.fcrtrainer.PreferenceUtils;
 import es.uniovi.imovil.fcrtrainer.R;
 
 
@@ -30,6 +35,7 @@ public class BinaryExerciseFragment extends BaseNumericalExerciseFragment {
 	private static final long GAME_DURATION_MS = 5 * 60 * 1000; // 5min
 
 	private BinaryConverter binaryConverter = new BinaryConverter();
+	private int mNumberOfBits;
 
 	public static BinaryExerciseFragment newInstance() {
 		BinaryExerciseFragment fragment = new BinaryExerciseFragment();
@@ -39,6 +45,15 @@ public class BinaryExerciseFragment extends BaseNumericalExerciseFragment {
 
 	public BinaryExerciseFragment() {
 		setGameDuration(GAME_DURATION_MS);
+	}
+	
+	@Override
+	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onActivityCreated(savedInstanceState);
+		Context context = getActivity().getApplicationContext();
+		Level level = PreferenceUtils.getLevel(context);
+		mNumberOfBits = level.numberOfBits();
 	}
 
 	private String convertToDecimal(String textToDecimal) {
@@ -80,16 +95,19 @@ public class BinaryExerciseFragment extends BaseNumericalExerciseFragment {
 
 	@Override
 	protected String titleString() {
+		int formatStringId;
 		if (mDirectConversion) {
-			return getResources().getString(R.string.convert_dec_to_bin);
+			formatStringId = R.string.convert_dec_to_bin;
 		} else {
-			return getResources().getString(R.string.convert_bin_to_dec);
+			formatStringId = R.string.convert_bin_to_dec;
 		}
+		String formatString = getResources().getString(formatStringId);
+		return String.format(formatString, mNumberOfBits);
 	}
 
 	@Override
 	protected String generateRandomNumber() {
-		int number = binaryConverter.createRandomNumber();
+		int number = binaryConverter.createRandomNumber(mNumberOfBits);
 
 		if (mDirectConversion) {
 			return String.valueOf(number);
