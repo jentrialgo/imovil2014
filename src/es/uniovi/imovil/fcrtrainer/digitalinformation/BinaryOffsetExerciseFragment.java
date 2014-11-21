@@ -23,7 +23,6 @@ import es.uniovi.imovil.fcrtrainer.R;
 public class BinaryOffsetExerciseFragment extends BaseNumericalExerciseFragment {
 
 	private static final int POINTS_FOR_QUESTION = 10;
-	private int mNumberOfBits = 6;
 	private int mOffset = 32;
 	private String mCorrectAnswer;
 
@@ -55,22 +54,28 @@ public class BinaryOffsetExerciseFragment extends BaseNumericalExerciseFragment 
 			formatStringId = R.string.convert_bin_offset_to_dec;
 		}
 		String formatString = getResources().getString(formatStringId);
-		return String.format(formatString, mOffset, mNumberOfBits);
+		return String.format(formatString, mOffset, numberOfBits());
 	}
 
 	@Override
 	protected String generateRandomNumber() {
-		int maxInNaturalBinary = ((int) Math.pow(2, mNumberOfBits));
-		int numberInOffset = mRandomGenerator.nextInt(maxInNaturalBinary);
+		int numberOfBits = numberOfBits();
+
+		int min = (int) -(Math.pow(2, numberOfBits - 1));
+		int max = (int) (Math.pow(2, numberOfBits - 1)) - 1;
+		int numberInDecimal = mRandomGenerator.nextInt(max - min + 1) + min;;
+
+		// Exceso central
+		mOffset = (int) Math.pow(2, numberOfBits - 1);
 
 		if (mDirectConversion) {
 			mCorrectAnswer = BinaryConverter.binaryToStringWithNbits(
-					numberInOffset, mNumberOfBits);
-			return Integer.toString(numberInOffset - mOffset);
+					numberInDecimal + mOffset, numberOfBits);
+			return Integer.toString(numberInDecimal);
 		} else {
-			mCorrectAnswer = Integer.toString(numberInOffset - mOffset);
-			return BinaryConverter.binaryToStringWithNbits(numberInOffset,
-					mNumberOfBits);
+			mCorrectAnswer = Integer.toString(numberInDecimal);
+			return BinaryConverter.binaryToStringWithNbits(
+					numberInDecimal - mOffset, numberOfBits);
 		}
 	}
 
