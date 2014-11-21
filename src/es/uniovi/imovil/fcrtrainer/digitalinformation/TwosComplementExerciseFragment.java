@@ -24,7 +24,6 @@ public class TwosComplementExerciseFragment extends
 		BaseNumericalExerciseFragment {
 	private static final int POINTS_FOR_QUESTION = 10;
 
-	private int mNumberOfBits = 6;
 	private int mNumberToConvert;
 
 	public static TwosComplementExerciseFragment newInstance() {
@@ -51,13 +50,14 @@ public class TwosComplementExerciseFragment extends
 			formatStringId = R.string.convert_twos_complement_to_dec;
 		}
 		String formatString = getResources().getString(formatStringId);
-		return String.format(formatString, mNumberOfBits);
+		return String.format(formatString, numberOfBits());
 	}
 
 	@Override
 	protected String generateRandomNumber() {
-		int min = (int) -(Math.pow(2, mNumberOfBits - 1));
-		int max = (int) (Math.pow(2, mNumberOfBits - 1)) - 1;
+		int numberOfBits = numberOfBits();
+		int min = (int) -(Math.pow(2, numberOfBits - 1));
+		int max = (int) (Math.pow(2, numberOfBits - 1)) - 1;
 
 		mNumberToConvert = mRandomGenerator.nextInt(max - min + 1) + min;
 
@@ -65,7 +65,7 @@ public class TwosComplementExerciseFragment extends
 			return Integer.toString(mNumberToConvert);
 		} else {
 			return BinaryConverter.binaryToStringWithNbits(mNumberToConvert,
-					mNumberOfBits);
+					numberOfBits);
 		}
 	}
 
@@ -73,7 +73,7 @@ public class TwosComplementExerciseFragment extends
 	protected String obtainSolution() {
 		if (mDirectConversion) {
 			return BinaryConverter.binaryToStringWithNbits(mNumberToConvert,
-					mNumberOfBits);
+					numberOfBits());
 		} else {
 			return Integer.toString(mNumberToConvert);
 		}
