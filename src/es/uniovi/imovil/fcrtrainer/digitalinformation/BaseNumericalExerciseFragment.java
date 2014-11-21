@@ -25,10 +25,13 @@ import java.util.Random;
 import org.json.JSONException;
 
 import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
+import es.uniovi.imovil.fcrtrainer.Level;
+import es.uniovi.imovil.fcrtrainer.PreferenceUtils;
 import es.uniovi.imovil.fcrtrainer.R;
 import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -110,7 +113,6 @@ public abstract class BaseNumericalExerciseFragment extends
 			public void onClick(View arg0) {
 				mDirectConversion ^= true;
 				setKeyboardLayout();
-				setTitle();
 				newQuestion();
 			}
 		});
@@ -123,22 +125,24 @@ public abstract class BaseNumericalExerciseFragment extends
 			}
 		});
 
+		return rootView;
+	}
+
+	@Override
+	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+
 		if (savedInstanceState != null) {
 			mDirectConversion = savedInstanceState
 					.getBoolean(STATE_DIRECT_CONVERSION);
 			mNumberToConvert = savedInstanceState
 					.getString(STATE_NUMBER_TO_CONVERT);
-			setKeyboardLayout();
-			setTitle();
 		} else {
 			generateRandomQuestion();
 		}
 
-		setTitle();
-		setKeyboardLayout();
 		updateUI();
-
-		return rootView;
+		setKeyboardLayout();
 	}
 
 	private void setKeyboardLayout() {
@@ -159,8 +163,14 @@ public abstract class BaseNumericalExerciseFragment extends
 		mNumberToConvert = generateRandomNumber();
 	}
 
+	protected int numberOfBits() {
+		Level level = PreferenceUtils.getLevel(getActivity());
+		return level.numberOfBits();
+	}	
+
 	private void updateUI() {
 		mNumberToConvertTextView.setText(mNumberToConvert);
+		setTitle();
 	}
 
 	/**

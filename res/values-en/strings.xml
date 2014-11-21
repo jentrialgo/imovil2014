@@ -15,7 +15,7 @@
     <string name="hexadecimal">Hexadecimal</string>
     <string name="sign_and_magnitude">Sign-and-magnitude</string>
  	<string name="offset_binary">Binary Offset</string>
-	<string name="twoscomplement">Twos Complement</string>
+	<string name="twoscomplement">Two\'s Complement</string>
     <string name="floating_point">Coma flotante</string>
     <string name="logic_gate">Logic gate</string>
     <string name="logic_operation">Logic operation</string>
@@ -51,11 +51,11 @@
     <string name="lost_time_over">Game Over! Time\'s up! You answered %1$d questions correctly.</string>
 
     <!-- Módulo: Binario -->
-    <string name="convert_bin_to_dec">Convert natural binary to decimal</string>
-    <string name="convert_dec_to_bin">Convert decimal to natural binary</string>
+    <string name="convert_bin_to_dec">Convert natural binary to decimal with %1$d bits</string>
+    <string name="convert_dec_to_bin">Convert decimal to natural binary with %1$d bits</string>
 
     <!-- Módulo: Hexadecimal -->
-    <string name="convert_bin_to_hex">Convert from decimal to hexadecimal</string>
+    <string name="convert_bin_to_hex">Convert from binary to hexadecimal</string>
     <string name="convert_hex_to_bin">Convert from hexadecimal to binary</string>
 
     <!--  Módulo: Signo y magnitud -->

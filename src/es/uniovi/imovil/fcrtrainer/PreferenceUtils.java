@@ -26,7 +26,8 @@ public class PreferenceUtils {
 		SharedPreferences prefs =
 				PreferenceManager.getDefaultSharedPreferences(context);
 		String levelPreferenceKey = context.getString(R.string.pref_level_key);
-		String levelAsString = prefs.getString(levelPreferenceKey, "");
+		String defaultLevel = context.getString(R.string.pref_level1_name);
+		String levelAsString = prefs.getString(levelPreferenceKey, defaultLevel);
 		return Level.fromString(context, levelAsString);
 	}
 }

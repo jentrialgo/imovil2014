@@ -20,8 +20,6 @@ package es.uniovi.imovil.fcrtrainer.digitalinformation;
 
 import java.util.Random;
 
-import android.util.Log;
-
 public class BinaryConverter{
 	private Random mRandom = new Random();
 
@@ -56,7 +54,6 @@ public class BinaryConverter{
 	
 	public int createRandomNumber(int numberOfBits) {
 		double x = Math.pow(2, numberOfBits - 1);
-		Log.d("borrame", "number of bits: " + numberOfBits + " x: " + x);
 		int maxNumber = (int) x;
 		return mRandom.nextInt(maxNumber);
 	}
