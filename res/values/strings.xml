@@ -103,8 +103,8 @@ limitations under the License.
     <string name="convert_dec_to_bin">Convierte de decimal a binario natural con %1$d bits</string>
 
     <!-- Módulo: Hexadecimal -->
-    <string name="convert_bin_to_hex">Convierte de binario a hexadecimal</string>
-    <string name="convert_hex_to_bin">Convierte de hexadecimal a binario</string>
+    <string name="convert_bin_to_hex">Convierte de binario con %1$d bits a hexadecimal</string>
+    <string name="convert_hex_to_bin">Convierte de hexadecimal a binario con %1$d bits</string>
 
 	<!--  Módulo: signo y magnitud -->
     <string name="convert_sign_and_magnitude_to_dec">Convierte de decimal a signo-magnitud con %1$d bits</string>

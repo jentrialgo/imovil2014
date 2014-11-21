@@ -55,8 +55,8 @@
     <string name="convert_dec_to_bin">Convert decimal to natural binary with %1$d bits</string>
 
     <!-- Módulo: Hexadecimal -->
-    <string name="convert_bin_to_hex">Convert from binary to hexadecimal</string>
-    <string name="convert_hex_to_bin">Convert from hexadecimal to binary</string>
+    <string name="convert_bin_to_hex">Convert from binary with %1$d bits to hexadecimal</string>
+    <string name="convert_hex_to_bin">Convert from hexadecimal to binary with %1$d bits</string>
 
     <!--  Módulo: Signo y magnitud -->
     <string name="convert_sign_and_magnitude_to_dec">Convert from decimal to sign-and-magnitude with %1$d bits</string>

@@ -23,7 +23,6 @@ import java.util.Locale;
 import es.uniovi.imovil.fcrtrainer.R;
 
 public class HexadecimalExerciseFragment extends BaseNumericalExerciseFragment {
-	private static final int MAX_NUMBER_TO_CONVERT = 512;
 	private static final int POINTS_FOR_QUESTION = 10;
 	private int mNumberToConvert;
 
@@ -51,11 +50,14 @@ public class HexadecimalExerciseFragment extends BaseNumericalExerciseFragment {
 
 	@Override
 	protected String titleString() {
+		int formatStringId;
 		if (mDirectConversion) {
-			return getResources().getString(R.string.convert_bin_to_hex);
+			formatStringId = R.string.convert_bin_to_hex;
 		} else {
-			return getResources().getString(R.string.convert_hex_to_bin);
+			formatStringId = R.string.convert_hex_to_bin;
 		}
+		String formatString = getResources().getString(formatStringId);
+		return String.format(formatString, numberOfBits());
 	}
 
 	@Override
@@ -74,7 +76,8 @@ public class HexadecimalExerciseFragment extends BaseNumericalExerciseFragment {
 
 	@Override
 	protected String generateRandomNumber() {
-		mNumberToConvert = mRandomGenerator.nextInt(MAX_NUMBER_TO_CONVERT);
+		int maxNumberToConvert = (int) (Math.pow(2, numberOfBits()) - 1);
+		mNumberToConvert = mRandomGenerator.nextInt(maxNumberToConvert);
 		if (mDirectConversion) {
 			return Integer.toBinaryString(mNumberToConvert);
 		} else {
