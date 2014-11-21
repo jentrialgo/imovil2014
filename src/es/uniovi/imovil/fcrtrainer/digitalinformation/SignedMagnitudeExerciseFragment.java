@@ -25,7 +25,6 @@ public class SignedMagnitudeExerciseFragment extends
 
 	private static final int POINTS_FOR_QUESTION = 10;
 	private static final long GAME_DURATION_MS = 5 * 1000 * 60; // 5min
-	int mNumberOfBits = 6;
 
 	private String mCorrectAnswer;
 
@@ -50,7 +49,7 @@ public class SignedMagnitudeExerciseFragment extends
 
 	@Override
 	protected String generateRandomNumber() {
-		int numberOfBitsMagnitude = mNumberOfBits - 1;
+		int numberOfBitsMagnitude = numberOfBits() - 1;
 		int maxMagnitude = (int) (Math.pow(2, numberOfBitsMagnitude) - 1);
 		int randomNumber = mRandomGenerator.nextInt(maxMagnitude);
 		String magnitudeDecimal = String.valueOf(randomNumber);
@@ -85,7 +84,7 @@ public class SignedMagnitudeExerciseFragment extends
 			formatStringId = R.string.convert_sign_and_magnitude_to_dec;
 		}
 		String formatString = getResources().getString(formatStringId);
-		return String.format(formatString, mNumberOfBits);
+		return String.format(formatString, numberOfBits());
 	}
 
 	@Override
