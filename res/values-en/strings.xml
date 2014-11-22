@@ -102,7 +102,15 @@
   	<string name="host_count_title">Calculate number of hosts</string>
   	<!-- End Host count exercise -->
   	
-  	    <!-- Help activity -->
+  	<!--  Punto Flotante -->
+    <string name="convert_to_iee">Transform to IEEE 754</string>
+    <string name="convert_from_iee">Transform from IEEE 754 to decimal</string>
+    <string name="tv_sign">S</string>
+    <string name="tv_exponent">Exp (8 bits)</string>
+    <string name="tv_mant">Mantissa (23 bits)</string>
+    <!--  Fin Punto Flotante -->
+  	
+  	<!-- Help activity -->
     <string name="developed_by">Application developed by Informática Móvil students, 2013-2014 promotion.</string>
     <!-- End Help activity -->
     

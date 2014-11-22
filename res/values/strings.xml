@@ -146,10 +146,11 @@ limitations under the License.
     <!-- End Host count exercise -->
     
     <!--  Punto Flotante -->
-    <string name="convert_to_iee">Convierte a IEEE 754/binario formato !</string>
+    <string name="convert_to_iee">Convierte a formato IEEE 754</string>
+    <string name="convert_from_iee">Convierte de IEEE 754 a decimal</string>
     <string name="tv_sign">S</string>
-    <string name="tv_exponent">Exp (8 Bit)</string>
-    <string name="tv_mant">Mantissa (23 Bit)</string>
+    <string name="tv_exponent">Exp (8 bits)</string>
+    <string name="tv_mant">Mantisa (23 bits)</string>
 	<!--  Fin Punto Flotante -->
 
     <!-- Help activity -->

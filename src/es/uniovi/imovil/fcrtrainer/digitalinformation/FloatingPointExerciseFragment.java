@@ -201,7 +201,7 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 
 				if (mIsBinary) {
 					mValues.setText(Float.toString(mDecimalValueF));
-					mIeeeBinary.setText("Convierte a IEE 754/binario formato!");
+					mIeeeBinary.setText(R.string.convert_to_iee);
 
 					mEtDecimal.setVisibility(View.GONE);
 					mTvDecimal.setVisibility(View.GONE);
@@ -226,7 +226,7 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 
 					mValues.setText(mBitRepresentationDivided);
 
-					mIeeeBinary.setText("Convierte a decimal formato!");
+					mIeeeBinary.setText(R.string.convert_from_iee);
 
 					mEtDecimal.setVisibility(View.VISIBLE);
 					mTvDecimal.setVisibility(View.VISIBLE);
