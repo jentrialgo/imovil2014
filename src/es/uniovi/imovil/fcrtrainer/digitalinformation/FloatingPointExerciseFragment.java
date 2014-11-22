@@ -147,54 +147,63 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 	private void checkSolutionListener() {
 		RemoveZeroes();
 
-		String comparisonString;
 		if (mIsBinary == true) {
-			comparisonString = mEtDecimal.getEditableText().toString()
-					.trim();
+			checkSolutionBinaryToDecimal();
+		} else {
+			checkSolutionDecimalToBinary();
+		}
+	}
 
-			if (comparisonString.equals(Float.toString(mDecimalValueF))) {
-				showAnimationAnswer(true);
-				if (mGame)
-					updateGameState();
-				generateRandomNumbers();
-				RemoveZeroes();
+	private void checkSolutionBinaryToDecimal() {
+		String comparisonString;
+		comparisonString = mEtDecimal.getEditableText().toString()
+				.trim();
 
-				mBitRepresentationDivided = mBitRepresentationDel
-						.substring(0, 1)
-						+ " "
-						+ mBitRepresentationDel.substring(1, 9)
-						+ " "
-						+ mBitRepresentationDel.substring(9);
+		if (comparisonString.equals(Float.toString(mDecimalValueF))) {
+			showAnimationAnswer(true);
+			if (mGame)
+				updateGameState();
+			generateRandomNumbers();
+			RemoveZeroes();
 
-				mValues.setText(mBitRepresentationDivided);
-				mEtDecimal.setText(null);
+			mBitRepresentationDivided = mBitRepresentationDel
+					.substring(0, 1)
+					+ " "
+					+ mBitRepresentationDel.substring(1, 9)
+					+ " "
+					+ mBitRepresentationDel.substring(9);
 
-			} else
-				showAnimationAnswer(false);
+			mValues.setText(mBitRepresentationDivided);
+			mEtDecimal.setText(null);
 
 		} else {
-			comparisonString = mEtSign.getEditableText().toString().trim()
-					+ mEtExponent.getEditableText().toString().trim()
-					+ mEtMantissa.getEditableText().toString().trim();
-
-			if (mBitRepresentationDel.equals(comparisonString)
-					|| mBitRepresentation.equals(comparisonString)) {
-				showAnimationAnswer(true);
-				if (mGame)
-					updateGameState();
-				generateRandomNumbers();
-				RemoveZeroes();
-				mValues.setText(Float.toString(mDecimalValueF));
-				mEtSign.setText(null);
-				mEtExponent.setText(null);
-				mEtMantissa.setText(null);
-
-			} else {
-				showAnimationAnswer(false);
-			}
+			showAnimationAnswer(false);
 		}
 	}
 	
+	private void checkSolutionDecimalToBinary() {
+		String comparisonString;
+		comparisonString = mEtSign.getEditableText().toString().trim()
+				+ mEtExponent.getEditableText().toString().trim()
+				+ mEtMantissa.getEditableText().toString().trim();
+
+		if (mBitRepresentationDel.equals(comparisonString)
+				|| mBitRepresentation.equals(comparisonString)) {
+			showAnimationAnswer(true);
+			if (mGame)
+				updateGameState();
+			generateRandomNumbers();
+			RemoveZeroes();
+			mValues.setText(Float.toString(mDecimalValueF));
+			mEtSign.setText(null);
+			mEtExponent.setText(null);
+			mEtMantissa.setText(null);
+
+		} else {
+			showAnimationAnswer(false);
+		}
+	}
+
 	private void solutionListener() {
 		if (mIsBinary) {
 			mEtDecimal.setText(Float.toString(mDecimalValueF));
