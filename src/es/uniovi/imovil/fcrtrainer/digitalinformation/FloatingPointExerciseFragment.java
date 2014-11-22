@@ -106,7 +106,6 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 		mEtExponent.setText(null);
 		mEtMantissa.setText(null);
 
-		// OnCreate
 		generateRandomNumbers();
 		RemoveZeroes();
 		mValues.setText(Float.toString(mDecimalValueF));
@@ -121,133 +120,140 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 				+ mBitRepresentationDel.substring(9);
 
 		mCheck.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
-				RemoveZeroes();
-
-				String comparisonString;
-				if (mIsBinary == true) {
-					comparisonString = mEtDecimal.getEditableText().toString()
-							.trim();
-
-					if (comparisonString.equals(Float.toString(mDecimalValueF))) {
-						showAnimationAnswer(true);
-						if (mGame)
-							updateGameState();
-						generateRandomNumbers();
-						RemoveZeroes();
-
-						mBitRepresentationDivided = mBitRepresentationDel
-								.substring(0, 1)
-								+ " "
-								+ mBitRepresentationDel.substring(1, 9)
-								+ " "
-								+ mBitRepresentationDel.substring(9);
-
-						mValues.setText(mBitRepresentationDivided);
-						mEtDecimal.setText(null);
-
-					} else
-						showAnimationAnswer(false);
-
-				} else {
-					comparisonString = mEtSign.getEditableText().toString().trim()
-							+ mEtExponent.getEditableText().toString().trim()
-							+ mEtMantissa.getEditableText().toString().trim();
-
-					if (mBitRepresentationDel.equals(comparisonString)
-							|| mBitRepresentation.equals(comparisonString)) {
-						showAnimationAnswer(true);
-						if (mGame)
-							updateGameState();
-						generateRandomNumbers();
-						RemoveZeroes();
-						mValues.setText(Float.toString(mDecimalValueF));
-						mEtSign.setText(null);
-						mEtExponent.setText(null);
-						mEtMantissa.setText(null);
-
-					} else {
-						showAnimationAnswer(false);
-					}
-				}
+				checkSolutionListener();
 			}
 		});
 
 		mSolution.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
-
-				if (mIsBinary) {
-					mEtDecimal.setText(Float.toString(mDecimalValueF));
-				} else {
-					mEtSign.setText(mBitRepresentationDel.substring(0, 1));
-					mEtExponent.setText(mBitRepresentationDel.substring(1, 9));
-					mEtMantissa.setText(mBitRepresentationDel.substring(9));
-				}
-
+				solutionListener();
 			}
+
 		});
 
 		mToggle.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
-
-				generateRandomNumbers();
-				RemoveZeroes();
-
-				if (mIsBinary) {
-					mValues.setText(Float.toString(mDecimalValueF));
-					mIeeeBinary.setText(R.string.convert_to_iee);
-
-					mEtDecimal.setVisibility(View.GONE);
-					mTvDecimal.setVisibility(View.GONE);
-					mEtSign.setVisibility(View.VISIBLE);
-					mEtExponent.setVisibility(View.VISIBLE);
-					mEtMantissa.setVisibility(View.VISIBLE);
-					mTvSign.setVisibility(View.VISIBLE);
-					mTvExponent.setVisibility(View.VISIBLE);
-					mTvMantissa.setVisibility(View.VISIBLE);
-
-					mEtSign.setText(null);
-					mEtExponent.setText(null);
-					mEtMantissa.setText(null);
-
-					mIsBinary = false;
-				} else {
-					mBitRepresentationDivided = mBitRepresentationDel.substring(
-							0, 1)
-							+ " "
-							+ mBitRepresentationDel.substring(1, 9)
-							+ " " + mBitRepresentationDel.substring(9);
-
-					mValues.setText(mBitRepresentationDivided);
-
-					mIeeeBinary.setText(R.string.convert_from_iee);
-
-					mEtDecimal.setVisibility(View.VISIBLE);
-					mTvDecimal.setVisibility(View.VISIBLE);
-					mEtSign.setVisibility(View.GONE);
-					mEtExponent.setVisibility(View.GONE);
-					mEtMantissa.setVisibility(View.GONE);
-					mTvSign.setVisibility(View.GONE);
-					mTvExponent.setVisibility(View.GONE);
-					mTvMantissa.setVisibility(View.GONE);
-
-					mEtDecimal.setText(null);
-
-					mIsBinary = true;
-				}
-
+				toggleListener();
 			}
 		});
 
 		return rootView;
 	}
 
+	private void checkSolutionListener() {
+		RemoveZeroes();
+
+		String comparisonString;
+		if (mIsBinary == true) {
+			comparisonString = mEtDecimal.getEditableText().toString()
+					.trim();
+
+			if (comparisonString.equals(Float.toString(mDecimalValueF))) {
+				showAnimationAnswer(true);
+				if (mGame)
+					updateGameState();
+				generateRandomNumbers();
+				RemoveZeroes();
+
+				mBitRepresentationDivided = mBitRepresentationDel
+						.substring(0, 1)
+						+ " "
+						+ mBitRepresentationDel.substring(1, 9)
+						+ " "
+						+ mBitRepresentationDel.substring(9);
+
+				mValues.setText(mBitRepresentationDivided);
+				mEtDecimal.setText(null);
+
+			} else
+				showAnimationAnswer(false);
+
+		} else {
+			comparisonString = mEtSign.getEditableText().toString().trim()
+					+ mEtExponent.getEditableText().toString().trim()
+					+ mEtMantissa.getEditableText().toString().trim();
+
+			if (mBitRepresentationDel.equals(comparisonString)
+					|| mBitRepresentation.equals(comparisonString)) {
+				showAnimationAnswer(true);
+				if (mGame)
+					updateGameState();
+				generateRandomNumbers();
+				RemoveZeroes();
+				mValues.setText(Float.toString(mDecimalValueF));
+				mEtSign.setText(null);
+				mEtExponent.setText(null);
+				mEtMantissa.setText(null);
+
+			} else {
+				showAnimationAnswer(false);
+			}
+		}
+	}
+	
+	private void solutionListener() {
+		if (mIsBinary) {
+			mEtDecimal.setText(Float.toString(mDecimalValueF));
+		} else {
+			mEtSign.setText(mBitRepresentationDel.substring(0, 1));
+			mEtExponent.setText(mBitRepresentationDel.substring(1, 9));
+			mEtMantissa.setText(mBitRepresentationDel.substring(9));
+		}
+	}
+
+	private void toggleListener() {
+		generateRandomNumbers();
+		RemoveZeroes();
+
+		if (mIsBinary) {
+			mValues.setText(Float.toString(mDecimalValueF));
+			mIeeeBinary.setText(R.string.convert_to_iee);
+
+			mEtDecimal.setVisibility(View.GONE);
+			mTvDecimal.setVisibility(View.GONE);
+			mEtSign.setVisibility(View.VISIBLE);
+			mEtExponent.setVisibility(View.VISIBLE);
+			mEtMantissa.setVisibility(View.VISIBLE);
+			mTvSign.setVisibility(View.VISIBLE);
+			mTvExponent.setVisibility(View.VISIBLE);
+			mTvMantissa.setVisibility(View.VISIBLE);
+
+			mEtSign.setText(null);
+			mEtExponent.setText(null);
+			mEtMantissa.setText(null);
+
+			mIsBinary = false;
+		} else {
+			mBitRepresentationDivided = mBitRepresentationDel.substring(
+					0, 1)
+					+ " "
+					+ mBitRepresentationDel.substring(1, 9)
+					+ " " + mBitRepresentationDel.substring(9);
+
+			mValues.setText(mBitRepresentationDivided);
+
+			mIeeeBinary.setText(R.string.convert_from_iee);
+
+			mEtDecimal.setVisibility(View.VISIBLE);
+			mTvDecimal.setVisibility(View.VISIBLE);
+			mEtSign.setVisibility(View.GONE);
+			mEtExponent.setVisibility(View.GONE);
+			mEtMantissa.setVisibility(View.GONE);
+			mTvSign.setVisibility(View.GONE);
+			mTvExponent.setVisibility(View.GONE);
+			mTvMantissa.setVisibility(View.GONE);
+
+			mEtDecimal.setText(null);
+
+			mIsBinary = true;
+		}
+
+	}
+	
 	public void RemoveZeroes() {
 		int lastSignificant = mBitRepresentation.length() - 1;
 
