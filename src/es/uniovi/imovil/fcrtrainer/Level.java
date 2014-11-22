@@ -20,20 +20,26 @@ package es.uniovi.imovil.fcrtrainer;
 import android.content.Context;
 
 public enum Level {
-	BEGINNER(4),
-	INTERMEDIATE(6),
-	PROFICIENCY(8);
+	BEGINNER(4, 1),
+	INTERMEDIATE(6, 2),
+	PROFICIENCY(8, 3);
 
-	private final int mNumberOfBits;
+	private final int mNumberOfBits; // for numerical exercises
+	private final int mNumberOfBitsFractionalPart; // for floating point
 
-	Level(int numberOfBits) {
+	Level(int numberOfBits, int numberOfBitsFractonalPart) {
 		mNumberOfBits = numberOfBits;
+		mNumberOfBitsFractionalPart = numberOfBitsFractonalPart;
 	}
 
 	public int numberOfBits() {
 		return mNumberOfBits;
 	}
 
+	public int numberOfBitsFractionalPart() {
+		return mNumberOfBitsFractionalPart;
+	}
+	
 	public static Level fromString(Context context, String string) {
 		String[] levelNames = context.getResources().getStringArray(
 				R.array.pref_level_values);

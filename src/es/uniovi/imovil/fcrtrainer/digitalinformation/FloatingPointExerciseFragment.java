@@ -34,6 +34,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
+import es.uniovi.imovil.fcrtrainer.Level;
+import es.uniovi.imovil.fcrtrainer.PreferenceUtils;
 import es.uniovi.imovil.fcrtrainer.R;
 import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
 
@@ -53,39 +55,23 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 	private Button mCheck;
 	private Button mToggle;
 	private Button mSolution;
+	
 	boolean mIsBinary = true;
 	boolean mConvert = true;
 	boolean mGame = false;
-	int mMinX = -50;
-	int mMaxX = 50;
-	int mMinY = 0;
-	int mMaxY = 15;
-	int mFinalX = 0;
-	int mFractionHelper = 0;
-	float mDecimalValueF = 0.0f;
-	int mX = 0;
-	int mMantissa;
-	int mSign;
-	int mExp;
-	int mSignBit = 0; // signbit
-	int mRealExp = 0; // exponent
-	int mLastOne = 0;
 	int mPointsCounter = 0;
-	String mComparisonString;
-	String mCheckString;
-	String mMantissaAsString;
-	String mShortMantissa;
 
+	float mDecimalValueF = 0.0f;
 	int mfAsIntBits;
-	String mfAsBinaryString;
 	String mBitRepresentationDel;
 	String mBitRepresentation;
 	String mBitRepresentationDivided;
 
+	private Random mRandom = new Random();
+
 	private static final int GAMEMODE_MAXQUESTIONS = 5;
 
 	public static FloatingPointExerciseFragment newInstance() {
-
 		FloatingPointExerciseFragment fragment = new FloatingPointExerciseFragment();
 		return fragment;
 	}
@@ -140,11 +126,12 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 			public void onClick(View v) {
 				RemoveZeroes();
 
+				String comparisonString;
 				if (mIsBinary == true) {
-					mComparisonString = mEtDecimal.getEditableText().toString()
+					comparisonString = mEtDecimal.getEditableText().toString()
 							.trim();
 
-					if (mComparisonString.equals(Float.toString(mDecimalValueF))) {
+					if (comparisonString.equals(Float.toString(mDecimalValueF))) {
 						showAnimationAnswer(true);
 						if (mGame)
 							updateGameState();
@@ -165,12 +152,12 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 						showAnimationAnswer(false);
 
 				} else {
-					mComparisonString = mEtSign.getEditableText().toString().trim()
+					comparisonString = mEtSign.getEditableText().toString().trim()
 							+ mEtExponent.getEditableText().toString().trim()
 							+ mEtMantissa.getEditableText().toString().trim();
 
-					if (mBitRepresentationDel.equals(mComparisonString)
-							|| mBitRepresentation.equals(mComparisonString)) {
+					if (mBitRepresentationDel.equals(comparisonString)
+							|| mBitRepresentation.equals(comparisonString)) {
 						showAnimationAnswer(true);
 						if (mGame)
 							updateGameState();
@@ -273,27 +260,51 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 
 	}
 
+	protected int numberOfBits() {
+		Level level = PreferenceUtils.getLevel(getActivity());
+		return level.numberOfBits();
+	}	
+
 	public void generateRandomNumbers() {
-		// Random numbers in range of: 0-50
-		Random rand = new Random();
-		mFinalX = rand.nextInt(mMaxX - mMinX) + mMinX;
+		int maxIntegerPart = (int) Math.pow(2, numberOfBits() - 1);		
+		int intPart = mRandom.nextInt(maxIntegerPart);
 
-		// Random numbers in range of: 0-15
-		Random rand_helper = new Random();
-		mFractionHelper = rand_helper.nextInt(mMaxY - mMinY) + mMinY;
-		mDecimalValueF = mFractionHelper * 0.125f + mFinalX;
+		int numberOfBitsForFraction = numberOfBitsFractionalPart();
+		int maxFractionalPart = (int) Math.pow(2, numberOfBitsForFraction);
+		
+		// Calcular el patrón de bits para la parte fraccional como un entero
+		int fractionalPartBitPattern = mRandom.nextInt(maxFractionalPart);
 
+		// Desplazarlo a la izquierda para que sea realmente fraccional
+		float fractionalPart = fractionalPartBitPattern
+				* (float) Math.pow(2, -numberOfBitsForFraction);
+		
+		mDecimalValueF = intPart + fractionalPart;
+
+		// El cero no es un resultado válido porque no es un número normalizado
+		// así que lo cambiamos por 1
+		if (mDecimalValueF == 0) {
+			mDecimalValueF = 1f;
+		}
+		
+		// Decidir si es positivo o negativo con un 50% de probabilidad
+		if (mRandom.nextInt(2) == 0) {
+			mDecimalValueF = -mDecimalValueF;
+		}
+		
 		mfAsIntBits = Float.floatToRawIntBits(mDecimalValueF);
 
-		mfAsBinaryString = Integer.toBinaryString(mfAsIntBits);
+		String fAsBinaryString;
+		fAsBinaryString = Integer.toBinaryString(mfAsIntBits);
 
 		// IMPORTANT: Representation of the float number in binary form
-		mBitRepresentation = String.format("%32s", mfAsBinaryString).replace(' ',
+		mBitRepresentation = String.format("%32s", fAsBinaryString).replace(' ',
 				'0');
+	}
 
-		mSign = ((mfAsIntBits & 0x80000000) >> 31) & 0x1;
-		mExp = (mfAsIntBits & 0x7f800000) >> 23;
-		mMantissa = (mfAsIntBits & 0x007fffff);
+	private int numberOfBitsFractionalPart() {
+		Level level = PreferenceUtils.getLevel(getActivity());
+		return level.numberOfBitsFractionalPart();
 	}
 
 	/**
