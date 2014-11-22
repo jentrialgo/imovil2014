@@ -76,7 +76,7 @@ limitations under the License.
             android:background="@drawable/cards" >
 
             <TextView
-                android:id="@+id/converting_value"
+                android:id="@+id/numbertoconvert"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"

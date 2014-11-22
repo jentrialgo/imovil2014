@@ -41,7 +41,7 @@ import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
 
 public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 
-	private TextView mValues;
+	private TextView mTvNumberToconvert;
 	private TextView mIeeeBinary;
 	private TextView mTvDecimal;
 	private TextView mTvSign;
@@ -87,7 +87,7 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 		rootView = inflater.inflate(R.layout.fragment_floatingpoint, container,
 				false);
 
-		mValues = (TextView) rootView.findViewById(R.id.converting_value);
+		mTvNumberToconvert = (TextView) rootView.findViewById(R.id.numbertoconvert);
 		mTvDecimal = (TextView) rootView.findViewById(R.id.tv_decimal);
 		mTvSign = (TextView) rootView.findViewById(R.id.tv_s);
 		mTvExponent = (TextView) rootView.findViewById(R.id.tv_exp);
@@ -108,7 +108,7 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 
 		generateRandomNumbers();
 		RemoveZeroes();
-		mValues.setText(Float.toString(mDecimalValueF));
+		mTvNumberToconvert.setText(Float.toString(mDecimalValueF));
 		mIsBinary = false;
 
 		mfAsIntBits = Float.floatToRawIntBits(mDecimalValueF);
@@ -173,7 +173,7 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 					+ " "
 					+ mBitRepresentationDel.substring(9);
 
-			mValues.setText(mBitRepresentationDivided);
+			mTvNumberToconvert.setText(mBitRepresentationDivided);
 			mEtDecimal.setText(null);
 
 		} else {
@@ -194,7 +194,7 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 				updateGameState();
 			generateRandomNumbers();
 			RemoveZeroes();
-			mValues.setText(Float.toString(mDecimalValueF));
+			mTvNumberToconvert.setText(Float.toString(mDecimalValueF));
 			mEtSign.setText(null);
 			mEtExponent.setText(null);
 			mEtMantissa.setText(null);
@@ -219,7 +219,7 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 		RemoveZeroes();
 
 		if (mIsBinary) {
-			mValues.setText(Float.toString(mDecimalValueF));
+			mTvNumberToconvert.setText(Float.toString(mDecimalValueF));
 			mIeeeBinary.setText(R.string.convert_to_iee);
 
 			mEtDecimal.setVisibility(View.GONE);
@@ -243,7 +243,7 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 					+ mBitRepresentationDel.substring(1, 9)
 					+ " " + mBitRepresentationDel.substring(9);
 
-			mValues.setText(mBitRepresentationDivided);
+			mTvNumberToconvert.setText(mBitRepresentationDivided);
 
 			mIeeeBinary.setText(R.string.convert_from_iee);
 
