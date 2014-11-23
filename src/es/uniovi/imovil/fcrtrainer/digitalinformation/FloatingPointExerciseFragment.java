@@ -148,12 +148,11 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 		generateRandomNumbers();
 		RemoveZeroes();
 
-		mBitRepresentationDivided = mBitRepresentationNoTrailingZeroes
-				.substring(0, 1)
+		mBitRepresentationDivided = mBitRepresentation.substring(0, 1)
 				+ " "
-				+ mBitRepresentationNoTrailingZeroes.substring(1, 9)
+				+ mBitRepresentation.substring(1, 9)
 				+ " "
-				+ mBitRepresentationNoTrailingZeroes.substring(9);
+				+ mBitRepresentation.substring(9);
 
 		mTvNumberToconvert.setText(mBitRepresentationDivided);
 		mEtDecimal.setText(null);
@@ -202,9 +201,9 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 		if (mIsBinary) {
 			mEtDecimal.setText(Float.toString(mDecimalValueF));
 		} else {
-			mEtSign.setText(mBitRepresentationNoTrailingZeroes.substring(0, 1));
-			mEtExponent.setText(mBitRepresentationNoTrailingZeroes.substring(1, 9));
-			mEtMantissa.setText(mBitRepresentationNoTrailingZeroes.substring(9));
+			mEtSign.setText(mBitRepresentation.substring(0, 1));
+			mEtExponent.setText(mBitRepresentation.substring(1, 9));
+			mEtMantissa.setText(mBitRepresentation.substring(9));
 		}
 	}
 
@@ -247,7 +246,8 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 		}
 		lastSignificant++;
 
-		mBitRepresentationNoTrailingZeroes = mBitRepresentation.substring(0, lastSignificant);
+		mBitRepresentationNoTrailingZeroes = mBitRepresentation.substring(
+				0, lastSignificant);
 	}
 
 	protected int numberOfBits() {
