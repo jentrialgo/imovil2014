@@ -167,7 +167,7 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 	private void checkSolutionBinaryToDecimal() {
 		String userAnswer = mEtDecimal.getEditableText().toString().trim();
 
-		if (userAnswer.equals(Float.toString(mDecimalValueF))) {
+		if (Float.parseFloat(userAnswer) == mDecimalValueF) {
 			showAnimationAnswer(true);
 			if (mGame)
 				updateGameState();
