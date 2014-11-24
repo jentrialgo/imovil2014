@@ -402,7 +402,7 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 
 		try {
 			HighscoreManager.addScore(getActivity().getApplicationContext(),
-					points, R.string.hexadecimal, new Date(), user);
+					points, R.string.hexadecimal, new Date(), user, level());
 		} catch (JSONException e) {
 			Log.v(getClass().getSimpleName(), "Error when saving score");
 		}

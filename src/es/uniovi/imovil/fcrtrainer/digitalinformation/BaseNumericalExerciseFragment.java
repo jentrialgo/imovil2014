@@ -164,10 +164,9 @@ public abstract class BaseNumericalExerciseFragment extends
 	}
 
 	protected int numberOfBits() {
-		Level level = PreferenceUtils.getLevel(getActivity());
-		return level.numberOfBits();
-	}	
-
+		return level().numberOfBits();
+	}
+	
 	private void updateUI() {
 		mNumberToConvertTextView.setText(mNumberToConvert);
 		setTitle();
@@ -330,7 +329,7 @@ public abstract class BaseNumericalExerciseFragment extends
 
 		try {
 			HighscoreManager.addScore(getActivity().getApplicationContext(),
-					points, obtainExerciseId(), new Date(), user);
+					points, obtainExerciseId(), new Date(), user, level());
 		} catch (JSONException e) {
 			Log.v(getClass().getSimpleName(), "Error when saving score");
 		}

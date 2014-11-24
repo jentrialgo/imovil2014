@@ -25,6 +25,7 @@ import java.util.Date;
 import org.json.JSONException;
 
 import es.uniovi.imovil.fcrtrainer.Exercise;
+import es.uniovi.imovil.fcrtrainer.Level;
 import es.uniovi.imovil.fcrtrainer.R;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -58,6 +59,7 @@ public class HighscoresFragment extends Fragment implements
 	private static final String FIRST_TIME_HIGHSCORES = "first_time_highscores";
 
 	private View mRootView;
+	private Spinner mLevelSpinner;
 	private Spinner mExerciseSpinner;
 	private ListView mHighscoreListView;
 	ArrayList<Exercise> mExercises;
@@ -77,12 +79,41 @@ public class HighscoresFragment extends Fragment implements
 		mRootView = inflater.inflate(R.layout.fragment_highscores, container,
 				false);
 
+		initializeLevelSpinner();
 		initializeExerciseSpinner();
 
 		// El ListView se inicializa porque cuando se carga el spinner, se
 		// genera un evento onItemSelected del spinner
 
 		return mRootView;
+	}
+
+	private void initializeLevelSpinner() {
+		ArrayList<String> levelNames = new ArrayList<String>();
+
+		TypedArray array = getResources().obtainTypedArray(
+				R.array.pref_level_values);
+
+		for (int i = 0; i < array.length(); i++) {
+			int defaultId = 0;
+			int resourceId = array.getResourceId(i, defaultId);
+
+			String name = getResources().getString(resourceId);
+			levelNames.add(name);
+		}
+
+		array.recycle();
+
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+				getActivity(), android.R.layout.simple_spinner_item,
+				levelNames);
+		adapter.setDropDownViewResource(
+				android.R.layout.simple_spinner_dropdown_item);
+ 
+		mLevelSpinner = (Spinner) mRootView.findViewById(R.id.spinner_level);
+		mLevelSpinner.setAdapter(adapter);
+
+		mLevelSpinner.setOnItemSelectedListener(this);
 	}
 
 	private void initializeExerciseSpinner() {
@@ -95,8 +126,11 @@ public class HighscoresFragment extends Fragment implements
 		addExerciseModule(mExercises, R.array.networks);
 
 		ArrayAdapter<Exercise> adapter = new ArrayAdapter<Exercise>(
-				getActivity(), android.R.layout.simple_list_item_1, mExercises);
-
+				getActivity(), android.R.layout.simple_spinner_item,
+				mExercises);
+		adapter.setDropDownViewResource(
+				android.R.layout.simple_spinner_dropdown_item);
+	 
 		mExerciseSpinner = (Spinner) mRootView
 				.findViewById(R.id.spinner_exercise);
 		mExerciseSpinner.setAdapter(adapter);
@@ -120,7 +154,7 @@ public class HighscoresFragment extends Fragment implements
 		array.recycle();
 	}
 
-	private void initializeListView(int selectedExerciseId) {
+	private void initializeListView(int selectedExerciseId, Level level) {
 		mHighscoreListView = (ListView) mRootView
 				.findViewById(R.id.list_view_highscores);
 
@@ -128,7 +162,7 @@ public class HighscoresFragment extends Fragment implements
 			addBasicHighscores();
 		}
 
-		ArrayList<Highscore> highscores = loadHighscores();
+		ArrayList<Highscore> highscores = loadHighscores(level);
 
 		highscores = selectHighscores(highscores, selectedExerciseId);
 
@@ -155,11 +189,11 @@ public class HighscoresFragment extends Fragment implements
 		return false;
 	}
 
-	private ArrayList<Highscore> loadHighscores() {
+	private ArrayList<Highscore> loadHighscores(Level level) {
 		ArrayList<Highscore> highscores = new ArrayList<Highscore>();
 
 		try {
-			highscores = HighscoreManager.loadHighscores(getActivity());
+			highscores = HighscoreManager.loadHighscores(getActivity(), level);
 		} catch (JSONException e) {
 			Log.d(TAG, "Error al analizar el JSON: " + e.getMessage());
 			Toast.makeText(getActivity(),
@@ -184,6 +218,12 @@ public class HighscoresFragment extends Fragment implements
 	}
 
 	private void addBasicHighscores() {
+		for (Level level : Level.values()) {
+			addBasicHighscores(level);
+		}
+	}
+
+	private void addBasicHighscores(Level level) {
 		String[] names = getResources().getStringArray(R.array.student_names);
 		ArrayList<Highscore> highscores = new ArrayList<Highscore>();
 
@@ -192,7 +232,7 @@ public class HighscoresFragment extends Fragment implements
 		}
 
 		try {
-			HighscoreManager.addAllHighscores(getActivity(), highscores);
+			HighscoreManager.addAllHighscores(getActivity(), highscores, level);
 		} catch (JSONException e) {
 			Log.d(TAG, "Error al analizar el JSON: " + e.getMessage());
 			Toast.makeText(
@@ -219,8 +259,17 @@ public class HighscoresFragment extends Fragment implements
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int pos,
 			long id) {
-		Exercise exercise = (Exercise) parent.getItemAtPosition(pos);
-		initializeListView(exercise.getId());
+		initializeListView(readExerciseIdFromSpinner(), readLevelFromSpinner());
+	}
+
+	private int readExerciseIdFromSpinner() {
+		Exercise exercise = (Exercise) mExerciseSpinner.getSelectedItem();
+		return exercise.getId();
+	}
+
+	private Level readLevelFromSpinner() {
+		String levelName = (String) mLevelSpinner.getSelectedItem();
+		return Level.fromString(getActivity(), levelName);
 	}
 
 	@Override

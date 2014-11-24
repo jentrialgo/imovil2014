@@ -26,6 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import es.uniovi.imovil.fcrtrainer.Level;
 import es.uniovi.imovil.fcrtrainer.R;
 
 import android.content.Context;
@@ -54,18 +55,24 @@ public class HighscoreManager {
 	 * 
 	 * @param context
 	 *            Contexto para gestionar recursos
+	 * @param level 
 	 * @return Un array con la lista de todas las mejores puntuaciones
 	 *         almacenadas
 	 * @throws JSONException
 	 */
-	public static ArrayList<Highscore> loadHighscores(Context context)
+	public static ArrayList<Highscore> loadHighscores(Context context,
+			Level level)
 			throws JSONException {
 		mSharedPreferences = context.getSharedPreferences(PREFERENCES_FILENAME,
 				Context.MODE_PRIVATE);
 		String highscoreJson = mSharedPreferences.getString(
-				HIGHSCORE_PREFERENCE, "");
+				preferenceName(level), "");
 
 		return jsonToHighscoreList(context, highscoreJson);
+	}
+
+	private static String preferenceName(Level level) {
+		return HIGHSCORE_PREFERENCE + level.toString();
 	}
 
 	private static ArrayList<Highscore> jsonToHighscoreList(Context context,
@@ -109,11 +116,13 @@ public class HighscoreManager {
 	 * @param userName
 	 *            Nombre del usuario que obtuvo la puntuaci�n. Si se pasa null,
 	 *            ser� el nombre de usuario por defecto
+	 * @param level
+	 *            Nivel para el que se consigue la puntuaci�n
 	 * @throws JSONException
 	 *             Cuando no se puede pasar a JSON o de JSON una puntuaci�n
 	 */
 	public static void addScore(Context context, int score, int exercise,
-			Date date, String userName) throws JSONException {
+			Date date, String userName, Level level) throws JSONException {
 		if (userName == null) {
 			userName = context.getString(R.string.default_user_name);
 		}
@@ -121,14 +130,14 @@ public class HighscoreManager {
 
 		ArrayList<Highscore> highscores = new ArrayList<Highscore>();
 		try {
-			highscores = loadHighscores(context);
+			highscores = loadHighscores(context, level);
 		} catch (JSONException e) {
 			Log.d(TAG, "Error al leer las puntuaciones para a�adir una nueva: "
 					+ e.getMessage());
 		}
 		highscores.add(highscore);
 		highscores = trim(highscores, MAX_NUMBER_HIGHSCORES);
-		saveHighscores(context, highscores);
+		saveHighscores(context, highscores, level);
 	}
 
 	private static ArrayList<Highscore> trim(ArrayList<Highscore> highscores,
@@ -166,24 +175,25 @@ public class HighscoreManager {
 	 * @throws JSONException
 	 */
 	public static void addAllHighscores(Context context,
-			ArrayList<Highscore> newHighscores) throws JSONException {
+			ArrayList<Highscore> newHighscores, Level level)
+					throws JSONException {
 		ArrayList<Highscore> highscores = new ArrayList<Highscore>();
 		try {
-			highscores = loadHighscores(context);
+			highscores = loadHighscores(context, level);
 		} catch (JSONException e) {
 			Log.d(TAG, "Error al leer las puntuaciones para a�adir una nueva: "
 					+ e.getMessage());
 		}
 		highscores.addAll(newHighscores);
 		highscores = trim(highscores, MAX_NUMBER_HIGHSCORES);
-		saveHighscores(context, highscores);
+		saveHighscores(context, highscores, level);
 	}
 
 	private static void saveHighscores(Context context,
-			ArrayList<Highscore> highscores) throws JSONException {
+			ArrayList<Highscore> highscores, Level level) throws JSONException {
 		SharedPreferences.Editor editor = mSharedPreferences.edit();
 		String json = highscoresToJsonString(highscores);
-		editor.putString(HIGHSCORE_PREFERENCE, json);
+		editor.putString(preferenceName(level), json);
 		editor.commit();
 	}
 

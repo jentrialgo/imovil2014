@@ -304,5 +304,11 @@ public abstract class BaseExerciseFragment extends Fragment {
 		}
 	}
 	
+	/**
+	 * @return nivel en el que se está
+	 */
+	protected Level level() {
+		return PreferenceUtils.getLevel(getActivity());
+	}
 	
 }

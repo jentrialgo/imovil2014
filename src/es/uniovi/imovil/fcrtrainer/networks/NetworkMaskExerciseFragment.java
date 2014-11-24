@@ -246,7 +246,8 @@ public class NetworkMaskExerciseFragment extends BaseExerciseFragment implements
 		String username = getResources().getString(R.string.default_user_name);
 		try {
 			HighscoreManager.addScore(getActivity().getApplicationContext(),
-					this.mPoints, R.string.binary, new Date(), username);
+					this.mPoints, R.string.binary, new Date(), username,
+					level());
 
 		} catch (JSONException e) {
 			e.printStackTrace();

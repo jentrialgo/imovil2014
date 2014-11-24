@@ -343,7 +343,7 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 	private void enviarPuntuacion(int score) {
 		try {
 			HighscoreManager.addScore(getActivity(), score,
-					R.string.logic_operation, new Date(), null);
+					R.string.logic_operation, new Date(), null, level());
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

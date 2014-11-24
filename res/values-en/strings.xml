@@ -16,7 +16,7 @@
     <string name="sign_and_magnitude">Sign-and-magnitude</string>
  	<string name="offset_binary">Binary Offset</string>
 	<string name="twoscomplement">Two\'s Complement</string>
-    <string name="floating_point">Coma flotante</string>
+    <string name="floating_point">Floating point</string>
     <string name="logic_gate">Logic gate</string>
     <string name="logic_operation">Logic operation</string>
     <string name="network_address">Network address</string>
@@ -26,6 +26,7 @@
     <string name="network_layer">Network layer</string>
     <string name="protocol">Protocol</string>
     <string name="highscores">Highscores</string>
+    <string name="exercise">Exercise</string>
     <string name="default_user_name">Me</string>
     <string name="error_parsing_highscores">Error al analizar las puntuaciones</string>
     <string name="error_adding_initial_highscores">Error while inserting initial highscores</string>
@@ -121,5 +122,11 @@
     <string name="text_butt_solution">Solution</string>
     <string name="na_title">Network address exercise</string>
     <!--  Fin Strings Network Address -->
+
+    <string name="pref_level_title">Level</string>
+    
+    <string name="pref_level1_name">Beginner</string>
+    <string name="pref_level2_name">Advanced</string>
+    <string name="pref_level3_name">Master</string>
     
 </resources>

@@ -43,6 +43,7 @@ limitations under the License.
     <string name="network_layer">Capa de red</string>
     <string name="protocol">Protocolo</string>
     <string name="highscores">Puntuaciones</string>
+    <string name="exercise">Ejercicio</string>
     <string name="default_user_name">Yo</string>
     <string name="error_parsing_highscores">Error al analizar las puntuaciones</string>
     <string name="error_adding_initial_highscores">Error al insertar las puntuaciones iniciales</string>
@@ -164,7 +165,7 @@ limitations under the License.
     <string name="comprobar">Comprobar</string>
     <!-- Fin Máscara de red -->
     <string name="tv_decimal">decimal number</string>
-    
+
     <!-- Preferences -->
     <string name="pref_level_key" translatable="false">PREF_LEVEL</string>
     <string name="pref_level_title">Nivel</string>

@@ -265,7 +265,7 @@ public class CidrExerciseFragment extends BaseExerciseFragment implements
 		try {
 
 			HighscoreManager.addScore(getActivity().getApplicationContext(),
-					this.mPuntos, 0, new Date(), username);
+					this.mPuntos, 0, new Date(), username, level());
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
