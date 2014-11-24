@@ -120,7 +120,7 @@
     <string name="mask">Mask:</string>
     <string name="text_butt_ans">Check</string>
     <string name="text_butt_solution">Solution</string>
-    <string name="na_title">Network address exercise</string>
+    <string name="na_title">What is the network address for this IP and this mask</string>
     <!--  Fin Strings Network Address -->
 
     <string name="pref_level_title">Level</string>

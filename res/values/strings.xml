@@ -134,7 +134,7 @@ limitations under the License.
     <string name="mask">Máscara:</string>
     <string name="text_butt_ans">Comprobar</string>
     <string name="text_butt_solution">Solución</string>
-    <string name="na_title">Ejercicio Dirección Red</string>
+    <string name="na_title">¿Cuál es la dirección de red para esta IP y esta máscara?</string>
     <!--  Fin Strings Network Address -->
 
     <!-- Modulo: Protocolos -->
