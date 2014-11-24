@@ -43,6 +43,12 @@ import android.widget.TextView.OnEditorActionListener;
 public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		implements OnClickListener {
 
+	private static final String TAG_INPUT1 = "LOentrada1";
+	private static final String TAG_INPUT2 = "LOentrada2";
+	private static final String TAG_OPERATION = "LOoperacion";
+	private static final String TAG_ANSWER = "LOrespuesta";
+	private static final String TAG_SOLUTION = "Solucion";
+
 	private static final int BASE_BINARIA = 2;
 	private static final int MAX_NUMBER_OF_OPERATIONS = 3;
 
@@ -56,7 +62,7 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 	private Button mButtonCheck;
 	private Button mButtonSolucion;
 
-	private Random rnd;
+	private Random mRandom;
 	private String mSolucion;
 	
 	// Juego
@@ -88,7 +94,7 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 
 		inicializarButtons();
 
-		rnd = new Random();
+		mRandom = new Random();
 
 		if (savedInstanceState != null) {
 			cargaDatos(savedInstanceState);
@@ -101,19 +107,19 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 	}
 
 	private void cargaDatos(Bundle savedInstanceState) {
-		String entrada1 = savedInstanceState.getString("LOentrada1");
+		String entrada1 = savedInstanceState.getString(TAG_INPUT1);
 		mTvEntrada1.setText(entrada1);
 
-		String entrada2 = savedInstanceState.getString("LOentrada2");
+		String entrada2 = savedInstanceState.getString(TAG_INPUT2);
 		mTvEntrada2.setText(entrada2);
 
-		String operacion = savedInstanceState.getString("LOoperacion");
+		String operacion = savedInstanceState.getString(TAG_OPERATION);
 		mTvOperacion.setText(operacion);
 
-		String respuesta = savedInstanceState.getString("LOrespuesta");
+		String respuesta = savedInstanceState.getString(TAG_ANSWER);
 		mEtRespuesta.setText(respuesta);
 
-		mSolucion = savedInstanceState.getString("Solucion");
+		mSolucion = savedInstanceState.getString(TAG_SOLUTION);
 		
 		mEtRespuesta.setInputType(EditorInfo.TYPE_CLASS_TEXT);
 	}
@@ -173,13 +179,13 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 	}
 
 	private void crearPregunta() {
-		String e1 = BinarioAleatorio();
+		String e1 = binarioAleatorio();
 		mTvEntrada1.setText(e1);
 
-		String e2 = BinarioAleatorio();
+		String e2 = binarioAleatorio();
 		mTvEntrada2.setText(e2);
 
-		String op = OperacionAleatoria();
+		String op = operacionAleatoria();
 		mTvOperacion.setText(op);
 
 		int entrada1 = Integer.parseInt(e1, BASE_BINARIA);
@@ -198,9 +204,9 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		mEtRespuesta.setText("");
 	}
 
-	private String BinarioAleatorio() {
+	private String binarioAleatorio() {
 		int maxNumber = (int) Math.pow(BASE_BINARIA, level().numberOfBits());
-		int entero = rnd.nextInt(maxNumber);
+		int entero = mRandom.nextInt(maxNumber);
 		String binario = Integer.toBinaryString(entero);
 
 		binario = completaNumeroBits(binario);
@@ -216,8 +222,8 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		return binario;
 	}
 
-	private String OperacionAleatoria() {
-		int entero = rnd.nextInt(MAX_NUMBER_OF_OPERATIONS);
+	private String operacionAleatoria() {
+		int entero = mRandom.nextInt(MAX_NUMBER_OF_OPERATIONS);
 		String operacion;
 
 		switch (entero) {
@@ -247,11 +253,11 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		String respuesta = mEtRespuesta.getText().toString();
 
 		// lo guardamos en el Bundle
-		outState.putString("LOentrada1", entrada1);
-		outState.putString("LOentrada2", entrada2);
-		outState.putString("LOoperacion", operacion);
-		outState.putString("LOrespuesta", respuesta);
-		outState.putString("Solucion", mSolucion);
+		outState.putString(TAG_INPUT1, entrada1);
+		outState.putString(TAG_INPUT2, entrada2);
+		outState.putString(TAG_OPERATION, operacion);
+		outState.putString(TAG_ANSWER, respuesta);
+		outState.putString(TAG_SOLUTION, mSolucion);
 	}
 
 	// Inicia el modo entrenamiento
