@@ -56,10 +56,8 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment
 	private int currentQuestionCounter = 1;
 
 	View mRootView;
-	int mQuestionIndex; // �ndice en los arrays de recursos
-	String[] mIp;
-	String[] mMask;
-	String[] mNet;
+	int mIp;
+	int mMask;
 	TextView mTextViewIp;
 	TextView mTextViewMask;
 	EditText mSolutionEditText;
@@ -84,16 +82,13 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment
 		mRootView = inflater.inflate(R.layout.fragment_network_address,
 				container, false);
 
-		mIp = getResources().getStringArray(R.array.ips);
-		mMask = getResources().getStringArray(R.array.masks);
-		mNet = getResources().getStringArray(R.array.nets);
 		mTextViewIp = (TextView) mRootView.findViewById(R.id.tv_ip);
 		mTextViewMask = (TextView) mRootView.findViewById(R.id.tv_mask);
 		mRandom = new Random();
 
 		mSolutionEditText = (EditText) mRootView.findViewById(R.id.et_netw);
 
-		GenerarPregunta();
+		generarPregunta();
 
 		mButtonanswer = (Button) mRootView.findViewById(R.id.but_ans);
 		mButtonanswer.setOnClickListener(this);
@@ -117,13 +112,14 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment
 	}
 
 	public void checkAnswer() {
-		if (mNet[mQuestionIndex].equals(mSolutionEditText.getText().toString())) {
+		String net = intToIpString(mIp & mMask);
+		if (net.equals(mSolutionEditText.getText().toString())) {
 			showAnimationAnswer(true);
 			if (this.mGameMode) {
 				gameModeControl();
 			}
 			mSolutionEditText.setText("");
-			GenerarPregunta();
+			generarPregunta();
 		} else {
 			showAnimationAnswer(false);
 		}
@@ -131,14 +127,42 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment
 
 	public void solutionNetworkAddress() {
 		mSolutionEditText.setTextColor(Color.BLACK);
-		mSolutionEditText.setText(mNet[mQuestionIndex]);
+		String net = intToIpString(mIp & mMask);
+		mSolutionEditText.setText(net);
 	}
 
-	public void GenerarPregunta() {
-		mQuestionIndex = mRandom.nextInt(mIp.length);
+	public void generarPregunta() {
+		mIp = generateRandomIP();
+		mMask = generateRandomMask();
+		
+		mTextViewIp.setText(intToIpString(mIp));
+		mTextViewMask.setText(intToIpString(mMask));
+	}
 
-		mTextViewIp.setText(mIp[mQuestionIndex]);
-		mTextViewMask.setText(mMask[mQuestionIndex]);
+	private int generateRandomIP() {
+		int value = 0;
+		while (value == 0) {
+			value = mRandom.nextInt(0x7ffffffe);
+		}
+		return value;
+	}
+
+	private int generateRandomMask() {
+		int prefix = mRandom.nextInt(31);
+		return 0xffffffff << (32 - prefix);
+	}
+
+	private String intToIpString(int ipAddress) {
+		int[] bytes = new int[] {
+				(ipAddress >> 24 & 0xff),
+				(ipAddress >> 16 & 0xff),
+				(ipAddress >> 8 & 0xff),
+				(ipAddress &0xff)
+		};
+		return Integer.toString(bytes[0]) 
+				+ "." + Integer.toString(bytes[1])
+				+ "." + Integer.toString(bytes[2])
+				+ "." + Integer.toString(bytes[3]);
 	}
 
 	// /--------------------- Modo Jugar -----------------------
@@ -188,7 +212,7 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment
 		mSolutionEditText.setText("");
 		mGameMode = true;
 
-		GenerarPregunta();
+		generarPregunta();
 
 		Button solution = (Button) mRootView.findViewById(R.id.but_solution);
 		solution.setVisibility(View.INVISIBLE);
