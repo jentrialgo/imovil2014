@@ -92,7 +92,7 @@
     <string name="LOor">OR</string>
     <string name="LOxor">XOR</string>
     
-    <string name="LOpregunta">Which is the solution of this 5-bit logic operation?</string>
+    <string name="LOpregunta">Which is the solution of this logic operation?</string>
     
     <string name="finJuego">End</string>
     <string name="modoEntrenamiento">Back to training mode</string>

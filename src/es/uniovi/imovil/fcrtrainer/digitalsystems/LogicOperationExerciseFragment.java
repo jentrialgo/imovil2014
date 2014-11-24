@@ -43,9 +43,7 @@ import android.widget.TextView.OnEditorActionListener;
 public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		implements OnClickListener {
 
-	private static final int MAX_NUMBER_OF_BITS = 5;
 	private static final int BASE_BINARIA = 2;
-	private static final int MAX_INT_NUMBER_TO_BINARY = 32;
 	private static final int MAX_NUMBER_OF_OPERATIONS = 3;
 
 	private static final int MAX_NUMBER_LO_QUESTIONS = 5;
@@ -58,6 +56,9 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 	private Button mButtonCheck;
 	private Button mButtonSolucion;
 
+	private Random rnd;
+	private String mSolucion;
+	
 	// Juego
 	private long mDurationMs = 60 * 1000; // 1 min
 	private Boolean mModoJuego = false;
@@ -87,10 +88,12 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 
 		inicializarButtons();
 
+		rnd = new Random();
+
 		if (savedInstanceState != null) {
 			cargaDatos(savedInstanceState);
 		} else {
-			inicializarTexViews();
+			crearPregunta();
 			inicializarEditText();
 		}
 
@@ -110,20 +113,9 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		String respuesta = savedInstanceState.getString("LOrespuesta");
 		mEtRespuesta.setText(respuesta);
 
+		mSolucion = savedInstanceState.getString("Solucion");
+		
 		mEtRespuesta.setInputType(EditorInfo.TYPE_CLASS_TEXT);
-	}
-
-	private void inicializarTexViews() {
-		String binario;
-
-		binario = BinarioAleatorio();
-		mTvEntrada1.setText(binario);
-
-		binario = BinarioAleatorio();
-		mTvEntrada2.setText(binario);
-
-		String operacion = OperacionAleatoria();
-		mTvOperacion.setText(operacion);
 	}
 
 	private void inicializarEditText() {
@@ -151,14 +143,12 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 	@Override
 	public void onClick(View v) {
 		String respuesta = mEtRespuesta.getText().toString();
-		String entrada1 = mTvEntrada1.getText().toString();
-		String entrada2 = mTvEntrada2.getText().toString();
-		String operacion = mTvOperacion.getText().toString();
 
 		if (v.getId() == mButtonCheck.getId()) {
-			isCorrect(mEtRespuesta.getEditableText().toString().trim());
 			if (mModoJuego) {
-				clickJuego(respuesta, entrada1, operacion, entrada2);
+				clickJuego(respuesta);
+			} else {
+				isCorrect(mEtRespuesta.getEditableText().toString().trim());
 			}
 		}
 
@@ -173,11 +163,7 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 
 	// Determina si la respuesta es correcta
 	public void isCorrect(String answer) {
-		String solucion = LOCalcularResultado(mTvEntrada1.getText().toString(),
-				mTvOperacion.getText().toString(), mTvEntrada2.getText()
-						.toString());
-
-		if (answer.equals(solucion)) {
+		if (answer.equals(mSolucion)) {
 			showAnimationAnswer(true);
 			// si se acert� la respuesta, crear otra pregunta
 			crearPregunta();
@@ -187,55 +173,43 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 	}
 
 	private void crearPregunta() {
-		String binario;
-		String op;
+		String e1 = BinarioAleatorio();
+		mTvEntrada1.setText(e1);
 
-		binario = BinarioAleatorio();
-		mTvEntrada1.setText(binario);
+		String e2 = BinarioAleatorio();
+		mTvEntrada2.setText(e2);
 
-		binario = BinarioAleatorio();
-		mTvEntrada2.setText(binario);
-
-		op = OperacionAleatoria();
+		String op = OperacionAleatoria();
 		mTvOperacion.setText(op);
 
-		mEtRespuesta.setText("");
-	}
-
-	// Calcula el resultado correcto de la pregunta formulada
-	public String LOCalcularResultado(String e1, String operacion, String e2) {
 		int entrada1 = Integer.parseInt(e1, BASE_BINARIA);
 		int entrada2 = Integer.parseInt(e2, BASE_BINARIA);
 		int result = 0;
-		String solucion;
-
-		if (operacion.equals("AND"))
+		if (op.equals("AND"))
 			result = entrada1 & entrada2;
-		else if (operacion.equals("OR"))
+		else if (op.equals("OR"))
 			result = entrada1 | entrada2;
-		else if (operacion.equals("XOR"))
+		else if (op.equals("XOR"))
 			result = entrada1 ^ entrada2;
 
-		solucion = Integer.toBinaryString(result);
-
-		// LLenamos la cadena de 0 hasta tener 5 bits
-		solucion = completaNumeroBits(solucion);
-		return solucion;
+		mSolucion = Integer.toBinaryString(result);
+		mSolucion = completaNumeroBits(mSolucion);
+		
+		mEtRespuesta.setText("");
 	}
 
 	private String BinarioAleatorio() {
-		Random rnd = new Random();
-		int entero = rnd.nextInt(MAX_INT_NUMBER_TO_BINARY);
+		int maxNumber = (int) Math.pow(BASE_BINARIA, level().numberOfBits());
+		int entero = rnd.nextInt(maxNumber);
 		String binario = Integer.toBinaryString(entero);
 
-		// LLenamos la cadena de 0 hasta tener 5 bits
 		binario = completaNumeroBits(binario);
 		return binario;
 	}
 
 	private String completaNumeroBits(String binario) {
 		int i = binario.length();
-		while (i < MAX_NUMBER_OF_BITS) {
+		while (i < level().numberOfBits()) {
 			binario = "0" + binario;
 			i = binario.length();
 		}
@@ -243,7 +217,6 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 	}
 
 	private String OperacionAleatoria() {
-		Random rnd = new Random();
 		int entero = rnd.nextInt(MAX_NUMBER_OF_OPERATIONS);
 		String operacion;
 
@@ -261,10 +234,7 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 	}
 
 	private void showSolution() {
-		String solucion = LOCalcularResultado(mTvEntrada1.getText().toString(),
-				mTvOperacion.getText().toString(), mTvEntrada2.getText()
-						.toString());
-		mEtRespuesta.setText(solucion);
+		mEtRespuesta.setText(mSolucion);
 	}
 
 	@Override
@@ -281,6 +251,7 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		outState.putString("LOentrada2", entrada2);
 		outState.putString("LOoperacion", operacion);
 		outState.putString("LOrespuesta", respuesta);
+		outState.putString("Solucion", mSolucion);
 	}
 
 	// Inicia el modo entrenamiento
@@ -294,7 +265,7 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		mButtonCheck.setVisibility(View.VISIBLE);
 		mButtonSolucion.setVisibility(View.VISIBLE);
 
-		inicializarTexViews();
+		crearPregunta();
 
 		mButtonSolucion.setText(getResources().getText(R.string.solution));
 		mEtRespuesta.requestFocus();
@@ -349,15 +320,12 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		}
 	}
 
-	private void clickJuego(String answer, String entrada1, String operacion,
-			String entrada2) {
-
-		String solucion = LOCalcularResultado(entrada1, operacion, entrada2);
-		if (answer.equals(solucion)) {
+	private void clickJuego(String answer) {
+		if (answer.equals(mSolucion)) {
 			showAnimationAnswer(true);
-			crearPregunta();
 			mNumeroPregunta++;
 			mNumeroAciertos = mNumeroAciertos + 10;
+			crearPregunta();
 		} else {
 			showAnimationAnswer(false);
 		}
@@ -384,7 +352,7 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		mEtRespuesta.setVisibility(View.VISIBLE);
 		mButtonCheck.setVisibility(View.VISIBLE);
 
-		inicializarTexViews();
+		crearPregunta();
 
 		mModoJuego = true;
 	}

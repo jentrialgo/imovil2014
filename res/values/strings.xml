@@ -123,7 +123,7 @@ limitations under the License.
     <string name="LOand">AND</string>
     <string name="LOor">OR</string>
     <string name="LOxor">XOR</string>
-    <string name="LOpregunta">¿Cuál es la solución a esta operación lógica de 5 bits?</string>
+    <string name="LOpregunta">¿Cuál es la solución a esta operación lógica?</string>
     <string name="modoEntrenamiento">Volver al modo entrenamiento</string>
     <string name="puntuacion">Has obtenido una puntuación de: </string>
     <!-- Fin Operaciones Lógicas -->
