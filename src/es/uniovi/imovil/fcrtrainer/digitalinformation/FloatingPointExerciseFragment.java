@@ -63,7 +63,6 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 
 	float mDecimalValueF = 0.0f;
 	int mfAsIntBits;
-	String mBitRepresentationNoTrailingZeroes;
 	String mBitRepresentation;
 	String mBitRepresentationDivided;
 
@@ -131,7 +130,7 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 
 	private void newDecimalQuestion() {
 		generateRandomNumbers();
-		RemoveZeroes();
+
 		mTvNumberToconvert.setText(Float.toString(mDecimalValueF));
 		mIsBinary = false;
 
@@ -146,7 +145,6 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 
 	private void newBinaryQuestion() {
 		generateRandomNumbers();
-		RemoveZeroes();
 
 		mBitRepresentationDivided = mBitRepresentation.substring(0, 1)
 				+ " "
@@ -159,8 +157,6 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 	}
 	
 	private void checkSolutionListener() {
-		RemoveZeroes();
-
 		if (mIsBinary == true) {
 			checkSolutionBinaryToDecimal();
 		} else {
@@ -186,8 +182,8 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 				+ mEtExponent.getEditableText().toString().trim()
 				+ mEtMantissa.getEditableText().toString().trim();
 
-		if (mBitRepresentationNoTrailingZeroes.equals(userAnswer)
-				|| mBitRepresentation.equals(userAnswer)) {
+		if (RemoveTrailingZeroes(mBitRepresentation).equals(
+				RemoveTrailingZeroes(userAnswer))) {
 			showAnimationAnswer(true);
 			if (mGame)
 				updateGameState();
@@ -238,16 +234,15 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 		}
 	}
 	
-	public void RemoveZeroes() {
-		int lastSignificant = mBitRepresentation.length() - 1;
+	private String RemoveTrailingZeroes(String bitRepresentation) {
+		int lastSignificant = bitRepresentation.length() - 1;
 
-		while (mBitRepresentation.charAt(lastSignificant) == '0') {
+		while (bitRepresentation.charAt(lastSignificant) == '0') {
 			lastSignificant--;
 		}
 		lastSignificant++;
-
-		mBitRepresentationNoTrailingZeroes = mBitRepresentation.substring(
-				0, lastSignificant);
+		
+		return bitRepresentation.substring(0, lastSignificant);
 	}
 
 	protected int numberOfBits() {
