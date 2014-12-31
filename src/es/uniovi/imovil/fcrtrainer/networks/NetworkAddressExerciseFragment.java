@@ -24,6 +24,8 @@ import java.util.Random;
 import org.json.JSONException;
 
 import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
+import es.uniovi.imovil.fcrtrainer.Level;
+import es.uniovi.imovil.fcrtrainer.PreferenceUtils;
 import es.uniovi.imovil.fcrtrainer.R;
 import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
 import android.app.AlertDialog;
@@ -134,6 +136,12 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment
 	public void generarPregunta() {
 		mIp = generateRandomIP();
 		mMask = generateRandomMask();
+
+		// The solution cannot be all zeros or the IP itself
+		while ((mIp & mMask) == 0
+				|| (mIp & mMask) == mIp) {
+			mIp = generateRandomIP();
+		}
 		
 		mTextViewIp.setText(intToIpString(mIp));
 		mTextViewMask.setText(intToIpString(mMask));
@@ -148,8 +156,25 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment
 	}
 
 	private int generateRandomMask() {
-		int prefix = mRandom.nextInt(31);
-		return 0xffffffff << (32 - prefix);
+		Level level = PreferenceUtils.getLevel(getActivity());
+
+		int maxOffset = 8;
+		switch (level) {
+		case BEGINNER:
+			maxOffset = 4;
+			break;
+		case INTERMEDIATE:
+			maxOffset = 16;
+			break;
+		case PROFICIENCY:
+			maxOffset = 26;
+			break;
+		}
+		
+		// Add 1 because 0 is not a valid mask
+		int offset = mRandom.nextInt(maxOffset) + 1;
+
+		return 0xffffffff << offset;
 	}
 
 	private String intToIpString(int ipAddress) {
