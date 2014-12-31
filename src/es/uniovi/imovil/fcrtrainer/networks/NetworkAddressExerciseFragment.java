@@ -37,6 +37,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -131,6 +132,7 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment
 		mSolutionEditText.setTextColor(Color.BLACK);
 		String net = intToIpString(mIp & mMask);
 		mSolutionEditText.setText(net);
+		mSolutionEditText.setSelection(mSolutionEditText.getText().length());
 	}
 
 	public void generarPregunta() {
@@ -145,6 +147,20 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment
 		
 		mTextViewIp.setText(intToIpString(mIp));
 		mTextViewMask.setText(intToIpString(mMask));
+		
+		// Show the IP as starting point for the network mask, because they
+		// probably have many numbers in common
+		mSolutionEditText.setText(intToIpString(mIp));
+		
+		// Set the focus on the edit text and show the keyboard
+		if(mSolutionEditText.requestFocus()) {
+		    getActivity().getWindow().setSoftInputMode(
+		    		WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+		}
+		
+		// Set the cursor at the end so that the user can begin deleting the
+		// numbers that are not part of the network address
+		mSolutionEditText.setSelection(mSolutionEditText.getText().length());
 	}
 
 	private int generateRandomIP() {
