@@ -19,11 +19,9 @@ limitations under the License.
 package es.uniovi.imovil.fcrtrainer.networks;
 
 import java.util.Date;
-import java.util.Random;
 
 import org.json.JSONException;
 
-import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
 import es.uniovi.imovil.fcrtrainer.R;
 import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
 
@@ -38,9 +36,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class HostCountExerciseFragment extends BaseExerciseFragment {
+public class HostCountExerciseFragment extends BaseNetworkMaskExerciseFragment {
 
-	private static final int RANDOM_NUMBER_LIMIT = 30;
 	private static final int POINTS_FOR_QUESTION = 10;
 	private static final int MAX_QUESTIONS = 5;
 	private static final long GAME_DURATION_MS = 10 * 1000 * 60; // 10min
@@ -53,11 +50,8 @@ public class HostCountExerciseFragment extends BaseExerciseFragment {
 	private View mRootView;
 	private Button mBtnCheck;
 	private Button mBtnSolution;
-	private String[] mHostCountQuestions;
-	private String[] mHostCountAnswers;
 	private TextView mQuestion;
 	EditText mAnswer;
-	int mRandomNumberQuestion;
 
 	// Constructor
 	public HostCountExerciseFragment() {
@@ -77,12 +71,7 @@ public class HostCountExerciseFragment extends BaseExerciseFragment {
 		mBtnSolution = (Button) mRootView.findViewById(R.id.btnSolution);
 		mQuestion = (TextView) mRootView.findViewById(R.id.question);
 		mAnswer = (EditText) mRootView.findViewById(R.id.answer);
-		mHostCountQuestions = getResources().getStringArray(
-				R.array.host_count_questions);
-		mHostCountAnswers = getResources().getStringArray(
-				R.array.host_count_answers);
-		mRandomNumberQuestion = generateRandomNumber();
-		// Carga una de las preguntas del array
+
 		newQuestion();
 
 		mBtnCheck.setOnClickListener(new View.OnClickListener() {
@@ -95,47 +84,42 @@ public class HostCountExerciseFragment extends BaseExerciseFragment {
 		mBtnSolution.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				showSolution(mRandomNumberQuestion);
+				showSolution();
 			}
 		});
 
 		return mRootView;
 	}
 
-	public void newQuestion() {
-		mQuestion.setText(mHostCountQuestions[mRandomNumberQuestion]);
+	private int correctAnswer() {
+		return (mMask ^ 0xffffffff) - 1;
 	}
 
-	private int generateRandomNumber() {
-		Random rn = new Random();
-
-		// Funcion nextInt devuelve un numero aleatorio entre [0, limite)
-		int x = rn.nextInt(RANDOM_NUMBER_LIMIT);
-		return x;
-
+	public void newQuestion() {
+		do {
+			mMask = generateRandomMask();
+		} while (correctAnswer() < 3); // have a minimum number of hosts
+		mQuestion.setText(intToIpString(mMask));
 	}
 
 	public void checkAnswer(String a) {
 		// Si la respuesta es correcta, genera otra nueva pregunta y borra
 		// respuesta
-		if ((a.toString().equals(mHostCountAnswers[mRandomNumberQuestion]
-				.toString()))) {
+		if (a.equals(Integer.toString(correctAnswer()))) {
 			showAnimationAnswer(true);
-			mRandomNumberQuestion = generateRandomNumber();
-			mQuestion.setText(mHostCountQuestions[mRandomNumberQuestion]);
+			newQuestion();
 			if (this.mGameMode) {
 				gameModeControl();
 			}
 			mAnswer.setText("");
-
-		} else
+		} else {
 			showAnimationAnswer(false);
-
+		}
 	}
 
 	// Método para mostrar la solución
-	public void showSolution(int numberOfQuestion) {
-		mAnswer.setText(mHostCountAnswers[numberOfQuestion]);
+	public void showSolution() {
+		mAnswer.setText(Integer.toString(correctAnswer()));
 	}
 
 	public void startGame() {
