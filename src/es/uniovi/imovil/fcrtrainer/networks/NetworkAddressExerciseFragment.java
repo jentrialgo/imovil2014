@@ -23,9 +23,6 @@ import java.util.Random;
 
 import org.json.JSONException;
 
-import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
-import es.uniovi.imovil.fcrtrainer.Level;
-import es.uniovi.imovil.fcrtrainer.PreferenceUtils;
 import es.uniovi.imovil.fcrtrainer.R;
 import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
 import android.app.AlertDialog;
@@ -43,7 +40,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class NetworkAddressExerciseFragment extends BaseExerciseFragment
+public class NetworkAddressExerciseFragment extends BaseNetworkMaskExerciseFragment
 		implements View.OnClickListener {
 
 	private static final int POINTS_FOR_QUESTION = 10; // 10 puntos por pregunta
@@ -60,7 +57,6 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment
 
 	View mRootView;
 	int mIp;
-	int mMask;
 	TextView mTextViewIp;
 	TextView mTextViewMask;
 	EditText mSolutionEditText;
@@ -68,7 +64,6 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment
 	Button mButtonanswer;
 	Button mButtonSolution;
 	Handler mHandler;
-	Random mRandom;
 
 	public static NetworkAddressExerciseFragment newInstance() {
 		NetworkAddressExerciseFragment fragment = new NetworkAddressExerciseFragment();
@@ -171,40 +166,7 @@ public class NetworkAddressExerciseFragment extends BaseExerciseFragment
 		return value;
 	}
 
-	private int generateRandomMask() {
-		Level level = PreferenceUtils.getLevel(getActivity());
-
-		int maxOffset = 8;
-		switch (level) {
-		case BEGINNER:
-			maxOffset = 4;
-			break;
-		case INTERMEDIATE:
-			maxOffset = 16;
-			break;
-		case PROFICIENCY:
-			maxOffset = 26;
-			break;
-		}
-		
-		// Add 1 because 0 is not a valid mask
-		int offset = mRandom.nextInt(maxOffset) + 1;
-
-		return 0xffffffff << offset;
-	}
-
-	private String intToIpString(int ipAddress) {
-		int[] bytes = new int[] {
-				(ipAddress >> 24 & 0xff),
-				(ipAddress >> 16 & 0xff),
-				(ipAddress >> 8 & 0xff),
-				(ipAddress &0xff)
-		};
-		return Integer.toString(bytes[0]) 
-				+ "." + Integer.toString(bytes[1])
-				+ "." + Integer.toString(bytes[2])
-				+ "." + Integer.toString(bytes[3]);
-	}
+	
 
 	// /--------------------- Modo Jugar -----------------------
 

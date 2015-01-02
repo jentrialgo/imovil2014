@@ -19,11 +19,9 @@ limitations under the License.
 package es.uniovi.imovil.fcrtrainer.networks;
 
 import java.util.Date;
-import java.util.Random;
 
 import org.json.JSONException;
 
-import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
 import es.uniovi.imovil.fcrtrainer.R;
 import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
 import android.app.AlertDialog;
@@ -38,13 +36,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class CidrExerciseFragment extends BaseExerciseFragment implements
+public class CidrExerciseFragment extends BaseNetworkMaskExerciseFragment implements
 		OnClickListener {
 
 	private static final int POINTS_FOR_QUESTION = 10;
 	private static final int MAX_QUESTIONS = 5;
 	private static final long GAME_DURATION_MS = 1 * 1000 * 60; // 1min
-	private static final int RANDOM_MASK = 5;
 
 	private boolean mGameMode = false;
 
@@ -55,14 +52,9 @@ public class CidrExerciseFragment extends BaseExerciseFragment implements
 
 	private Button mButtonCheck;
 	private Button mButtonSol;
-	private String[] mMascaras;
-	private String[] mRespuestas;
 	private TextView mMascara;
-	int mMaskIndex;
 	EditText mAnswer;
 	public View mRootView;
-
-	private Random mRandom = new Random();;
 
 	public static CidrExerciseFragment newInstance() {
 		CidrExerciseFragment fragment = new CidrExerciseFragment();
@@ -77,7 +69,6 @@ public class CidrExerciseFragment extends BaseExerciseFragment implements
 			Bundle savedInstanceState) {
 		mRootView = inflater.inflate(R.layout.fragment_cidr, container, false);
 
-		// Cargar los views
 		CargaViews();
 
 		mButtonCheck = (Button) mRootView.findViewById(R.id.cButton);
@@ -94,7 +85,7 @@ public class CidrExerciseFragment extends BaseExerciseFragment implements
 		mButtonSol.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				showSolution(mMaskIndex);
+				showSolution();
 			}
 		});
 
@@ -105,36 +96,28 @@ public class CidrExerciseFragment extends BaseExerciseFragment implements
 	public void onClick(View view) {
 		if (view.getId() == R.id.cButton) {
 			checkAnswer((mAnswer.getEditableText().toString()));
-			clearUserInput();
-
 		}
+
 		if (view.getId() == R.id.sButton) {
-			showSolution(mMaskIndex);
+			showSolution();
 		}
-
-	}
-
-	private void clearUserInput() {
-		EditText userInput = (EditText) mRootView.findViewById(R.id.respuesta);
-		userInput.setText("");
 	}
 
 	public void CargaViews() {
-		mMascaras = getResources().getStringArray(R.array.mascaras);
 		mMascara = (TextView) mRootView.findViewById(R.id.mascara);
 		mAnswer = (EditText) mRootView.findViewById(R.id.respuesta);
-		mRespuestas = getResources().getStringArray(R.array.cidr);
 	}
 
 	// Metodo para comprobar la respuesta
 	public void checkAnswer(String ans) {
 		if (ans.isEmpty()) {
-			super.showAnimationAnswer(false);
+			showAnimationAnswer(false);
 			return;
 		}
+
 		// Si es correcta, cambia la máscara por una nueva y pone el "EditText"
 		// en blanco
-		if ((ans.equals(mRespuestas[mMaskIndex].toString()))) {
+		if (ans.equals(correctAnswer())) {
 			showAnimationAnswer(true);
 			if (this.mGameMode) {
 				gameModeControl();
@@ -147,13 +130,27 @@ public class CidrExerciseFragment extends BaseExerciseFragment implements
 	}
 
 	// Metodo para mostrar la solucion
-	public void showSolution(int n) {
-		mAnswer.setText(mRespuestas[n]);
+	public void showSolution() {
+		mAnswer.setText(correctAnswer());
+	}
+
+	private String correctAnswer() {
+		return Integer.toString(cidrNotation(mMask));
+	}
+
+	private int cidrNotation(int mMask) {
+		int zeroCount = 0;
+		int mask = mMask;
+		while ((mask & 0x1) == 0) {
+			zeroCount++;
+			mask = mask >> 1;
+		}
+		return 32 - zeroCount;
 	}
 
 	public void GenerarPregunta() {
-		mMaskIndex = mRandom.nextInt(RANDOM_MASK);
-		mMascara.setText(mMascaras[mMaskIndex]);
+		mMask = generateRandomMask();
+		mMascara.setText(intToIpString(mMask));
 	}
 
 	// /--------------------- Modo Jugar -----------------------
