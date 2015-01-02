@@ -60,8 +60,9 @@ public class CidrExerciseFragment extends BaseExerciseFragment implements
 	private TextView mMascara;
 	int mMaskIndex;
 	EditText mAnswer;
-	public int mMask;
 	public View mRootView;
+
+	private Random mRandom = new Random();;
 
 	public static CidrExerciseFragment newInstance() {
 		CidrExerciseFragment fragment = new CidrExerciseFragment();
@@ -93,7 +94,7 @@ public class CidrExerciseFragment extends BaseExerciseFragment implements
 		mButtonSol.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				showSolution(mMask);
+				showSolution(mMaskIndex);
 			}
 		});
 
@@ -133,7 +134,7 @@ public class CidrExerciseFragment extends BaseExerciseFragment implements
 		}
 		// Si es correcta, cambia la máscara por una nueva y pone el "EditText"
 		// en blanco
-		if ((ans.toString().equals(mRespuestas[mMask].toString()))) {
+		if ((ans.equals(mRespuestas[mMaskIndex].toString()))) {
 			showAnimationAnswer(true);
 			if (this.mGameMode) {
 				gameModeControl();
@@ -150,17 +151,9 @@ public class CidrExerciseFragment extends BaseExerciseFragment implements
 		mAnswer.setText(mRespuestas[n]);
 	}
 
-	// Metodo para generar un número aleatorio
-	public int random() {
-		Random ran = new Random();
-		mMaskIndex = ran.nextInt(RANDOM_MASK);
-
-		return mMaskIndex;
-	}
-
 	public void GenerarPregunta() {
-		mMask = random();
-		mMascara.setText(mMascaras[mMask]);
+		mMaskIndex = mRandom.nextInt(RANDOM_MASK);
+		mMascara.setText(mMascaras[mMaskIndex]);
 	}
 
 	// /--------------------- Modo Jugar -----------------------
