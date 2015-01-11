@@ -92,7 +92,7 @@ limitations under the License.
                 android:layout_gravity="center"
                 android:ems="10"
                 android:imeOptions="actionDone"
-                android:inputType="text"
+                android:inputType="phone"
                 android:padding="10dp" >
 
                 <requestFocus />
