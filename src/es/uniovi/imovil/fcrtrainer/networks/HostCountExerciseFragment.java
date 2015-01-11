@@ -18,77 +18,16 @@ limitations under the License.
 
 package es.uniovi.imovil.fcrtrainer.networks;
 
-import java.util.Date;
-
-import org.json.JSONException;
-
 import es.uniovi.imovil.fcrtrainer.R;
-import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
-
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.DialogInterface;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 public class HostCountExerciseFragment extends BaseNetworkMaskExerciseFragment {
 
-	private static final int POINTS_FOR_QUESTION = 10;
-	private static final int MAX_QUESTIONS = 5;
-	private static final long GAME_DURATION_MS = 10 * 1000 * 60; // 10min
-
-	private boolean mWon = false;
-	private boolean mGameMode = false;
-	private int mPoints;
-	private int mCurrentQuestionCounter = 1;
-
-	private View mRootView;
-	private Button mBtnCheck;
-	private Button mBtnSolution;
-	private TextView mQuestion;
-	EditText mAnswer;
-
-	// Constructor
 	public HostCountExerciseFragment() {
 	}
 
-	public static HostCountExerciseFragment newInstance() {
-		HostCountExerciseFragment fragment = new HostCountExerciseFragment();
+	public static BaseNetworkMaskExerciseFragment newInstance() {
+		BaseNetworkMaskExerciseFragment fragment = new HostCountExerciseFragment();
 		return fragment;
-	}
-
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		mRootView = inflater.inflate(R.layout.fragment_host_count, container,
-				false);
-
-		mBtnCheck = (Button) mRootView.findViewById(R.id.btnCheckAnswer);
-		mBtnSolution = (Button) mRootView.findViewById(R.id.btnSolution);
-		mQuestion = (TextView) mRootView.findViewById(R.id.question);
-		mAnswer = (EditText) mRootView.findViewById(R.id.answer);
-
-		newQuestion();
-
-		mBtnCheck.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				checkAnswer((mAnswer.getText().toString()));
-			}
-		});
-
-		mBtnSolution.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				showSolution();
-			}
-		});
-
-		return mRootView;
 	}
 
 	private int correctAnswer() {
@@ -102,10 +41,18 @@ public class HostCountExerciseFragment extends BaseNetworkMaskExerciseFragment {
 		mQuestion.setText(intToIpString(mMask));
 	}
 
-	public void checkAnswer(String a) {
-		// Si la respuesta es correcta, genera otra nueva pregunta y borra
-		// respuesta
-		if (a.equals(Integer.toString(correctAnswer()))) {
+	@Override
+	protected void showSolution() {
+		mAnswer.setText(Integer.toString(correctAnswer()));
+
+		// Set the cursor at the end
+		mAnswer.setSelection(mAnswer.getText().length());
+	}
+
+	@Override
+	protected void checkAnswer() {
+		String answer = mAnswer.getText().toString();
+		if (answer.equals(Integer.toString(correctAnswer()))) {
 			showAnimationAnswer(true);
 			newQuestion();
 			if (this.mGameMode) {
@@ -117,137 +64,14 @@ public class HostCountExerciseFragment extends BaseNetworkMaskExerciseFragment {
 		}
 	}
 
-	// Método para mostrar la solución
-	public void showSolution() {
-		mAnswer.setText(Integer.toString(correctAnswer()));
-	}
-
-	public void startGame() {
-		setGameDuration(GAME_DURATION_MS);
-
-		// set starting points of textview
-		updatePointsTextView(0);
-
-		super.startGame();
-		updateToGameMode();
-	}
-
-	private void updateToGameMode() {
-		mGameMode = true;
-
-		newQuestion();
-
-		Button solution = (Button) mRootView.findViewById(R.id.btnSolution);
-		solution.setVisibility(View.INVISIBLE);
-
-		TextView points = (TextView) mRootView.findViewById(R.id.points);
-		points.setVisibility(View.VISIBLE);
-
-	}
-
-	private void updateToTrainMode() {
-		mGameMode = false;
-
-		Button solution = (Button) mRootView.findViewById(R.id.btnSolution);
-		solution.setVisibility(View.VISIBLE);
-
-		TextView points = (TextView) mRootView.findViewById(R.id.points);
-		points.setVisibility(View.INVISIBLE);
+	@Override
+	protected int exerciseId() {
+		return R.string.host_count;
 	}
 
 	@Override
-	public void cancelGame() {
-		super.cancelGame();
-		updateToTrainMode();
-	}
-
-	@Override
-	protected void endGame() {
-		// convert to seconds
-		int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000;
-		// every remaining second gives one extra point.
-		this.mPoints = (int) (this.mPoints + remainingTimeInSeconds);
-
-		if (this.mWon)
-			savePoints();
-
-		dialogGameOver();
-		super.endGame();
-		updateToTrainMode();
-		reset();
-	}
-
-	private void reset() {
-		this.mPoints = 0;
-		this.mCurrentQuestionCounter = 0;
-		this.mWon = false;
-
-		updatePointsTextView(0);
-	}
-
-	private void savePoints() {
-		String username = getResources().getString(R.string.default_user_name);
-		try {
-			HighscoreManager.addScore(getActivity().getApplicationContext(),
-					this.mPoints, R.string.host_count, new Date(), username,
-					level());
-
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void gameModeControl() {
-		increasePoints(POINTS_FOR_QUESTION);
-
-		if (mCurrentQuestionCounter >= MAX_QUESTIONS) {
-			// won
-			this.mWon = true;
-			this.endGame();
-		}
-
-		if (mCurrentQuestionCounter < MAX_QUESTIONS
-				&& getRemainingTimeMs() <= 0) {
-			// lost --> no time left...
-			this.mWon = false;
-			this.endGame();
-		}
-		mCurrentQuestionCounter++;
-	}
-
-	private void increasePoints(int val) {
-		this.mPoints = this.mPoints + val;
-		updatePointsTextView(this.mPoints);
-	}
-
-	private void updatePointsTextView(int p) {
-		TextView tvPoints = (TextView) mRootView.findViewById(R.id.points);
-		tvPoints.setText(getResources().getString(R.string.points) + " "
-				+ String.valueOf(p));
-	}
-
-	// Simple GameOver Dialog
-	private void dialogGameOver() {
-		String message = getResources().getString(R.string.lost);
-
-		if (this.mWon) {
-			message = getResources().getString(R.string.won) + " "
-					+ getResources().getString(R.string.points) + " "
-					+ this.mPoints;
-		}
-
-		Builder alert = new AlertDialog.Builder(getActivity());
-		alert.setTitle(getResources().getString(R.string.game_over));
-		alert.setMessage(message);
-		alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.cancel();
-				// nothing to do...
-			}
-		});
-		alert.show();
-
+	protected String titleString() {
+		return getString(R.string.host_count_title);
 	}
 
 }

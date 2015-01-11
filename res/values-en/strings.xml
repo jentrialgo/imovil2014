@@ -115,6 +115,10 @@
     <string name="developed_by">Application developed by Informática Móvil students, 2013-2014 promotion.</string>
     <!-- End Help activity -->
     
+    <!-- Máscara de red -->
+    <string name="network_mask_title">Smallest network mask to hold this number of hosts</string>
+    <!-- Fin Máscara de red -->
+
     <!--  Strings Network Address -->
     <string name="ip_add">IP address:</string>
     <string name="mask">Mask:</string>

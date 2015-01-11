@@ -160,10 +160,9 @@ limitations under the License.
 
 
 	<!-- Máscara de red -->
-    <string name="enunciadomasc">Numero de computadoras en red</string>
-	<string name="solucion">Solucion</string>
-    <string name="comprobar">Comprobar</string>
+    <string name="network_mask_title">Máscara de red más pequeña que puede tener este número de máquinas</string>
     <!-- Fin Máscara de red -->
+
     <string name="tv_decimal">decimal number</string>
 
     <!-- Preferences -->

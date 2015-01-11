@@ -18,46 +18,12 @@ limitations under the License.
 
 package es.uniovi.imovil.fcrtrainer.networks;
 
-import java.util.Date;
-
-import org.json.JSONException;
-
 import es.uniovi.imovil.fcrtrainer.R;
-import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.DialogInterface;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
-public class CidrExerciseFragment extends BaseNetworkMaskExerciseFragment implements
-		OnClickListener {
+public class CidrExerciseFragment extends BaseNetworkMaskExerciseFragment {
 
-	private static final int POINTS_FOR_QUESTION = 10;
-	private static final int MAX_QUESTIONS = 5;
-	private static final long GAME_DURATION_MS = 1 * 1000 * 60; // 1min
-
-	private boolean mGameMode = false;
-
-	private boolean mWon = false;
-
-	private int mPuntos;
-	private int mCurrentQuestionCounter = 1;
-
-	private Button mButtonCheck;
-	private Button mButtonSol;
-	private TextView mMascara;
-	EditText mAnswer;
-	public View mRootView;
-
-	public static CidrExerciseFragment newInstance() {
-		CidrExerciseFragment fragment = new CidrExerciseFragment();
+	public static BaseNetworkMaskExerciseFragment newInstance() {
+		BaseNetworkMaskExerciseFragment fragment = new CidrExerciseFragment();
 		return fragment;
 	}
 
@@ -65,80 +31,30 @@ public class CidrExerciseFragment extends BaseNetworkMaskExerciseFragment implem
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		mRootView = inflater.inflate(R.layout.fragment_cidr, container, false);
-
-		CargaViews();
-
-		mButtonCheck = (Button) mRootView.findViewById(R.id.cButton);
-		mButtonCheck.setOnClickListener(this);
-
-		mButtonSol = (Button) mRootView.findViewById(R.id.sButton);
-		mButtonSol.setOnClickListener(this);
-
-		GenerarPregunta();
-
-		// Usamos listeners para los botones "Comprobar" y "Solucion"
-		mButtonCheck.setOnClickListener((OnClickListener) this);
-
-		mButtonSol.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				showSolution();
-			}
-		});
-
-		return mRootView;
-	}
-
-	@Override
-	public void onClick(View view) {
-		if (view.getId() == R.id.cButton) {
-			checkAnswer((mAnswer.getEditableText().toString()));
-		}
-
-		if (view.getId() == R.id.sButton) {
-			showSolution();
-		}
-	}
-
-	public void CargaViews() {
-		mMascara = (TextView) mRootView.findViewById(R.id.mascara);
-		mAnswer = (EditText) mRootView.findViewById(R.id.respuesta);
-	}
-
-	// Metodo para comprobar la respuesta
-	public void checkAnswer(String ans) {
+	protected void checkAnswer() {
+		String ans = mAnswer.getEditableText().toString();
 		if (ans.isEmpty()) {
 			showAnimationAnswer(false);
 			return;
 		}
 
-		// Si es correcta, cambia la máscara por una nueva y pone el "EditText"
-		// en blanco
 		if (ans.equals(correctAnswer())) {
 			showAnimationAnswer(true);
 			if (this.mGameMode) {
 				gameModeControl();
 			}
-
-			GenerarPregunta();
+			mAnswer.setText("");
+			newQuestion();
 		} else {
 			showAnimationAnswer(false);
 		}
 	}
 
-	// Metodo para mostrar la solucion
-	public void showSolution() {
-		mAnswer.setText(correctAnswer());
-	}
-
 	private String correctAnswer() {
-		return Integer.toString(cidrNotation(mMask));
+		return Integer.toString(cidrSuffixFromMask(mMask));
 	}
 
-	private int cidrNotation(int mMask) {
+	private int cidrSuffixFromMask(int mMask) {
 		int zeroCount = 0;
 		int mask = mMask;
 		while ((mask & 0x1) == 0) {
@@ -148,139 +64,27 @@ public class CidrExerciseFragment extends BaseNetworkMaskExerciseFragment implem
 		return 32 - zeroCount;
 	}
 
-	public void GenerarPregunta() {
+	protected void newQuestion() {
 		mMask = generateRandomMask();
-		mMascara.setText(intToIpString(mMask));
-	}
-
-	// /--------------------- Modo Jugar -----------------------
-
-	private void gameModeControl() {
-		increasePoints(POINTS_FOR_QUESTION);
-
-		if (mCurrentQuestionCounter >= MAX_QUESTIONS) {
-			// won
-			this.mWon = true;
-			this.endGame();
-		}
-
-		if (mCurrentQuestionCounter < MAX_QUESTIONS
-				&& getRemainingTimeMs() <= 0) {
-			// lost --> no time left...
-			this.mWon = false;
-			this.endGame();
-		}
-		mCurrentQuestionCounter++;
-	}
-
-	private void increasePoints(int val) {
-		this.mPuntos = this.mPuntos + val;
-		updatePointsTextView(this.mPuntos);
-	}
-
-	private void updatePointsTextView(int p) {
-		TextView tvPoints = (TextView) mRootView.findViewById(R.id.puntos);
-		tvPoints.setText(getResources().getString(R.string.points) + " "
-				+ String.valueOf(p));
+		mQuestion.setText(intToIpString(mMask));
 	}
 
 	@Override
-	public void startGame() {
-		super.startGame();
-		super.setGameDuration(GAME_DURATION_MS);
+	protected void showSolution() {
+		mAnswer.setText(correctAnswer());
 
-		// set starting points of textview
-		updatePointsTextView(0);
-		updateToGameMode();
-	}
-
-	private void updateToGameMode() {
-		mGameMode = true;
-
-		GenerarPregunta();
-
-		Button solution = (Button) mRootView.findViewById(R.id.sButton);
-		solution.setVisibility(View.INVISIBLE);
-
-		TextView points = (TextView) mRootView.findViewById(R.id.puntos);
-		points.setVisibility(View.VISIBLE);
-	}
-
-	private void updateToTrainMode() {
-		mGameMode = false;
-
-		Button solution = (Button) mRootView.findViewById(R.id.sButton);
-		solution.setVisibility(View.VISIBLE);
-
-		TextView points = (TextView) mRootView.findViewById(R.id.puntos);
-		points.setVisibility(View.INVISIBLE);
+		// Set the cursor at the end
+		mAnswer.setSelection(mAnswer.getText().length());
 	}
 
 	@Override
-	public void cancelGame() {
-		super.cancelGame();
-		updateToTrainMode();
+	protected int exerciseId() {
+		return R.string.cidr;
 	}
 
 	@Override
-	protected void endGame() {
-		// convert to seconds
-		int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000;
-		// every remaining second gives one extra point.
-		this.mPuntos = (int) (this.mPuntos + remainingTimeInSeconds);
-
-		if (this.mWon) {
-			savePoints();
-		}
-
-		dialogGameOver();
-
-		super.endGame();
-
-		updateToTrainMode();
-
-		reset();
+	protected String titleString() {
+		return getString(R.string.cidr_title);
 	}
 
-	private void reset() {
-		this.mPuntos = 0;
-		this.mCurrentQuestionCounter = 0;
-		this.mWon = false;
-
-		updatePointsTextView(0);
-	}
-
-	private void savePoints() {
-		String username = getResources().getString(R.string.default_user_name);
-		try {
-
-			HighscoreManager.addScore(getActivity().getApplicationContext(),
-					this.mPuntos, 0, new Date(), username, level());
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-	}
-
-	// Simple GameOver Dialog
-	private void dialogGameOver() {
-		String message = getResources().getString(R.string.lost);
-
-		if (this.mWon) {
-			message = getResources().getString(R.string.won) + " "
-					+ getResources().getString(R.string.points) + " "
-					+ this.mPuntos;
-		}
-
-		Builder alert = new AlertDialog.Builder(getActivity());
-		alert.setTitle(getResources().getString(R.string.game_over));
-		alert.setMessage(message);
-		alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.cancel();
-				// nothing to do...
-			}
-		});
-		alert.show();
-	}
 }

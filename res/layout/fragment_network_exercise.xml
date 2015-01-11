@@ -36,93 +36,87 @@ limitations under the License.
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin" >
 
-        <TextView
-            android:id="@+id/exercisetitle"
-            style="@style/Title2DarkLight"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/cidr_title" />
-
-        <TextView
-            android:id="@+id/puntos"
-           
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:textSize="20sp"
-            android:text="@string/points" />
-
-        <TextView
-            android:id="@+id/text_view_clock"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            
-            android:text="@string/initial_clock_value"
-            android:textSize="20sp"
-            android:visibility="gone" />
+            android:layout_height="wrap_content" >
 
-        <RelativeLayout
+            <TextView
+                android:id="@id/text_view_clock"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:textSize="20sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/text_view_points"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:textColor="@color/mediumdarkgray"
+                android:textSize="20sp"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/text_view_exercise_title"
+            style="@style/Title2DarkLight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:id="@+id/LinearLayout2"
             style="@style/cards"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/cards" >
+            android:background="@drawable/cards"
+            android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/mascara"
+                android:id="@+id/text_view_question"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:layout_gravity="center"
                 android:padding="10dp"
                 android:textColor="@color/mediumdarkgray"
                 android:textSize="32sp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            style="@style/cards"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/cards" >
 
             <EditText
-                android:id="@+id/respuesta"
+                android:id="@+id/text_view_answer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:layout_gravity="center"
                 android:ems="10"
                 android:imeOptions="actionDone"
-                android:inputType="number"
-                android:maxLength="8"
+                android:inputType="text"
                 android:padding="10dp" >
 
                 <requestFocus />
             </EditText>
-        </RelativeLayout>
-
-        <!-- Buttons -->
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
             <Button
-                android:id="@+id/cButton"
+                android:id="@+id/button_check_answer"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/check" />
 
             <Button
-                android:id="@+id/sButton"
+                android:id="@+id/button_show_solution"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/solution" />
-
         </LinearLayout>
-        <!-- /Buttons -->
-
     </LinearLayout>
 
     <!-- Views required by the animation -->
