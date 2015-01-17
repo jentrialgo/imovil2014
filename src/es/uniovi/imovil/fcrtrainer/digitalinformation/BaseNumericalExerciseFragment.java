@@ -25,8 +25,6 @@ import java.util.Random;
 import org.json.JSONException;
 
 import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
-import es.uniovi.imovil.fcrtrainer.Level;
-import es.uniovi.imovil.fcrtrainer.PreferenceUtils;
 import es.uniovi.imovil.fcrtrainer.R;
 import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
 import android.app.AlertDialog;
