@@ -221,10 +221,12 @@ public abstract class BaseNumericalExerciseFragment extends
 		if (training) {
 			mIsPlaying = false;
 			mSolutionButton.setVisibility(View.VISIBLE);
+			mChangeDirectionButton.setVisibility(View.VISIBLE);
 		} else {
 			mIsPlaying = true;
 			resetGameState();
 			mSolutionButton.setVisibility(View.GONE);
+			mChangeDirectionButton.setVisibility(View.GONE);
 		}
 		clearAnswer();
 	}
