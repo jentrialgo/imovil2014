@@ -83,7 +83,7 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		mRootView = inflater.inflate(R.layout.fragmen_logic_operation,
+		mRootView = inflater.inflate(R.layout.fragment_logic_operation,
 				container, false);
 
 		mTvEntrada1 = (TextView) mRootView.findViewById(R.id.LOentrada1);

@@ -67,7 +67,6 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 	private ArrayList<Integer> mNumberList = new ArrayList<Integer>();
 	private int mPoints;
 	private TextView mScore;
-	private TextView mScoreTitle;
 
 	public static LogicGateExerciseFragment newInstance() {
 
@@ -125,8 +124,7 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 
 		// Inicializamos views para el modo juego
 		mClock = (TextView) mRootView.findViewById(R.id.text_view_clock);
-		mScore = (TextView) mRootView.findViewById(R.id.puntuacion);
-		mScoreTitle = (TextView) mRootView.findViewById(R.id.title_puntuacion);
+		mScore = (TextView) mRootView.findViewById(R.id.text_view_points);
 
 		return mRootView;
 	}
@@ -216,8 +214,6 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 		mImageView.setImageResource(mImageArray.getResourceId(mCurrentQuestion,
 				0));
 		mScore.setVisibility(View.VISIBLE);
-		mScoreTitle.setVisibility(View.VISIBLE);
-		mScoreTitle.setText(R.string.title_puntuacion);
 		mScore.setText("0");
 	}
 
@@ -227,7 +223,6 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 
 		// Cambiamos el layout y lo dejamos otra vez como el modo ejercicio
 		mScore.setVisibility(View.GONE);
-		mScoreTitle.setVisibility(View.GONE);
 		mSolutionButton.setVisibility(View.VISIBLE);
 		mButtoncheck.setText("Comprobar");
 	}
@@ -254,7 +249,6 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 		mNumberList.clear();
 
 		// Cambiamos el layout para dejarlo en modo ejercicio
-		mScoreTitle.setVisibility(View.GONE);
 		mScore.setVisibility(View.GONE);
 		mClock.setVisibility(View.GONE);
 		mSolutionButton.setVisibility(View.VISIBLE);

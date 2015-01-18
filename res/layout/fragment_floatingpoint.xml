@@ -16,46 +16,24 @@ limitations under the License.
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/game_fragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_gravity="center_horizontal"
-    android:background="@color/mediumgray"
-    android:gravity="center_horizontal" >
-    
-     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+    android:layout_height="match_parent" >
 
-            <TextView
-                android:id="@id/text_view_clock"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:textSize="20sp"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/tv_points"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:textColor="@color/mediumdarkgray"
-                android:textSize="20sp"
-                android:visibility="gone" />
-
-        </LinearLayout>
-    
-
-    <LinearLayout
-        android:id="@+id/LinearLayout1"
+    <include
+        android:id="@+id/game_info_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        layout="@layout/game_info_panel" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/game_info_panel"
         android:orientation="vertical"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -102,51 +80,40 @@ limitations under the License.
                 android:textSize="@dimen/big_font" >
 
                 <requestFocus android:layout_width="match_parent" />
-
             </EditText>
 
             <EditText
                 android:id="@+id/ed_sign"
                 android:layout_width="0dp"
-                android:layout_weight="12"
                 android:layout_height="wrap_content"
+                android:layout_weight="12"
+                android:gravity="start"
                 android:imeOptions="actionDone"
                 android:inputType="text"
-                android:text="0"
-                android:textSize="@dimen/small_font"
-                android:gravity="left"
-              
-                />
-
+                tools:text="0"
+                android:textSize="@dimen/small_font" />
 
             <EditText
                 android:id="@+id/ed_exponent"
                 android:layout_width="0dp"
-                android:layout_weight="33"
                 android:layout_height="wrap_content"
+                android:layout_weight="33"
+                android:gravity="start"
                 android:imeOptions="actionDone"
                 android:inputType="text"
-                android:text="00000000"
-                android:textSize="@dimen/small_font"
-                android:gravity="left"
-              
-                 />
+                tools:text="00000000"
+                android:textSize="@dimen/small_font" />
 
             <EditText
                 android:id="@+id/ed_mantissa"
                 android:layout_width="0dp"
-                android:layout_weight="65"
                 android:layout_height="wrap_content"
+                android:layout_weight="65"
+                android:gravity="start"
                 android:imeOptions="actionDone"
                 android:inputType="text"
-                android:text="00000000000000000000000"
-                android:textSize="@dimen/small_font"
-                android:gravity="left"
-              
-                 />
-            
-
-
+                tools:text="00000000000000000000000"
+                android:textSize="@dimen/small_font" />
         </LinearLayout>
 
         <LinearLayout
@@ -159,8 +126,7 @@ limitations under the License.
                 android:layout_height="wrap_content"
                 android:layout_weight="100"
                 android:gravity="center_horizontal"
-                android:text="@string/tv_decimal"
-                 />
+                android:text="@string/tv_decimal" />
 
             <TextView
                 android:id="@+id/tv_s"
@@ -174,7 +140,7 @@ limitations under the License.
                 android:id="@+id/tv_exp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                 android:layout_weight="40"
+                android:layout_weight="40"
                 android:gravity="center_horizontal"
                 android:text="@string/tv_exponent" />
 
@@ -185,7 +151,6 @@ limitations under the License.
                 android:layout_weight="50"
                 android:gravity="center_horizontal"
                 android:text="@string/tv_mant" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -213,31 +178,12 @@ limitations under the License.
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_import_export"
+                android:drawableStart="@drawable/ic_import_export"
                 android:minWidth="48dp"
                 android:onClick="OnButtonClick" />
         </LinearLayout>
     </LinearLayout>
-    
-    <!--  Views required by the animation -->
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/result"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:background="@color/pantalla"
-        android:visibility="gone" >
-
-        <ImageView
-            android:id="@+id/resultimage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="140dp"/>
-    </RelativeLayout>
-    
-    <!-- End of views required by the animation -->
+    <include layout="@layout/overlapped_info_window" />
 
 </RelativeLayout>

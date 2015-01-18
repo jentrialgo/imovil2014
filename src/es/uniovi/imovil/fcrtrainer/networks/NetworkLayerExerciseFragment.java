@@ -86,7 +86,7 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 		//TextView para mostrar la pregunta
 		mQuestion = (TextView) mRootView.findViewById(R.id.textlayer);
 		//TextView para los puntos en el modo jugar
-		mLayerPoints = (TextView) mRootView.findViewById(R.id.points_layer);
+		mLayerPoints = (TextView) mRootView.findViewById(R.id.text_view_points);
 
 		//Radiogrup
 		mOptions = (RadioGroup) mRootView.findViewById(R.id.layer_group);

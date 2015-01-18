@@ -80,7 +80,7 @@ public abstract class BaseNumericalExerciseFragment extends
 		mNumberToConvertTextView = (TextView) rootView
 				.findViewById(R.id.numbertoconvert);
 		mTitleTextView = (TextView) rootView.findViewById(R.id.exercisetitle);
-		mPointsTextView = (TextView) rootView.findViewById(R.id.tvpoints);
+		mPointsTextView = (TextView) rootView.findViewById(R.id.text_view_points);
 		mRandomGenerator = new Random();
 
 		mAnswerTextView.setOnEditorActionListener(new OnEditorActionListener() {

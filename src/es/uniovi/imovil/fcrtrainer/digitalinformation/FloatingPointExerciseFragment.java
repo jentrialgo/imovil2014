@@ -91,7 +91,7 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 		mTvSign = (TextView) rootView.findViewById(R.id.tv_s);
 		mTvExponent = (TextView) rootView.findViewById(R.id.tv_exp);
 		mTvMantissa = (TextView) rootView.findViewById(R.id.tv_mant);
-		mTvPoints = (TextView) rootView.findViewById(R.id.tv_points);
+		mTvPoints = (TextView) rootView.findViewById(R.id.text_view_points);
 		mTvTitle = (TextView) rootView.findViewById(R.id.theme);
 		mEtDecimal = (EditText) rootView.findViewById(R.id.ed_decimal);
 		mEtSign = (EditText) rootView.findViewById(R.id.ed_sign);
