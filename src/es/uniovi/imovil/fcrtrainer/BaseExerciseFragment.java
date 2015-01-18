@@ -166,10 +166,14 @@ public abstract class BaseExerciseFragment extends Fragment {
 			// El fragmento está incrustado en una actividad distinta a
 			// MainActivity. No se hace nada
 		}
+
+		MenuItem setup = menu.findItem(R.id.action_settings);
 		if (mIsPlaying) {
 			item.setIcon(R.drawable.ic_action_stop);
+			setup.setVisible(false);
 		} else {
 			item.setIcon(R.drawable.ic_action_play);
+			setup.setVisible(true);
 		}
 	}
 
@@ -207,6 +211,8 @@ public abstract class BaseExerciseFragment extends Fragment {
 
 		updateScore(0);
 		showLevel();
+
+		getActivity().supportInvalidateOptionsMenu(); // to hide the settings action
 
 		mIsPlaying = true;
 		setGameInfoPanelVisibility(View.VISIBLE);
