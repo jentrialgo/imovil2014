@@ -35,6 +35,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -92,6 +93,12 @@ public abstract class BaseNumericalExerciseFragment extends
 				return false;
 			}
 		});
+
+		// Set the focus on the edit text and show the keyboard
+		if (mAnswerTextView.requestFocus()) {
+			getActivity().getWindow().setSoftInputMode(
+					WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+		}
 
 		mCheckButton.setOnClickListener(new OnClickListener() {
 
