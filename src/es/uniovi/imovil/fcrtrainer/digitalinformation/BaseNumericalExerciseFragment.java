@@ -56,8 +56,6 @@ public abstract class BaseNumericalExerciseFragment extends
 	private Button mSolutionButton;
 	private TextView mNumberToConvertTextView;
 	private TextView mTitleTextView;
-	private TextView mPointsTextView;
-
 	protected String mNumberToConvert;
 	private int mQuestionCounter = 0;
 	private int mPoints = 0;
@@ -80,7 +78,6 @@ public abstract class BaseNumericalExerciseFragment extends
 		mNumberToConvertTextView = (TextView) rootView
 				.findViewById(R.id.numbertoconvert);
 		mTitleTextView = (TextView) rootView.findViewById(R.id.exercisetitle);
-		mPointsTextView = (TextView) rootView.findViewById(R.id.text_view_points);
 		mRandomGenerator = new Random();
 
 		mAnswerTextView.setOnEditorActionListener(new OnEditorActionListener() {
@@ -217,12 +214,10 @@ public abstract class BaseNumericalExerciseFragment extends
 		if (training) {
 			mIsPlaying = false;
 			mSolutionButton.setVisibility(View.VISIBLE);
-			mPointsTextView.setVisibility(View.GONE);
 		} else {
 			mIsPlaying = true;
 			resetGameState();
 			mSolutionButton.setVisibility(View.GONE);
-			mPointsTextView.setVisibility(View.VISIBLE);
 		}
 		clearAnswer();
 	}
@@ -233,7 +228,7 @@ public abstract class BaseNumericalExerciseFragment extends
 	 */
 	private void handleCorrectAnswer() {
 		mPoints += pointsForCorrectAnswer();
-		updatePoints(mPoints);
+		updateScore(mPoints);
 
 		mQuestionCounter++;
 		if (mQuestionCounter == GAMEMODE_MAXQUESTIONS) {
@@ -244,22 +239,11 @@ public abstract class BaseNumericalExerciseFragment extends
 	private void resetGameState() {
 		mQuestionCounter = 0;
 		mPoints = 0;
-		mPointsTextView.setVisibility(View.GONE);
 		clearAnswer();
 	}
 
 	private void clearAnswer() {
 		mAnswerTextView.setText("");
-	}
-
-	/**
-	 * Updates the points in the UI
-	 * 
-	 * @param points
-	 */
-	private void updatePoints(int points) {
-		mPointsTextView.setText(getString(R.string.points)
-				+ String.valueOf(points));
 	}
 
 	/**
@@ -270,7 +254,7 @@ public abstract class BaseNumericalExerciseFragment extends
 		super.startGame();
 		setTrainingMode(false);
 		newQuestion();
-		updatePoints(mPoints);
+		updateScore(mPoints);
 	}
 
 	/**

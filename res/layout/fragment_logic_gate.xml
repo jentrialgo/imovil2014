@@ -23,6 +23,7 @@ limitations under the License.
         android:id="@+id/game_info_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         layout="@layout/game_info_panel" />
 
     <TextView

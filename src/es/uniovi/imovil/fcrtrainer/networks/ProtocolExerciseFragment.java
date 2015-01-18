@@ -199,18 +199,9 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 		}
 	}
 
-	private void updatePointsTextView(int p) {
-		TextView tvPoints = (TextView) mRootView.findViewById(R.id.points);
-		tvPoints.setText(getResources().getString(R.string.points) + " "
-				+ String.valueOf(p));
-	}
-
 	@Override
 	public void startGame() {
 		setGameDuration(GAME_DURATION_MS);
-
-		// set starting points of textview
-		updatePointsTextView(0);
 
 		super.startGame();
 		updateToGameMode();
@@ -229,9 +220,6 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 
 		Button solution = (Button) mRootView.findViewById(R.id.seesolution);
 		solution.setVisibility(View.GONE);
-		TextView points = (TextView) mRootView.findViewById(R.id.points);
-		points.setVisibility(View.VISIBLE);
-
 	}
 
 	private void updateToTrainMode() {
@@ -239,9 +227,6 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 
 		Button solution = (Button) mRootView.findViewById(R.id.seesolution);
 		solution.setVisibility(View.VISIBLE);
-
-		TextView points = (TextView) mRootView.findViewById(R.id.points);
-		points.setVisibility(View.GONE);
 	}
 
 	private void gameModeControl() {
@@ -266,7 +251,7 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 	protected void endGame() {
 		// convert to seconds
 		int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000;
-		this.mPoints = (int) (this.mPoints + remainingTimeInSeconds);
+		mPoints = (int) (this.mPoints + remainingTimeInSeconds);
 
 		if (this.mWon)
 			savePoints();
@@ -283,7 +268,7 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 
 	private void increasePoints(int val) {
 		mPoints = mPoints + val;
-		updatePointsTextView(mPoints);
+		updateScore(mPoints);
 	}
 
 	// Simple GameOver Dialog
@@ -292,8 +277,8 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 
 		if (mWon) {
 			message = getResources().getString(R.string.won) + " "
-					+ getResources().getString(R.string.points) + " "
-					+ this.mPoints;
+					+ getResources().getString(R.string.points_final) + " "
+					+ mPoints;
 		}
 
 		Builder alert = new AlertDialog.Builder(getActivity());
@@ -326,7 +311,7 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 		mPoints = 0;
 		mCurrentQuestionCounter = 0;
 		mWon = false;
-		updatePointsTextView(0);
+		updateScore(mPoints);
 	}
 
 }

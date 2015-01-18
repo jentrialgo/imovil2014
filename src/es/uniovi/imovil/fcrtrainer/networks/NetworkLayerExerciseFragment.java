@@ -46,7 +46,6 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 
 	private View mRootView;		
 	private TextView mQuestion;
-	private TextView mLayerPoints;
 	private RadioGroup mOptions;
 
 	private RadioButton mRblayer;
@@ -58,7 +57,7 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 	private Button mSolution;
 	private String[] mQuestions;
 	private String[] mAnswers;
-	private String mRbPressed="";
+	private String mRbPressed = "";
 	private int mIndex =0;
 
 	private int mPoints;
@@ -85,8 +84,6 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 		mRootView =inflater.inflate(R.layout.fragment_layer, container, false);
 		//TextView para mostrar la pregunta
 		mQuestion = (TextView) mRootView.findViewById(R.id.textlayer);
-		//TextView para los puntos en el modo jugar
-		mLayerPoints = (TextView) mRootView.findViewById(R.id.text_view_points);
 
 		//Radiogrup
 		mOptions = (RadioGroup) mRootView.findViewById(R.id.layer_group);
@@ -179,12 +176,8 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 	}
 
 	private void increasePoints(int val) {
-		this.mPoints = this.mPoints + val;
-		updatePointsTextView(this.mPoints);
-	}
-
-	private void updatePointsTextView(int p) {		
-		mLayerPoints.setText(getResources().getString(R.string.points)+ " "+ String.valueOf(p));
+		mPoints = mPoints + val;
+		updateScore(this.mPoints);
 	}
 
 	private void gameModeControl() {
@@ -208,15 +201,12 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 	@Override
 	public void startGame() {
 		setGameDuration(GAME_DURATION_MS);
-		// set starting points of textview
-		updatePointsTextView(0); 
 		super.startGame();
 		updateToGameMode();
 	}
 
 	private void updateToGameMode() {
 		mSolution.setVisibility(View.INVISIBLE);
-		mLayerPoints.setVisibility(View.VISIBLE);
 	}
 
 	@Override
@@ -227,7 +217,6 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 
 	private void updateToTrainMode() {
 		mSolution.setVisibility(View.VISIBLE);
-		mLayerPoints.setVisibility(View.GONE);
 	}
 
 	// Simple GameOver Dialog
@@ -236,7 +225,7 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 
 		if (this.mWon) {
 			message = getResources().getString(R.string.won) + " "
-					+ getResources().getString(R.string.points) + " "
+					+ getResources().getString(R.string.points_final) + " "
 					+ this.mPoints;
 		}
 

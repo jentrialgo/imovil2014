@@ -46,14 +46,6 @@ limitations under the License.
             android:layout_height="wrap_content"
             android:text="@string/protocols" />
 
-        <TextView
-            android:id="@+id/points"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/points"
-            android:textSize="20sp"
-            android:visibility="gone" />
-
         <RelativeLayout
             android:id="@+id/card"
             style="@style/cards"

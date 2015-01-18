@@ -43,7 +43,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 		OnClickListener, OnItemSelectedListener {
@@ -60,13 +59,11 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 	private Button mSolutionButton;
 	private Spinner mSpinner;
 	private int mN;
-	private TextView mClock;
 	private int mGameEnd = 0;
 	private int mInitialValue = 0;
 	private int mFinalValue = 5;
 	private ArrayList<Integer> mNumberList = new ArrayList<Integer>();
 	private int mPoints;
-	private TextView mScore;
 
 	public static LogicGateExerciseFragment newInstance() {
 
@@ -122,10 +119,6 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 		mSpinner.setAdapter(adapter);
 		mSpinner.setOnItemSelectedListener(this);
 
-		// Inicializamos views para el modo juego
-		mClock = (TextView) mRootView.findViewById(R.id.text_view_clock);
-		mScore = (TextView) mRootView.findViewById(R.id.text_view_points);
-
 		return mRootView;
 	}
 
@@ -165,17 +158,15 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position,
 			long id) {
-		// TODO Auto-generated method stub
-
+		// Nada que hacer aquí
 	}
 
 	@Override
 	public void onNothingSelected(AdapterView<?> parent) {
-		// TODO Auto-generated method stub
-
+		// Nada que hacer aquí
 	}
 
-	// Metodo para generar un n�mero aleatorio
+	// Metodo para generar un número aleatorio
 	private int random() {
 		Random ran = new Random();
 		mN = ran.nextInt(RANDOM);
@@ -213,8 +204,6 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 		mCurrentQuestion = generar();
 		mImageView.setImageResource(mImageArray.getResourceId(mCurrentQuestion,
 				0));
-		mScore.setVisibility(View.VISIBLE);
-		mScore.setText("0");
 	}
 
 	@Override
@@ -222,7 +211,6 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 		super.cancelGame();
 
 		// Cambiamos el layout y lo dejamos otra vez como el modo ejercicio
-		mScore.setVisibility(View.GONE);
 		mSolutionButton.setVisibility(View.VISIBLE);
 		mButtoncheck.setText("Comprobar");
 	}
@@ -249,8 +237,6 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 		mNumberList.clear();
 
 		// Cambiamos el layout para dejarlo en modo ejercicio
-		mScore.setVisibility(View.GONE);
-		mClock.setVisibility(View.GONE);
 		mSolutionButton.setVisibility(View.VISIBLE);
 		mButtoncheck.setText("Comprobar");
 		mGameEnd = 0;
@@ -312,7 +298,7 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 				pregunta = generar();
 				mCurrentQuestion = pregunta;
 				mPoints += POINTS_FOR_QUESTION;
-				mScore.setText(Integer.toString(mPoints));
+				updateScore(mPoints);
 			} else {
 				pregunta = random();
 				mCurrentQuestion = pregunta;

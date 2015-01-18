@@ -92,7 +92,7 @@ limitations under the License.
 
 	<!-- Cadenas comunes a varios módulos -->
 	<string name="game_over">Juego finalizado</string>
-    <string name="points">Puntos obtenidos: </string>
+    <string name="score">Puntos: </string>
     <string name="won">Juego terminado. </string>
     <string name="lost">¡Se ha cumplido el tiempo! </string>
     <string name="next_binary">Siguente</string>

@@ -38,10 +38,18 @@ import android.widget.Toast;
  * Contendrá toda la funcionalidad común a todos los ejercicios. Entre ellos
  * está un botón en la barra de tareas para empezar y parar de jugar.
  * 
- * Para que esto funcione, el fragmento debe tener definido un TextView llamado
- * text_view_clock, que debe ser inicialmente invisible. Este TextView servirá
- * para mostrar el reloj mientras se esté jugando. Cuando se pulse el botón de
- * jugar, se mostrará el reloj y empezará la cuenta atrás. Cuando se llegue a
+ * Para que esto funcione, el fragmento debe tener definido un panel para la
+ * información del juego llamado game_info_panel, que debe ser incluido en el
+ * layout utilizando esta orden:
+ *  <include
+        android:id="@+id/game_info_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/game_info_panel" />
+ * 
+ * En este se mostrará la información del juego (tiempo restante, puntuación y
+ * nivel de dificultad) mientras se esté jugando. Cuando se pulse el botón de
+ * jugar, se mostrará panel y empezará la cuenta atrás. Cuando se llegue a
  * cero, se acabará el juego.
  * 
  * Un fragmento con un ejercicio puede hacer estas cosas:
@@ -59,6 +67,8 @@ import android.widget.Toast;
  * En estros tres métodos se debe llamar siempre al método padre en
  * BaseExercise, ya que son los que controlan el comportamiento del juego.
  * 
+ * Se debe llamar al método updateScore() cada vez que cambie la puntuación
+ * 
  * También se puede llamar en el constructor del fragmento al método
  * setGameDuration() si se desea una duración distinta de los dos minutos que se
  * tienen por defecto.
@@ -72,6 +82,8 @@ public abstract class BaseExerciseFragment extends Fragment {
 	private Handler mTimerHandler = new Handler();
 	private Runnable mUpdateTimeTask = new TimeUpdater();
 	private TextView mClock;
+	private TextView mScoreTextView;
+	private View mGameInfoPanel;
 	private long mDurationMs = DEFAULT_GAME_DURATION_MS;
 	private long mStartMs;
 
@@ -85,6 +97,12 @@ public abstract class BaseExerciseFragment extends Fragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		mResult = (View) view.findViewById(R.id.result);
 		mResultImage = (ImageView) view.findViewById(R.id.resultimage);
+		mScoreTextView = (TextView) view.findViewById(R.id.text_view_score);
+		mGameInfoPanel = view.findViewById(R.id.game_info_panel);
+		if (mGameInfoPanel != null) {
+			mGameInfoPanel.setVisibility(View.GONE);
+		}
+		
 		super.onViewCreated(view, savedInstanceState);
 	}
 
@@ -159,9 +177,9 @@ public abstract class BaseExerciseFragment extends Fragment {
 		}
 	}
 
-	private void setClockVisibility(int visibility) {
-		if (mClock != null) {
-			mClock.setVisibility(visibility);
+	private void setGameInfoPanelVisibility(int visibility) {
+		if (mGameInfoPanel != null) {
+			mGameInfoPanel.setVisibility(visibility);
 		}
 	}
 
@@ -184,8 +202,10 @@ public abstract class BaseExerciseFragment extends Fragment {
 			return;
 		}
 
+		updateScore(0);
+
 		mIsPlaying = true;
-		setClockVisibility(View.VISIBLE);
+		setGameInfoPanelVisibility(View.VISIBLE);
 		getActivity().supportInvalidateOptionsMenu();
 		showAnimationGameStart(true);
 		final Handler handler = new Handler();
@@ -200,6 +220,14 @@ public abstract class BaseExerciseFragment extends Fragment {
 		}, 1500);
 
 
+	}
+
+	/***
+	 * Esta función muestra el valor que se le pase en el panel de puntuación
+	 */
+	protected void updateScore(int newScore) {
+		mScoreTextView.setText(getString(R.string.score)
+				+ String.valueOf(newScore));
 	}
 
 	/**
@@ -224,7 +252,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 		if (mIsPlaying) {
 			mIsPlaying = false;
 			mTimerHandler.removeCallbacks(mUpdateTimeTask);
-			setClockVisibility(View.GONE);
+			setGameInfoPanelVisibility(View.GONE);
 			getActivity().supportInvalidateOptionsMenu();
 		}
 	}

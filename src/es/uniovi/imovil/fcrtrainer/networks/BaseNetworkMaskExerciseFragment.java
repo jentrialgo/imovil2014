@@ -108,9 +108,6 @@ public abstract class BaseNetworkMaskExerciseFragment
 	public void startGame() {
 		setGameDuration(GAME_DURATION_MS);
 	
-		// set starting points of textview
-		updatePointsTextView(0);
-	
 		super.startGame();
 		updateToGameMode();
 	}
@@ -123,11 +120,6 @@ public abstract class BaseNetworkMaskExerciseFragment
 		Button solution = (Button) mRootView.findViewById(
 				R.id.button_show_solution);
 		solution.setVisibility(View.GONE);
-	
-		TextView points = (TextView) mRootView.findViewById(
-				R.id.text_view_points);
-		points.setVisibility(View.VISIBLE);
-	
 	}
 
 	private void updateToTrainMode() {
@@ -136,10 +128,6 @@ public abstract class BaseNetworkMaskExerciseFragment
 		Button solution = (Button) mRootView.findViewById(
 				R.id.button_show_solution);
 		solution.setVisibility(View.VISIBLE);
-	
-		TextView points = (TextView) mRootView.findViewById(
-				R.id.text_view_points);
-		points.setVisibility(View.GONE);
 	}
 
 	@Override
@@ -153,10 +141,11 @@ public abstract class BaseNetworkMaskExerciseFragment
 		// convert to seconds
 		int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000;
 		// every remaining second gives one extra point.
-		this.mPoints = (int) (this.mPoints + remainingTimeInSeconds);
+		mPoints = (int) (mPoints + remainingTimeInSeconds);
 	
-		if (this.mWon)
+		if (this.mWon) {
 			savePoints();
+		}
 	
 		dialogGameOver();
 		super.endGame();
@@ -195,15 +184,8 @@ public abstract class BaseNetworkMaskExerciseFragment
 	}
 
 	private void increasePoints(int val) {
-		this.mPoints = this.mPoints + val;
-		updatePointsTextView(this.mPoints);
-	}
-
-	protected void updatePointsTextView(int p) {
-		TextView tvPoints = (TextView) mRootView.findViewById(
-				R.id.text_view_points);
-		tvPoints.setText(getResources().getString(R.string.points) + " "
-				+ String.valueOf(p));
+		mPoints = mPoints + val;
+		updateScore(mPoints);
 	}
 
 	private void dialogGameOver() {
@@ -211,7 +193,7 @@ public abstract class BaseNetworkMaskExerciseFragment
 	
 		if (this.mWon) {
 			message = getResources().getString(R.string.won) + " "
-					+ getResources().getString(R.string.points) + " "
+					+ getResources().getString(R.string.points_final) + " "
 					+ this.mPoints;
 		}
 	
@@ -230,11 +212,11 @@ public abstract class BaseNetworkMaskExerciseFragment
 	}
 
 	private void reset() {
-		this.mPoints = 0;
-		this.mCurrentQuestionCounter = 0;
-		this.mWon = false;
+		mPoints = 0;
+		mCurrentQuestionCounter = 0;
+		mWon = false;
 	
-		updatePointsTextView(0);
+		updateScore(mPoints);
 	}
 
 	@Override
