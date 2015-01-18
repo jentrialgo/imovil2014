@@ -44,7 +44,7 @@
 
 	<!-- Cadenas comunes a varios módulos -->
 	<string name="game_over">Game over</string>
-    <string name="score">Score: </string>
+    <string name="score">Score:</string>
     <string name="won">Game over. </string>
     <string name="lost">Time\'s up! </string>
     <string name="next_binary">Next</string>

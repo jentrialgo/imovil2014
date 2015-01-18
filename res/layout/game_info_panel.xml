@@ -38,9 +38,18 @@ limitations under the License.
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="end"
+        android:gravity="center_horizontal"
         android:textColor="@color/mediumdarkgray"
         android:textSize="20sp"
         tools:text="3:56" />
 
+    <TextView
+        android:id="@+id/text_view_level"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="end"
+        android:textColor="@color/mediumdarkgray"
+        android:textSize="20sp"
+        tools:text="Master" />
 </LinearLayout>

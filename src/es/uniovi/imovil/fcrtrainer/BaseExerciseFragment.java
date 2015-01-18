@@ -83,6 +83,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 	private Runnable mUpdateTimeTask = new TimeUpdater();
 	private TextView mClock;
 	private TextView mScoreTextView;
+	private TextView mLevelTextView;
 	private View mGameInfoPanel;
 	private long mDurationMs = DEFAULT_GAME_DURATION_MS;
 	private long mStartMs;
@@ -97,12 +98,15 @@ public abstract class BaseExerciseFragment extends Fragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		mResult = (View) view.findViewById(R.id.result);
 		mResultImage = (ImageView) view.findViewById(R.id.resultimage);
+		mClock = (TextView) getView().findViewById(R.id.text_view_clock);
 		mScoreTextView = (TextView) view.findViewById(R.id.text_view_score);
+		mLevelTextView = (TextView) view.findViewById(R.id.text_view_level);
+
 		mGameInfoPanel = view.findViewById(R.id.game_info_panel);
 		if (mGameInfoPanel != null) {
 			mGameInfoPanel.setVisibility(View.GONE);
 		}
-		
+
 		super.onViewCreated(view, savedInstanceState);
 	}
 
@@ -195,7 +199,6 @@ public abstract class BaseExerciseFragment extends Fragment {
 	 * padre, para ñadir lo necesario a cada juego particular
 	 */
 	protected void startGame() {
-		mClock = (TextView) getView().findViewById(R.id.text_view_clock);
 		if (mClock == null) {
 			Toast.makeText(getActivity(), getString(R.string.error_no_clock),
 					Toast.LENGTH_LONG).show();
@@ -203,6 +206,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 		}
 
 		updateScore(0);
+		showLevel();
 
 		mIsPlaying = true;
 		setGameInfoPanelVisibility(View.VISIBLE);
@@ -222,11 +226,19 @@ public abstract class BaseExerciseFragment extends Fragment {
 
 	}
 
+	private void showLevel() {
+		if (mLevelTextView == null) {
+			return;
+		}
+		
+		mLevelTextView.setText(level().toString(getActivity()));
+	}
+
 	/***
 	 * Esta función muestra el valor que se le pase en el panel de puntuación
 	 */
 	protected void updateScore(int newScore) {
-		mScoreTextView.setText(getString(R.string.score)
+		mScoreTextView.setText(getString(R.string.score) + " "
 				+ String.valueOf(newScore));
 	}
 

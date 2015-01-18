@@ -51,4 +51,18 @@ public enum Level {
 
 		throw new IllegalArgumentException();
 	}
+	
+	public String toString(Context context) {
+		switch (this) {
+		case BEGINNER:
+			return context.getString(R.string.pref_level1_name);
+		case INTERMEDIATE:
+			return context.getString(R.string.pref_level2_name);
+		case PROFICIENCY:
+			return context.getString(R.string.pref_level3_name);
+		}
+
+		throw new IllegalArgumentException();
+		
+	}
 }
