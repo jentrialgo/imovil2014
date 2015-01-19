@@ -134,7 +134,8 @@ public abstract class BaseExerciseFragment extends Fragment {
 			if (remainingTimeMs < tenSecondsInMs) {
 				mClock.setTextColor(Color.RED);
 			} else {
-				mClock.setTextColor(Color.BLACK);
+				mClock.setTextColor(getActivity().getResources().getColor(
+						R.color.score_info));
 			}
 
 			mClock.setText(String.format("%d:%02d", remainingTimeMin,

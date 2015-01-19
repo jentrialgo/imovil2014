@@ -56,4 +56,9 @@ limitations under the License.
         <item name="android:paddingRight">@dimen/activity_horizontal_margin</item>
     </style>
 
+    <style name="score_info">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/score_info</item>
+        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-light</item>
+    </style>
 </resources>
