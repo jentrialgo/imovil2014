@@ -42,11 +42,11 @@ public class BinaryExerciseFragment extends BaseNumericalExerciseFragment {
 	}
 	
 	private String convertToDecimal(String textToDecimal) {
-		return this.binaryConverter.convertBinaryToDecimal(textToDecimal);
+		return BinaryConverter.convertBinaryToDecimal(textToDecimal);
 	}
 
 	private String convertToBinary(String textToBinary) {
-		return this.binaryConverter.convertDecimalToBinary(textToBinary);
+		return BinaryConverter.convertDecimalToBinary(textToBinary);
 	}
 
 	private boolean checkDecimalAnswer(String answer) {
@@ -56,7 +56,7 @@ public class BinaryExerciseFragment extends BaseNumericalExerciseFragment {
 
 	private boolean checkBinaryAnswer(String answer) {
 		// get answer without zeros in front to compare it easy.
-		answer = binaryConverter.deleteStartingZeroesFromBinaryInput(answer);
+		answer = BinaryConverter.deleteStartingZeroesFromBinaryInput(answer);
 
 		// Convert Question to binary
 		String questionConverted = convertToBinary(mNumberToConvert);
@@ -97,7 +97,7 @@ public class BinaryExerciseFragment extends BaseNumericalExerciseFragment {
 		if (mDirectConversion) {
 			return String.valueOf(number);
 		} else {
-			return binaryConverter.convertDecimalToBinary(number);
+			return BinaryConverter.convertDecimalToBinary(number);
 		}
 	}
 

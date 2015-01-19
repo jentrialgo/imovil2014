@@ -23,14 +23,20 @@ import java.util.Random;
 public class BinaryConverter{
 	private Random mRandom = new Random();
 
-	public boolean isStringEmpty(String string) {
+	public int createRandomNumber(int numberOfBits) {
+		double x = Math.pow(2, numberOfBits - 1);
+		int maxNumber = (int) x;
+		return mRandom.nextInt(maxNumber);
+	}
+
+	public static boolean isStringEmpty(String string) {
 		if (string.matches("") || !string.contains("1")) {
 			return true;
 		}
 		return false;
 	}
 	
-	public String deleteStartingZeroesFromBinaryInput(String binaryText){
+	public static String deleteStartingZeroesFromBinaryInput(String binaryText){
 		if(isStringEmpty(binaryText))
 			return "0"; //empty string equals "0" in this case.
 		
@@ -52,22 +58,16 @@ public class BinaryConverter{
 		return binaryText.substring(lastPosition);
 	}
 	
-	public int createRandomNumber(int numberOfBits) {
-		double x = Math.pow(2, numberOfBits - 1);
-		int maxNumber = (int) x;
-		return mRandom.nextInt(maxNumber);
-	}
-
-	public String convertDecimalToBinary(int decimalNumber) {
+	public static String convertDecimalToBinary(int decimalNumber) {
 		return Integer.toBinaryString(decimalNumber);
 	}
 	
-	public String convertDecimalToBinary(String decimalNumber) {		
+	public static String convertDecimalToBinary(String decimalNumber) {		
 		int number = Integer.parseInt(decimalNumber);
 		return convertDecimalToBinary(number);
 	}
 	
-	public String convertBinaryToDecimal(String binary){
+	public static String convertBinaryToDecimal(String binary){
 		return "" + Integer.parseInt(binary, 2);
 	}
 
