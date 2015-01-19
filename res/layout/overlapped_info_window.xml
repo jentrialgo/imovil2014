@@ -18,12 +18,12 @@ limitations under the License.
     android:id="@+id/result"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginLeft="-12dp"
     android:layout_alignParentBottom="true"
     android:layout_alignParentRight="true"
     android:layout_alignParentLeft="true"
     android:layout_alignParentStart="true"
     android:layout_alignParentEnd="true"
-    android:background="@color/pantalla"
     android:visibility="gone" >
 
     <ImageView
