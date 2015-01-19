@@ -65,7 +65,8 @@ public class HexadecimalExerciseFragment extends BaseNumericalExerciseFragment {
 		if (mDirectConversion) {
 			return Integer.toHexString(mNumberToConvert).toUpperCase(Locale.US);
 		} else {
-			return Integer.toBinaryString(mNumberToConvert);
+			return BinaryConverter.binaryToStringWithNbits(mNumberToConvert,
+					numberOfBits());
 		}
 	}
 
@@ -79,7 +80,8 @@ public class HexadecimalExerciseFragment extends BaseNumericalExerciseFragment {
 		int maxNumberToConvert = (int) (Math.pow(2, numberOfBits()) - 1);
 		mNumberToConvert = mRandomGenerator.nextInt(maxNumberToConvert);
 		if (mDirectConversion) {
-			return Integer.toBinaryString(mNumberToConvert);
+			return BinaryConverter.binaryToStringWithNbits(mNumberToConvert,
+					numberOfBits());
 		} else {
 			return Integer.toHexString(mNumberToConvert).toUpperCase(Locale.US);
 		}
