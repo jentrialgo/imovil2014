@@ -27,7 +27,6 @@ import org.json.JSONException;
 import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
 import es.uniovi.imovil.fcrtrainer.R;
 import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.InputType;
@@ -280,36 +279,32 @@ public abstract class BaseNumericalExerciseFragment extends
 	 */
 	@Override
 	protected void endGame() {
-		super.endGame();
-
 		int remainingTime = (int) getRemainingTimeMs() / 1000;
 		mPoints = mPoints + remainingTime;
 
-		showEndGameDialog(remainingTime);
+		super.endGame();
 
 		saveScore(mPoints);
 		setTrainingMode(true);
 	}
 
-	/**
-	 * Shows a dialog with the game stats when the game is over
-	 * 
-	 * @param remainingTime
-	 */
-	private void showEndGameDialog(int remainingTime) {
-		AlertDialog.Builder abuilder = new AlertDialog.Builder(getActivity());
-		abuilder.setTitle(getString(R.string.game_over));
-
-		if (remainingTime > 0)
-			abuilder.setMessage(String.format(
-					getString(R.string.gameisoverexp), remainingTime, mPoints));
-		else
-			abuilder.setMessage(String.format(
-					getString(R.string.lost_time_over), mPoints));
-
-		abuilder.create().show();
+	@Override
+	protected int finalScore() {
+		return mPoints;
 	}
 
+	@Override
+	protected String gameOverMessage() {
+		int remainingTime = (int) getRemainingTimeMs() / 1000;
+		if (remainingTime > 0) {
+			return String.format(
+					getString(R.string.gameisoverexp), remainingTime, mPoints);
+		} else {
+			return String.format(
+					getString(R.string.lost_time_over), mPoints);
+		}
+	}
+	
 	/**
 	 * Saves the score using the Highscore Manager.
 	 * 

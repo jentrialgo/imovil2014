@@ -29,11 +29,10 @@ limitations under the License.
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
         android:layout_below="@+id/game_info_panel"
         android:orientation="vertical" >
 
@@ -49,6 +48,16 @@ limitations under the License.
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/cards" >
+
+            <TextView
+                android:id="@+id/LOentrada1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:padding="5dp"
+                android:textColor="@color/mediumdarkgray"
+                android:textSize="25sp" />
 
             <TextView
                 android:id="@+id/LOentrada2"
@@ -75,30 +84,15 @@ limitations under the License.
                 android:textColor="@color/mediumdarkgray"
                 android:textSize="25sp" />
 
-            <TextView
-                android:id="@+id/LOentrada1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:padding="5dp"
-                android:textColor="@color/mediumdarkgray"
-                android:textSize="25sp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            style="@style/cards"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/cards" >
-
             <EditText
                 android:id="@+id/LOrespuesta"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
+                android:layout_below="@+id/LOentrada2"
                 android:ems="10"
+                android:gravity="center"
                 android:imeOptions="actionDone"
                 android:inputType="number"
                 android:padding="10dp" >

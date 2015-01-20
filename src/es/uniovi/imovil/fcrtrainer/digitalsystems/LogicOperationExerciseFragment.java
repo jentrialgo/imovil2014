@@ -19,7 +19,6 @@ limitations under the License.
 package es.uniovi.imovil.fcrtrainer.digitalsystems;
 
 import java.util.Date;
-import java.util.Locale;
 import java.util.Random;
 
 import org.json.JSONException;
@@ -27,7 +26,6 @@ import org.json.JSONException;
 import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
 import es.uniovi.imovil.fcrtrainer.R;
 import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
-
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -52,7 +50,7 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 	private static final int BASE_BINARIA = 2;
 	private static final int MAX_NUMBER_OF_OPERATIONS = 3;
 
-	private static final int MAX_NUMBER_LO_QUESTIONS = 5;
+	private static final int MAX_NUMBER_OF_QUESTIONS = 5;
 
 	private View mRootView;
 	private TextView mTvEntrada1;
@@ -64,13 +62,12 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 
 	private Random mRandom;
 	private String mSolucion;
-	
+
 	// Juego
 	private long mDurationMs = 60 * 1000; // 1 min
 	private Boolean mModoJuego = false;
-	int mNumeroAciertos = 0;
+	int mScore = 0;
 	int mNumeroPregunta = 0;
-	private Boolean mFinJuego = false;
 
 	public static LogicOperationExerciseFragment newInstance() {
 		LogicOperationExerciseFragment fragment = new LogicOperationExerciseFragment();
@@ -130,8 +127,7 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 			public boolean onEditorAction(TextView v, int actionId,
 					KeyEvent event) {
 				if (EditorInfo.IME_ACTION_DONE == actionId) {
-					isCorrect(mEtRespuesta.getEditableText().toString().trim()
-							.toLowerCase(Locale.US));
+					checkSolution();
 				}
 				return false;
 			}
@@ -148,22 +144,21 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 
 	@Override
 	public void onClick(View v) {
-		String respuesta = mEtRespuesta.getText().toString();
-
 		if (v.getId() == mButtonCheck.getId()) {
-			if (mModoJuego) {
-				clickJuego(respuesta);
-			} else {
-				isCorrect(mEtRespuesta.getEditableText().toString().trim());
-			}
+			checkSolution();
 		}
 
 		if (v.getId() == mButtonSolucion.getId()) {
-			if (!mFinJuego) {
-				showSolution();
-			} else {
-				clickFin();
-			}
+			showSolution();
+		}
+	}
+
+	private void checkSolution() {
+		String respuesta = mEtRespuesta.getText().toString();
+		if (mModoJuego) {
+			clickJuego(respuesta);
+		} else {
+			isCorrect(mEtRespuesta.getEditableText().toString().trim());
 		}
 	}
 
@@ -262,27 +257,14 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 
 	// Inicia el modo entrenamiento
 	private void vistaModoEntrenamiento() {
-		TextView pregunta = (TextView) mRootView.findViewById(R.id.LOpregunta);
-		pregunta.setText(getResources().getText(R.string.LOpregunta).toString());
-
-		mTvEntrada2.setVisibility(View.VISIBLE);
-		mTvOperacion.setVisibility(View.VISIBLE);
-		mEtRespuesta.setVisibility(View.VISIBLE);
 		mButtonCheck.setVisibility(View.VISIBLE);
-		mButtonSolucion.setVisibility(View.VISIBLE);
-
 		crearPregunta();
-
-		mButtonSolucion.setText(getResources().getText(R.string.solution));
 		mEtRespuesta.requestFocus();
-
 		mModoJuego = false;
-		mFinJuego = false;
 	}
 
 	// ************************ MODO JUEGO *******************************
 	protected void startGame() {
-		super.startGame();
 		// Establecer duracion del juego
 		super.setGameDuration(mDurationMs);
 
@@ -290,16 +272,17 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 
 		// Inicializar el numero de preguntas y de aciertos
 		mNumeroPregunta = 0;
-		mNumeroAciertos = 0;
+		mScore = 0;
 
 		mEtRespuesta.setText("");
 		mEtRespuesta.requestFocus();
+
+		super.startGame();
 	}
 
 	protected void endGame() {
+		int score = finalScore();
 		super.endGame();
-		int score = calculaPuntuacion();
-		vistaFinJuego();
 		enviarPuntuacion(score);
 		mModoJuego = false;
 	}
@@ -309,12 +292,10 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		vistaModoEntrenamiento();
 	}
 
-	private int calculaPuntuacion() {
-		int aciertos = mNumeroAciertos;
+	protected int finalScore() {
 		long miliseg = getRemainingTimeMs();
 		int segundos = (int) (miliseg / 1000);
-		int score = aciertos + segundos;
-		return score;
+		return mScore + segundos;
 	}
 
 	private void enviarPuntuacion(int score) {
@@ -330,55 +311,25 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		if (answer.equals(mSolucion)) {
 			showAnimationAnswer(true);
 			mNumeroPregunta++;
-			mNumeroAciertos = mNumeroAciertos + 10;
+			mScore = mScore + 10;
+			updateScore(mScore);
+			
+			if (mNumeroPregunta == MAX_NUMBER_OF_QUESTIONS) {
+				endGame();
+				return;
+			}
+
 			crearPregunta();
 		} else {
 			showAnimationAnswer(false);
 		}
 
-		if (mNumeroPregunta == MAX_NUMBER_LO_QUESTIONS) {
-			mButtonSolucion.setVisibility(View.VISIBLE);
-			endGame();
-		}
-	}
-
-	// Vuelve al modo entrenamiento al finalizar el juego
-	private void clickFin() {
-		vistaModoEntrenamiento();
 	}
 
 	private void vistaInicioJuego() {
 		mButtonSolucion.setVisibility(View.GONE);
-
-		TextView pregunta = (TextView) mRootView.findViewById(R.id.LOpregunta);
-		pregunta.setText(getResources().getText(R.string.LOpregunta).toString());
-
-		mTvEntrada2.setVisibility(View.VISIBLE);
-		mTvOperacion.setVisibility(View.VISIBLE);
-		mEtRespuesta.setVisibility(View.VISIBLE);
-		mButtonCheck.setVisibility(View.VISIBLE);
-
 		crearPregunta();
-
 		mModoJuego = true;
 	}
 
-	private void vistaFinJuego() {
-		TextView pregunta = (TextView) mRootView.findViewById(R.id.LOpregunta);
-		pregunta.setText(getResources().getText(R.string.finJuego).toString());
-
-		int score = calculaPuntuacion();
-
-		mTvEntrada1.setText(getResources().getText(R.string.puntuacion)
-				.toString() + " " + score);
-		mTvEntrada2.setVisibility(View.GONE);
-		mTvOperacion.setVisibility(View.GONE);
-		mEtRespuesta.setVisibility(View.GONE);
-		mButtonCheck.setVisibility(View.GONE);
-		mButtonSolucion.setVisibility(View.VISIBLE);
-		mButtonSolucion.setText(getResources().getText(
-				R.string.modoEntrenamiento));
-
-		mFinJuego = true;
-	}
 }

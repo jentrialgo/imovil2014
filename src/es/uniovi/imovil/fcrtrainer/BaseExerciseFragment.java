@@ -18,6 +18,9 @@ limitations under the License.
 package es.uniovi.imovil.fcrtrainer;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -64,10 +67,16 @@ import android.widget.Toast;
  * - Redefinir el método cancelGame(), que se llama cuando el usuario cancela el
  * juego, para hacer las acciones que se deseen.
  * 
- * En estros tres métodos se debe llamar siempre al método padre en
- * BaseExercise, ya que son los que controlan el comportamiento del juego.
+ *   En estros tres métodos se debe llamar siempre al método padre en
+ *   BaseExercise, ya que son los que controlan el comportamiento del juego.
  * 
- * Se debe llamar al método updateScore() cada vez que cambie la puntuación
+ * - Se debe llamar al método updateScore() cada vez que cambie la puntuación
+ * 
+ * - Se debe definir el método finalScore() para indicar la puntuación al
+ * acabar la partida.
+ * 
+ * - Se puede redefinir el método gameOverMessage() si se desea que la pantalla
+ * final muestre algo más que los puntos.
  * 
  * También se puede llamar en el constructor del fragmento al método
  * setGameDuration() si se desea una duración distinta de los dos minutos que se
@@ -260,12 +269,45 @@ public abstract class BaseExerciseFragment extends Fragment {
 
 	/**
 	 * Esta función se llama al finalizar el juego, parando y ocultando el
-	 * reloj. Las clases derivadas deben redifinirla, llamando al padre, para
-	 * añadir lo necesario a cada juego particular
+	 * reloj y mostrando un mensaje de fin de juego que, por defecto, muestra
+	 * la puntuación. Las clases derivadas deben redifinirla, llamando al
+	 * padre, para añadir lo necesario a cada juego particular
 	 */
 	protected void endGame() {
 		stopPlaying();
+		showEndGameDialog();
 	}
+
+	private void showEndGameDialog() {
+		String message = gameOverMessage();
+
+		Builder alert = new AlertDialog.Builder(getActivity())
+				.setTitle(getResources().getString(R.string.end_game))
+				.setMessage(message)
+				.setPositiveButton(android.R.string.ok,
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								dialog.cancel();
+							}
+						});
+		alert.show();
+	}
+
+	/***
+	 * Crea un mensaje para la pantalla final que simplemente muestra la
+	 * puntuación. Se puede sobreescribir si se desea dar más información
+	 */
+	protected String gameOverMessage() {
+		return String.format(getString(R.string.game_over_message),
+				finalScore());
+	}
+
+	/***
+	 * Debe retornar la puntuación final al acabar el juego
+	 */
+	protected abstract int finalScore();
 
 	private void stopPlaying() {
 		if (mIsPlaying) {

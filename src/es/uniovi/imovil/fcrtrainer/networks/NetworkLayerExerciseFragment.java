@@ -26,9 +26,6 @@ import org.json.JSONException;
 import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
 import es.uniovi.imovil.fcrtrainer.R;
 import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,7 +60,6 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 	private int mPoints;
 
 	private int mCurrentQuestionCounter = 0;
-	private boolean mWon = false;
 
 	//constructores
 	public NetworkLayerExerciseFragment() 
@@ -170,7 +166,7 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 
 	//Metodo para generar un número aleatorio
 	public int random(){
-		Random ran = new Random();
+		Random ran = new Random(); // TODO: it shouldn't be created each time
 		mIndex = ran.nextInt(11);
 		return mIndex;
 	}
@@ -180,20 +176,12 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 		updateScore(this.mPoints);
 	}
 
-	private void gameModeControl() {
+	protected void gameModeControl() {
 		increasePoints(POINTS_FOR_QUESTION);
-
-		if (mCurrentQuestionCounter >= MAX_QUESTIONS) {
-			// won
-			this.mWon = true;
-			this.endGame();
-
-		}
-
-		if (mCurrentQuestionCounter < MAX_QUESTIONS && getRemainingTimeMs() <= 0) {
-			// lost --> no time left...
-			this.mWon = false;
-			this.endGame();
+	
+		if (mCurrentQuestionCounter >= MAX_QUESTIONS
+				|| getRemainingTimeMs() <= 0) {
+			endGame();
 		}
 		mCurrentQuestionCounter++;
 	}
@@ -206,7 +194,7 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 	}
 
 	private void updateToGameMode() {
-		mSolution.setVisibility(View.INVISIBLE);
+		mSolution.setVisibility(View.GONE);
 	}
 
 	@Override
@@ -219,53 +207,44 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 		mSolution.setVisibility(View.VISIBLE);
 	}
 
-	// Simple GameOver Dialog
-	private void dialogGameOver() {
-		String message = getResources().getString(R.string.lost);
-
-		if (this.mWon) {
-			message = getResources().getString(R.string.won) + " "
-					+ getResources().getString(R.string.points_final) + " "
-					+ this.mPoints;
-		}
-
-		Builder alert = new AlertDialog.Builder(getActivity());
-		alert.setTitle(getResources().getString(R.string.game_over));
-		alert.setMessage(message);
-		alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.cancel();
-				// nothing to do...
-			}
-		});
-		alert.show();
-
-	}
-
 	@Override
 	protected void endGame() {
 		//convert to seconds
 		int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000; 
 		//every remaining second gives one extra point.
-		this.mPoints = (int) (this.mPoints + remainingTimeInSeconds);
+		mPoints = (int) (mPoints + remainingTimeInSeconds);
 
-		if (this.mWon){
-			String username = getResources().getString(R.string.default_user_name);
-			try {
-				HighscoreManager.addScore(getActivity().getApplicationContext(),
-						this.mPoints, R.string.network_layer, new Date(),
-						username, level());
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
+		String username = getResources().getString(R.string.default_user_name);
+		try {
+			HighscoreManager.addScore(getActivity().getApplicationContext(),
+					mPoints, R.string.network_layer, new Date(),
+					username, level());
+		} catch (JSONException e) {
+			e.printStackTrace();
 		}
-		dialogGameOver();
+
 		super.endGame();
+
 		updateToTrainMode();
-		this.mPoints = 0;
-		this.mCurrentQuestionCounter = 0;
-		this.mWon = false;
+		mPoints = 0;
+		mCurrentQuestionCounter = 0;
+	}
+	
+	@Override
+	protected int finalScore() {
+		return mPoints;
+	}
+
+	@Override
+	protected String gameOverMessage() {
+		int remainingTime = (int) getRemainingTimeMs() / 1000;
+		if (remainingTime > 0) {
+			return String.format(
+					getString(R.string.gameisoverexp), remainingTime, mPoints);
+		} else {
+			return String.format(
+					getString(R.string.lost_time_over), mPoints);
+		}
 	}
 
 }

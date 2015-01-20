@@ -27,9 +27,6 @@ import org.json.JSONException;
 import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
 import es.uniovi.imovil.fcrtrainer.R;
 import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -64,6 +61,7 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 	private int mFinalValue = 5;
 	private ArrayList<Integer> mNumberList = new ArrayList<Integer>();
 	private int mPoints;
+	private Random mRandom;
 
 	public static LogicGateExerciseFragment newInstance() {
 
@@ -143,7 +141,6 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 				compruebaModo(mCurrentQuestion);
 			} else {
 				endGame();
-				dialogGameOver();
 			}
 		} else {
 			compruebaModo(mCurrentQuestion);
@@ -168,8 +165,7 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 
 	// Metodo para generar un número aleatorio
 	private int random() {
-		Random ran = new Random();
-		mN = ran.nextInt(RANDOM);
+		mN = mRandom.nextInt(RANDOM);
 
 		return mN;
 	}
@@ -215,14 +211,7 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 		mButtoncheck.setText("Comprobar");
 	}
 
-	/**
-	 * Esta función se llama al finalizar el juego, parando y ocultando el
-	 * reloj. Las clases derivadas deben redifinirla, llamando al padre, para
-	 * añadir lo necesario a cada juego particular
-	 */
 	protected void endGame() {
-		super.endGame();
-
 		// convert to seconds
 		int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000;
 
@@ -240,6 +229,25 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 		mSolutionButton.setVisibility(View.VISIBLE);
 		mButtoncheck.setText("Comprobar");
 		mGameEnd = 0;
+
+		super.endGame();
+	}
+
+	@Override
+	protected int finalScore() {
+		return mPoints;
+	}
+
+	@Override
+	protected String gameOverMessage() {
+		int remainingTime = (int) getRemainingTimeMs() / 1000;
+		if (remainingTime > 0) {
+			return String.format(
+					getString(R.string.gameisoverexp), remainingTime, mPoints);
+		} else {
+			return String.format(
+					getString(R.string.lost_time_over), mPoints);
+		}
 	}
 
 	// Método para a�adir los puntos a la tabla de highscore
@@ -308,25 +316,6 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 			// Si no es igual es texto del string con el del editText
 			showAnimationAnswer(false);
 		}
-	}
-
-	// Simple GameOver Dialog
-	private void dialogGameOver() {
-		String message = getResources().getString(R.string.lost);
-		message = getResources().getString(R.string.points_final) + " "
-				+ mPoints + " " + "puntos";
-
-		Builder alert = new AlertDialog.Builder(getActivity());
-		alert.setTitle(getResources().getString(R.string.end_game));
-		alert.setMessage(message);
-		alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.cancel();
-			}
-		});
-		alert.show();
-
 	}
 
 	@Override

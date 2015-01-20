@@ -5,9 +5,6 @@ import java.util.Random;
 
 import org.json.JSONException;
 
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
 import es.uniovi.imovil.fcrtrainer.Level;
 import es.uniovi.imovil.fcrtrainer.PreferenceUtils;
@@ -34,7 +30,6 @@ public abstract class BaseNetworkMaskExerciseFragment
 	
 	protected int mMask;
 
-	protected boolean mWon = false;
 	protected boolean mGameMode = false;
 	protected int mCurrentQuestionCounter = 1;
 	protected int mPoints;
@@ -138,19 +133,32 @@ public abstract class BaseNetworkMaskExerciseFragment
 
 	@Override
 	protected void endGame() {
-		// convert to seconds
 		int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000;
 		// every remaining second gives one extra point.
 		mPoints = (int) (mPoints + remainingTimeInSeconds);
 	
-		if (this.mWon) {
-			savePoints();
-		}
+		savePoints();
 	
-		dialogGameOver();
 		super.endGame();
 		updateToTrainMode();
 		reset();
+	}
+
+	@Override
+	protected int finalScore() {
+		return mPoints;
+	}
+
+	@Override
+	protected String gameOverMessage() {
+		int remainingTime = (int) getRemainingTimeMs() / 1000;
+		if (remainingTime > 0) {
+			return String.format(
+					getString(R.string.gameisoverexp), remainingTime, mPoints);
+		} else {
+			return String.format(
+					getString(R.string.lost_time_over), mPoints);
+		}
 	}
 
 	private void savePoints() {
@@ -168,17 +176,9 @@ public abstract class BaseNetworkMaskExerciseFragment
 	protected void gameModeControl() {
 		increasePoints(POINTS_FOR_QUESTION);
 	
-		if (mCurrentQuestionCounter >= MAX_QUESTIONS) {
-			// won
-			this.mWon = true;
-			this.endGame();
-		}
-	
-		if (mCurrentQuestionCounter < MAX_QUESTIONS
-				&& getRemainingTimeMs() <= 0) {
-			// lost --> no time left...
-			this.mWon = false;
-			this.endGame();
+		if (mCurrentQuestionCounter >= MAX_QUESTIONS
+				|| getRemainingTimeMs() <= 0) {
+			endGame();
 		}
 		mCurrentQuestionCounter++;
 	}
@@ -188,33 +188,10 @@ public abstract class BaseNetworkMaskExerciseFragment
 		updateScore(mPoints);
 	}
 
-	private void dialogGameOver() {
-		String message = getResources().getString(R.string.lost);
-	
-		if (this.mWon) {
-			message = getResources().getString(R.string.won) + " "
-					+ getResources().getString(R.string.points_final) + " "
-					+ this.mPoints;
-		}
-	
-		Builder alert = new AlertDialog.Builder(getActivity());
-		alert.setTitle(getResources().getString(R.string.game_over));
-		alert.setMessage(message);
-		alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.cancel();
-				// nothing to do...
-			}
-		});
-		alert.show();
-	
-	}
 
 	private void reset() {
 		mPoints = 0;
 		mCurrentQuestionCounter = 0;
-		mWon = false;
 	
 		updateScore(mPoints);
 	}

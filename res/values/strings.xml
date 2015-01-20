@@ -65,7 +65,7 @@ limitations under the License.
     <string name="done_logic_gate">Has acabado</string>
     <string name="button_logic_gate_solution">Solución</string>
     <string name="logic_gate_title">¿Que puerta lógica es?</string>
-     <string name="points_final">Tu puntuacion es de </string>
+    <string name="points_final">Tu puntuacion es de </string>
     <string name="end_game">Has terminado</string>
     <string name="title_puntuacion">Puntuación: </string>
 
@@ -82,7 +82,6 @@ limitations under the License.
     <string name="application_layer">Capa de aplicación</string>
 
     <!-- Fin Strings layer exercise -->
-    <string name="initial_clock_value">2:00</string>
     <string name="error_no_clock">Error: este ejercicio no está preparado para jugar</string>
     <string name="check">Comprobar</string>
     <string name="correct">¡Correcto!</string>
@@ -91,13 +90,10 @@ limitations under the License.
     <string name="change">Cambiar</string>
 
 	<!-- Cadenas comunes a varios módulos -->
-	<string name="game_over">Juego finalizado</string>
+	<string name="game_over_message">Juego finalizado. Puntos: %1$d</string>
     <string name="score">Puntos:</string>
-    <string name="won">Juego terminado. </string>
-    <string name="lost">¡Se ha cumplido el tiempo! </string>
-    <string name="next_binary">Siguente</string>
     <string name="gameisoverexp">¡Has acabado el juego! Te han sobrado %1$d segundos y has obtenido %2$d puntos.</string>
-    <string name="lost_time_over">Game Over! Se ha acabado el tiempo. Has contestado correctamente %1$d preguntas.</string>
+    <string name="lost_time_over">Game Over! Se ha acabado el tiempo. Puntos: %1$d</string>
 
     <!-- Módulo: Binario -->
     <string name="convert_bin_to_dec">Convierte de binario natural con %1$d bits a decimal</string>

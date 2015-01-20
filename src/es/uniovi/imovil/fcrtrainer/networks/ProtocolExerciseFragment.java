@@ -1,6 +1,5 @@
 /*
 
-Copyright 2014 Profesores y alumnos de la asignatura Informática Móvil de la EPI de Gijón
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -27,10 +26,6 @@ import org.json.JSONException;
 import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
 import es.uniovi.imovil.fcrtrainer.R;
 import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
-
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,14 +40,14 @@ import android.widget.Toast;
 
 public class ProtocolExerciseFragment extends BaseExerciseFragment {
 
-	static public int NUMBER_OF_ANSWERS = 4;
+	public static final int NUMBER_OF_ANSWERS = 4;
 	private static final int POINTS_FOR_QUESTION = 10;
 	private static final int REST_FOR_FAIL = 3;
 	private static final int MAX_QUESTIONS = 5;
 	private static final String DB_NAME = "protocolFCR.sqlite";
 	private static final int DB_VERSION = 2;
-	private static final long GAME_DURATION_MS = 3 * 1000; // 2 minutos de
-															// juego.
+	private static final long GAME_DURATION_MS = 120 * 1000; // 2 minutos de
+															 // juego.
 
 	private ArrayList<ProtocolTest> mTestList = null;
 	private View mRootView;
@@ -64,7 +59,6 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 	private ProtocolTest mTest;
 	private RadioGroup mRadioGroup;
 	private int mCurrentQuestionCounter = 1;
-	private boolean mWon = false;
 	private int mPoints;
 	private int mPartialPoints;
 	private int mTotalFails = 0;
@@ -163,16 +157,16 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 	}
 
 	private void checkIfButtonClickedIsCorrectAnswer(int index) {
-		boolean response = false;
+		boolean correct = false;
 		if (mRadioButtonAnswers[index].getText().equals(mTest.getResponse())) {
-			response = true;
+			correct = true;
 		} else {
-			response = false;
+			correct = false;
 		}
-		super.showAnimationAnswer(response);
+		super.showAnimationAnswer(correct);
 		// only create new Question if user has right input
 		if (this.mGameMode) {
-			if (response) {
+			if (correct) {
 				gameModeControl();
 				newQuestion();
 			} else if (mTotalFails < 3) {
@@ -229,19 +223,12 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 		solution.setVisibility(View.VISIBLE);
 	}
 
-	private void gameModeControl() {
-		increasePoints(mPartialPoints);
-
-		if (mCurrentQuestionCounter >= MAX_QUESTIONS) {
-			this.mWon = true;
-			this.endGame();
-		}
-
-		if (mCurrentQuestionCounter < MAX_QUESTIONS
-				&& getRemainingTimeMs() <= 0) {
-			// lost --> no time left...
-			this.mWon = false;
-			this.endGame();
+	protected void gameModeControl() {
+		increasePoints(POINTS_FOR_QUESTION);
+	
+		if (mCurrentQuestionCounter >= MAX_QUESTIONS
+				|| getRemainingTimeMs() <= 0) {
+			endGame();
 		}
 		mCurrentQuestionCounter++;
 		mTotalFails = 0;
@@ -253,46 +240,18 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 		int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000;
 		mPoints = (int) (this.mPoints + remainingTimeInSeconds);
 
-		if (this.mWon)
-			savePoints();
-
-		dialogGameOver();
+		savePoints();
 
 		super.endGame();
 
 		updateToTrainMode();
 
 		reset();
-
 	}
 
 	private void increasePoints(int val) {
 		mPoints = mPoints + val;
 		updateScore(mPoints);
-	}
-
-	// Simple GameOver Dialog
-	private void dialogGameOver() {
-		String message = getResources().getString(R.string.lost);
-
-		if (mWon) {
-			message = getResources().getString(R.string.won) + " "
-					+ getResources().getString(R.string.points_final) + " "
-					+ mPoints;
-		}
-
-		Builder alert = new AlertDialog.Builder(getActivity());
-		alert.setTitle(getResources().getString(R.string.game_over));
-		alert.setMessage(message);
-		alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.cancel();
-				// nothing to do...
-			}
-		});
-		alert.show();
-
 	}
 
 	private void savePoints() {
@@ -310,8 +269,24 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 	private void reset() {
 		mPoints = 0;
 		mCurrentQuestionCounter = 0;
-		mWon = false;
 		updateScore(mPoints);
+	}
+
+	@Override
+	protected int finalScore() {
+		return mPoints;
+	}
+
+	@Override
+	protected String gameOverMessage() {
+		int remainingTime = (int) getRemainingTimeMs() / 1000;
+		if (remainingTime > 0) {
+			return String.format(
+					getString(R.string.gameisoverexp), remainingTime, mPoints);
+		} else {
+			return String.format(
+					getString(R.string.lost_time_over), mPoints);
+		}
 	}
 
 }

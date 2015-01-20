@@ -34,7 +34,6 @@
 
     <string name="dummy_exercise">Exercise</string>   
 
-    <string name="initial_clock_value">2:00</string>
     <string name="error_no_clock">Error: this exercise is not prepared for playing</string>
     <string name="check">Check</string>
     <string name="correct">Correct!</string>
@@ -43,13 +42,10 @@
     <string name="change">Change</string>
 
 	<!-- Cadenas comunes a varios módulos -->
-	<string name="game_over">Game over</string>
+	<string name="game_over_message">Game over. Score: %1$d</string>
     <string name="score">Score:</string>
-    <string name="won">Game over. </string>
-    <string name="lost">Time\'s up! </string>
-    <string name="next_binary">Next</string>
     <string name="gameisoverexp">Game ended! You have %1$d seconds left and obtained %2$d points!</string>
-    <string name="lost_time_over">Game Over! Time\'s up! You answered %1$d questions correctly.</string>
+    <string name="lost_time_over">Game Over! Time\'s up! Score: %1$d</string>
 
     <!-- Módulo: Binario -->
     <string name="convert_bin_to_dec">Convert natural binary to decimal with %1$d bits</string>

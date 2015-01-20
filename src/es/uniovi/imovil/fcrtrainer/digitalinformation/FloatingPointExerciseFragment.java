@@ -23,7 +23,6 @@ import java.util.Random;
 
 import org.json.JSONException;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -58,7 +57,7 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 	boolean mIsBinary = true;
 	boolean mConvert = true;
 	boolean mGame = false;
-	int mPointsCounter = 0;
+	int mPoints = 0;
 
 	float mDecimalValueF = 0.0f;
 	int mfAsIntBits;
@@ -311,73 +310,57 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 	 * the endGame() method.
 	 */
 	public void updateGameState() {
-		mPointsCounter++;
-		updateScore(mPointsCounter);
-		if (mPointsCounter == GAMEMODE_MAXQUESTIONS) {
+		mPoints++;
+		updateScore(mPoints);
+		if (mPoints == GAMEMODE_MAXQUESTIONS) {
 			endGame();
 		}
 	}
 
 	public void resetGameState() {
-		mPointsCounter = 0;
+		mPoints = 0;
 	}
 
-	/**
-	 * Starts the game and sets the UI
-	 */
 	@Override
 	protected void startGame() {
 		super.startGame();
 		setTrainingMode(false);
-		updateScore(mPointsCounter);
+		updateScore(mPoints);
 	}
 
-	/**
-	 * Called when the user cancels the game
-	 */
 	@Override
 	protected void cancelGame() {
 		super.cancelGame();
 		setTrainingMode(true);
 	}
 
-	/**
-	 * Called when the game ends
-	 */
 	@Override
 	protected void endGame() {
-		super.endGame();
-
 		int remainingTime = (int) getRemainingTimeMs() / 1000;
-		mPointsCounter = mPointsCounter + remainingTime;
-
-		showEndGameDialog(remainingTime);
-
-		saveScore(mPointsCounter);
+		mPoints = mPoints + remainingTime;
+		saveScore(mPoints);
 		setTrainingMode(true);
+
+		super.endGame();
 	}
 
-	/**
-	 * Shows a dialog with the game stats when the game is over
-	 * 
-	 * @param remainingTime
-	 */
-	public void showEndGameDialog(int remainingTime) {
-		AlertDialog.Builder abuilder = new AlertDialog.Builder(getActivity());
-		abuilder.setTitle(getString(R.string.game_over));
+	@Override
+	protected int finalScore() {
+		return mPoints;
+	}
 
+	@Override
+	protected String gameOverMessage() {
+		int remainingTime = (int) getRemainingTimeMs() / 1000;
 		if (remainingTime > 0) {
-			abuilder.setMessage(String.format(
-					getString(R.string.gameisoverexp), remainingTime,
-					mPointsCounter));
+			return String.format(
+					getString(R.string.gameisoverexp), remainingTime, mPoints);
 		} else {
-			abuilder.setMessage(String.format(
-					getString(R.string.lost_time_over), mPointsCounter));
+			return String.format(
+					getString(R.string.lost_time_over), mPoints);
 		}
-
-		abuilder.create().show();
 	}
-
+	
 	/**
 	 * Saves the score using the Highscore Manager.
 	 * 
