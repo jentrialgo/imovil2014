@@ -67,6 +67,7 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 	private Random mRandom = new Random();
 
 	private static final int GAMEMODE_MAXQUESTIONS = 5;
+	private static final long GAME_DURATION_MS = 5 * 1000 * 60; // 5 min
 
 	public static FloatingPointExerciseFragment newInstance() {
 		FloatingPointExerciseFragment fragment = new FloatingPointExerciseFragment();
@@ -74,6 +75,7 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 	}
 
 	public FloatingPointExerciseFragment() {
+		setGameDuration(GAME_DURATION_MS);
 	}
 
 	@Override

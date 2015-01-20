@@ -41,6 +41,7 @@ import android.widget.TextView.OnEditorActionListener;
 public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		implements OnClickListener {
 
+	private static final long GAME_DURATION_MS = 1 * 1000 * 60; // 1 min
 	private static final String TAG_INPUT1 = "LOentrada1";
 	private static final String TAG_INPUT2 = "LOentrada2";
 	private static final String TAG_OPERATION = "LOoperacion";
@@ -64,7 +65,6 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 	private String mSolucion;
 
 	// Juego
-	private long mDurationMs = 60 * 1000; // 1 min
 	private Boolean mModoJuego = false;
 	int mScore = 0;
 	int mNumeroPregunta = 0;
@@ -266,7 +266,7 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 	// ************************ MODO JUEGO *******************************
 	protected void startGame() {
 		// Establecer duracion del juego
-		super.setGameDuration(mDurationMs);
+		super.setGameDuration(GAME_DURATION_MS);
 
 		vistaInicioJuego();
 

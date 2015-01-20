@@ -39,7 +39,7 @@ import android.widget.TextView;
 public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 	private final static int POINTS_FOR_QUESTION = 10;
 	private final static int MAX_QUESTIONS = 5;
-	private final static long GAME_DURATION_MS = 1 * 1000 * 60; // 1min
+	private final static long GAME_DURATION_MS = 1 * 1000 * 60; // 1 min
 
 	private View mRootView;		
 	private TextView mQuestion;

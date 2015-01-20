@@ -46,8 +46,7 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 	private static final int MAX_QUESTIONS = 5;
 	private static final String DB_NAME = "protocolFCR.sqlite";
 	private static final int DB_VERSION = 2;
-	private static final long GAME_DURATION_MS = 120 * 1000; // 2 minutos de
-															 // juego.
+	private static final long GAME_DURATION_MS = 60 * 1000; // 1 min
 
 	private ArrayList<ProtocolTest> mTestList = null;
 	private View mRootView;

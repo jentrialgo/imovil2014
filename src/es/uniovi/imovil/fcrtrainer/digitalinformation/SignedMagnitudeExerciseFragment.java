@@ -24,7 +24,6 @@ public class SignedMagnitudeExerciseFragment extends
 		BaseNumericalExerciseFragment {
 
 	private static final int POINTS_FOR_QUESTION = 10;
-	private static final long GAME_DURATION_MS = 5 * 1000 * 60; // 5min
 
 	private String mCorrectAnswer;
 
@@ -34,7 +33,6 @@ public class SignedMagnitudeExerciseFragment extends
 	}
 
 	public SignedMagnitudeExerciseFragment() {
-		setGameDuration(GAME_DURATION_MS);
 	}
 
 	@Override

@@ -24,7 +24,7 @@ public abstract class BaseNetworkMaskExerciseFragment
 
 	private static final int POINTS_FOR_QUESTION = 10;
 	private static final int MAX_QUESTIONS = 5;
-	private static final long GAME_DURATION_MS = 1 * 1000 * 60;
+	private static final long GAME_DURATION_MS = 1 * 1000 * 60; // 1 min
 
 	protected Random mRandom = new Random();
 	

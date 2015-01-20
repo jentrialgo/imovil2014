@@ -27,7 +27,6 @@ import es.uniovi.imovil.fcrtrainer.R;
  */
 public class BinaryExerciseFragment extends BaseNumericalExerciseFragment {
 	private static final int POINTS_FOR_QUESTION = 10;
-	private static final long GAME_DURATION_MS = 5 * 60 * 1000; // 5min
 
 	private BinaryConverter binaryConverter = new BinaryConverter();
 
@@ -38,7 +37,6 @@ public class BinaryExerciseFragment extends BaseNumericalExerciseFragment {
 	}
 
 	public BinaryExerciseFragment() {
-		setGameDuration(GAME_DURATION_MS);
 	}
 	
 	private String convertToDecimal(String textToDecimal) {
