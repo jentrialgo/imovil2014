@@ -41,55 +41,53 @@ limitations under the License.
             android:layout_marginTop="5dp"
             android:text="@string/layer_tittle" />
 
-        <TextView
-            android:id="@+id/textlayer"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="15dp"
-            android:background="@drawable/cards"
-            android:gravity="center"
-            android:textSize="20sp" />
-
-        <RadioGroup
-            android:id="@+id/layer_group"
+        <RelativeLayout
+            style="@style/cards"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/cards"
-            android:padding="10dp" >
+            android:background="@drawable/cards" >
 
-            <RadioButton
-                android:id="@+id/link_layer"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/textlayer"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/link_layer" />
+                android:layout_alignParentTop="true"
+                android:textSize="20sp" />
 
-            <RadioButton
-                android:id="@+id/internet_layer"
-                android:layout_width="wrap_content"
+            <RadioGroup
+                android:id="@+id/layer_group"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/internet_layer" />
+                android:layout_below="@+id/textlayer"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:padding="10dp" >
 
-            <RadioButton
-                android:id="@+id/transport_layer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/transport_layer" />
+                <RadioButton
+                    android:id="@+id/link_layer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/link_layer" />
 
-            <RadioButton
-                android:id="@+id/application_layer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/application_layer" />
-        </RadioGroup>
+                <RadioButton
+                    android:id="@+id/internet_layer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/internet_layer" />
 
-        <TextView
-            android:id="@+id/layer_exercise"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/logic_gate"
-            android:visibility="gone" />
+                <RadioButton
+                    android:id="@+id/transport_layer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/transport_layer" />
+
+                <RadioButton
+                    android:id="@+id/application_layer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/application_layer" />
+            </RadioGroup>
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
