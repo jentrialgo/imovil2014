@@ -75,6 +75,8 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		mRandom = new Random();
+		
 		// Inicializamos la variable contador con el fin de recorrer el array
 		// con las diferentes puertas lógicas
 		mCurrentQuestion = random();
