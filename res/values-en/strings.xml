@@ -7,8 +7,7 @@
     
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
-    <string name="hello_world">Hello World</string>
-    <string name="codes">Codes</string>
+    <string name="codes">Encoding</string>
     <string name="digital_systems">Digital systems</string>
     <string name="networks">Networks</string>
     <string name="binary">Binary</string>
@@ -28,18 +27,12 @@
     <string name="highscores">Highscores</string>
     <string name="exercise">Exercise</string>
     <string name="default_user_name">Me</string>
-    <string name="error_parsing_highscores">Error al analizar las puntuaciones</string>
+    <string name="error_parsing_highscores">Error analyzing scores</string>
     <string name="error_adding_initial_highscores">Error while inserting initial highscores</string>
-    <string name="all">All</string>
-
-    <string name="dummy_exercise">Exercise</string>   
 
     <string name="error_no_clock">Error: this exercise is not prepared for playing</string>
     <string name="check">Check</string>
-    <string name="correct">Correct!</string>
-    <string name="not_correct">That\'s not correct!</string>
     <string name="solution">Solution</string>
-    <string name="change">Change</string>
 
 	<!-- Cadenas comunes a varios módulos -->
 	<string name="game_over_message">Game over. Score: %1$d</string>
@@ -68,35 +61,16 @@
     <string name="convert_twos_complement_to_dec">Convert from two\'s complement with %1$d bits to decimal</string>
     
     <!-- Strings logic gate -->
-     
-     <string name="button_logic_gate">Check</string>
-     <string name="failed_logic_gate">You failed!</string>
-     <string name="dialog_try_logic_gate">Do you want to try again or want to know the solution?</string>
-     <string name="try_again_logic_gate">Try again</string>
-     <string name="solution_logic_gate">Solution</string>
-     <string name="done_logic_gate">You are done</string>
-    <string name="button_logic_gate_solution">Solution</string>
     <string name="logic_gate_title">What is this logic gate?</string>
-    <string name="points_final">Your score is </string>
     <string name="end_game">End game</string>
-    <string name="title_puntuacion">Score: </string>
-     
      <!--  Fin Strings logic gate -->
      
      <!-- Modulo: Operaciones Lógicas -->
-  	<string name="LOand">AND</string>
-    <string name="LOor">OR</string>
-    <string name="LOxor">XOR</string>
-    
     <string name="LOpregunta">Which is the solution of this logic operation?</string>
-    
-    <string name="finJuego">End</string>
-    <string name="modoEntrenamiento">Back to training mode</string>
-    <string name="puntuacion">Your score is: </string>
     <!-- Fin Operaciones Lógicas -->
     
  	<!-- Host count exercise -->
-  	<string name="host_count_title">Calculate number of hosts</string>
+  	<string name="host_count_title">How many host can a network with this subnet mask have?</string>
   	<!-- End Host count exercise -->
   	
     <!-- Modulo: Protocolos -->
@@ -120,10 +94,6 @@
     <!-- Fin Máscara de red -->
 
     <!--  Strings Network Address -->
-    <string name="ip_add">IP address:</string>
-    <string name="mask">Mask:</string>
-    <string name="text_butt_ans">Check</string>
-    <string name="text_butt_solution">Solution</string>
     <string name="na_title">What is the network address for this IP and this mask</string>
     <!--  Fin Strings Network Address -->
 

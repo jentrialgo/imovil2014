@@ -23,7 +23,6 @@ limitations under the License.
     <string name="action_game_control">Jugar</string>
     <string name="drawer_open">Abrir drawer</string>
     <string name="drawer_close">Cerrar drawer</string>
-    <string name="hello_world">Hola Mundo</string>
     <string name="codes">Códigos</string>
     <string name="digital_systems">Digitales</string>
     <string name="networks">Redes</string>
@@ -47,30 +46,15 @@ limitations under the License.
     <string name="default_user_name">Yo</string>
     <string name="error_parsing_highscores">Error al analizar las puntuaciones</string>
     <string name="error_adding_initial_highscores">Error al insertar las puntuaciones iniciales</string>
-    <string name="all">Todos</string>
-    <string name="training">Entrenamiento</string>
-    <string name="retry">Reintentar</string>
-    <string name="finish">Entrenamiento finalido.</string>
-    <string name="success">Has acertado</string>
-    <string name="fail">Has fallado. La respuesta correcta es</string>
-    <string name="finJuego">Final de Juego</string>
-    
+
     <!-- Strings logic gate -->
-
-    <string name="button_logic_gate">Comprobar</string>
-    <string name="failed_logic_gate">¡Has fallado!</string>
-    <string name="dialog_try_logic_gate">¿Quieres probar de nuevo o bien quieres saber la solución?</string>
-    <string name="try_again_logic_gate">Reintentar</string>
-    <string name="solution_logic_gate">Solución</string>
-    <string name="done_logic_gate">Has acabado</string>
-    <string name="button_logic_gate_solution">Solución</string>
-    <string name="logic_gate_title">¿Que puerta lógica es?</string>
-    <string name="points_final">Tu puntuacion es de </string>
+    <string name="logic_gate_title">¿Qué puerta lógica es?</string>
     <string name="end_game">Has terminado</string>
-    <string name="title_puntuacion">Puntuación: </string>
-
     <!-- Fin Strings logic gate -->
-    <string name="dummy_exercise">Ejercicio</string>
+
+    <!-- Strings de logic operation -->
+    <string name="LOpregunta">¿Cuál es la solución a esta operación lógica?</string>
+    <!-- Fin de strings de logic operation -->
 
     <!-- Strings layer exercise -->
     <string name="layer_tittle">Acierta la capa</string>
@@ -84,10 +68,7 @@ limitations under the License.
     <!-- Fin Strings layer exercise -->
     <string name="error_no_clock">Error: este ejercicio no está preparado para jugar</string>
     <string name="check">Comprobar</string>
-    <string name="correct">¡Correcto!</string>
-    <string name="not_correct">¡No es correcto!</string>
     <string name="solution">Solución</string>
-    <string name="change">Cambiar</string>
 
 	<!-- Cadenas comunes a varios módulos -->
 	<string name="game_over_message">Juego finalizado. Puntos: %1$d</string>
@@ -115,21 +96,7 @@ limitations under the License.
     <string name="convert_dec_to_twos_complement">Convierte de decimal a complemento a dos con %1$d bits</string>
     <string name="convert_twos_complement_to_dec">Convierte de complemento a dos con %1$d bits a decimal</string>
 
-    <!-- Modulo: Operaciones Lógicas -->
-    <string name="LOand">AND</string>
-    <string name="LOor">OR</string>
-    <string name="LOxor">XOR</string>
-    <string name="LOpregunta">¿Cuál es la solución a esta operación lógica?</string>
-    <string name="modoEntrenamiento">Volver al modo entrenamiento</string>
-    <string name="puntuacion">Has obtenido una puntuación de: </string>
-    <!-- Fin Operaciones Lógicas -->
-
-
     <!--  Strings Network Address -->
-    <string name="ip_add">Dirección IP:</string>
-    <string name="mask">Máscara:</string>
-    <string name="text_butt_ans">Comprobar</string>
-    <string name="text_butt_solution">Solución</string>
     <string name="na_title">¿Cuál es la dirección de red para esta IP y esta máscara?</string>
     <!--  Fin Strings Network Address -->
 
@@ -138,7 +105,7 @@ limitations under the License.
     <string name="cidr_title">Calcula el sufijo CIDR para esta máscara</string>
 
     <!-- Host count exercise -->
-    <string name="host_count_title">Calcula el número de hosts</string>
+    <string name="host_count_title">¿Cuántas máquinas podría haber en una red con esta subred?</string>
     <!-- End Host count exercise -->
     
     <!--  Punto Flotante -->
@@ -158,7 +125,7 @@ limitations under the License.
     <string name="network_mask_title">Máscara de red más pequeña que puede tener este número de máquinas</string>
     <!-- Fin Máscara de red -->
 
-    <string name="tv_decimal">decimal number</string>
+    <string name="tv_decimal">Número decimal</string>
 
     <!-- Preferences -->
     <string name="pref_level_key" translatable="false">PREF_LEVEL</string>
