@@ -14,68 +14,73 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/game_fragment"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <include
-        android:id="@+id/game_info_panel"
+    <RelativeLayout
+        style="@style/game_fragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        layout="@layout/game_info_panel" />
+        android:layout_height="wrap_content" >
 
-    <TextView
-        android:id="@+id/exercisetitle"
-        style="@style/Title2DarkLight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/game_info_panel"
-        android:layout_marginTop="18dp"
-        android:text="@string/logic_gate_title" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/spinner_logic_gate"
-        android:layout_marginTop="20dp" >
-
-        <Button
-            android:id="@+id/cButton"
-            android:layout_width="0dp"
+        <include
+            android:id="@+id/game_info_panel"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/check" />
+            layout="@layout/game_info_panel"
+            android:visibility="gone" />
 
-        <Button
-            android:id="@+id/sButton"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/exercisetitle"
+            style="@style/Title2DarkLight"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/solution" />
-    </LinearLayout>
+            android:layout_below="@+id/game_info_panel"
+            android:layout_marginTop="18dp"
+            android:text="@string/logic_gate_title" />
 
-    <ImageView
-        android:id="@+id/imagelogicgate"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_below="@+id/exercisetitle"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/cards"
-        android:padding="10dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/spinner_logic_gate"
+            android:layout_marginTop="20dp" >
 
-    <Spinner
-        android:id="@+id/spinner_logic_gate"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_below="@+id/imagelogicgate"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="15dp"
-        android:ems="5"
-        android:gravity="center" />
+            <Button
+                android:id="@+id/cButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/check" />
 
-    <include layout="@layout/overlapped_info_window" />
+            <Button
+                android:id="@+id/sButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/solution" />
+        </LinearLayout>
 
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/imagelogicgate"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@+id/exercisetitle"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/cards"
+            android:padding="10dp" />
+
+        <Spinner
+            android:id="@+id/spinner_logic_gate"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/imagelogicgate"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="15dp"
+            android:ems="5"
+            android:gravity="center" />
+
+        <include layout="@layout/overlapped_info_window" />
+    </RelativeLayout>
+
+</ScrollView>
