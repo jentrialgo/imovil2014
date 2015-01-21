@@ -76,7 +76,7 @@ limitations under the License.
                 android:ems="10"
                 android:gravity="top"
                 android:imeOptions="actionDone"
-                android:inputType="text"
+                android:inputType="numberDecimal|numberSigned"
                 android:textSize="@dimen/big_font" >
 
                 <requestFocus android:layout_width="match_parent" />
@@ -89,7 +89,7 @@ limitations under the License.
                 android:layout_weight="12"
                 android:gravity="start"
                 android:imeOptions="actionDone"
-                android:inputType="text"
+                android:inputType="number"
                 tools:text="0"
                 android:textSize="@dimen/small_font" />
 
@@ -100,7 +100,7 @@ limitations under the License.
                 android:layout_weight="33"
                 android:gravity="start"
                 android:imeOptions="actionDone"
-                android:inputType="text"
+                android:inputType="number"
                 tools:text="00000000"
                 android:textSize="@dimen/small_font" />
 
@@ -111,7 +111,7 @@ limitations under the License.
                 android:layout_weight="65"
                 android:gravity="start"
                 android:imeOptions="actionDone"
-                android:inputType="text"
+                android:inputType="number"
                 tools:text="00000000000000000000000"
                 android:textSize="@dimen/small_font" />
         </LinearLayout>
