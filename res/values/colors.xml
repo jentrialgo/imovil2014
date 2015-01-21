@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
-        <color name="darkgray">#424242</color>
-        <color name="mediumgray">#fff0f0f0</color>
-        <color name="mediumdarkgray">#ff979797</color>
-        <color name="pantalla">#88000000</color>
-        <color name="score_info">#ffffffff</color>
-    
+
+    <!-- scheme: http://paletton.com/#uid=13R0u0kllllaFw0g0qFqFg0w0aF -->
+    <color name="primary">#172457</color>
+    <color name="primary_darker">#07113A</color>
+    <color name="primary_text_color">#ffffff</color>
+    <color name="accent">#447684</color>
+
+    <color name="darkgray">#424242</color>
+    <color name="mediumgray">#fff0f0f0</color>
+    <color name="mediumdarkgray">#ff979797</color>
+    <color name="pantalla">#88000000</color>
+    <color name="score_info">#ffffffff</color>
+
 </resources>
