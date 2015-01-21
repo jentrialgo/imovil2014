@@ -20,7 +20,7 @@ limitations under the License.
     style="@style/cards"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#3061A4"
+    android:background="@color/game_info_panel_background"
     android:orientation="horizontal" >
 
     <TextView

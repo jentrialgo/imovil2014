@@ -5,12 +5,14 @@
     <color name="primary">#172457</color>
     <color name="primary_darker">#07113A</color>
     <color name="primary_text_color">#ffffff</color>
-    <color name="accent">#447684</color>
+    <color name="accent">#EC7904</color>
 
     <color name="darkgray">#424242</color>
     <color name="mediumgray">#fff0f0f0</color>
     <color name="mediumdarkgray">#ff979797</color>
     <color name="pantalla">#88000000</color>
     <color name="score_info">#ffffffff</color>
+
+    <color name="game_info_panel_background">#EC7904</color>
 
 </resources>
