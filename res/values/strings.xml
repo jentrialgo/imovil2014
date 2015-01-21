@@ -138,7 +138,7 @@ limitations under the License.
     <string name="cidr_title">Calcula el sufijo CIDR para esta máscara</string>
 
     <!-- Host count exercise -->
-    <string name="host_count_title">Calcula el numero de hosts</string>
+    <string name="host_count_title">Calcula el número de hosts</string>
     <!-- End Host count exercise -->
     
     <!--  Punto Flotante -->
