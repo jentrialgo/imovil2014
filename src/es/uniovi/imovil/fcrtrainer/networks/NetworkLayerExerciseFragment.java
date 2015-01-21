@@ -60,6 +60,7 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 	private int mPoints;
 
 	private int mCurrentQuestionCounter = 0;
+	private Random mRandom = new Random();
 
 	//constructores
 	public NetworkLayerExerciseFragment() 
@@ -160,14 +161,14 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 			}
 			random();			
 			mQuestion.setText(mQuestions[mIndex]);
+			mOptions.clearCheck();
 		}
 		else showAnimationAnswer(false);		
 	}
 
 	//Metodo para generar un número aleatorio
 	public int random(){
-		Random ran = new Random(); // TODO: it shouldn't be created each time
-		mIndex = ran.nextInt(11);
+		mIndex = mRandom.nextInt(11);
 		return mIndex;
 	}
 
