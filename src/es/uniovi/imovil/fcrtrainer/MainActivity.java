@@ -26,7 +26,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.app.FragmentTransaction;
@@ -217,7 +217,6 @@ public class MainActivity extends ActionBarActivity implements
 		final ActionBar actionBar = getSupportActionBar();
 		mDrawerToggle = new ActionBarDrawerToggle(this, // Actividad que lo aloja
 				mDrawerLayout, // El layout
-				R.drawable.ic_drawer, // El icono del drawer
 				R.string.drawer_open, R.string.drawer_close) {
 
 			// Se llama cuando el Drawer se acaba de cerrar
