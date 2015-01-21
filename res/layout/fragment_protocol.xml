@@ -14,76 +14,80 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/game_fragment"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <include
-        android:id="@+id/game_info_panel"
+    <RelativeLayout
+        style="@style/game_fragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/game_info_panel" />
+        android:layout_height="wrap_content" >
 
-    <LinearLayout
-        android:id="@+id/LinearLayout1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/game_info_panel"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin" >
-
-        <TextView
-            android:id="@+id/exerciseTitle"
-            style="@style/Title2DarkLight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/protocols" />
-
-        <RelativeLayout
-            android:id="@+id/card"
-            style="@style/cards"
+        <include
+            android:id="@+id/game_info_panel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/cards" >
-
-            <TextView
-                android:id="@+id/exerciseQuestion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:padding="10dp"
-                android:textColor="@color/mediumdarkgray"
-                android:textSize="32sp" />
-        </RelativeLayout>
+            layout="@layout/game_info_panel" />
 
         <LinearLayout
+            android:id="@+id/LinearLayout1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/game_info_panel"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin" >
 
-            <Button
-                android:id="@+id/checkbutton"
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/exerciseTitle"
+                style="@style/Title2DarkLight"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/check" />
+                android:text="@string/protocols" />
 
-            <Button
-                android:id="@+id/seesolution"
-                android:layout_width="0dp"
+            <RelativeLayout
+                android:id="@+id/card"
+                style="@style/cards"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/solution" />
+                android:background="@drawable/cards" >
+
+                <TextView
+                    android:id="@+id/exerciseQuestion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:padding="10dp"
+                    android:textColor="@color/mediumdarkgray"
+                    android:textSize="32sp" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <Button
+                    android:id="@+id/checkbutton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/check" />
+
+                <Button
+                    android:id="@+id/seesolution"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/solution" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
 
-    <include layout="@layout/overlapped_info_window" />
+        <include layout="@layout/overlapped_info_window" />
+    </RelativeLayout>
 
-</RelativeLayout>
+</ScrollView>
