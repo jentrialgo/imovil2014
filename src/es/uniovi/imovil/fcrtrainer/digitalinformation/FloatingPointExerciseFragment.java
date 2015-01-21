@@ -166,7 +166,8 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 	private void checkSolutionBinaryToDecimal() {
 		String userAnswer = mEtDecimal.getEditableText().toString().trim();
 
-		if (Float.parseFloat(userAnswer) == mDecimalValueF) {
+		if (!userAnswer.equals("")
+				&& Float.parseFloat(userAnswer) == mDecimalValueF) {
 			showAnimationAnswer(true);
 			if (mGame)
 				updateGameState();
@@ -181,8 +182,9 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 				+ mEtExponent.getEditableText().toString().trim()
 				+ mEtMantissa.getEditableText().toString().trim();
 
-		if (RemoveTrailingZeroes(mBitRepresentation).equals(
-				RemoveTrailingZeroes(userAnswer))) {
+		if (!userAnswer.equals("")
+				&& RemoveTrailingZeroes(mBitRepresentation).equals(
+						RemoveTrailingZeroes(userAnswer))) {
 			showAnimationAnswer(true);
 			if (mGame)
 				updateGameState();
