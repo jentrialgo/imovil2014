@@ -28,5 +28,6 @@ limitations under the License.
     
     <dimen name="small_font">12sp</dimen>
     <dimen name="big_font">35sp</dimen>
-    
+    <dimen name="normal_font">20sp</dimen>
+
 </resources>

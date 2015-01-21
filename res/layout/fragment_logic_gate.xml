@@ -16,7 +16,7 @@ limitations under the License.
 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="wrap_content" >
 
     <RelativeLayout
         style="@style/game_fragment"
@@ -36,14 +36,12 @@ limitations under the License.
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/game_info_panel"
-            android:layout_marginTop="18dp"
             android:text="@string/logic_gate_title" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/spinner_logic_gate"
-            android:layout_marginTop="20dp" >
+            android:layout_below="@+id/spinner_logic_gate" >
 
             <Button
                 android:id="@+id/cButton"
@@ -66,18 +64,17 @@ limitations under the License.
             android:layout_height="200dp"
             android:layout_below="@+id/exercisetitle"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/cards"
-            android:padding="10dp" />
+            android:padding="16dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/cards" />
 
         <Spinner
             android:id="@+id/spinner_logic_gate"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:layout_below="@+id/imagelogicgate"
             android:layout_centerHorizontal="true"
-            android:layout_margin="15dp"
-            android:ems="5"
             android:gravity="center" />
 
         <include layout="@layout/overlapped_info_window" />

@@ -40,9 +40,6 @@ limitations under the License.
                 style="@style/Title2DarkLight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="5dp"
                 android:text="@string/layer_tittle" />
 
             <RelativeLayout
@@ -56,15 +53,13 @@ limitations under the License.
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:textSize="20sp" />
+                    android:textSize="@dimen/normal_font" />
 
                 <RadioGroup
                     android:id="@+id/layer_group"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textlayer"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
                     android:padding="10dp" >
 
                     <RadioButton
@@ -96,8 +91,6 @@ limitations under the License.
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
                 android:orientation="horizontal" >
 
                 <Button

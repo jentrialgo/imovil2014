@@ -57,7 +57,7 @@ limitations under the License.
                 android:layout_centerHorizontal="true"
                 android:padding="5dp"
                 android:textColor="@color/mediumdarkgray"
-                android:textSize="25sp" />
+                android:textSize="@dimen/normal_font" />
 
             <TextView
                 android:id="@+id/LOentrada2"
@@ -68,7 +68,7 @@ limitations under the License.
                 android:layout_centerVertical="true"
                 android:padding="5dp"
                 android:textColor="@color/mediumdarkgray"
-                android:textSize="25sp" />
+                android:textSize="@dimen/normal_font" />
 
             <TextView
                 android:id="@+id/LOoperacion"
@@ -82,7 +82,7 @@ limitations under the License.
                 android:layout_toStartOf="@+id/LOentrada2"
                 android:padding="5dp"
                 android:textColor="@color/mediumdarkgray"
-                android:textSize="25sp" />
+                android:textSize="@dimen/normal_font" />
 
             <EditText
                 android:id="@+id/LOrespuesta"
@@ -95,7 +95,8 @@ limitations under the License.
                 android:gravity="center"
                 android:imeOptions="actionDone"
                 android:inputType="number"
-                android:padding="10dp" >
+                android:padding="10dp"
+                android:textSize="@dimen/normal_font" >
 
                 <requestFocus />
             </EditText>

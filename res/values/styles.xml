@@ -38,7 +38,7 @@ limitations under the License.
     </style>
 
     <style name="Title2DarkLight">
-        <item name="android:textSize">28sp</item>
+        <item name="android:textSize">@dimen/normal_font</item>
         <item name="android:textColor">@color/darkgray</item>
         <item name="android:textStyle">italic</item>
         <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-light</item>
