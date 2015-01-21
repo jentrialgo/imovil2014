@@ -14,105 +14,109 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/game_fragment"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <include
-        android:id="@+id/game_info_panel"
+    <RelativeLayout
+        style="@style/game_fragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/game_info_panel" />
+        android:layout_height="wrap_content" >
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@+id/game_info_panel"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/exercisetitle"
-            style="@style/Title2DarkLight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="5dp"
-            android:text="@string/layer_tittle" />
-
-        <RelativeLayout
-            style="@style/cards"
+        <include
+            android:id="@+id/game_info_panel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/cards" >
-
-            <TextView
-                android:id="@+id/textlayer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:textSize="20sp" />
-
-            <RadioGroup
-                android:id="@+id/layer_group"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textlayer"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:padding="10dp" >
-
-                <RadioButton
-                    android:id="@+id/application_layer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/application_layer" />
-
-                <RadioButton
-                    android:id="@+id/transport_layer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/transport_layer" />
-
-                <RadioButton
-                    android:id="@+id/internet_layer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/internet_layer" />
-
-                <RadioButton
-                    android:id="@+id/link_layer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/link_layer" />
-
-            </RadioGroup>
-        </RelativeLayout>
+            layout="@layout/game_info_panel" />
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:orientation="horizontal" >
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/game_info_panel"
+            android:orientation="vertical" >
 
-            <Button
-                android:id="@+id/button_layer"
+            <TextView
+                android:id="@+id/exercisetitle"
+                style="@style/Title2DarkLight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/button_layer_exercise" />
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/layer_tittle" />
 
-            <Button
-                android:id="@+id/button_solutionlayer"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                style="@style/cards"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/button_solution" />
+                android:background="@drawable/cards" >
+
+                <TextView
+                    android:id="@+id/textlayer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:textSize="20sp" />
+
+                <RadioGroup
+                    android:id="@+id/layer_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textlayer"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:padding="10dp" >
+
+                    <RadioButton
+                        android:id="@+id/application_layer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/application_layer" />
+
+                    <RadioButton
+                        android:id="@+id/transport_layer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/transport_layer" />
+
+                    <RadioButton
+                        android:id="@+id/internet_layer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/internet_layer" />
+
+                    <RadioButton
+                        android:id="@+id/link_layer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/link_layer" />
+                </RadioGroup>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/button_layer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/button_layer_exercise" />
+
+                <Button
+                    android:id="@+id/button_solutionlayer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/button_solution" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
 
-    <include layout="@layout/overlapped_info_window" />
+        <include layout="@layout/overlapped_info_window" />
+    </RelativeLayout>
 
-</RelativeLayout>
+</ScrollView>
