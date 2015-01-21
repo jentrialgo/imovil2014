@@ -257,7 +257,7 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 
 	// Inicia el modo entrenamiento
 	private void vistaModoEntrenamiento() {
-		mButtonCheck.setVisibility(View.VISIBLE);
+		mButtonSolucion.setVisibility(View.VISIBLE);
 		crearPregunta();
 		mEtRespuesta.requestFocus();
 		mModoJuego = false;
@@ -284,7 +284,7 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		int score = finalScore();
 		super.endGame();
 		enviarPuntuacion(score);
-		mModoJuego = false;
+		vistaModoEntrenamiento();
 	}
 
 	protected void cancelGame() {
