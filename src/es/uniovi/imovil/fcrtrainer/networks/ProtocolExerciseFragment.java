@@ -42,7 +42,7 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 
 	public static final int NUMBER_OF_ANSWERS = 4;
 	private static final int POINTS_FOR_QUESTION = 10;
-	private static final int REST_FOR_FAIL = 3;
+	private static final int PENALIZATION_PER_FAIL = 3;
 	private static final int MAX_QUESTIONS = 5;
 	private static final String DB_NAME = "protocolFCR.sqlite";
 	private static final int DB_VERSION = 2;
@@ -62,7 +62,6 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 	private int mPartialPoints;
 	private int mTotalFails = 0;
 	private boolean mGameMode = false;
-	private boolean mFlag;
 
 	public static ProtocolExerciseFragment newInstance() {
 		ProtocolExerciseFragment fragment = new ProtocolExerciseFragment();
@@ -88,34 +87,31 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 		mSeeSolutionButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				mFlag = false;
-				int i = 0;
-				while (i < NUMBER_OF_ANSWERS) {
-					if ((mRadioButtonAnswers[i].getText().equals(mTest
-							.getResponse())) && (!mFlag)) {
+				for (int i = 0; i < NUMBER_OF_ANSWERS; i++) {
+					if ((mRadioButtonAnswers[i].getText().equals(
+							mTest.getResponse()))) {
 						mRadioButtonAnswers[i].setChecked(true);
-						mFlag = true;
+						return;
 					}
-					i++;
 				}
-
 			}
 		});
 		// Manejador del botón de comprobación de respuesta.
 		mCheckSolutionButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				mFlag = false;
+				boolean checkedButtonFound = false;
 				int index = 0;
-				while ((index < NUMBER_OF_ANSWERS) && (!mFlag)) {
+				while ((index < NUMBER_OF_ANSWERS) && (!checkedButtonFound)) {
 					if (mRadioButtonAnswers[index].isChecked()) {
 						checkIfButtonClickedIsCorrectAnswer(index);
-						mFlag = true;
+						checkedButtonFound = true;
 					}
 					index++;
 				}
-				if (!mGameMode)
-					newQuestion();
+				if (!checkedButtonFound) {
+					showAnimationAnswer(false);
+				}
 			}
 		});
 		try {
@@ -163,19 +159,19 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 			correct = false;
 		}
 		super.showAnimationAnswer(correct);
-		// only create new Question if user has right input
-		if (this.mGameMode) {
-			if (correct) {
+
+		if (correct) {
+			if (this.mGameMode) {
 				gameModeControl();
-				newQuestion();
-			} else if (mTotalFails < 3) {
-				mTotalFails++;
-				mPartialPoints = mPartialPoints - REST_FOR_FAIL;
-			} else {
-				mPartialPoints = 0;
-				gameModeControl();
-				newQuestion();
 			}
+			newQuestion();
+		} else if (mTotalFails < 3) {
+			mTotalFails++;
+			mPartialPoints = mPartialPoints - PENALIZATION_PER_FAIL;
+		} else {
+			mPartialPoints = 0;
+			gameModeControl();
+			newQuestion();
 		}
 	}
 
