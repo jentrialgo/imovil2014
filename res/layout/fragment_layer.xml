@@ -64,16 +64,10 @@ limitations under the License.
                 android:padding="10dp" >
 
                 <RadioButton
-                    android:id="@+id/link_layer"
+                    android:id="@+id/application_layer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/link_layer" />
-
-                <RadioButton
-                    android:id="@+id/internet_layer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/internet_layer" />
+                    android:text="@string/application_layer" />
 
                 <RadioButton
                     android:id="@+id/transport_layer"
@@ -82,10 +76,17 @@ limitations under the License.
                     android:text="@string/transport_layer" />
 
                 <RadioButton
-                    android:id="@+id/application_layer"
+                    android:id="@+id/internet_layer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/application_layer" />
+                    android:text="@string/internet_layer" />
+
+                <RadioButton
+                    android:id="@+id/link_layer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/link_layer" />
+
             </RadioGroup>
         </RelativeLayout>
 
