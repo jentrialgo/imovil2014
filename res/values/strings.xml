@@ -17,7 +17,7 @@ limitations under the License.
 
 <resources>
 
-    <string name="app_name">FCR</string>
+    <string name="app_name">Master Hacker</string>
     <string name="action_settings">Configuración</string>
     <string name="action_help">Ayuda</string>
     <string name="action_game_control">Jugar</string>
