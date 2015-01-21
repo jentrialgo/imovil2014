@@ -99,6 +99,10 @@
   	<string name="host_count_title">Calculate number of hosts</string>
   	<!-- End Host count exercise -->
   	
+    <!-- Modulo: Protocolos -->
+    <string name="protocols">Guess the protocol</string>
+    <string name="cidr_title">Compute the CIDR suffix for this mask</string>
+
   	<!--  Punto Flotante -->
     <string name="convert_to_iee">Transform to IEEE 754</string>
     <string name="convert_from_iee">Transform from IEEE 754 to decimal</string>
@@ -108,7 +112,7 @@
     <!--  Fin Punto Flotante -->
   	
   	<!-- Help activity -->
-    <string name="developed_by">Application developed by Informática Móvil students, 2013-2014 promotion.</string>
+    <string name="developed_by">Application developed by Informática Móvil students, class of 2013–2014.</string>
     <!-- End Help activity -->
     
     <!-- Máscara de red -->

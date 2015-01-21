@@ -113,7 +113,7 @@ limitations under the License.
 
     <!-- Twos Complement -->
     <string name="convert_dec_to_twos_complement">Convierte de decimal a complemento a dos con %1$d bits</string>
-    <string name="convert_twos_complement_to_dec">Convierte de complemento con %1$d bits a dos a decimal</string>
+    <string name="convert_twos_complement_to_dec">Convierte de complemento a dos con %1$d bits a decimal</string>
 
     <!-- Modulo: Operaciones Lógicas -->
     <string name="LOand">AND</string>
@@ -135,9 +135,8 @@ limitations under the License.
 
     <!-- Modulo: Protocolos -->
     <string name="protocols">Adivina el protocolo</string>
-    <string name="cidr_title">Calcula la notación CIDR</string>
+    <string name="cidr_title">Calcula el sufijo CIDR para esta máscara</string>
 
-    <string name="fragment_interpretation">Interpretacion </string>
     <!-- Host count exercise -->
     <string name="host_count_title">Calcula el numero de hosts</string>
     <!-- End Host count exercise -->
@@ -151,7 +150,7 @@ limitations under the License.
 	<!--  Fin Punto Flotante -->
 
     <!-- Help activity -->
-    <string name="developed_by">Aplicación desarrollada por los alumnos de Informática Móvil, promoción 2013-2014.</string>
+    <string name="developed_by">Aplicación desarrollada por los alumnos de Informática Móvil, promoción 2013–2014.</string>
     <!-- End Help activity -->
 
 
