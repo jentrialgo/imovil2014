@@ -29,6 +29,7 @@ import es.uniovi.imovil.fcrtrainer.R;
 import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,25 +44,27 @@ import android.widget.Spinner;
 
 public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 		OnClickListener, OnItemSelectedListener {
+	private static final String STATE_CURRENT_QUESTION = "mCurrentQuestion";
+	private static final String STATE_GAME_END = "mGameEnd";
+
 	private static final int RANDOM = 6;
 	private static final int POINTS_FOR_QUESTION = 10;
 	private static final long GAME_DURATION_MS = 1 * 1000 * 60;// 1 min
 
+	private static final int INITIAL_VALUE = 0;
+	private static final int FINAL_VALUE = 5;
+
+	private int mCurrentQuestion;
+	private int mGameEnd = 0;
+
 	private Button mButtoncheck;
 	private String[] mLogicstring;
-	private View mRootView;
-	private int mCurrentQuestion;
 	private TypedArray mImageArray;
 	private ImageView mImageView;
 	private Button mSolutionButton;
 	private Spinner mSpinner;
-	private int mN;
-	private int mGameEnd = 0;
-	private int mInitialValue = 0;
-	private int mFinalValue = 5;
 	private ArrayList<Integer> mNumberList = new ArrayList<Integer>();
-	private int mPoints;
-	private Random mRandom;
+	private Random mRandom = new Random();
 
 	public static LogicGateExerciseFragment newInstance() {
 
@@ -75,22 +78,17 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		mRandom = new Random();
-		
-		// Inicializamos la variable contador con el fin de recorrer el array
-		// con las diferentes puertas lógicas
-		mCurrentQuestion = random();
 
 		// Inflamos el Layout
-		mRootView = inflater.inflate(R.layout.fragment_logic_gate, container,
-				false);
+		View rootView = inflater.inflate(R.layout.fragment_logic_gate,
+				container, false);
 
 		// Cargamos el array con las puertas logicas
 		mLogicstring = getResources().getStringArray(R.array.logic_gates);
 
 		// Inicializamos las vistas de los botones y sus respectivos Listener
-		mButtoncheck = (Button) mRootView.findViewById(R.id.cButton);
-		mSolutionButton = (Button) mRootView.findViewById(R.id.sButton);
+		mButtoncheck = (Button) rootView.findViewById(R.id.cButton);
+		mSolutionButton = (Button) rootView.findViewById(R.id.sButton);
 		mButtoncheck.setOnClickListener(this);
 		mSolutionButton.setOnClickListener(this);
 
@@ -98,13 +96,19 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 		mImageArray = getResources().obtainTypedArray(
 				R.array.logic_gates_images);
 
-		// Inicializamos las vistas de las imagenes
-		mImageView = (ImageView) mRootView.findViewById(R.id.imagelogicgate);
-		mImageView.setImageResource(mImageArray.getResourceId(mCurrentQuestion,
-				0));
+		mImageView = (ImageView) rootView.findViewById(R.id.imagelogicgate);
+
+		if (savedInstanceState == null) {
+			// Inicializamos la variable contador con el fin de recorrer el array
+			// con las diferentes puertas lógicas
+			mCurrentQuestion = random();
+
+			mImageView.setImageResource(mImageArray.getResourceId(
+					mCurrentQuestion, 0));
+		}
 
 		// Inicializamos el spinner y le cargamos los elementos
-		mSpinner = (Spinner) mRootView.findViewById(R.id.spinner_logic_gate);
+		mSpinner = (Spinner) rootView.findViewById(R.id.spinner_logic_gate);
 
 		// Create an ArrayAdapter using the string array and a default spinner
 		// layout
@@ -119,7 +123,34 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 		mSpinner.setAdapter(adapter);
 		mSpinner.setOnItemSelectedListener(this);
 
-		return mRootView;
+		return rootView;
+	}
+
+	@Override
+	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		
+		if (savedInstanceState == null) {
+			return;
+		}
+
+		if (mIsPlaying) {
+			mSolutionButton.setVisibility(View.GONE);
+		}
+
+		mCurrentQuestion = savedInstanceState.getInt(STATE_CURRENT_QUESTION, 0);
+		mGameEnd = savedInstanceState.getInt(STATE_GAME_END, 0);
+		
+		mImageView.setImageResource(mImageArray.getResourceId(
+				mCurrentQuestion, 0));
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+
+		outState.putInt(STATE_CURRENT_QUESTION, mCurrentQuestion);
+		outState.putInt(STATE_GAME_END, mGameEnd);
 	}
 
 	@Override
@@ -130,8 +161,7 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 			break;
 
 		case R.id.sButton:
-			// Mostramos la solución
-			solutionLogicGate();
+			showSolution();
 			break;
 		}
 
@@ -150,7 +180,7 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 	}
 
 	// Metodo para seleccionar en el spinner la respuesta.
-	public void solutionLogicGate() {
+	public void showSolution() {
 		mSpinner.setSelection(mCurrentQuestion);
 	}
 
@@ -167,9 +197,7 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 
 	// Metodo para generar un número aleatorio
 	private int random() {
-		mN = mRandom.nextInt(RANDOM);
-
-		return mN;
+		return mRandom.nextInt(RANDOM);
 	}
 
 	@Override
@@ -198,7 +226,7 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 		// Cambiamos el layout y se adapta al modo juego
 		mSolutionButton.setVisibility(View.GONE);
 		mButtoncheck.setText("Ok");
-		mPoints = 0;
+		updateScore(0);
 		mCurrentQuestion = generar();
 		mImageView.setImageResource(mImageArray.getResourceId(mCurrentQuestion,
 				0));
@@ -217,8 +245,8 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 		// convert to seconds
 		int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000;
 
-		// every remaining second gives one extra point.
-		mPoints = (int) (mPoints + remainingTimeInSeconds);
+		// every remaining second gives one extra point
+		updateScore(score() + remainingTimeInSeconds);
 
 		// Guardamos los puntos
 		savePoints();
@@ -236,28 +264,27 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 	}
 
 	@Override
-	protected int finalScore() {
-		return mPoints;
-	}
-
-	@Override
 	protected String gameOverMessage() {
 		int remainingTime = (int) getRemainingTimeMs() / 1000;
 		if (remainingTime > 0) {
 			return String.format(
-					getString(R.string.gameisoverexp), remainingTime, mPoints);
+					getString(R.string.gameisoverexp), remainingTime, score());
 		} else {
 			return String.format(
-					getString(R.string.lost_time_over), mPoints);
+					getString(R.string.lost_time_over), score());
 		}
 	}
 
 	// Método para a�adir los puntos a la tabla de highscore
 	private void savePoints() {
+		if (!isAdded()) {
+			return;
+		}
+
 		String username = getResources().getString(R.string.default_user_name);
 		try {
 			HighscoreManager.addScore(getActivity().getApplicationContext(),
-					this.mPoints, R.string.logic_gate, new Date(), username,
+					score(), R.string.logic_gate, new Date(), username,
 					level());
 
 		} catch (JSONException e) {
@@ -267,7 +294,7 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 
 	// Metodo para generar numeros aleatorios sin repetir numeros.
 	public int generar() {
-		if (mNumberList.size() < (mFinalValue - mInitialValue) + 1) {
+		if (mNumberList.size() < (FINAL_VALUE - INITIAL_VALUE) + 1) {
 			// Aun no se han generado todos los numeros
 			int numero = numeroAleatorio();// genero un numero
 			if (mNumberList.isEmpty()) {// si la lista esta vacia
@@ -291,7 +318,7 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 
 	// Genera un numero aleatorio
 	private int numeroAleatorio() {
-		return (int) (Math.random() * (mFinalValue - mInitialValue + 1) + mInitialValue);
+		return (int) (Math.random() * (FINAL_VALUE - INITIAL_VALUE + 1) + INITIAL_VALUE);
 	}
 
 	// Metodo para comprobar el modo en el que se ecuentra (juego o ejercicio) y
@@ -307,8 +334,7 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 			if (mIsPlaying) {
 				pregunta = generar();
 				mCurrentQuestion = pregunta;
-				mPoints += POINTS_FOR_QUESTION;
-				updateScore(mPoints);
+				updateScore(score() + POINTS_FOR_QUESTION);
 			} else {
 				pregunta = random();
 				mCurrentQuestion = pregunta;

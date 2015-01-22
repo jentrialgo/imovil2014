@@ -37,7 +37,12 @@ public class HostCountExerciseFragment extends BaseNetworkMaskExerciseFragment {
 	public void newQuestion() {
 		do {
 			mMask = generateRandomMask();
-		} while (correctAnswer() < 3); // have a minimum number of hosts
+		} while (correctAnswer() < 2); // have a minimum number of hosts
+		printQuestion();
+	}
+
+	@Override
+	protected void printQuestion() {
 		mQuestion.setText(intToIpString(mMask));
 	}
 
@@ -55,7 +60,7 @@ public class HostCountExerciseFragment extends BaseNetworkMaskExerciseFragment {
 		if (answer.equals(Integer.toString(correctAnswer()))) {
 			showAnimationAnswer(true);
 			newQuestion();
-			if (this.mGameMode) {
+			if (mIsPlaying) {
 				gameModeControl();
 			}
 			mAnswer.setText("");

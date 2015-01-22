@@ -27,6 +27,7 @@ import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
 import es.uniovi.imovil.fcrtrainer.R;
 import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,12 +42,15 @@ import android.widget.TextView.OnEditorActionListener;
 public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		implements OnClickListener {
 
+	private static final int POINTS_PER_QUESTION = 10;
 	private static final long GAME_DURATION_MS = 1 * 1000 * 60; // 1 min
+
 	private static final String TAG_INPUT1 = "LOentrada1";
 	private static final String TAG_INPUT2 = "LOentrada2";
 	private static final String TAG_OPERATION = "LOoperacion";
 	private static final String TAG_ANSWER = "LOrespuesta";
 	private static final String TAG_SOLUTION = "Solucion";
+	private static final String TAG_NUMERO_PREGUNTA = "mNumeroPregunta";
 
 	private static final int BASE_BINARIA = 2;
 	private static final int MAX_NUMBER_OF_OPERATIONS = 3;
@@ -65,8 +69,6 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 	private String mSolucion;
 
 	// Juego
-	private Boolean mModoJuego = false;
-	int mScore = 0;
 	int mNumeroPregunta = 0;
 
 	public static LogicOperationExerciseFragment newInstance() {
@@ -102,6 +104,14 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 
 		return mRootView;
 	}
+	
+	@Override
+	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		if (mIsPlaying) {
+			mButtonSolucion.setVisibility(View.GONE);
+		}
+	}
 
 	private void cargaDatos(Bundle savedInstanceState) {
 		String entrada1 = savedInstanceState.getString(TAG_INPUT1);
@@ -118,7 +128,7 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 
 		mSolucion = savedInstanceState.getString(TAG_SOLUTION);
 		
-		mEtRespuesta.setInputType(EditorInfo.TYPE_CLASS_TEXT);
+		mNumeroPregunta = savedInstanceState.getInt(TAG_NUMERO_PREGUNTA);
 	}
 
 	private void inicializarEditText() {
@@ -155,7 +165,7 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 
 	private void checkSolution() {
 		String respuesta = mEtRespuesta.getText().toString();
-		if (mModoJuego) {
+		if (mIsPlaying) {
 			clickJuego(respuesta);
 		} else {
 			isCorrect(mEtRespuesta.getEditableText().toString().trim());
@@ -253,6 +263,8 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		outState.putString(TAG_OPERATION, operacion);
 		outState.putString(TAG_ANSWER, respuesta);
 		outState.putString(TAG_SOLUTION, mSolucion);
+		
+		outState.putInt(TAG_NUMERO_PREGUNTA, mNumeroPregunta);
 	}
 
 	// Inicia el modo entrenamiento
@@ -260,7 +272,7 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		mButtonSolucion.setVisibility(View.VISIBLE);
 		crearPregunta();
 		mEtRespuesta.requestFocus();
-		mModoJuego = false;
+		mIsPlaying = false;
 	}
 
 	// ************************ MODO JUEGO *******************************
@@ -272,7 +284,7 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 
 		// Inicializar el numero de preguntas y de aciertos
 		mNumeroPregunta = 0;
-		mScore = 0;
+		updateScore(0);
 
 		mEtRespuesta.setText("");
 		mEtRespuesta.requestFocus();
@@ -281,9 +293,8 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 	}
 
 	protected void endGame() {
-		int score = finalScore();
 		super.endGame();
-		enviarPuntuacion(score);
+		enviarPuntuacion(finalScore());
 		vistaModoEntrenamiento();
 	}
 
@@ -292,10 +303,10 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		vistaModoEntrenamiento();
 	}
 
-	protected int finalScore() {
+	private int finalScore() {
 		long miliseg = getRemainingTimeMs();
 		int segundos = (int) (miliseg / 1000);
-		return mScore + segundos;
+		return score() + segundos;
 	}
 
 	private void enviarPuntuacion(int score) {
@@ -311,8 +322,7 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		if (answer.equals(mSolucion)) {
 			showAnimationAnswer(true);
 			mNumeroPregunta++;
-			mScore = mScore + 10;
-			updateScore(mScore);
+			updateScore(score() + POINTS_PER_QUESTION);
 			
 			if (mNumeroPregunta == MAX_NUMBER_OF_QUESTIONS) {
 				endGame();
@@ -329,7 +339,7 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 	private void vistaInicioJuego() {
 		mButtonSolucion.setVisibility(View.GONE);
 		crearPregunta();
-		mModoJuego = true;
+		mIsPlaying = true;
 	}
 
 }

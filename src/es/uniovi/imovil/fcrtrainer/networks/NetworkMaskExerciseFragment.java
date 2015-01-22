@@ -37,17 +37,23 @@ public class NetworkMaskExerciseFragment
 	}
 
 	public void newQuestion() {
-		int maxHost;
 		do {
 			mMask = generateRandomMask();
-		
-			// 1 is subtracted for removing the value with all 0, that
-			// corresponds to the network address and is not a valid
-			// host address
-			maxHost = (mMask ^ 0xffffffff) - 1;
-		} while (maxHost < 2); // A network needs at least two hosts
+		} while (maxHost() < 2); // A network needs at least two hosts
 
-		mQuestion.setText(Integer.toString(maxHost));
+		printQuestion();
+	}
+
+	private int maxHost() {
+		// 1 is subtracted for removing the value with all 0, that
+		// corresponds to the network address and is not a valid
+		// host address
+		return (mMask ^ 0xffffffff) - 1;
+	}
+
+	@Override
+	protected void printQuestion() {
+		mQuestion.setText(Integer.toString(maxHost()));
 		mAnswer.setText("255.255.255.255");
 		
 		// Set the focus on the edit text and show the keyboard
@@ -75,7 +81,7 @@ public class NetworkMaskExerciseFragment
 		if (answer.equals(intToIpString(correctAnswer()))) {
 			showAnimationAnswer(true);
 			newQuestion();
-			if (this.mGameMode) {
+			if (mIsPlaying) {
 				gameModeControl();
 			}
 		} else {

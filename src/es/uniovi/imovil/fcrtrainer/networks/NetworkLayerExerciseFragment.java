@@ -27,6 +27,7 @@ import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
 import es.uniovi.imovil.fcrtrainer.R;
 import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,9 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
+	private static final String STATE_CURRENT_QUESTION = "mCurrentQuestion";
+	private static final String STATE_QUESTION_COUNTER = "mQuestionCounter";
+
 	private final static int POINTS_FOR_QUESTION = 10;
 	private final static int MAX_QUESTIONS = 5;
 	private final static long GAME_DURATION_MS = 1 * 1000 * 60; // 1 min
@@ -45,8 +49,8 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 	private TextView mQuestion;
 	private RadioGroup mOptions;
 
-	private RadioButton mRblayer;
-	private RadioButton mRbnetwork;
+	private RadioButton mRbLink;
+	private RadioButton mRbNetwork;
 	private RadioButton mRbTransport;
 	private RadioButton mRbAplication;
 
@@ -55,11 +59,9 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 	private String[] mQuestions;
 	private String[] mAnswers;
 	private String mRbPressed = "";
-	private int mIndex =0;
+	private int mCurrentQuestion = 0;
 
-	private int mPoints;
-
-	private int mCurrentQuestionCounter = 0;
+	private int mQuestionCounter = 0;
 	private Random mRandom = new Random();
 
 	//constructores
@@ -84,8 +86,8 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 
 		//Radiogrup
 		mOptions = (RadioGroup) mRootView.findViewById(R.id.layer_group);
-		mRblayer = (RadioButton) mRootView.findViewById(R.id.link_layer);
-		mRbnetwork = (RadioButton) mRootView.findViewById(R.id.internet_layer);
+		mRbLink = (RadioButton) mRootView.findViewById(R.id.link_layer);
+		mRbNetwork = (RadioButton) mRootView.findViewById(R.id.internet_layer);
 		mRbTransport = (RadioButton) mRootView.findViewById(R.id.transport_layer);
 		mRbAplication = (RadioButton) mRootView.findViewById(R.id.application_layer);
 
@@ -124,7 +126,7 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 		mSolution.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				if(v.getId() == R.id.button_solutionlayer){
-					Solucion();
+					showSolution();
 				}
 			}
 		});
@@ -132,20 +134,49 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 		//Arrays
 		mQuestions = getResources().getStringArray(R.array.layer_exercise_questions);
 		mAnswers = getResources().getStringArray(R.array.layer_exercise_answers);
-		random();
-		mQuestion.setText(mQuestions[mIndex]);	
+		
+		if (savedInstanceState == null) {
+			newRandomQuestion();
+			mQuestion.setText(mQuestions[mCurrentQuestion]);
+		}
 
 		return mRootView;
 	}
 
-	protected void Solucion() {
-		if (mAnswers[mIndex].equals("Capa de enlace")){
-			mRblayer.setChecked(true);
+	@Override
+	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		if (savedInstanceState == null) {
+			return;
 		}
-		else if (mAnswers[mIndex].equals("Capa de internet")){
-			mRbnetwork.setChecked(true);
+
+		if (mIsPlaying) {
+			mSolution.setVisibility(View.GONE);
+			mQuestionCounter = savedInstanceState
+					.getInt(STATE_QUESTION_COUNTER);
 		}
-		else if (mAnswers[mIndex].equals("Capa de transporte")){
+		
+		mCurrentQuestion = savedInstanceState.getInt(STATE_CURRENT_QUESTION);
+		mQuestion.setText(mQuestions[mCurrentQuestion]);
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+
+		outState.putInt(STATE_CURRENT_QUESTION, mCurrentQuestion);
+		outState.putInt(STATE_QUESTION_COUNTER, mQuestionCounter);
+	}
+
+	protected void showSolution() {
+		String answer = mAnswers[mCurrentQuestion];
+		if (answer.equals(getString(R.string.link_layer))){
+			mRbLink.setChecked(true);
+		}
+		else if (answer.equals(getString(R.string.internet_layer))){
+			mRbNetwork.setChecked(true);
+		}
+		else if (answer.equals(getString(R.string.transport_layer))){
 			mRbTransport.setChecked(true);
 		}
 		else {
@@ -154,37 +185,30 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 	}
 
 	private void CompruebaRespuesta() {
-		if (mRbPressed.equals(mAnswers[mIndex])){
+		if (mRbPressed.equals(mAnswers[mCurrentQuestion])){
 			showAnimationAnswer(true);
 			if (mIsPlaying){
 				gameModeControl();
 			}
-			random();			
-			mQuestion.setText(mQuestions[mIndex]);
+			newRandomQuestion();			
+			mQuestion.setText(mQuestions[mCurrentQuestion]);
 			mOptions.clearCheck();
 		}
 		else showAnimationAnswer(false);		
 	}
 
 	//Metodo para generar un número aleatorio
-	public int random(){
-		mIndex = mRandom.nextInt(11);
-		return mIndex;
-	}
-
-	private void increasePoints(int val) {
-		mPoints = mPoints + val;
-		updateScore(this.mPoints);
+	public void newRandomQuestion(){
+		mCurrentQuestion = mRandom.nextInt(11);
 	}
 
 	protected void gameModeControl() {
-		increasePoints(POINTS_FOR_QUESTION);
+		updateScore(score() + POINTS_FOR_QUESTION);
 	
-		if (mCurrentQuestionCounter >= MAX_QUESTIONS
-				|| getRemainingTimeMs() <= 0) {
+		mQuestionCounter++;
+		if (mQuestionCounter >= MAX_QUESTIONS || getRemainingTimeMs() <= 0) {
 			endGame();
 		}
-		mCurrentQuestionCounter++;
 	}
 
 	@Override
@@ -213,12 +237,12 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 		//convert to seconds
 		int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000; 
 		//every remaining second gives one extra point.
-		mPoints = (int) (mPoints + remainingTimeInSeconds);
+		updateScore(score() + remainingTimeInSeconds);
 
 		String username = getResources().getString(R.string.default_user_name);
 		try {
 			HighscoreManager.addScore(getActivity().getApplicationContext(),
-					mPoints, R.string.network_layer, new Date(),
+					score(), R.string.network_layer, new Date(),
 					username, level());
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -227,24 +251,19 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 		super.endGame();
 
 		updateToTrainMode();
-		mPoints = 0;
-		mCurrentQuestionCounter = 0;
+		updateScore(0);
+		mQuestionCounter = 0;
 	}
 	
-	@Override
-	protected int finalScore() {
-		return mPoints;
-	}
-
 	@Override
 	protected String gameOverMessage() {
 		int remainingTime = (int) getRemainingTimeMs() / 1000;
 		if (remainingTime > 0) {
 			return String.format(
-					getString(R.string.gameisoverexp), remainingTime, mPoints);
+					getString(R.string.gameisoverexp), remainingTime, score());
 		} else {
 			return String.format(
-					getString(R.string.lost_time_over), mPoints);
+					getString(R.string.lost_time_over), score());
 		}
 	}
 

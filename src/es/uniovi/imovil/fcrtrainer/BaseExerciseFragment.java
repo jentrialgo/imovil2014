@@ -21,7 +21,6 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -73,9 +72,6 @@ import android.widget.Toast;
  * 
  * - Se debe llamar al método updateScore() cada vez que cambie la puntuación
  * 
- * - Se debe definir el método finalScore() para indicar la puntuación al
- * acabar la partida.
- * 
  * - Se puede redefinir el método gameOverMessage() si se desea que la pantalla
  * final muestre algo más que los puntos.
  * 
@@ -85,11 +81,15 @@ import android.widget.Toast;
  */
 public abstract class BaseExerciseFragment extends Fragment {
 	private static final String STATE_IS_PLAYING = "mIsPlaying";
-	private static final String STATE_CONSUMED_TIME_MS = "remainingTimeMs";
+	private static final String STATE_CONSUMED_TIME_MS = "consumedTimeMs";
+	private static final String STATE_DURATION_TIME_MS = "mDurationTimeMs";
+	private static final String STATE_SCORE = "mScore";
 
 	private final static int CLOCK_UPDATE_PERIOD_MS = 1000; // 1 s
 	private final static int DEFAULT_GAME_DURATION_MS = 120 * 1000; // 2 min
+
 	protected boolean mIsPlaying = false;
+	private int mScore = 0;
 
 	private Handler mTimerHandler = new Handler();
 	private Runnable mUpdateTimeTask = new TimeUpdater();
@@ -133,11 +133,17 @@ public abstract class BaseExerciseFragment extends Fragment {
 
 		if (mIsPlaying) {
 			setGameInfoPanelVisibility(View.VISIBLE);
+			mScore = savedInstanceState.getInt(STATE_SCORE);
+			updateScore(mScore);
 			showLevel();
+
+			mDurationMs = savedInstanceState.getLong(STATE_DURATION_TIME_MS,
+					DEFAULT_GAME_DURATION_MS);
 			long consumedTime = savedInstanceState.getLong(
 					STATE_CONSUMED_TIME_MS, mDurationMs);
 			mStartMs = System.currentTimeMillis() - consumedTime;
-			startTimer();
+			printRemainingTime();
+			mTimerHandler.postDelayed(mUpdateTimeTask, CLOCK_UPDATE_PERIOD_MS);
 		}
 	}
 
@@ -147,6 +153,8 @@ public abstract class BaseExerciseFragment extends Fragment {
 		outState.putBoolean(STATE_IS_PLAYING, mIsPlaying);
 		outState.putLong(STATE_CONSUMED_TIME_MS,
 				mDurationMs - getRemainingTimeMs());
+		outState.putLong(STATE_DURATION_TIME_MS, mDurationMs);
+		outState.putInt(STATE_SCORE, mScore);
 	}
 
 	/**
@@ -163,23 +171,9 @@ public abstract class BaseExerciseFragment extends Fragment {
 		public void run() {
 			mTimerHandler.removeCallbacks(mUpdateTimeTask);
 
-			long remainingTimeMs = getRemainingTimeMs();
-			int remainingTimeSec = (int) (remainingTimeMs / 1000);
-			int remainingTimeMin = remainingTimeSec / 60;
-			remainingTimeSec = remainingTimeSec % 60;
+			printRemainingTime();
 
-			final long tenSecondsInMs = 10000;
-			if (remainingTimeMs < tenSecondsInMs) {
-				mClock.setTextColor(Color.RED);
-			} else {
-				mClock.setTextColor(getActivity().getResources().getColor(
-						R.color.score_info));
-			}
-
-			mClock.setText(String.format("%d:%02d", remainingTimeMin,
-					remainingTimeSec));
-
-			if (remainingTimeMin > 0 || remainingTimeSec > 0) {
+			if (getRemainingTimeMs() > 0) {
 				mTimerHandler.postDelayed(mUpdateTimeTask,
 						CLOCK_UPDATE_PERIOD_MS);
 			} else {
@@ -187,6 +181,16 @@ public abstract class BaseExerciseFragment extends Fragment {
 			}
 		}
 
+	}
+
+	private void printRemainingTime() {
+		long remainingTimeMs = getRemainingTimeMs();
+		int remainingTimeSec = (int) (remainingTimeMs / 1000);
+		int remainingTimeMin = remainingTimeSec / 60;
+		remainingTimeSec = remainingTimeSec % 60;
+
+		mClock.setText(String.format("%d:%02d", remainingTimeMin,
+				remainingTimeSec));
 	}
 
 	public BaseExerciseFragment() {
@@ -258,16 +262,20 @@ public abstract class BaseExerciseFragment extends Fragment {
 		mIsPlaying = true;
 		setGameInfoPanelVisibility(View.VISIBLE);
 		getActivity().supportInvalidateOptionsMenu();
+		mClock.setText("");
 		showAnimationGameStart(true);
-		mStartMs = System.currentTimeMillis();
-		startTimer();
+		waitForAnimationAndStartTimer();
 	}
 
-	private void startTimer() {
-		final Handler handler = new Handler();
-		handler.postDelayed(new Runnable() {
+	/***
+	 * This method starts the timer delayed to give time to the animation to
+	 * finish
+	 */
+	private void waitForAnimationAndStartTimer() {
+		mTimerHandler.postDelayed(new Runnable() {
 			@Override
 			public void run() {
+				mStartMs = System.currentTimeMillis();
 				final long updateTime = 0; 	// Hacer la primera actualización
 											// inmediatamente
 				mTimerHandler.postDelayed(mUpdateTimeTask, updateTime);
@@ -285,10 +293,16 @@ public abstract class BaseExerciseFragment extends Fragment {
 
 	/***
 	 * Esta función muestra el valor que se le pase en el panel de puntuación
+	 * y guarda la puntuación
 	 */
 	protected void updateScore(int newScore) {
+		mScore = newScore;
 		mScoreTextView.setText(getString(R.string.score) + " "
 				+ String.valueOf(newScore));
+	}
+
+	protected int score() {
+		return mScore;
 	}
 
 	/**
@@ -333,14 +347,8 @@ public abstract class BaseExerciseFragment extends Fragment {
 	 * puntuación. Se puede sobreescribir si se desea dar más información
 	 */
 	protected String gameOverMessage() {
-		return String.format(getString(R.string.game_over_message),
-				finalScore());
+		return String.format(getString(R.string.game_over_message), score());
 	}
-
-	/***
-	 * Debe retornar la puntuación final al acabar el juego
-	 */
-	protected abstract int finalScore();
 
 	private void stopPlaying() {
 		if (mIsPlaying) {

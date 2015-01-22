@@ -27,6 +27,7 @@ import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
 import es.uniovi.imovil.fcrtrainer.R;
 import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -38,6 +39,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+// TODO: Necesita que se traduzcan las preguntas de la base de datos a inglés
 public class ProtocolExerciseFragment extends BaseExerciseFragment {
 
 	public static final int NUMBER_OF_ANSWERS = 4;
@@ -52,16 +54,14 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 	private View mRootView;
 	private View mCardView;
 	private RadioButton[] mRadioButtonAnswers;
-	private Button mSeeSolutionButton;
+	private Button mShowSolutionButton;
 	private Button mCheckSolutionButton;
 	private TextView mQuestion;
 	private ProtocolTest mTest;
 	private RadioGroup mRadioGroup;
 	private int mCurrentQuestionCounter = 1;
-	private int mPoints;
 	private int mPartialPoints;
 	private int mTotalFails = 0;
-	private boolean mGameMode = false;
 
 	public static ProtocolExerciseFragment newInstance() {
 		ProtocolExerciseFragment fragment = new ProtocolExerciseFragment();
@@ -78,13 +78,13 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 		mCardView = (RelativeLayout) mRootView.findViewById(R.id.card);
 		mRadioGroup = new RadioGroup(getActivity());
 		addAnswerRadioButtons();
-		mSeeSolutionButton = (Button) mRootView.findViewById(R.id.seesolution);
+		mShowSolutionButton = (Button) mRootView.findViewById(R.id.seesolution);
 		mCheckSolutionButton = (Button) mRootView
 				.findViewById(R.id.checkbutton);
 
 		// Manejador del evento de mostrar soluciÃ³n (solo en modo
 		// entrenamiento).
-		mSeeSolutionButton.setOnClickListener(new OnClickListener() {
+		mShowSolutionButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
 				for (int i = 0; i < NUMBER_OF_ANSWERS; i++) {
@@ -125,8 +125,33 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 		}
 
 		mTestList = db.loadData();
-		newQuestion();
+		
+		if (savedInstanceState != null) {
+			newQuestion();
+		}
+
 		return mRootView;
+	}
+
+	@Override
+	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		if (savedInstanceState == null) {
+			return;
+		}
+
+		if (mIsPlaying) {
+			mShowSolutionButton.setVisibility(View.GONE);
+		}
+		
+		// TODO: get mTestList
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+
+		// TODO: save mTestList
 	}
 
 	private void addAnswerRadioButtons() {
@@ -161,7 +186,7 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 		super.showAnimationAnswer(correct);
 
 		if (correct) {
-			if (this.mGameMode) {
+			if (mIsPlaying) {
 				gameModeControl();
 			}
 			newQuestion();
@@ -203,8 +228,6 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 	}
 
 	private void updateToGameMode() {
-		mGameMode = true;
-
 		newQuestion();
 
 		Button solution = (Button) mRootView.findViewById(R.id.seesolution);
@@ -212,14 +235,11 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 	}
 
 	private void updateToTrainMode() {
-		mGameMode = false;
-
-		Button solution = (Button) mRootView.findViewById(R.id.seesolution);
-		solution.setVisibility(View.VISIBLE);
+		mShowSolutionButton.setVisibility(View.VISIBLE);
 	}
 
 	protected void gameModeControl() {
-		increasePoints(POINTS_FOR_QUESTION);
+		updateScore(score() + POINTS_FOR_QUESTION);
 	
 		if (mCurrentQuestionCounter >= MAX_QUESTIONS
 				|| getRemainingTimeMs() <= 0) {
@@ -233,7 +253,7 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 	protected void endGame() {
 		// convert to seconds
 		int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000;
-		mPoints = (int) (this.mPoints + remainingTimeInSeconds);
+		updateScore(score() + remainingTimeInSeconds);
 
 		savePoints();
 
@@ -244,16 +264,11 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 		reset();
 	}
 
-	private void increasePoints(int val) {
-		mPoints = mPoints + val;
-		updateScore(mPoints);
-	}
-
 	private void savePoints() {
 		String username = getResources().getString(R.string.default_user_name);
 		try {
 			HighscoreManager.addScore(getActivity().getApplicationContext(),
-					this.mPoints, R.string.protocol, new Date(), username,
+					score(), R.string.protocol, new Date(), username,
 					level());
 
 		} catch (JSONException e) {
@@ -262,14 +277,8 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 	}
 
 	private void reset() {
-		mPoints = 0;
+		updateScore(0);
 		mCurrentQuestionCounter = 0;
-		updateScore(mPoints);
-	}
-
-	@Override
-	protected int finalScore() {
-		return mPoints;
 	}
 
 	@Override
@@ -277,10 +286,10 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 		int remainingTime = (int) getRemainingTimeMs() / 1000;
 		if (remainingTime > 0) {
 			return String.format(
-					getString(R.string.gameisoverexp), remainingTime, mPoints);
+					getString(R.string.gameisoverexp), remainingTime, score());
 		} else {
 			return String.format(
-					getString(R.string.lost_time_over), mPoints);
+					getString(R.string.lost_time_over), score());
 		}
 	}
 

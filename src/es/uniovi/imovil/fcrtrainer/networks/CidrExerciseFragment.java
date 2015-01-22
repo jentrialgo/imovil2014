@@ -40,7 +40,7 @@ public class CidrExerciseFragment extends BaseNetworkMaskExerciseFragment {
 
 		if (ans.equals(correctAnswer())) {
 			showAnimationAnswer(true);
-			if (this.mGameMode) {
+			if (mIsPlaying) {
 				gameModeControl();
 			}
 			mAnswer.setText("");
@@ -66,6 +66,11 @@ public class CidrExerciseFragment extends BaseNetworkMaskExerciseFragment {
 
 	protected void newQuestion() {
 		mMask = generateRandomMask();
+		printQuestion();
+	}
+
+	@Override
+	protected void printQuestion() {
 		mQuestion.setText(intToIpString(mMask));
 	}
 

@@ -45,10 +45,11 @@ import android.widget.TextView.OnEditorActionListener;
 
 public abstract class BaseNumericalExerciseFragment extends
 		BaseExerciseFragment {
-	private static final int GAMEMODE_MAXQUESTIONS = 5;
-
 	private static final String STATE_DIRECT_CONVERSION = "mDirectConversion";
 	private static final String STATE_NUMBER_TO_CONVERT = "mNumberToConvert";
+	private static final String STATE_QUESTION_COUNTER = "mQuestionCounter";
+
+	private static final int GAMEMODE_MAXQUESTIONS = 5;
 
 	private EditText mAnswerTextView;
 	private Button mCheckButton;
@@ -58,7 +59,6 @@ public abstract class BaseNumericalExerciseFragment extends
 	private TextView mTitleTextView;
 	protected String mNumberToConvert;
 	private int mQuestionCounter = 0;
-	private int mPoints = 0;
 
 	protected Random mRandomGenerator;
 	protected boolean mDirectConversion = true;
@@ -138,12 +138,22 @@ public abstract class BaseNumericalExerciseFragment extends
 					.getBoolean(STATE_DIRECT_CONVERSION);
 			mNumberToConvert = savedInstanceState
 					.getString(STATE_NUMBER_TO_CONVERT);
+			mQuestionCounter = savedInstanceState
+					.getInt(STATE_QUESTION_COUNTER);
 		} else {
 			generateRandomQuestion();
 		}
 
 		updateUI();
 		setKeyboardLayout();
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putBoolean(STATE_DIRECT_CONVERSION, mDirectConversion);
+		outState.putString(STATE_NUMBER_TO_CONVERT, mNumberToConvert);
+		outState.putInt(STATE_QUESTION_COUNTER, mQuestionCounter);
 	}
 
 	private void setKeyboardLayout() {
@@ -203,13 +213,6 @@ public abstract class BaseNumericalExerciseFragment extends
 		mAnswerTextView.setText(obtainSolution());
 	}
 
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		outState.putBoolean(STATE_DIRECT_CONVERSION, mDirectConversion);
-		outState.putString(STATE_NUMBER_TO_CONVERT, mNumberToConvert);
-	}
-
 	/**
 	 * Prepares the layout for the training and game mode.
 	 * 
@@ -235,8 +238,7 @@ public abstract class BaseNumericalExerciseFragment extends
 	 * the endGame() method.
 	 */
 	private void handleCorrectAnswer() {
-		mPoints += pointsForCorrectAnswer();
-		updateScore(mPoints);
+		updateScore(score() + pointsForCorrectAnswer());
 
 		mQuestionCounter++;
 		if (mQuestionCounter == GAMEMODE_MAXQUESTIONS) {
@@ -246,7 +248,7 @@ public abstract class BaseNumericalExerciseFragment extends
 
 	private void resetGameState() {
 		mQuestionCounter = 0;
-		mPoints = 0;
+		updateScore(0);
 		clearAnswer();
 	}
 
@@ -262,7 +264,7 @@ public abstract class BaseNumericalExerciseFragment extends
 		super.startGame();
 		setTrainingMode(false);
 		newQuestion();
-		updateScore(mPoints);
+		updateScore(0);
 	}
 
 	/**
@@ -280,17 +282,12 @@ public abstract class BaseNumericalExerciseFragment extends
 	@Override
 	protected void endGame() {
 		int remainingTime = (int) getRemainingTimeMs() / 1000;
-		mPoints = mPoints + remainingTime;
+		updateScore(score() + remainingTime);
 
 		super.endGame();
 
-		saveScore(mPoints);
+		saveScore(score());
 		setTrainingMode(true);
-	}
-
-	@Override
-	protected int finalScore() {
-		return mPoints;
 	}
 
 	@Override
@@ -298,10 +295,10 @@ public abstract class BaseNumericalExerciseFragment extends
 		int remainingTime = (int) getRemainingTimeMs() / 1000;
 		if (remainingTime > 0) {
 			return String.format(
-					getString(R.string.gameisoverexp), remainingTime, mPoints);
+					getString(R.string.gameisoverexp), remainingTime, score());
 		} else {
 			return String.format(
-					getString(R.string.lost_time_over), mPoints);
+					getString(R.string.lost_time_over), score());
 		}
 	}
 	

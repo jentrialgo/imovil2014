@@ -59,8 +59,6 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 	private Button mSolution;
 	
 	private boolean mConvertToDecimal;
-	private boolean mGame;
-	private int mPoints = 0;
 
 	private float mDecimalValueF = 0.0f;
 	private int mfAsIntBits;
@@ -104,7 +102,6 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 		mToggle = (Button) rootView.findViewById(R.id.btn_togglebinary);
 
 		if (savedInstanceState == null) {
-			mGame = false;
 			newConvertToBinaryQuestion();
 		}
 
@@ -141,6 +138,10 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 			return;
 		}
 
+		if (mIsPlaying) {
+			mSolution.setVisibility(View.GONE);
+		}
+		
 		mConvertToDecimal = savedInstanceState.getBoolean(STATE_CONVERT_TO_DECIMAL);
 		mDecimalValueF = savedInstanceState.getFloat(STATE_DECIMAL_VALUE_F);
 
@@ -210,7 +211,7 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 		if (!userAnswer.equals("")
 				&& Float.parseFloat(userAnswer) == mDecimalValueF) {
 			showAnimationAnswer(true);
-			if (mGame)
+			if (mIsPlaying)
 				updateGameState();
 			newConvertToDecimalQuestion();
 		} else {
@@ -227,7 +228,7 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 				&& RemoveTrailingZeroes(mBitRepresentation).equals(
 						RemoveTrailingZeroes(userAnswer))) {
 			showAnimationAnswer(true);
-			if (mGame)
+			if (mIsPlaying)
 				updateGameState();
 			newConvertToBinaryQuestion();
 		} else {
@@ -353,10 +354,8 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 	 */
 	public void setTrainingMode(boolean training) {
 		if (training) {
-			mGame = false;
 			mSolution.setVisibility(View.VISIBLE);
 		} else {
-			mGame = true;
 			resetGameState();
 			mSolution.setVisibility(View.GONE);
 		}
@@ -367,22 +366,21 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 	 * the endGame() method.
 	 */
 	public void updateGameState() {
-		mPoints++;
-		updateScore(mPoints);
-		if (mPoints == GAMEMODE_MAXQUESTIONS) {
+		updateScore(score() + 1);
+		if (score() == GAMEMODE_MAXQUESTIONS) {
 			endGame();
 		}
 	}
 
 	public void resetGameState() {
-		mPoints = 0;
+		updateScore(0);
 	}
 
 	@Override
 	protected void startGame() {
 		super.startGame();
 		setTrainingMode(false);
-		updateScore(mPoints);
+		updateScore(0);
 	}
 
 	@Override
@@ -394,16 +392,11 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 	@Override
 	protected void endGame() {
 		int remainingTime = (int) getRemainingTimeMs() / 1000;
-		mPoints = mPoints + remainingTime;
-		saveScore(mPoints);
+		updateScore(score() + remainingTime);
+		saveScore(score());
 		setTrainingMode(true);
 
 		super.endGame();
-	}
-
-	@Override
-	protected int finalScore() {
-		return mPoints;
 	}
 
 	@Override
@@ -411,10 +404,10 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 		int remainingTime = (int) getRemainingTimeMs() / 1000;
 		if (remainingTime > 0) {
 			return String.format(
-					getString(R.string.gameisoverexp), remainingTime, mPoints);
+					getString(R.string.gameisoverexp), remainingTime, score());
 		} else {
 			return String.format(
-					getString(R.string.lost_time_over), mPoints);
+					getString(R.string.lost_time_over), score());
 		}
 	}
 	

@@ -19,14 +19,17 @@ limitations under the License.
 package es.uniovi.imovil.fcrtrainer.networks;
 
 import es.uniovi.imovil.fcrtrainer.R;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.WindowManager;
 
 public class NetworkAddressExerciseFragment 
 		extends BaseNetworkMaskExerciseFragment
 		implements View.OnClickListener {
+	private static final String STATE_IP = "mIp";
 
-	int mIp;
+	int mIp; // IP address
 
 	public static NetworkAddressExerciseFragment newInstance() {
 		NetworkAddressExerciseFragment fragment = new NetworkAddressExerciseFragment();
@@ -36,11 +39,32 @@ public class NetworkAddressExerciseFragment
 	public NetworkAddressExerciseFragment() {
 	}
 
+	@Override
+	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+		if (savedInstanceState == null) {
+			// Required by the framework
+			super.onActivityCreated(savedInstanceState);
+			return;
+		}
+
+		mIp = savedInstanceState.getInt(STATE_IP, 0);
+		
+		// Called after the previous initializations because it requires mIp
+		// for printQuestion
+		super.onActivityCreated(savedInstanceState);
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putInt(STATE_IP, mIp);
+	}
+
 	public void checkAnswer() {
 		String net = intToIpString(mIp & mMask);
 		if (net.equals(mAnswer.getText().toString())) {
 			showAnimationAnswer(true);
-			if (this.mGameMode) {
+			if (mIsPlaying) {
 				gameModeControl();
 			}
 			newQuestion();
@@ -67,8 +91,13 @@ public class NetworkAddressExerciseFragment
 			mIp = generateRandomIP();
 		}
 		
+		printQuestion();
+	}
+
+	@Override
+	protected void printQuestion() {
 		mQuestion.setText(intToIpString(mIp) + "\n" + intToIpString(mMask));
-		
+
 		// Show the IP as starting point for the network mask, because they
 		// probably have many numbers in common
 		mAnswer.setText(intToIpString(mIp));
