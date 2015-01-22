@@ -24,6 +24,7 @@ import java.util.Random;
 import org.json.JSONException;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +41,9 @@ import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
 
 public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 
+	private static final String STATE_CONVERT_TO_DECIMAL = "mConvertToDecimal";
+	private static final String STATE_DECIMAL_VALUE_F = "mDecimalValueF";
+
 	private TextView mTvNumberToconvert;
 	private TextView mTvTitle;
 	private TextView mTvDecimal;
@@ -54,15 +58,14 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 	private Button mToggle;
 	private Button mSolution;
 	
-	boolean mIsBinary = true;
-	boolean mConvert = true;
-	boolean mGame = false;
-	int mPoints = 0;
+	private boolean mConvertToDecimal;
+	private boolean mGame;
+	private int mPoints = 0;
 
-	float mDecimalValueF = 0.0f;
-	int mfAsIntBits;
-	String mBitRepresentation;
-	String mBitRepresentationDivided;
+	private float mDecimalValueF = 0.0f;
+	private int mfAsIntBits;
+	private String mBitRepresentation;
+	private String mBitRepresentationDivided;
 
 	private Random mRandom = new Random();
 
@@ -100,7 +103,10 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 		mSolution = (Button) rootView.findViewById(R.id.btn_getsolution);
 		mToggle = (Button) rootView.findViewById(R.id.btn_togglebinary);
 
-		newDecimalQuestion();
+		if (savedInstanceState == null) {
+			mGame = false;
+			newConvertToBinaryQuestion();
+		}
 
 		mCheck.setOnClickListener(new OnClickListener() {
 			@Override
@@ -127,11 +133,43 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 		return rootView;
 	}
 
-	private void newDecimalQuestion() {
-		generateRandomNumbers();
+	@Override
+	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
 
+		if (savedInstanceState == null) {
+			return;
+		}
+
+		mConvertToDecimal = savedInstanceState.getBoolean(STATE_CONVERT_TO_DECIMAL);
+		mDecimalValueF = savedInstanceState.getFloat(STATE_DECIMAL_VALUE_F);
+
+		if (mConvertToDecimal) {
+			prepareConvertToDecimalView();
+			showDecimalViews();
+		} else {
+			computeBitRepresentation();
+			prepareConvertToBinarylView();
+			showBinaryViews();
+		}
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putBoolean(STATE_CONVERT_TO_DECIMAL, mConvertToDecimal);
+		outState.putFloat(STATE_DECIMAL_VALUE_F, mDecimalValueF);
+	}
+
+
+	private void newConvertToBinaryQuestion() {
+		generateRandomNumbers();
+		prepareConvertToBinarylView();
+	}
+
+	private void prepareConvertToBinarylView() {
 		mTvNumberToconvert.setText(Float.toString(mDecimalValueF));
-		mIsBinary = false;
+		mConvertToDecimal = false;
 
 		mfAsIntBits = Float.floatToRawIntBits(mDecimalValueF);
 		mEtDecimal.setVisibility(View.GONE);
@@ -142,9 +180,12 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 		mEtMantissa.setText(null);
 	}
 
-	private void newBinaryQuestion() {
+	private void newConvertToDecimalQuestion() {
 		generateRandomNumbers();
+		prepareConvertToDecimalView();
+	}
 
+	private void prepareConvertToDecimalView() {
 		mBitRepresentationDivided = mBitRepresentation.substring(0, 1)
 				+ " "
 				+ mBitRepresentation.substring(1, 9)
@@ -156,7 +197,7 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 	}
 	
 	private void checkSolutionListener() {
-		if (mIsBinary == true) {
+		if (mConvertToDecimal == true) {
 			checkSolutionBinaryToDecimal();
 		} else {
 			checkSolutionDecimalToBinary();
@@ -171,7 +212,7 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 			showAnimationAnswer(true);
 			if (mGame)
 				updateGameState();
-			newBinaryQuestion();
+			newConvertToDecimalQuestion();
 		} else {
 			showAnimationAnswer(false);
 		}
@@ -188,14 +229,14 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 			showAnimationAnswer(true);
 			if (mGame)
 				updateGameState();
-			newDecimalQuestion();
+			newConvertToBinaryQuestion();
 		} else {
 			showAnimationAnswer(false);
 		}
 	}
 
 	private void solutionListener() {
-		if (mIsBinary) {
+		if (mConvertToDecimal) {
 			mEtDecimal.setText(Float.toString(mDecimalValueF));
 		} else {
 			mEtSign.setText(mBitRepresentation.substring(0, 1));
@@ -205,34 +246,41 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 	}
 
 	private void toggleListener() {
-		if (mIsBinary) {
-			newDecimalQuestion();
-			mIsBinary = false;
-			mTvTitle.setText(R.string.convert_to_iee);
-			
-			mEtDecimal.setVisibility(View.GONE);
-			mTvDecimal.setVisibility(View.GONE);
-			mEtSign.setVisibility(View.VISIBLE);
-			mEtExponent.setVisibility(View.VISIBLE);
-			mEtMantissa.setVisibility(View.VISIBLE);
-			mTvSign.setVisibility(View.VISIBLE);
-			mTvExponent.setVisibility(View.VISIBLE);
-			mTvMantissa.setVisibility(View.VISIBLE);
-
+		if (mConvertToDecimal) {
+			newConvertToBinaryQuestion();
+			mConvertToDecimal = false;
+			showBinaryViews();
 		} else {
-			newBinaryQuestion();
-			mIsBinary = true;
-			mTvTitle.setText(R.string.convert_from_iee);
-
-			mEtDecimal.setVisibility(View.VISIBLE);
-			mTvDecimal.setVisibility(View.VISIBLE);
-			mEtSign.setVisibility(View.GONE);
-			mEtExponent.setVisibility(View.GONE);
-			mEtMantissa.setVisibility(View.GONE);
-			mTvSign.setVisibility(View.GONE);
-			mTvExponent.setVisibility(View.GONE);
-			mTvMantissa.setVisibility(View.GONE);
+			newConvertToDecimalQuestion();
+			mConvertToDecimal = true;
+			showDecimalViews();
 		}
+	}
+
+	private void showDecimalViews() {
+		mTvTitle.setText(R.string.convert_from_iee);
+
+		mEtDecimal.setVisibility(View.VISIBLE);
+		mTvDecimal.setVisibility(View.VISIBLE);
+		mEtSign.setVisibility(View.GONE);
+		mEtExponent.setVisibility(View.GONE);
+		mEtMantissa.setVisibility(View.GONE);
+		mTvSign.setVisibility(View.GONE);
+		mTvExponent.setVisibility(View.GONE);
+		mTvMantissa.setVisibility(View.GONE);
+	}
+
+	private void showBinaryViews() {
+		mTvTitle.setText(R.string.convert_to_iee);
+		
+		mEtDecimal.setVisibility(View.GONE);
+		mTvDecimal.setVisibility(View.GONE);
+		mEtSign.setVisibility(View.VISIBLE);
+		mEtExponent.setVisibility(View.VISIBLE);
+		mEtMantissa.setVisibility(View.VISIBLE);
+		mTvSign.setVisibility(View.VISIBLE);
+		mTvExponent.setVisibility(View.VISIBLE);
+		mTvMantissa.setVisibility(View.VISIBLE);
 	}
 	
 	private String RemoveTrailingZeroes(String bitRepresentation) {
@@ -278,6 +326,10 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 			mDecimalValueF = -mDecimalValueF;
 		}
 		
+		computeBitRepresentation();
+	}
+
+	private void computeBitRepresentation() {
 		mfAsIntBits = Float.floatToRawIntBits(mDecimalValueF);
 
 		String fAsBinaryString = Integer.toBinaryString(mfAsIntBits);
@@ -285,6 +337,7 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 		// IMPORTANT: Representation of the float number in binary form
 		mBitRepresentation = String.format("%32s", fAsBinaryString).replace(' ',
 				'0');
+
 	}
 
 	private int numberOfBitsFractionalPart() {
