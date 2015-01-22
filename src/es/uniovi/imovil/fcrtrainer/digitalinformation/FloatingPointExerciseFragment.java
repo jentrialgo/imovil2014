@@ -144,11 +144,11 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 		mConvertToDecimal = savedInstanceState.getBoolean(STATE_CONVERT_TO_DECIMAL);
 		mDecimalValueF = savedInstanceState.getFloat(STATE_DECIMAL_VALUE_F);
 
+		computeBitRepresentation();
 		if (mConvertToDecimal) {
 			prepareConvertToDecimalView();
 			showDecimalViews();
 		} else {
-			computeBitRepresentation();
 			prepareConvertToBinarylView();
 			showBinaryViews();
 		}
