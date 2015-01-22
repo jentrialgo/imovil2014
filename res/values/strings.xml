@@ -105,7 +105,7 @@ limitations under the License.
     <string name="cidr_title">Calcula el sufijo CIDR para esta máscara</string>
 
     <!-- Host count exercise -->
-    <string name="host_count_title">¿Cuántas máquinas podría haber en una red con esta subred?</string>
+    <string name="host_count_title">¿Cuántas máquinas podría haber en una red con esta máscara de subred?</string>
     <!-- End Host count exercise -->
     
     <!--  Punto Flotante -->

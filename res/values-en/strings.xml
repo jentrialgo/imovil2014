@@ -70,7 +70,7 @@
     <!-- Fin Operaciones Lógicas -->
     
  	<!-- Host count exercise -->
-  	<string name="host_count_title">How many host can a network with this subnet mask have?</string>
+  	<string name="host_count_title">How many hosts can a network with this subnet mask have?</string>
   	<!-- End Host count exercise -->
   	
     <!-- Modulo: Protocolos -->
