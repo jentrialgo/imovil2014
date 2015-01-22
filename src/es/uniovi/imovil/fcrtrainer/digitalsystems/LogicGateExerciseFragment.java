@@ -320,12 +320,4 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 		}
 	}
 
-	@Override
-	public void onPause() {
-		super.onPause();
-		if (mIsPlaying) {
-			cancelGame();
-		}
-	}
-
 }
