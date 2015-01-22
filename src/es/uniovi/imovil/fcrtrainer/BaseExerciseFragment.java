@@ -24,6 +24,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -83,6 +84,8 @@ import android.widget.Toast;
  * tienen por defecto.
  */
 public abstract class BaseExerciseFragment extends Fragment {
+	private static final String STATE_IS_PLAYING = "mIsPlaying";
+	private static final String STATE_CONSUMED_TIME_MS = "remainingTimeMs";
 
 	private final static int CLOCK_UPDATE_PERIOD_MS = 1000; // 1 s
 	private final static int DEFAULT_GAME_DURATION_MS = 120 * 1000; // 2 min
@@ -119,6 +122,33 @@ public abstract class BaseExerciseFragment extends Fragment {
 		super.onViewCreated(view, savedInstanceState);
 	}
 
+	@Override
+	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+
+		if (savedInstanceState == null) {
+			return;
+		}
+		mIsPlaying = savedInstanceState.getBoolean(STATE_IS_PLAYING);
+
+		if (mIsPlaying) {
+			setGameInfoPanelVisibility(View.VISIBLE);
+			showLevel();
+			long consumedTime = savedInstanceState.getLong(
+					STATE_CONSUMED_TIME_MS, mDurationMs);
+			mStartMs = System.currentTimeMillis() - consumedTime;
+			startTimer();
+		}
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putBoolean(STATE_IS_PLAYING, mIsPlaying);
+		outState.putLong(STATE_CONSUMED_TIME_MS,
+				mDurationMs - getRemainingTimeMs());
+	}
+
 	/**
 	 * Get remaining time in ms.
 	 * 
@@ -133,8 +163,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 		public void run() {
 			mTimerHandler.removeCallbacks(mUpdateTimeTask);
 
-			long nowMs = System.currentTimeMillis();
-			long remainingTimeMs = mDurationMs - (nowMs - mStartMs);
+			long remainingTimeMs = getRemainingTimeMs();
 			int remainingTimeSec = (int) (remainingTimeMs / 1000);
 			int remainingTimeMin = remainingTimeSec / 60;
 			remainingTimeSec = remainingTimeSec % 60;
@@ -171,7 +200,9 @@ public abstract class BaseExerciseFragment extends Fragment {
 		MenuItem item = menu.findItem(R.id.action_change_game_mode);
 		try {
 			MainActivity activity = (MainActivity) getActivity();
-			item.setVisible(!activity.isDrawerOpen());
+			if (item != null && activity != null) {
+				item.setVisible(!activity.isDrawerOpen());
+			}
 		} catch (ClassCastException ex) {
 			// El fragmento está incrustado en una actividad distinta a
 			// MainActivity. No se hace nada
@@ -191,7 +222,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 	public void onPause() {
 		super.onPause();
 		if (mIsPlaying) {
-			cancelGame();
+			mTimerHandler.removeCallbacks(mUpdateTimeTask);
 		}
 	}
 
@@ -228,18 +259,20 @@ public abstract class BaseExerciseFragment extends Fragment {
 		setGameInfoPanelVisibility(View.VISIBLE);
 		getActivity().supportInvalidateOptionsMenu();
 		showAnimationGameStart(true);
+		mStartMs = System.currentTimeMillis();
+		startTimer();
+	}
+
+	private void startTimer() {
 		final Handler handler = new Handler();
 		handler.postDelayed(new Runnable() {
 			@Override
 			public void run() {
-				mStartMs = System.currentTimeMillis();
-				final long updateTime = 0; // Hacer la primera actualización
-				// inmediatamente
+				final long updateTime = 0; 	// Hacer la primera actualización
+											// inmediatamente
 				mTimerHandler.postDelayed(mUpdateTimeTask, updateTime);
 			}
 		}, 1500);
-
-
 	}
 
 	private void showLevel() {
