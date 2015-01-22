@@ -36,7 +36,7 @@ limitations under the License.
         <item>@string/host_count</item>
         <item>@string/network_mask</item>
         <item>@string/network_layer</item>
-        <item>@string/protocol</item>
+      <!--    <item>@string/protocol</item>  -->
     </array>
      
     <array name="highscores">
