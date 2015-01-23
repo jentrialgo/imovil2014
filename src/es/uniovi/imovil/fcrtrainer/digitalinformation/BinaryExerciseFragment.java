@@ -26,7 +26,6 @@ import es.uniovi.imovil.fcrtrainer.R;
  * decimal y en el modo inverso, lo contrario
  */
 public class BinaryExerciseFragment extends BaseNumericalExerciseFragment {
-	private static final int POINTS_FOR_QUESTION = 10;
 
 	private BinaryConverter binaryConverter = new BinaryConverter();
 
@@ -59,11 +58,6 @@ public class BinaryExerciseFragment extends BaseNumericalExerciseFragment {
 		// Convert Question to binary
 		String questionConverted = convertToBinary(mNumberToConvert);
 		return answer.equals(questionConverted);
-	}
-
-	@Override
-	protected int pointsForCorrectAnswer() {
-		return POINTS_FOR_QUESTION;
 	}
 
 	@Override

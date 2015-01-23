@@ -22,8 +22,6 @@ import es.uniovi.imovil.fcrtrainer.R;
 
 public class TwosComplementExerciseFragment extends
 		BaseNumericalExerciseFragment {
-	private static final int POINTS_FOR_QUESTION = 10;
-
 	private int mNumberToConvert;
 
 	public static TwosComplementExerciseFragment newInstance() {
@@ -82,11 +80,6 @@ public class TwosComplementExerciseFragment extends
 	@Override
 	protected boolean isCorrect(String answer) {
 		return answer.equals(obtainSolution());
-	}
-
-	@Override
-	protected int pointsForCorrectAnswer() {
-		return POINTS_FOR_QUESTION;
 	}
 
 }

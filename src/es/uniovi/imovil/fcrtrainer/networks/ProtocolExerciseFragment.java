@@ -39,12 +39,8 @@ import es.uniovi.imovil.fcrtrainer.R;
 public class ProtocolExerciseFragment extends BaseExerciseFragment {
 
 	public static final int NUMBER_OF_ANSWERS = 4;
-	private static final int POINTS_FOR_QUESTION = 10;
-	private static final int PENALIZATION_PER_FAIL = 3;
-	private static final int MAX_QUESTIONS = 5;
 	private static final String DB_NAME = "protocolFCR.sqlite";
 	private static final int DB_VERSION = 2;
-	private static final long GAME_DURATION_MS = 60 * 1000; // 1 min
 
 	private ArrayList<ProtocolTest> mTestList = null;
 	private View mRootView;
@@ -55,9 +51,6 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 	private TextView mQuestion;
 	private ProtocolTest mTest;
 	private RadioGroup mRadioGroup;
-	private int mCurrentQuestionCounter = 1;
-	private int mPartialPoints;
-	private int mTotalFails = 0;
 
 	public static ProtocolExerciseFragment newInstance() {
 		ProtocolExerciseFragment fragment = new ProtocolExerciseFragment();
@@ -179,27 +172,20 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 		} else {
 			correct = false;
 		}
-		super.showAnimationAnswer(correct);
+		showAnimationAnswer(correct);
 
 		if (correct) {
 			if (mIsPlaying) {
-				gameModeControl();
+				computeCorrectQuestion();
 			}
 			newQuestion();
-		} else if (mTotalFails < 3) {
-			mTotalFails++;
-			mPartialPoints = mPartialPoints - PENALIZATION_PER_FAIL;
 		} else {
-			mPartialPoints = 0;
-			gameModeControl();
-			newQuestion();
+			computeIncorrectQuestion();
 		}
 	}
 
 	private void newQuestion() {
 		mRadioGroup.clearCheck();
-		mPartialPoints = POINTS_FOR_QUESTION; // Puntos parciales (al fallar se
-												// resta 2 puntos).
 		mTest = mTestList.get((int) (Math.random() * (14 - 0)) + 0);
 
 		// Mostrar pregunta y opciones.
@@ -211,8 +197,6 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 
 	@Override
 	public void startGame() {
-		setGameDuration(GAME_DURATION_MS);
-
 		super.startGame();
 		updateToGameMode();
 	}
@@ -234,47 +218,10 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 		mShowSolutionButton.setVisibility(View.VISIBLE);
 	}
 
-	protected void gameModeControl() {
-		updateScore(score() + POINTS_FOR_QUESTION);
-	
-		if (mCurrentQuestionCounter >= MAX_QUESTIONS
-				|| getRemainingTimeMs() <= 0) {
-			endGame();
-		}
-		mCurrentQuestionCounter++;
-		mTotalFails = 0;
-	}
-
 	@Override
 	protected void endGame() {
-		// convert to seconds
-		int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000;
-		updateScore(score() + remainingTimeInSeconds);
-
-		saveScore();
-
 		super.endGame();
-
 		updateToTrainMode();
-
-		reset();
-	}
-
-	private void reset() {
-		updateScore(0);
-		mCurrentQuestionCounter = 0;
-	}
-
-	@Override
-	protected String gameOverMessage() {
-		int remainingTime = (int) getRemainingTimeMs() / 1000;
-		if (remainingTime > 0) {
-			return String.format(
-					getString(R.string.gameisoverexp), remainingTime, score());
-		} else {
-			return String.format(
-					getString(R.string.lost_time_over), score());
-		}
 	}
 
 	@Override

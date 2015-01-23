@@ -19,17 +19,10 @@ import es.uniovi.imovil.fcrtrainer.R;
 public abstract class BaseNetworkMaskExerciseFragment
 		extends BaseExerciseFragment implements OnClickListener {
 	private static final String STATE_MASK = "mMask";
-	private static final String STATE_QUESTION_COUNTER = "mQuestionCounter";
-
-	private static final int POINTS_FOR_QUESTION = 10;
-	private static final int MAX_QUESTIONS = 5;
-	private static final long GAME_DURATION_MS = 1 * 1000 * 60; // 1 min
 
 	protected Random mRandom = new Random();
 	
 	protected int mMask;
-
-	protected int mQuestionCounter = 1;
 
 	protected TextView mExerciseTitle;
 	protected TextView mQuestion;
@@ -73,8 +66,6 @@ public abstract class BaseNetworkMaskExerciseFragment
 		mMask = savedInstanceState.getInt(STATE_MASK, 0);
 		if (mIsPlaying) {
 			mButtonShowSolution.setVisibility(View.GONE);
-			mQuestionCounter = savedInstanceState
-					.getInt(STATE_QUESTION_COUNTER);
 		}
 		printQuestion();
 	}
@@ -83,7 +74,6 @@ public abstract class BaseNetworkMaskExerciseFragment
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putInt(STATE_MASK, mMask);
-		outState.putInt(STATE_QUESTION_COUNTER, mQuestionCounter);
 	}
 
 	protected int generateRandomMask() {
@@ -122,8 +112,6 @@ public abstract class BaseNetworkMaskExerciseFragment
 	}
 
 	public void startGame() {
-		setGameDuration(GAME_DURATION_MS);
-	
 		super.startGame();
 		updateToGameMode();
 	}
@@ -145,42 +133,8 @@ public abstract class BaseNetworkMaskExerciseFragment
 
 	@Override
 	protected void endGame() {
-		int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000;
-		// every remaining second gives one extra point.
-		updateScore(score() + remainingTimeInSeconds);
-
-		saveScore();
-
 		super.endGame();
 		updateToTrainMode();
-		reset();
-	}
-
-	@Override
-	protected String gameOverMessage() {
-		int remainingTime = (int) getRemainingTimeMs() / 1000;
-		if (remainingTime > 0) {
-			return String.format(
-					getString(R.string.gameisoverexp), remainingTime, score());
-		} else {
-			return String.format(
-					getString(R.string.lost_time_over), score());
-		}
-	}
-
-	protected void gameModeControl() {
-		updateScore(score() + POINTS_FOR_QUESTION);
-	
-		if (mQuestionCounter >= MAX_QUESTIONS
-				|| getRemainingTimeMs() <= 0) {
-			endGame();
-		}
-		mQuestionCounter++;
-	}
-
-	private void reset() {
-		updateScore(0);
-		mQuestionCounter = 0;
 	}
 
 	@Override

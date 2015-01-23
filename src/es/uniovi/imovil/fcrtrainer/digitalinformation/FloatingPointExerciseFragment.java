@@ -62,7 +62,6 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 
 	private Random mRandom = new Random();
 
-	private static final int GAMEMODE_MAXQUESTIONS = 5;
 	private static final long GAME_DURATION_MS = 5 * 1000 * 60; // 5 min
 
 	public static FloatingPointExerciseFragment newInstance() {
@@ -206,11 +205,13 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 		if (!userAnswer.equals("")
 				&& Float.parseFloat(userAnswer) == mDecimalValueF) {
 			showAnimationAnswer(true);
-			if (mIsPlaying)
-				updateGameState();
+			if (mIsPlaying) {
+				computeCorrectQuestion();
+			}
 			newConvertToDecimalQuestion();
 		} else {
 			showAnimationAnswer(false);
+			computeIncorrectQuestion();
 		}
 	}
 
@@ -223,11 +224,13 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 				&& RemoveTrailingZeroes(mBitRepresentation).equals(
 						RemoveTrailingZeroes(userAnswer))) {
 			showAnimationAnswer(true);
-			if (mIsPlaying)
-				updateGameState();
+			if (mIsPlaying) {
+				computeCorrectQuestion();
+			}
 			newConvertToBinaryQuestion();
 		} else {
 			showAnimationAnswer(false);
+			computeIncorrectQuestion();
 		}
 	}
 
@@ -351,31 +354,14 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 		if (training) {
 			mSolution.setVisibility(View.VISIBLE);
 		} else {
-			resetGameState();
 			mSolution.setVisibility(View.GONE);
 		}
-	}
-
-	/**
-	 * Updates the game stats and if all the questions have been asked it calls
-	 * the endGame() method.
-	 */
-	public void updateGameState() {
-		updateScore(score() + 1);
-		if (score() == GAMEMODE_MAXQUESTIONS) {
-			endGame();
-		}
-	}
-
-	public void resetGameState() {
-		updateScore(0);
 	}
 
 	@Override
 	protected void startGame() {
 		super.startGame();
 		setTrainingMode(false);
-		updateScore(0);
 	}
 
 	@Override
@@ -386,26 +372,10 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 
 	@Override
 	protected void endGame() {
-		int remainingTime = (int) getRemainingTimeMs() / 1000;
-		updateScore(score() + remainingTime);
-		saveScore();
-		setTrainingMode(true);
-
 		super.endGame();
+		setTrainingMode(true);
 	}
 
-	@Override
-	protected String gameOverMessage() {
-		int remainingTime = (int) getRemainingTimeMs() / 1000;
-		if (remainingTime > 0) {
-			return String.format(
-					getString(R.string.gameisoverexp), remainingTime, score());
-		} else {
-			return String.format(
-					getString(R.string.lost_time_over), score());
-		}
-	}
-	
 	@Override
 	protected int obtainExerciseId() {
 		return R.string.floating_point;

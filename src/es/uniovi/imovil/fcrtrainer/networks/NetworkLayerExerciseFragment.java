@@ -35,11 +35,8 @@ import android.widget.TextView;
 
 public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 	private static final String STATE_CURRENT_QUESTION = "mCurrentQuestion";
-	private static final String STATE_QUESTION_COUNTER = "mQuestionCounter";
 
-	private final static int POINTS_FOR_QUESTION = 10;
-	private final static int MAX_QUESTIONS = 5;
-	private final static long GAME_DURATION_MS = 1 * 1000 * 60; // 1 min
+	private static final long GAME_DURATION_MS = 30 * 1000; // half minute
 
 	private View mRootView;		
 	private TextView mQuestion;
@@ -57,18 +54,15 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 	private String mRbPressed = "";
 	private int mCurrentQuestion = 0;
 
-	private int mQuestionCounter = 0;
 	private Random mRandom = new Random();
 
 	//constructores
-	public NetworkLayerExerciseFragment() 
-	{
-
+	public NetworkLayerExerciseFragment() {
+		setGameDuration(GAME_DURATION_MS);
 	}
 
 	//metodos
-	public static NetworkLayerExerciseFragment newInstance() 
-	{
+	public static NetworkLayerExerciseFragment newInstance() {
 		NetworkLayerExerciseFragment fragment = new NetworkLayerExerciseFragment();
 		return fragment;
 	}
@@ -88,8 +82,7 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 		mRbAplication = (RadioButton) mRootView.findViewById(R.id.application_layer);
 
 		mOptions.setOnCheckedChangeListener( new RadioGroup.OnCheckedChangeListener() {
-			public void onCheckedChanged(RadioGroup rGroup, int checkedId)
-			{
+			public void onCheckedChanged(RadioGroup rGroup, int checkedId) {
 				switch(checkedId){
 				case R.id.link_layer:
 					mRbPressed = getResources().getString(R.string.link_layer);
@@ -148,8 +141,6 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 
 		if (mIsPlaying) {
 			mSolution.setVisibility(View.GONE);
-			mQuestionCounter = savedInstanceState
-					.getInt(STATE_QUESTION_COUNTER);
 		}
 		
 		mCurrentQuestion = savedInstanceState.getInt(STATE_CURRENT_QUESTION);
@@ -161,7 +152,6 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 		super.onSaveInstanceState(outState);
 
 		outState.putInt(STATE_CURRENT_QUESTION, mCurrentQuestion);
-		outState.putInt(STATE_QUESTION_COUNTER, mQuestionCounter);
 	}
 
 	protected void showSolution() {
@@ -184,32 +174,25 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 		if (mRbPressed.equals(mAnswers[mCurrentQuestion])){
 			showAnimationAnswer(true);
 			if (mIsPlaying){
-				gameModeControl();
+				computeCorrectQuestion();
 			}
 			newRandomQuestion();			
 			mQuestion.setText(mQuestions[mCurrentQuestion]);
 			mOptions.clearCheck();
 		}
-		else showAnimationAnswer(false);		
+		else {
+			showAnimationAnswer(false);
+			computeIncorrectQuestion();
+		}
 	}
 
 	//Metodo para generar un número aleatorio
-	public void newRandomQuestion(){
+	public void newRandomQuestion() {
 		mCurrentQuestion = mRandom.nextInt(11);
-	}
-
-	protected void gameModeControl() {
-		updateScore(score() + POINTS_FOR_QUESTION);
-	
-		mQuestionCounter++;
-		if (mQuestionCounter >= MAX_QUESTIONS || getRemainingTimeMs() <= 0) {
-			endGame();
-		}
 	}
 
 	@Override
 	public void startGame() {
-		setGameDuration(GAME_DURATION_MS);
 		super.startGame();
 		updateToGameMode();
 	}
@@ -230,31 +213,10 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 
 	@Override
 	protected void endGame() {
-		//convert to seconds
-		int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000; 
-		//every remaining second gives one extra point.
-		updateScore(score() + remainingTimeInSeconds);
-		saveScore();
-
 		super.endGame();
-
 		updateToTrainMode();
-		updateScore(0);
-		mQuestionCounter = 0;
 	}
 	
-	@Override
-	protected String gameOverMessage() {
-		int remainingTime = (int) getRemainingTimeMs() / 1000;
-		if (remainingTime > 0) {
-			return String.format(
-					getString(R.string.gameisoverexp), remainingTime, score());
-		} else {
-			return String.format(
-					getString(R.string.lost_time_over), score());
-		}
-	}
-
 	@Override
 	protected int obtainExerciseId() {
 		return R.string.network_layer;

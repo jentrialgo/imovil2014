@@ -82,12 +82,14 @@ public class NetworkMaskExerciseFragment
 			showAnimationAnswer(true);
 			newQuestion();
 			if (mIsPlaying) {
-				gameModeControl();
+				computeCorrectQuestion();
 			}
 		} else {
 			showAnimationAnswer(false);
+			computeIncorrectQuestion();
 		}
 	}
+
 	@Override
 	protected int exerciseId() {
 		return R.string.network_mask;

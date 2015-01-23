@@ -38,9 +38,6 @@ import android.widget.TextView.OnEditorActionListener;
 public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		implements OnClickListener {
 
-	private static final int POINTS_PER_QUESTION = 10;
-	private static final long GAME_DURATION_MS = 1 * 1000 * 60; // 1 min
-
 	private static final String TAG_INPUT1 = "LOentrada1";
 	private static final String TAG_INPUT2 = "LOentrada2";
 	private static final String TAG_OPERATION = "LOoperacion";
@@ -50,8 +47,6 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 
 	private static final int BASE_BINARIA = 2;
 	private static final int MAX_NUMBER_OF_OPERATIONS = 3;
-
-	private static final int MAX_NUMBER_OF_QUESTIONS = 5;
 
 	private View mRootView;
 	private TextView mTvEntrada1;
@@ -273,14 +268,10 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 
 	// ************************ MODO JUEGO *******************************
 	protected void startGame() {
-		// Establecer duracion del juego
-		super.setGameDuration(GAME_DURATION_MS);
-
 		vistaInicioJuego();
 
 		// Inicializar el numero de preguntas y de aciertos
 		mNumeroPregunta = 0;
-		updateScore(0);
 
 		mEtRespuesta.setText("");
 		mEtRespuesta.requestFocus();
@@ -289,8 +280,6 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 	}
 
 	protected void endGame() {
-		updateScore(finalScore());
-		saveScore();
 		super.endGame();
 		vistaModoEntrenamiento();
 	}
@@ -300,26 +289,16 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		vistaModoEntrenamiento();
 	}
 
-	private int finalScore() {
-		long miliseg = getRemainingTimeMs();
-		int segundos = (int) (miliseg / 1000);
-		return score() + segundos;
-	}
-
 	private void clickJuego(String answer) {
 		if (answer.equals(mSolucion)) {
 			showAnimationAnswer(true);
 			mNumeroPregunta++;
-			updateScore(score() + POINTS_PER_QUESTION);
+			computeCorrectQuestion();
 			
-			if (mNumeroPregunta == MAX_NUMBER_OF_QUESTIONS) {
-				endGame();
-				return;
-			}
-
 			crearPregunta();
 		} else {
 			showAnimationAnswer(false);
+			computeIncorrectQuestion();
 		}
 
 	}

@@ -29,6 +29,8 @@ public class NetworkAddressExerciseFragment
 		implements View.OnClickListener {
 	private static final String STATE_IP = "mIp";
 
+	private static final long GAME_DURATION_MS = 2 * 60 * 1000; // 2 minutes
+
 	int mIp; // IP address
 
 	public static NetworkAddressExerciseFragment newInstance() {
@@ -37,6 +39,7 @@ public class NetworkAddressExerciseFragment
 	}
 
 	public NetworkAddressExerciseFragment() {
+		setGameDuration(GAME_DURATION_MS);
 	}
 
 	@Override
@@ -65,11 +68,12 @@ public class NetworkAddressExerciseFragment
 		if (net.equals(mAnswer.getText().toString())) {
 			showAnimationAnswer(true);
 			if (mIsPlaying) {
-				gameModeControl();
+				computeCorrectQuestion();
 			}
 			newQuestion();
 		} else {
 			showAnimationAnswer(false);
+			computeIncorrectQuestion();
 		}
 	}
 

@@ -18,7 +18,6 @@ limitations under the License.
 
 package es.uniovi.imovil.fcrtrainer.digitalsystems;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
@@ -27,7 +26,6 @@ import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -41,17 +39,13 @@ import android.widget.Spinner;
 public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 		OnClickListener, OnItemSelectedListener {
 	private static final String STATE_CURRENT_QUESTION = "mCurrentQuestion";
-	private static final String STATE_GAME_END = "mGameEnd";
 
 	private static final int RANDOM = 6;
-	private static final int POINTS_FOR_QUESTION = 10;
-	private static final long GAME_DURATION_MS = 1 * 1000 * 60;// 1 min
 
 	private static final int INITIAL_VALUE = 0;
 	private static final int FINAL_VALUE = 5;
 
 	private int mCurrentQuestion;
-	private int mGameEnd = 0;
 
 	private Button mButtoncheck;
 	private String[] mLogicstring;
@@ -59,7 +53,6 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 	private ImageView mImageView;
 	private Button mSolutionButton;
 	private Spinner mSpinner;
-	private ArrayList<Integer> mNumberList = new ArrayList<Integer>();
 	private Random mRandom = new Random();
 
 	public static LogicGateExerciseFragment newInstance() {
@@ -135,7 +128,6 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 		}
 
 		mCurrentQuestion = savedInstanceState.getInt(STATE_CURRENT_QUESTION, 0);
-		mGameEnd = savedInstanceState.getInt(STATE_GAME_END, 0);
 		
 		mImageView.setImageResource(mImageArray.getResourceId(
 				mCurrentQuestion, 0));
@@ -146,7 +138,6 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 		super.onSaveInstanceState(outState);
 
 		outState.putInt(STATE_CURRENT_QUESTION, mCurrentQuestion);
-		outState.putInt(STATE_GAME_END, mGameEnd);
 	}
 
 	@Override
@@ -164,14 +155,20 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 	}
 
 	public void checkAnswer() {
-		if (mIsPlaying) {
-			if (mGameEnd < mLogicstring.length - 1) {
-				compruebaModo(mCurrentQuestion);
-			} else {
-				endGame();
+		String answer = mSpinner.getSelectedItem().toString();
+		if (mLogicstring[mCurrentQuestion].equals(answer)) {
+			showAnimationAnswer(true);
+			if (mIsPlaying) {
+				computeCorrectQuestion();
 			}
+			mCurrentQuestion = random();
+			mImageView.setImageResource(mImageArray.getResourceId(
+					mCurrentQuestion, 0));
 		} else {
-			compruebaModo(mCurrentQuestion);
+			showAnimationAnswer(false);
+			if (mIsPlaying) {
+				computeIncorrectQuestion();
+			}
 		}
 	}
 
@@ -197,33 +194,13 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle presses on the action bar items
-		switch (item.getItemId()) {
-		case R.id.action_change_game_mode:
-			if (mIsPlaying) {
-				cancelGame();
-			} else {
-				startGame();
-			}
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-	}
-
-	@Override
 	protected void startGame() {
 		super.startGame();
-
-		// Fijamos el contador en 1 minuto
-		setGameDuration(GAME_DURATION_MS);
 
 		// Cambiamos el layout y se adapta al modo juego
 		mSolutionButton.setVisibility(View.GONE);
 		mButtoncheck.setText("Ok");
-		updateScore(0);
-		mCurrentQuestion = generar();
+		mCurrentQuestion = numeroAleatorio();
 		mImageView.setImageResource(mImageArray.getResourceId(mCurrentQuestion,
 				0));
 	}
@@ -238,91 +215,15 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 	}
 
 	protected void endGame() {
-		// convert to seconds
-		int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000;
-
-		// every remaining second gives one extra point
-		updateScore(score() + remainingTimeInSeconds);
-
-		// Guardamos los puntos
-		saveScore();
-
-		// Vaciamos la lista que contiene todos los resultados posibles del
-		// metodo generar()
-		mNumberList.clear();
+		super.endGame();
 
 		// Cambiamos el layout para dejarlo en modo ejercicio
 		mSolutionButton.setVisibility(View.VISIBLE);
-		mButtoncheck.setText("Comprobar");
-		mGameEnd = 0;
-
-		super.endGame();
-	}
-
-	@Override
-	protected String gameOverMessage() {
-		int remainingTime = (int) getRemainingTimeMs() / 1000;
-		if (remainingTime > 0) {
-			return String.format(
-					getString(R.string.gameisoverexp), remainingTime, score());
-		} else {
-			return String.format(
-					getString(R.string.lost_time_over), score());
-		}
-	}
-
-	// Metodo para generar numeros aleatorios sin repetir numeros.
-	public int generar() {
-		if (mNumberList.size() < (FINAL_VALUE - INITIAL_VALUE) + 1) {
-			// Aun no se han generado todos los numeros
-			int numero = numeroAleatorio();// genero un numero
-			if (mNumberList.isEmpty()) {// si la lista esta vacia
-				mNumberList.add(numero);
-				return numero;
-			} else {// si no esta vacia
-				if (mNumberList.contains(numero)) {// Si el numero que gener�
-													// esta contenido en la
-													// lista
-					return generar();// recursivamente lo mando a generar otra
-										// vez
-				} else {// Si no esta contenido en la lista
-					mNumberList.add(numero);
-					return numero;
-				}
-			}
-		} else {// ya se generaron todos los numeros
-			return -1;
-		}
 	}
 
 	// Genera un numero aleatorio
 	private int numeroAleatorio() {
 		return (int) (Math.random() * (FINAL_VALUE - INITIAL_VALUE + 1) + INITIAL_VALUE);
-	}
-
-	// Metodo para comprobar el modo en el que se ecuentra (juego o ejercicio) y
-	// segun el modo
-	// Si estas en modo juego genera solo 6 numeros aleatorios sin repetir y si
-	// no, genera numeros aleatorios infinitos
-	public void compruebaModo(int pregunta) {
-		String textosUpper = mSpinner.getSelectedItem().toString();
-		if (mLogicstring[pregunta].equals(textosUpper)) {
-			mGameEnd++;
-			showAnimationAnswer(true);
-			// Ponemos el texto en verde y ponemos la imagen de un tic verde.
-			if (mIsPlaying) {
-				pregunta = generar();
-				mCurrentQuestion = pregunta;
-				updateScore(score() + POINTS_FOR_QUESTION);
-			} else {
-				pregunta = random();
-				mCurrentQuestion = pregunta;
-			}
-			mImageView.setImageResource(mImageArray.getResourceId(pregunta, 0));
-		} else {
-			// Si no es igual es texto del string con el del editText
-			showAnimationAnswer(false);
-		}
 	}
 
 	@Override

@@ -23,7 +23,6 @@ import java.util.Locale;
 import es.uniovi.imovil.fcrtrainer.R;
 
 public class HexadecimalExerciseFragment extends BaseNumericalExerciseFragment {
-	private static final int POINTS_FOR_QUESTION = 10;
 	private int mNumberToConvert;
 
 	public static HexadecimalExerciseFragment newInstance() {
@@ -68,11 +67,6 @@ public class HexadecimalExerciseFragment extends BaseNumericalExerciseFragment {
 			return BinaryConverter.binaryToStringWithNbits(mNumberToConvert,
 					numberOfBits());
 		}
-	}
-
-	@Override
-	protected int pointsForCorrectAnswer() {
-		return POINTS_FOR_QUESTION;
 	}
 
 	@Override

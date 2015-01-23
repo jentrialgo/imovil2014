@@ -23,8 +23,6 @@ import es.uniovi.imovil.fcrtrainer.R;
 public class SignedMagnitudeExerciseFragment extends
 		BaseNumericalExerciseFragment {
 
-	private static final int POINTS_FOR_QUESTION = 10;
-
 	private String mCorrectAnswer;
 
 	public static SignedMagnitudeExerciseFragment newInstance() {
@@ -93,11 +91,6 @@ public class SignedMagnitudeExerciseFragment extends
 	@Override
 	protected boolean isCorrect(String answer) {
 		return answer.equals(mCorrectAnswer);
-	}
-
-	@Override
-	protected int pointsForCorrectAnswer() {
-		return POINTS_FOR_QUESTION;
 	}
 
 }

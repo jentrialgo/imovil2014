@@ -48,21 +48,33 @@ import android.widget.Toast;
 /**
  * Clase base de la que deben heredar todos los fragmentos de los ejercicios.
  * Contendrá toda la funcionalidad común a todos los ejercicios. Entre ellos
- * está un botón en la barra de tareas para empezar y parar de jugar.
+ * están
  * 
- * Para que esto funcione, el fragmento debe tener definido un panel para la
- * información del juego llamado game_info_panel, que debe ser incluido en el
- * layout utilizando esta orden:
- *  <include
-        android:id="@+id/game_info_panel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/game_info_panel" />
+ * - Un botón en la barra de tareas para empezar y parar de jugar.
  * 
- * En este se mostrará la información del juego (tiempo restante, puntuación y
- * nivel de dificultad) mientras se esté jugando. Cuando se pulse el botón de
- * jugar, se mostrará panel y empezará la cuenta atrás. Cuando se llegue a
- * cero, se acabará el juego.
+ * - Un panel donde se muestra la puntuación, el tiempo que queda y el nivel.
+ * 
+ * - La gestión de la puntuación.
+ * 
+ * Todos los juegos tienen la misma mecánica: hay una cuenta atrás durante la
+ * cual se van haciendo preguntas. Cuando el usuario acierta una pregunta, se
+ * debe llamar a computeCorrectQuestion() para que se actualice la puntuación;
+ * cuando falle, se debe llamar a computeIncorrectQuestion() para que penalice
+ * al jugador. La idea es evitar que probar valores al azar sea una estrategia
+ * ventajosa en el juego.
+ * 
+ * Para que este fragmento funcione, el fragmento debe tener definido un panel
+ * para la información del juego llamado game_info_panel, que debe ser incluido
+ * en el layout utilizando esta orden:
+ * 
+ * <include android:id="@+id/game_info_panel"
+ * android:layout_width="match_parent" android:layout_height="wrap_content"
+ * layout="@layout/game_info_panel" />
+ * 
+ * En este panel se mostrará la información del juego (tiempo restante,
+ * puntuación y nivel de dificultad) mientras se esté jugando. Cuando se pulse
+ * el botón de jugar, se mostrará panel y empezará la cuenta atrás. Cuando se
+ * llegue a cero, se acabará el juego.
  * 
  * Un fragmento con un ejercicio puede hacer estas cosas:
  * 
@@ -70,19 +82,14 @@ import android.widget.Toast;
  * se cambiará el layout para el modo juego y se generará la primera pregunta.
  * 
  * - Redefinir el método stopGame() para hacer las acciones que se deseen cuando
- * se acabe la partida, como por ejemplo, mostrar un mensaje con la puntuación y
- * llamar a HighScoreManager.addScore().
+ * se acabe la partida.
  * 
  * - Redefinir el método cancelGame(), que se llama cuando el usuario cancela el
  * juego, para hacer las acciones que se deseen.
  * 
- *   En estros tres métodos se debe llamar siempre al método padre en
- *   BaseExercise, ya que son los que controlan el comportamiento del juego.
- * 
- * - Se debe llamar al método updateScore() cada vez que cambie la puntuación
- * 
- * - Se puede redefinir el método gameOverMessage() si se desea que la pantalla
- * final muestre algo más que los puntos.
+ * En estros tres métodos se debe llamar siempre al método padre en
+ * BaseExerciseFragment, ya que son los que controlan el comportamiento del
+ * juego.
  * 
  * También se puede llamar en el constructor del fragmento al método
  * setGameDuration() si se desea una duración distinta de los dos minutos que se
@@ -95,7 +102,11 @@ public abstract class BaseExerciseFragment extends Fragment {
 	private static final String STATE_SCORE = "mScore";
 
 	private final static int CLOCK_UPDATE_PERIOD_MS = 1000; // 1 s
-	private final static int DEFAULT_GAME_DURATION_MS = 120 * 1000; // 2 min
+	private final static int DEFAULT_GAME_DURATION_MS = 60 * 1000; // 1 min
+
+	private static final int POINTS_PER_CORRECT_QUESTION = 5;
+	private static final int PENALIZATION_PER_INCORRECT_QUESTION = 2;
+	private static final int INITIAL_SCORE = 0;
 
 	protected boolean mIsPlaying = false;
 	private int mScore = 0;
@@ -143,7 +154,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 		if (mIsPlaying) {
 			setGameInfoPanelVisibility(View.VISIBLE);
 			mScore = savedInstanceState.getInt(STATE_SCORE);
-			updateScore(mScore);
+			updateScore();
 			showLevel();
 
 			mDurationMs = savedInstanceState.getLong(STATE_DURATION_TIME_MS,
@@ -267,11 +278,11 @@ public abstract class BaseExerciseFragment extends Fragment {
 	}
 
 	/**
-	 * Esta función comienza el juego. En BaseExercise simplemente se hace
-	 * visible el reloj y se lanza la tarea que lo actualiza cada segundo. Si se
-	 * quiere cambiar la duración del juego, se debe llamar antes a
-	 * setGameDuration(). Las clases derivadas deben redifinirla, llamando al
-	 * padre, para ñadir lo necesario a cada juego particular
+	 * Esta función comienza el juego. En BaseExercise se hace visible el reloj,
+	 * se lanza la tarea que lo actualiza cada segundo y se inicializa la
+	 * puntuación. Si se quiere cambiar la duración del juego, se debe llamar
+	 * antes a setGameDuration(). Las clases derivadas deben redifinirla,
+	 * llamando al padre, para ñadir lo necesario a cada juego particular
 	 */
 	protected void startGame() {
 		if (mClock == null) {
@@ -280,7 +291,8 @@ public abstract class BaseExerciseFragment extends Fragment {
 			return;
 		}
 
-		updateScore(0);
+		mScore = INITIAL_SCORE;
+		updateScore();
 		showLevel();
 
 		getActivity().supportInvalidateOptionsMenu(); // to hide the settings action
@@ -301,18 +313,19 @@ public abstract class BaseExerciseFragment extends Fragment {
 		mLevelTextView.setText(level().toString(getActivity()));
 	}
 
-	/***
-	 * Esta función muestra el valor que se le pase en el panel de puntuación
-	 * y guarda la puntuación
-	 */
-	protected void updateScore(int newScore) {
-		mScore = newScore;
+	private void updateScore() {
 		mScoreTextView.setText(getString(R.string.score) + " "
-				+ String.valueOf(newScore));
+				+ String.valueOf(mScore));
 	}
 
-	protected int score() {
-		return mScore;
+	protected void computeCorrectQuestion() {
+		mScore += POINTS_PER_CORRECT_QUESTION;
+		updateScore();
+	}
+
+	protected void computeIncorrectQuestion() {
+		mScore -= PENALIZATION_PER_INCORRECT_QUESTION;
+		updateScore();
 	}
 
 	/**
@@ -333,6 +346,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 	protected void endGame() {
 		stopPlaying();
 		showEndGameDialog();
+		saveScore();
 	}
 
 	private void showEndGameDialog() {
@@ -354,10 +368,10 @@ public abstract class BaseExerciseFragment extends Fragment {
 
 	/***
 	 * Crea un mensaje para la pantalla final que simplemente muestra la
-	 * puntuación. Se puede sobreescribir si se desea dar más información
+	 * puntuación
 	 */
-	protected String gameOverMessage() {
-		return String.format(getString(R.string.game_over_message), score());
+	private String gameOverMessage() {
+		return String.format(getString(R.string.game_over_message), mScore);
 	}
 
 	private void stopPlaying() {
@@ -440,7 +454,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 
 		try {
 			HighscoreManager.addScore(getActivity().getApplicationContext(),
-					score(), obtainExerciseId(), new Date(), user, level());
+					mScore, obtainExerciseId(), new Date(), user, level());
 		} catch (JSONException e) {
 			Log.v(getClass().getSimpleName(), "Error when saving score");
 		}

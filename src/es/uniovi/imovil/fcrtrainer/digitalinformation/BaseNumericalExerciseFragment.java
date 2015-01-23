@@ -42,9 +42,6 @@ public abstract class BaseNumericalExerciseFragment extends
 		BaseExerciseFragment {
 	private static final String STATE_DIRECT_CONVERSION = "mDirectConversion";
 	private static final String STATE_NUMBER_TO_CONVERT = "mNumberToConvert";
-	private static final String STATE_QUESTION_COUNTER = "mQuestionCounter";
-
-	private static final int GAMEMODE_MAXQUESTIONS = 5;
 
 	private EditText mAnswerTextView;
 	private Button mCheckButton;
@@ -53,7 +50,6 @@ public abstract class BaseNumericalExerciseFragment extends
 	private TextView mNumberToConvertTextView;
 	private TextView mTitleTextView;
 	protected String mNumberToConvert;
-	private int mQuestionCounter = 0;
 
 	protected Random mRandomGenerator;
 	protected boolean mDirectConversion = true;
@@ -133,8 +129,7 @@ public abstract class BaseNumericalExerciseFragment extends
 					.getBoolean(STATE_DIRECT_CONVERSION);
 			mNumberToConvert = savedInstanceState
 					.getString(STATE_NUMBER_TO_CONVERT);
-			mQuestionCounter = savedInstanceState
-					.getInt(STATE_QUESTION_COUNTER);
+			setTrainingMode(!mIsPlaying);
 		} else {
 			generateRandomQuestion();
 		}
@@ -148,7 +143,6 @@ public abstract class BaseNumericalExerciseFragment extends
 		super.onSaveInstanceState(outState);
 		outState.putBoolean(STATE_DIRECT_CONVERSION, mDirectConversion);
 		outState.putString(STATE_NUMBER_TO_CONVERT, mNumberToConvert);
-		outState.putInt(STATE_QUESTION_COUNTER, mQuestionCounter);
 	}
 
 	private void setKeyboardLayout() {
@@ -190,11 +184,12 @@ public abstract class BaseNumericalExerciseFragment extends
 	private void checkSolution(String answer) {
 		if (answer.equals("") || !isCorrect(answer)) {
 			showAnimationAnswer(false);
+			computeIncorrectQuestion();
 		} else {
 			// Correct answer
 			showAnimationAnswer(true);
 			if (mIsPlaying) {
-				handleCorrectAnswer();
+				computeCorrectQuestion();
 			}
 			newQuestion();
 		}
@@ -230,22 +225,7 @@ public abstract class BaseNumericalExerciseFragment extends
 		clearAnswer();
 	}
 
-	/**
-	 * Updates the game stats and if all the questions have been asked it calls
-	 * the endGame() method.
-	 */
-	private void handleCorrectAnswer() {
-		updateScore(score() + pointsForCorrectAnswer());
-
-		mQuestionCounter++;
-		if (mQuestionCounter == GAMEMODE_MAXQUESTIONS) {
-			endGame();
-		}
-	}
-
 	private void resetGameState() {
-		mQuestionCounter = 0;
-		updateScore(0);
 		clearAnswer();
 	}
 
@@ -261,7 +241,6 @@ public abstract class BaseNumericalExerciseFragment extends
 		super.startGame();
 		setTrainingMode(false);
 		newQuestion();
-		updateScore(0);
 	}
 
 	/**
@@ -278,25 +257,8 @@ public abstract class BaseNumericalExerciseFragment extends
 	 */
 	@Override
 	protected void endGame() {
-		int remainingTime = (int) getRemainingTimeMs() / 1000;
-		updateScore(score() + remainingTime);
-
 		super.endGame();
-
-		saveScore();
 		setTrainingMode(true);
-	}
-
-	@Override
-	protected String gameOverMessage() {
-		int remainingTime = (int) getRemainingTimeMs() / 1000;
-		if (remainingTime > 0) {
-			return String.format(
-					getString(R.string.gameisoverexp), remainingTime, score());
-		} else {
-			return String.format(
-					getString(R.string.lost_time_over), score());
-		}
 	}
 
 	/**
@@ -331,10 +293,5 @@ public abstract class BaseNumericalExerciseFragment extends
 	 * Debe retornar true si la solución es correcta
 	 */
 	protected abstract boolean isCorrect(String answer);
-
-	/**
-	 * Must return the number of points awarded when the answer is right
-	 */
-	protected abstract int pointsForCorrectAnswer();
 
 }

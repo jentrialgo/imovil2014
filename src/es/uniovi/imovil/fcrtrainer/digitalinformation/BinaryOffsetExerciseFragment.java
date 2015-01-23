@@ -22,7 +22,6 @@ import es.uniovi.imovil.fcrtrainer.R;
 
 public class BinaryOffsetExerciseFragment extends BaseNumericalExerciseFragment {
 
-	private static final int POINTS_FOR_QUESTION = 10;
 	private int mOffset = 32;
 	private String mCorrectAnswer;
 
@@ -87,11 +86,6 @@ public class BinaryOffsetExerciseFragment extends BaseNumericalExerciseFragment 
 	@Override
 	protected boolean isCorrect(String answer) {
 		return answer.equals(mCorrectAnswer);
-	}
-
-	@Override
-	protected int pointsForCorrectAnswer() {
-		return POINTS_FOR_QUESTION;
 	}
 
 }

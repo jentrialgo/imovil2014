@@ -61,11 +61,12 @@ public class HostCountExerciseFragment extends BaseNetworkMaskExerciseFragment {
 			showAnimationAnswer(true);
 			newQuestion();
 			if (mIsPlaying) {
-				gameModeControl();
+				computeCorrectQuestion();
 			}
 			mAnswer.setText("");
 		} else {
 			showAnimationAnswer(false);
+			computeIncorrectQuestion();
 		}
 	}
 
