@@ -427,4 +427,9 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 		}
 	}
 
+	@Override
+	protected int obtainExerciseId() {
+		return R.string.floating_point;
+	}
+
 }

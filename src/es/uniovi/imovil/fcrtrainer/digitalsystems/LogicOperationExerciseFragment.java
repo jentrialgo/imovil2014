@@ -342,4 +342,9 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		mIsPlaying = true;
 	}
 
+	@Override
+	protected int obtainExerciseId() {
+		return R.string.logic_operation;
+	}
+
 }

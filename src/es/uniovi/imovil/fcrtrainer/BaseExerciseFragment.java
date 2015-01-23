@@ -17,6 +17,9 @@ limitations under the License.
 
 package es.uniovi.imovil.fcrtrainer;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -155,6 +158,23 @@ public abstract class BaseExerciseFragment extends Fragment {
 				mDurationMs - getRemainingTimeMs());
 		outState.putLong(STATE_DURATION_TIME_MS, mDurationMs);
 		outState.putInt(STATE_SCORE, mScore);
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+		analyticsTrack(obtainExerciseId());
+	}
+
+	private void analyticsTrack(int exerciseNameId) {
+		Tracker t = ((FcrTrainerApplication) getActivity().getApplication())
+				.getTracker();
+
+		String screenName = getString(exerciseNameId);
+		t.setScreenName(screenName);
+
+		// Send a screen view.
+		t.send(new HitBuilders.ScreenViewBuilder().build());
 	}
 
 	/**
@@ -440,5 +460,11 @@ public abstract class BaseExerciseFragment extends Fragment {
 	protected Level level() {
 		return PreferenceUtils.getLevel(getActivity());
 	}
-	
+
+	/***
+	 * Debe devolver el id de una cadena que identifique el ejercicio
+	 */
+	protected abstract int obtainExerciseId();
+
+
 }

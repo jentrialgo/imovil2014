@@ -79,4 +79,9 @@ public class HostCountExerciseFragment extends BaseNetworkMaskExerciseFragment {
 		return getString(R.string.host_count_title);
 	}
 
+	@Override
+	protected int obtainExerciseId() {
+		return R.string.host_count;
+	}
+
 }

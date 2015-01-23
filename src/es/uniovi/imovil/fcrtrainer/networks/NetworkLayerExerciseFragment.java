@@ -267,4 +267,9 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 		}
 	}
 
+	@Override
+	protected int obtainExerciseId() {
+		return R.string.network_layer;
+	}
+
 }

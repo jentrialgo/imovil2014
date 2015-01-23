@@ -92,4 +92,9 @@ public class CidrExerciseFragment extends BaseNetworkMaskExerciseFragment {
 		return getString(R.string.cidr_title);
 	}
 
+	@Override
+	protected int obtainExerciseId() {
+		return R.string.cidr;
+	}
+
 }

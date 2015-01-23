@@ -346,4 +346,9 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 		}
 	}
 
+	@Override
+	protected int obtainExerciseId() {
+		return R.string.logic_gate;
+	}
+
 }

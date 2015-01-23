@@ -39,7 +39,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-// TODO: Necesita que se traduzcan las preguntas de la base de datos a inglés
+// TODO: Necesita que se traduzcan las preguntas de la base de datos a inglï¿½s
 public class ProtocolExerciseFragment extends BaseExerciseFragment {
 
 	public static final int NUMBER_OF_ANSWERS = 4;
@@ -291,6 +291,11 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 			return String.format(
 					getString(R.string.lost_time_over), score());
 		}
+	}
+
+	@Override
+	protected int obtainExerciseId() {
+		return R.string.protocol;
 	}
 
 }

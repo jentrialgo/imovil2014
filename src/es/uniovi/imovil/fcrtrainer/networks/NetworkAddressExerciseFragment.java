@@ -131,4 +131,9 @@ public class NetworkAddressExerciseFragment
 		return getString(R.string.na_title);
 	}
 
+	@Override
+	protected int obtainExerciseId() {
+		return R.string.network_address;
+	}
+
 }

@@ -98,4 +98,9 @@ public class NetworkMaskExerciseFragment
 		return getString(R.string.network_mask_title);
 	}
 
+	@Override
+	protected int obtainExerciseId() {
+		return R.string.network_mask;
+	}
+
 }

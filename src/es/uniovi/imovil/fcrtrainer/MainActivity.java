@@ -20,6 +20,8 @@ package es.uniovi.imovil.fcrtrainer;
 
 import java.util.ArrayList;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -97,7 +99,7 @@ public class MainActivity extends ActionBarActivity implements
 		if (savedInstanceState == null)
 			updateContentFragment();
 
-		initializeDrawer(fromSavedInstanceState);
+		initializeDrawer(fromSavedInstanceState);		
 	}
 
 	@Override
@@ -280,5 +282,17 @@ public class MainActivity extends ActionBarActivity implements
 		array.recycle();
 		
 		sections.add(group);
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		GoogleAnalytics.getInstance(this).reportActivityStart(this);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		GoogleAnalytics.getInstance(this).reportActivityStop(this);
 	}
 }
