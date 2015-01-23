@@ -17,9 +17,14 @@ limitations under the License.
 
 package es.uniovi.imovil.fcrtrainer;
 
+import java.util.Date;
+
+import org.json.JSONException;
+
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
+import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -28,6 +33,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -423,6 +429,22 @@ public abstract class BaseExerciseFragment extends Fragment {
 	 * Debe devolver el id de una cadena que identifique el ejercicio
 	 */
 	protected abstract int obtainExerciseId();
+
+	/**
+	 * Saves the score using the Highscore Manager.
+	 * 
+	 * @param score
+	 */
+	protected void saveScore() {
+		String user = getString(R.string.default_user_name);
+
+		try {
+			HighscoreManager.addScore(getActivity().getApplicationContext(),
+					score(), obtainExerciseId(), new Date(), user, level());
+		} catch (JSONException e) {
+			Log.v(getClass().getSimpleName(), "Error when saving score");
+		}
+	}
 
 
 }

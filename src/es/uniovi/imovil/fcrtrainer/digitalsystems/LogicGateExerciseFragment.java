@@ -19,14 +19,10 @@ limitations under the License.
 package es.uniovi.imovil.fcrtrainer.digitalsystems;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Random;
-
-import org.json.JSONException;
 
 import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
 import es.uniovi.imovil.fcrtrainer.R;
-import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -249,7 +245,7 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 		updateScore(score() + remainingTimeInSeconds);
 
 		// Guardamos los puntos
-		savePoints();
+		saveScore();
 
 		// Vaciamos la lista que contiene todos los resultados posibles del
 		// metodo generar()
@@ -272,23 +268,6 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 		} else {
 			return String.format(
 					getString(R.string.lost_time_over), score());
-		}
-	}
-
-	// Método para a�adir los puntos a la tabla de highscore
-	private void savePoints() {
-		if (!isAdded()) {
-			return;
-		}
-
-		String username = getResources().getString(R.string.default_user_name);
-		try {
-			HighscoreManager.addScore(getActivity().getApplicationContext(),
-					score(), R.string.logic_gate, new Date(), username,
-					level());
-
-		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 	}
 

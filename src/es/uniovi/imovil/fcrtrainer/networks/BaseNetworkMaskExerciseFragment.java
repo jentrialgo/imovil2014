@@ -1,9 +1,6 @@
 package es.uniovi.imovil.fcrtrainer.networks;
 
-import java.util.Date;
 import java.util.Random;
-
-import org.json.JSONException;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,7 +15,6 @@ import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
 import es.uniovi.imovil.fcrtrainer.Level;
 import es.uniovi.imovil.fcrtrainer.PreferenceUtils;
 import es.uniovi.imovil.fcrtrainer.R;
-import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
 
 public abstract class BaseNetworkMaskExerciseFragment
 		extends BaseExerciseFragment implements OnClickListener {
@@ -153,8 +149,8 @@ public abstract class BaseNetworkMaskExerciseFragment
 		// every remaining second gives one extra point.
 		updateScore(score() + remainingTimeInSeconds);
 
-		savePoints();
-	
+		saveScore();
+
 		super.endGame();
 		updateToTrainMode();
 		reset();
@@ -169,18 +165,6 @@ public abstract class BaseNetworkMaskExerciseFragment
 		} else {
 			return String.format(
 					getString(R.string.lost_time_over), score());
-		}
-	}
-
-	private void savePoints() {
-		String username = getResources().getString(R.string.default_user_name);
-		try {
-			HighscoreManager.addScore(getActivity().getApplicationContext(),
-					score(), exerciseId(), new Date(), username,
-					level());
-	
-		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 	}
 

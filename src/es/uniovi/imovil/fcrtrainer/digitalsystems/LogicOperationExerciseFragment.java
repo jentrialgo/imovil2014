@@ -18,14 +18,10 @@ limitations under the License.
 
 package es.uniovi.imovil.fcrtrainer.digitalsystems;
 
-import java.util.Date;
 import java.util.Random;
-
-import org.json.JSONException;
 
 import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
 import es.uniovi.imovil.fcrtrainer.R;
-import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
@@ -293,8 +289,9 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 	}
 
 	protected void endGame() {
+		updateScore(finalScore());
+		saveScore();
 		super.endGame();
-		enviarPuntuacion(finalScore());
 		vistaModoEntrenamiento();
 	}
 
@@ -307,15 +304,6 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		long miliseg = getRemainingTimeMs();
 		int segundos = (int) (miliseg / 1000);
 		return score() + segundos;
-	}
-
-	private void enviarPuntuacion(int score) {
-		try {
-			HighscoreManager.addScore(getActivity(), score,
-					R.string.logic_operation, new Date(), null, level());
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
 	}
 
 	private void clickJuego(String answer) {

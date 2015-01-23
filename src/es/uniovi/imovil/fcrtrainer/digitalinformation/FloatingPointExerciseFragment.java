@@ -18,14 +18,10 @@ limitations under the License.
 
 package es.uniovi.imovil.fcrtrainer.digitalinformation;
 
-import java.util.Date;
 import java.util.Random;
-
-import org.json.JSONException;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -37,7 +33,6 @@ import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
 import es.uniovi.imovil.fcrtrainer.Level;
 import es.uniovi.imovil.fcrtrainer.PreferenceUtils;
 import es.uniovi.imovil.fcrtrainer.R;
-import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
 
 public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 
@@ -393,7 +388,7 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 	protected void endGame() {
 		int remainingTime = (int) getRemainingTimeMs() / 1000;
 		updateScore(score() + remainingTime);
-		saveScore(score());
+		saveScore();
 		setTrainingMode(true);
 
 		super.endGame();
@@ -411,22 +406,6 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 		}
 	}
 	
-	/**
-	 * Saves the score using the Highscore Manager.
-	 * 
-	 * @param points
-	 */
-	public void saveScore(int points) {
-		String user = getString(R.string.default_user_name);
-
-		try {
-			HighscoreManager.addScore(getActivity().getApplicationContext(),
-					points, R.string.hexadecimal, new Date(), user, level());
-		} catch (JSONException e) {
-			Log.v(getClass().getSimpleName(), "Error when saving score");
-		}
-	}
-
 	@Override
 	protected int obtainExerciseId() {
 		return R.string.floating_point;

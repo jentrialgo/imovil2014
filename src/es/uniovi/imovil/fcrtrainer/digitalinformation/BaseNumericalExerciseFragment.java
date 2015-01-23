@@ -18,19 +18,14 @@ limitations under the License.
 
 package es.uniovi.imovil.fcrtrainer.digitalinformation;
 
-import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
 
-import org.json.JSONException;
-
 import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
 import es.uniovi.imovil.fcrtrainer.R;
-import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.InputType;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -288,7 +283,7 @@ public abstract class BaseNumericalExerciseFragment extends
 
 		super.endGame();
 
-		saveScore(score());
+		saveScore();
 		setTrainingMode(true);
 	}
 
@@ -301,22 +296,6 @@ public abstract class BaseNumericalExerciseFragment extends
 		} else {
 			return String.format(
 					getString(R.string.lost_time_over), score());
-		}
-	}
-	
-	/**
-	 * Saves the score using the Highscore Manager.
-	 * 
-	 * @param points
-	 */
-	private void saveScore(int points) {
-		String user = getString(R.string.default_user_name);
-
-		try {
-			HighscoreManager.addScore(getActivity().getApplicationContext(),
-					points, obtainExerciseId(), new Date(), user, level());
-		} catch (JSONException e) {
-			Log.v(getClass().getSimpleName(), "Error when saving score");
 		}
 	}
 

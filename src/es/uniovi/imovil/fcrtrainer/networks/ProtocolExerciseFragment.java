@@ -19,13 +19,7 @@ package es.uniovi.imovil.fcrtrainer.networks;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 
-import org.json.JSONException;
-
-import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
-import es.uniovi.imovil.fcrtrainer.R;
-import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -38,6 +32,8 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
+import es.uniovi.imovil.fcrtrainer.R;
 
 // TODO: Necesita que se traduzcan las preguntas de la base de datos a ingl�s
 public class ProtocolExerciseFragment extends BaseExerciseFragment {
@@ -255,25 +251,13 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 		int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000;
 		updateScore(score() + remainingTimeInSeconds);
 
-		savePoints();
+		saveScore();
 
 		super.endGame();
 
 		updateToTrainMode();
 
 		reset();
-	}
-
-	private void savePoints() {
-		String username = getResources().getString(R.string.default_user_name);
-		try {
-			HighscoreManager.addScore(getActivity().getApplicationContext(),
-					score(), R.string.protocol, new Date(), username,
-					level());
-
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
 	}
 
 	private void reset() {

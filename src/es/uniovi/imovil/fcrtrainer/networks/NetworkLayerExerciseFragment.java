@@ -18,14 +18,10 @@ limitations under the License.
 
 package es.uniovi.imovil.fcrtrainer.networks;
 
-import java.util.Date;
 import java.util.Random;
-
-import org.json.JSONException;
 
 import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
 import es.uniovi.imovil.fcrtrainer.R;
-import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -238,15 +234,7 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 		int remainingTimeInSeconds = (int) super.getRemainingTimeMs() / 1000; 
 		//every remaining second gives one extra point.
 		updateScore(score() + remainingTimeInSeconds);
-
-		String username = getResources().getString(R.string.default_user_name);
-		try {
-			HighscoreManager.addScore(getActivity().getApplicationContext(),
-					score(), R.string.network_layer, new Date(),
-					username, level());
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+		saveScore();
 
 		super.endGame();
 
