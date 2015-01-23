@@ -24,7 +24,7 @@ public class BinaryConverter{
 	private Random mRandom = new Random();
 
 	public int createRandomNumber(int numberOfBits) {
-		double x = Math.pow(2, numberOfBits - 1);
+		double x = Math.pow(2, numberOfBits);
 		int maxNumber = (int) x;
 		return mRandom.nextInt(maxNumber);
 	}
