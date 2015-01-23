@@ -193,14 +193,16 @@ public abstract class BaseNumericalExerciseFragment extends
 	 *            the user input
 	 */
 	private void checkSolution(String answer) {
-		if (isCorrect(answer)) {
+		if (answer.equals("") || !isCorrect(answer)) {
+			showAnimationAnswer(false);
+		} else {
+			// Correct answer
 			showAnimationAnswer(true);
 			if (mIsPlaying) {
 				handleCorrectAnswer();
 			}
 			newQuestion();
-		} else
-			showAnimationAnswer(false);
+		}
 	}
 
 	private void newQuestion() {
