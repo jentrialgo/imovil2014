@@ -280,27 +280,11 @@ public abstract class BaseExerciseFragment extends Fragment {
 		getActivity().supportInvalidateOptionsMenu(); // to hide the settings action
 
 		mIsPlaying = true;
+		mClock.setText(getString(R.string.game_on));
 		setGameInfoPanelVisibility(View.VISIBLE);
 		getActivity().supportInvalidateOptionsMenu();
-		mClock.setText("");
-		showAnimationGameStart(true);
-		waitForAnimationAndStartTimer();
-	}
-
-	/***
-	 * This method starts the timer delayed to give time to the animation to
-	 * finish
-	 */
-	private void waitForAnimationAndStartTimer() {
-		mTimerHandler.postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				mStartMs = System.currentTimeMillis();
-				final long updateTime = 0; 	// Hacer la primera actualización
-											// inmediatamente
-				mTimerHandler.postDelayed(mUpdateTimeTask, updateTime);
-			}
-		}, 1500);
+		mStartMs = System.currentTimeMillis();
+		mTimerHandler.postDelayed(mUpdateTimeTask, CLOCK_UPDATE_PERIOD_MS);
 	}
 
 	private void showLevel() {
@@ -425,32 +409,6 @@ public abstract class BaseExerciseFragment extends Fragment {
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
-		}
-	}
-	
-	@SuppressLint("NewApi") protected void showAnimationGameStart(boolean correct){ 
-		// Fade in - fade out
-		mResult.setVisibility(View.VISIBLE);
-		mAnimation = new AlphaAnimation(0,1);
-		mAnimation.setDuration(1000);
-		mAnimation.setFillBefore(true);
-		mAnimation.setFillAfter(true);
-		mAnimation.setRepeatCount(Animation.RESTART);
-		mAnimation.setRepeatMode(Animation.REVERSE);
-		mResult.startAnimation(mAnimation);
-		if(correct)
-			mResultImage.setImageDrawable(getResources().getDrawable(R.drawable.game_start));
-
-
-		// This only works in API 12+, so we skip this animation on old devices
-		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB_MR2){
-			mResultImage.animate().setDuration(1100).setInterpolator(mAntovershoot).scaleX(1.5f).scaleY(1.5f).withEndAction(new Runnable(){
-				@Override
-				public void run() {
-					// Back to its original size after the animation's end
-					mResultImage.animate().scaleX(1f).scaleY(1f);
-				}
-			});
 		}
 	}
 	

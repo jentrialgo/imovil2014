@@ -37,6 +37,7 @@
 	<!-- Cadenas comunes a varios módulos -->
 	<string name="game_over_message">Game over. Score: %1$d</string>
     <string name="score">Score:</string>
+    <string name="game_on">Game on!</string>
     <string name="gameisoverexp">Game ended! You have %1$d seconds left and obtained %2$d points!</string>
     <string name="lost_time_over">Game Over! Time\'s up! Score: %1$d</string>
 
