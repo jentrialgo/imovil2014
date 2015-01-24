@@ -40,6 +40,7 @@
     <string name="game_on">Game on!</string>
     <string name="gameisoverexp">Game ended! You have %1$d seconds left and obtained %2$d points!</string>
     <string name="lost_time_over">Game Over! Time\'s up! Score: %1$d</string>
+    <string name="end_game">End game</string>
 
     <!-- Módulo: Binario -->
     <string name="convert_bin_to_dec">Convert natural binary to decimal with %1$d bits</string>
@@ -63,7 +64,7 @@
     
     <!-- Strings logic gate -->
     <string name="logic_gate_title">What is this logic gate?</string>
-    <string name="end_game">End game</string>
+    <string name="tri_state_buffer">Tri-state buffer</string>
      <!--  Fin Strings logic gate -->
      
      <!-- Modulo: Operaciones Lógicas -->

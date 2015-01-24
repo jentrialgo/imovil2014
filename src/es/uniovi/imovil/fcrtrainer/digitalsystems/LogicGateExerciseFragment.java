@@ -40,11 +40,6 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 		OnClickListener, OnItemSelectedListener {
 	private static final String STATE_CURRENT_QUESTION = "mCurrentQuestion";
 
-	private static final int RANDOM = 6;
-
-	private static final int INITIAL_VALUE = 0;
-	private static final int FINAL_VALUE = 5;
-
 	private int mCurrentQuestion;
 
 	private Button mButtoncheck;
@@ -190,17 +185,20 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 
 	// Metodo para generar un número aleatorio
 	private int random() {
-		return mRandom.nextInt(RANDOM);
+		return mRandom.nextInt(numberOfGates());
 	}
 
+	private int numberOfGates() {
+		return mLogicstring.length;
+	}
+	
 	@Override
 	protected void startGame() {
 		super.startGame();
 
 		// Cambiamos el layout y se adapta al modo juego
 		mSolutionButton.setVisibility(View.GONE);
-		mButtoncheck.setText("Ok");
-		mCurrentQuestion = numeroAleatorio();
+		mCurrentQuestion = random();
 		mImageView.setImageResource(mImageArray.getResourceId(mCurrentQuestion,
 				0));
 	}
@@ -211,7 +209,6 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 
 		// Cambiamos el layout y lo dejamos otra vez como el modo ejercicio
 		mSolutionButton.setVisibility(View.VISIBLE);
-		mButtoncheck.setText("Comprobar");
 	}
 
 	protected void endGame() {
@@ -219,11 +216,6 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 
 		// Cambiamos el layout para dejarlo en modo ejercicio
 		mSolutionButton.setVisibility(View.VISIBLE);
-	}
-
-	// Genera un numero aleatorio
-	private int numeroAleatorio() {
-		return (int) (Math.random() * (FINAL_VALUE - INITIAL_VALUE + 1) + INITIAL_VALUE);
 	}
 
 	@Override

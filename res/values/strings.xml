@@ -49,7 +49,7 @@ limitations under the License.
 
     <!-- Strings logic gate -->
     <string name="logic_gate_title">¿Qué puerta lógica es?</string>
-    <string name="end_game">Has terminado</string>
+    <string name="tri_state_buffer">Buffer triestado</string>
     <!-- Fin Strings logic gate -->
 
     <!-- Strings de logic operation -->
@@ -76,6 +76,7 @@ limitations under the License.
     <string name="game_on">¡A jugar!</string>
     <string name="gameisoverexp">¡Has acabado el juego! Te han sobrado %1$d segundos y has obtenido %2$d puntos.</string>
     <string name="lost_time_over">Game Over! Se ha acabado el tiempo. Puntos: %1$d</string>
+    <string name="end_game">Has terminado</string>
 
     <!-- Módulo: Binario -->
     <string name="convert_bin_to_dec">Convierte de binario natural con %1$d bits a decimal</string>
