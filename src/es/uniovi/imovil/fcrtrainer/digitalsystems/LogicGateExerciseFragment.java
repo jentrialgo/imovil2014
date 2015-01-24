@@ -223,4 +223,11 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 		return R.string.logic_gate;
 	}
 
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+
+		mImageArray.recycle();
+	}
+	
 }
