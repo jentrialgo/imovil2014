@@ -88,7 +88,11 @@
     <!--  Fin Punto Flotante -->
   	
   	<!-- Help activity -->
-    <string name="developed_by">Application developed by Informática Móvil students, class of 2013–2014.</string>
+    <string name="help_info">
+        Application developed by Informática Móvil students, class of
+        2013–2014.\n\nSource code: https://github.com/jentrialgo/imovil2014
+    </string>
+    
     <!-- End Help activity -->
     
     <!-- Máscara de red -->

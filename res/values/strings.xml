@@ -119,9 +119,11 @@ limitations under the License.
 	<!--  Fin Punto Flotante -->
 
     <!-- Help activity -->
-    <string name="developed_by">Aplicación desarrollada por los alumnos de Informática Móvil, promoción 2013–2014.</string>
+    <string name="help_info">
+        Aplicación desarrollada por los alumnos de Informática Móvil, promoción
+        2013–2014.\n\nCódigo fuente: https://github.com/jentrialgo/imovil2014/
+    </string>
     <!-- End Help activity -->
-
 
 	<!-- Máscara de red -->
     <string name="network_mask_title">Máscara de red más pequeña que puede tener este número de máquinas</string>
