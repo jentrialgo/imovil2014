@@ -63,14 +63,23 @@
     <string name="convert_twos_complement_to_dec">Convert from two\'s complement with %1$d bits to decimal</string>
     
     <!-- Strings logic gate -->
-    <string name="logic_gate_title">What is this logic gate?</string>
+    <string name="logic_gate_title">Which is this logic gate?</string>
     <string name="tri_state_buffer">Tri-state buffer</string>
      <!--  Fin Strings logic gate -->
      
      <!-- Modulo: Operaciones Lógicas -->
-    <string name="LOpregunta">Which is the solution of this logic operation?</string>
+    <string name="LOpregunta">What is the solution of this logic operation?</string>
     <!-- Fin Operaciones Lógicas -->
-    
+
+    <!-- Strings layer exercise -->
+    <string name="layer_title">Guess the layer</string>
+    <string name="button_layer_exercise">Check</string>
+    <string name="button_solution">Solution</string>
+    <string name="link_layer">Link layer</string>
+    <string name="internet_layer">Internet layer</string>
+    <string name="transport_layer">Transport layer</string>
+    <string name="application_layer">Application layer</string>
+
  	<!-- Host count exercise -->
   	<string name="host_count_title">How many hosts can a network with this subnet mask have?</string>
   	<!-- End Host count exercise -->

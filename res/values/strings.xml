@@ -57,7 +57,7 @@ limitations under the License.
     <!-- Fin de strings de logic operation -->
 
     <!-- Strings layer exercise -->
-    <string name="layer_tittle">Acierta la capa</string>
+    <string name="layer_title">Acierta la capa</string>
     <string name="button_layer_exercise">Comprobar</string>
     <string name="button_solution">Solución</string>
     <string name="link_layer">Capa de enlace</string>

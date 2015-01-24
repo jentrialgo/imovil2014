@@ -41,7 +41,7 @@ limitations under the License.
                 style="@style/Title2DarkLight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/layer_tittle" />
+                android:text="@string/layer_title" />
 
             <RelativeLayout
                 style="@style/cards"

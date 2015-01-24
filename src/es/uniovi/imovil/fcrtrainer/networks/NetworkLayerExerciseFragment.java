@@ -126,7 +126,7 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 		
 		if (savedInstanceState == null) {
 			newRandomQuestion();
-			mQuestion.setText(mQuestions[mCurrentQuestion]);
+			updateQuestionText();
 		}
 
 		return mRootView;
@@ -144,7 +144,12 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 		}
 		
 		mCurrentQuestion = savedInstanceState.getInt(STATE_CURRENT_QUESTION);
-		mQuestion.setText(mQuestions[mCurrentQuestion]);
+		updateQuestionText();
+	}
+
+	private void updateQuestionText() {
+		mQuestion.setText(getString(R.string.protocol) + " "
+				+ mQuestions[mCurrentQuestion]);
 	}
 
 	@Override
@@ -177,7 +182,7 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 				computeCorrectQuestion();
 			}
 			newRandomQuestion();			
-			mQuestion.setText(mQuestions[mCurrentQuestion]);
+			updateQuestionText();
 			mOptions.clearCheck();
 		}
 		else {

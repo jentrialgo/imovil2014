@@ -60,38 +60,37 @@ limitations under the License.
         <item>Roberto</item>
         <item>Walter</item>
     </string-array>
-    
+
     <!-- Arrays layer exercise -->  
     <string-array name="layer_exercise_questions">
-        <item>Protocolo IP</item>
-        <item>Protocolo UDP</item>
-        <item>Protocolo TCP</item>
-        <item>Protocolo POP3</item>
-        <item>Protocolo IMAP</item>
-        <item>Protocolo ICMP</item>
-        <item>Protocolo DNS</item>
-        <item>Protocolo Ethernet</item>
-        <item>Protocolo ARP</item>
-        <item>Protocolo SSH</item>
-        <item>Protocolo ICMP</item>
+        <item>IP</item>
+        <item>UDP</item>
+        <item>TCP</item>
+        <item>POP3</item>
+        <item>IMAP</item>
+        <item>ICMP</item>
+        <item>DNS</item>
+        <item>Ethernet</item>
+        <item>ARP</item>
+        <item>SSH</item>
+        <item>ICMP</item>
     </string-array>
 
     <string-array name="layer_exercise_answers">
-        <item>Capa de internet</item>
-        <item>Capa de transporte</item>
-        <item>Capa de transporte</item>
-        <item>Capa de aplicación</item>
-        <item>Capa de aplicación</item>
-        <item>Capa de internet</item>
-        <item>Capa de aplicación</item>
-        <item>Capa de enlace</item>
-        <item>Capa de enlace</item>
-        <item>Capa de aplicación</item>
-        <item>Capa de internet</item>
+        <item>@string/internet_layer</item>
+        <item>@string/transport_layer</item>
+        <item>@string/transport_layer</item>
+        <item>@string/application_layer</item>
+        <item>@string/application_layer</item>
+        <item>@string/internet_layer</item>
+        <item>@string/application_layer</item>
+        <item>@string/link_layer</item>
+        <item>@string/link_layer</item>
+        <item>@string/application_layer</item>
+        <item>@string/internet_layer</item>
     </string-array>
-    
+
     <!-- Arrays logic gate -->
-    
     <string-array name="logic_gates">
         <item>AND</item>
         <item>OR</item>
