@@ -1,0 +1,11 @@
+<resources>
+
+    <!-- 7' devices in portrait -->
+    <dimen name="activity_horizontal_margin">100dp</dimen>
+
+    <dimen name="small_font">22sp</dimen>
+    <dimen name="normal_font">36sp</dimen>
+    <dimen name="big_font">50sp</dimen>
+    <dimen name="score_font">24sp</dimen>
+    
+</resources>

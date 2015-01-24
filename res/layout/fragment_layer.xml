@@ -67,25 +67,29 @@ limitations under the License.
                         android:id="@+id/application_layer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/application_layer" />
+                        android:text="@string/application_layer"
+                        android:textSize="@dimen/normal_font" />
 
                     <RadioButton
                         android:id="@+id/transport_layer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/transport_layer" />
+                        android:text="@string/transport_layer"
+                        android:textSize="@dimen/normal_font" />
 
                     <RadioButton
                         android:id="@+id/internet_layer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/internet_layer" />
+                        android:text="@string/internet_layer"
+                        android:textSize="@dimen/normal_font" />
 
                     <RadioButton
                         android:id="@+id/link_layer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/link_layer" />
+                        android:text="@string/link_layer"
+                        android:textSize="@dimen/normal_font" />
                 </RadioGroup>
             </RelativeLayout>
 

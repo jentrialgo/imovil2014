@@ -26,6 +26,7 @@ limitations under the License.
         android:id="@+id/text_view_position"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/normal_font"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true" />
 
@@ -33,12 +34,14 @@ limitations under the License.
         android:id="@+id/text_view_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/normal_font"
         android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/text_view_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/normal_font"
         android:layout_alignParentRight="true" />
 
 </RelativeLayout>

@@ -27,7 +27,8 @@ limitations under the License.
     <dimen name="drawer_item_padding">16dp</dimen>
     
     <dimen name="small_font">12sp</dimen>
-    <dimen name="big_font">35sp</dimen>
     <dimen name="normal_font">20sp</dimen>
+    <dimen name="big_font">35sp</dimen>
+    <dimen name="score_font">14sp</dimen>
 
 </resources>

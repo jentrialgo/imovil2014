@@ -60,7 +60,7 @@ limitations under the License.
     </style>
 
     <style name="score_info">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/score_font</item>
         <item name="android:textColor">@color/score_info</item>
         <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-light</item>
     </style>
