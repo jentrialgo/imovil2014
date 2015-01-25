@@ -40,7 +40,7 @@ import android.widget.TextView.OnEditorActionListener;
 public abstract class BaseNumericalExerciseFragment extends
 		BaseExerciseFragment {
 	private static final String STATE_DIRECT_CONVERSION = "mDirectConversion";
-	private static final String STATE_NUMBER_TO_CONVERT = "mNumberToConvert";
+	private static final String STATE_NUMBER_TO_CONVERT = "mNumberToConvertString";
 
 	private EditText mAnswerTextView;
 	private Button mCheckButton;
@@ -48,7 +48,7 @@ public abstract class BaseNumericalExerciseFragment extends
 	private Button mSolutionButton;
 	private TextView mNumberToConvertTextView;
 	private TextView mTitleTextView;
-	protected String mNumberToConvert;
+	protected String mNumberToConvertString;
 
 	protected Random mRandomGenerator;
 	protected boolean mDirectConversion = true;
@@ -120,7 +120,7 @@ public abstract class BaseNumericalExerciseFragment extends
 		if (savedInstanceState != null) {
 			mDirectConversion = savedInstanceState
 					.getBoolean(STATE_DIRECT_CONVERSION);
-			mNumberToConvert = savedInstanceState
+			mNumberToConvertString = savedInstanceState
 					.getString(STATE_NUMBER_TO_CONVERT);
 			setTrainingMode(!mIsPlaying);
 		} else {
@@ -135,7 +135,7 @@ public abstract class BaseNumericalExerciseFragment extends
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putBoolean(STATE_DIRECT_CONVERSION, mDirectConversion);
-		outState.putString(STATE_NUMBER_TO_CONVERT, mNumberToConvert);
+		outState.putString(STATE_NUMBER_TO_CONVERT, mNumberToConvertString);
 	}
 
 	private void setKeyboardLayout() {
@@ -153,7 +153,7 @@ public abstract class BaseNumericalExerciseFragment extends
 	}
 
 	private void generateRandomQuestion() {
-		mNumberToConvert = generateRandomNumber();
+		mNumberToConvertString = generateRandomNumber();
 	}
 
 	protected int numberOfBits() {
@@ -161,7 +161,7 @@ public abstract class BaseNumericalExerciseFragment extends
 	}
 	
 	private void updateUI() {
-		mNumberToConvertTextView.setText(mNumberToConvert);
+		mNumberToConvertTextView.setText(mNumberToConvertString);
 		setTitle();
 	}
 

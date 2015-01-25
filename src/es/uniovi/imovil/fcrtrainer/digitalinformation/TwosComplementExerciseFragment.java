@@ -18,15 +18,36 @@ limitations under the License.
 
 package es.uniovi.imovil.fcrtrainer.digitalinformation;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import es.uniovi.imovil.fcrtrainer.R;
 
 public class TwosComplementExerciseFragment extends
 		BaseNumericalExerciseFragment {
+	private static final String STATE_NUMBER_TO_CONVERT = "mNumberToConvert";
+
 	private int mNumberToConvert;
 
 	public static TwosComplementExerciseFragment newInstance() {
 		TwosComplementExerciseFragment fragment = new TwosComplementExerciseFragment();
 		return fragment;
+	}
+
+	@Override
+	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+
+		if (savedInstanceState == null) {
+			return;
+		}
+		mNumberToConvert = savedInstanceState.getInt(STATE_NUMBER_TO_CONVERT);
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+
+		outState.putInt(STATE_NUMBER_TO_CONVERT, mNumberToConvert);
 	}
 
 	@Override

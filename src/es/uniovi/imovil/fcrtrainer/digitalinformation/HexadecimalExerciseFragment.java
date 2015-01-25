@@ -20,9 +20,13 @@ package es.uniovi.imovil.fcrtrainer.digitalinformation;
 
 import java.util.Locale;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import es.uniovi.imovil.fcrtrainer.R;
 
 public class HexadecimalExerciseFragment extends BaseNumericalExerciseFragment {
+	private static final String STATE_NUMBER_TO_CONVERT = "mNumberToConvert";
+
 	private int mNumberToConvert;
 
 	public static HexadecimalExerciseFragment newInstance() {
@@ -32,6 +36,23 @@ public class HexadecimalExerciseFragment extends BaseNumericalExerciseFragment {
 	}
 
 	public HexadecimalExerciseFragment() {
+	}
+
+	@Override
+	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+
+		if (savedInstanceState == null) {
+			return;
+		}
+		mNumberToConvert = savedInstanceState.getInt(STATE_NUMBER_TO_CONVERT);
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+
+		outState.putInt(STATE_NUMBER_TO_CONVERT, mNumberToConvert);
 	}
 
 	protected int obtainExerciseId() {

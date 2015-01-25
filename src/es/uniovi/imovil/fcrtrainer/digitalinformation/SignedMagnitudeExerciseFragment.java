@@ -18,10 +18,13 @@ limitations under the License.
 
 package es.uniovi.imovil.fcrtrainer.digitalinformation;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import es.uniovi.imovil.fcrtrainer.R;
 
 public class SignedMagnitudeExerciseFragment extends
 		BaseNumericalExerciseFragment {
+	private static final String STATE_CORRECT_ANSWER = "mCorrectAnswer";
 
 	private String mCorrectAnswer;
 
@@ -31,6 +34,23 @@ public class SignedMagnitudeExerciseFragment extends
 	}
 
 	public SignedMagnitudeExerciseFragment() {
+	}
+
+	@Override
+	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+
+		if (savedInstanceState == null) {
+			return;
+		}
+		mCorrectAnswer = savedInstanceState.getString(STATE_CORRECT_ANSWER);
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+
+		outState.putString(STATE_CORRECT_ANSWER, mCorrectAnswer);
 	}
 
 	@Override

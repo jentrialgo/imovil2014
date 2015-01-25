@@ -48,7 +48,7 @@ public class BinaryExerciseFragment extends BaseNumericalExerciseFragment {
 
 	private boolean checkDecimalAnswer(String answer) {
 		String answerConverted = convertToBinary(answer);
-		return answerConverted.equals(mNumberToConvert);
+		return answerConverted.equals(mNumberToConvertString);
 	}
 
 	private boolean checkBinaryAnswer(String answer) {
@@ -56,7 +56,7 @@ public class BinaryExerciseFragment extends BaseNumericalExerciseFragment {
 		answer = BinaryConverter.deleteStartingZeroesFromBinaryInput(answer);
 
 		// Convert Question to binary
-		String questionConverted = convertToBinary(mNumberToConvert);
+		String questionConverted = convertToBinary(mNumberToConvertString);
 		return answer.equals(questionConverted);
 	}
 
@@ -96,9 +96,9 @@ public class BinaryExerciseFragment extends BaseNumericalExerciseFragment {
 	@Override
 	protected String obtainSolution() {
 		if (mDirectConversion) {
-			return convertToBinary(mNumberToConvert);
+			return convertToBinary(mNumberToConvertString);
 		} else {
-			return convertToDecimal(mNumberToConvert);
+			return convertToDecimal(mNumberToConvertString);
 		}
 	}
 
