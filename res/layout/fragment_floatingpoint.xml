@@ -29,10 +29,10 @@ limitations under the License.
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
         android:layout_below="@+id/game_info_panel"
         android:orientation="vertical" >
 
@@ -86,8 +86,8 @@ limitations under the License.
                 android:gravity="start"
                 android:imeOptions="actionDone"
                 android:inputType="number"
-                tools:text="0"
-                android:textSize="@dimen/small_font" />
+                android:textSize="@dimen/small_font"
+                tools:text="0" />
 
             <EditText
                 android:id="@+id/ed_exponent"
@@ -97,8 +97,8 @@ limitations under the License.
                 android:gravity="start"
                 android:imeOptions="actionDone"
                 android:inputType="number"
-                tools:text="00000000"
-                android:textSize="@dimen/small_font" />
+                android:textSize="@dimen/small_font"
+                tools:text="00000000" />
 
             <EditText
                 android:id="@+id/ed_mantissa"
@@ -108,8 +108,8 @@ limitations under the License.
                 android:gravity="start"
                 android:imeOptions="actionDone"
                 android:inputType="number"
-                tools:text="00000000000000000000000"
-                android:textSize="@dimen/small_font" />
+                android:textSize="@dimen/small_font"
+                tools:text="00000000000000000000000" />
         </LinearLayout>
 
         <LinearLayout
@@ -178,6 +178,12 @@ limitations under the License.
                 android:minWidth="48dp"
                 android:onClick="OnButtonClick" />
         </LinearLayout>
+
+        <es.uniovi.imovil.fcrtrainer.KeyboardView
+            android:id="@+id/keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
     </LinearLayout>
 
     <include layout="@layout/overlapped_info_window" />

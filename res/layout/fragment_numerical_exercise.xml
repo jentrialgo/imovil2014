@@ -61,7 +61,7 @@ limitations under the License.
                 android:textSize="@dimen/normal_font" />
 
             <EditText
-                android:id="@+id/answer"
+                android:id="@+id/text_view_answer"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -99,6 +99,12 @@ limitations under the License.
                 android:drawableStart="@drawable/ic_import_export"
                 android:minWidth="48dp" />
         </LinearLayout>
+
+        <es.uniovi.imovil.fcrtrainer.KeyboardView
+            android:id="@+id/keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
     </LinearLayout>
 
     <include layout="@layout/overlapped_info_window" />

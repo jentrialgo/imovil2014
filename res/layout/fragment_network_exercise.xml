@@ -30,10 +30,10 @@ limitations under the License.
         android:id="@+id/LinearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
         android:layout_below="@+id/game_info_panel"
         android:orientation="vertical" >
 
@@ -95,6 +95,12 @@ limitations under the License.
                 android:layout_weight="1"
                 android:text="@string/solution" />
         </LinearLayout>
+
+        <es.uniovi.imovil.fcrtrainer.KeyboardView
+            android:id="@+id/keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
     </LinearLayout>
 
     <include layout="@layout/overlapped_info_window" />

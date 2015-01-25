@@ -29,7 +29,6 @@ import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -62,7 +61,7 @@ public abstract class BaseNumericalExerciseFragment extends
 		rootView = inflater.inflate(R.layout.fragment_numerical_exercise,
 				container, false);
 
-		mAnswerTextView = (EditText) rootView.findViewById(R.id.answer);
+		mAnswerTextView = (EditText) rootView.findViewById(R.id.text_view_answer);
 		mChangeDirectionButton = (Button) rootView.findViewById(R.id.change);
 		mSolutionButton = (Button) rootView.findViewById(R.id.seesolution);
 		mCheckButton = (Button) rootView.findViewById(R.id.checkbutton);
@@ -83,12 +82,6 @@ public abstract class BaseNumericalExerciseFragment extends
 				return false;
 			}
 		});
-
-		// Set the focus on the edit text and show the keyboard
-		if (mAnswerTextView.requestFocus()) {
-			getActivity().getWindow().setSoftInputMode(
-					WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-		}
 
 		mCheckButton.setOnClickListener(new OnClickListener() {
 

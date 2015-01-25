@@ -80,7 +80,7 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		mTvEntrada2 = (TextView) mRootView.findViewById(R.id.LOentrada2);
 		mTvOperacion = (TextView) mRootView.findViewById(R.id.LOoperacion);
 
-		mEtRespuesta = (EditText) mRootView.findViewById(R.id.LOrespuesta);
+		mEtRespuesta = (EditText) mRootView.findViewById(R.id.text_view_answer);
 
 		inicializarButtons();
 

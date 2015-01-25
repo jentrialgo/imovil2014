@@ -30,6 +30,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
+import es.uniovi.imovil.fcrtrainer.KeyboardView;
 import es.uniovi.imovil.fcrtrainer.Level;
 import es.uniovi.imovil.fcrtrainer.PreferenceUtils;
 import es.uniovi.imovil.fcrtrainer.R;
@@ -52,7 +53,8 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 	private Button mCheck;
 	private Button mToggle;
 	private Button mSolution;
-	
+	private KeyboardView mKeyboardView;
+
 	private boolean mConvertToDecimal;
 
 	private float mDecimalValueF = 0.0f;
@@ -63,6 +65,7 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 	private Random mRandom = new Random();
 
 	private static final long GAME_DURATION_MS = 5 * 1000 * 60; // 5 min
+	private View mRootView;
 
 	public static FloatingPointExerciseFragment newInstance() {
 		FloatingPointExerciseFragment fragment = new FloatingPointExerciseFragment();
@@ -77,26 +80,33 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		View rootView;
-		rootView = inflater.inflate(R.layout.fragment_floatingpoint, container,
+		mRootView = inflater.inflate(R.layout.fragment_floatingpoint, container,
 				false);
 
-		mTvNumberToconvert = (TextView) rootView.findViewById(R.id.numbertoconvert);
-		mTvDecimal = (TextView) rootView.findViewById(R.id.tv_decimal);
-		mTvSign = (TextView) rootView.findViewById(R.id.tv_s);
-		mTvExponent = (TextView) rootView.findViewById(R.id.tv_exp);
-		mTvMantissa = (TextView) rootView.findViewById(R.id.tv_mant);
-		mTvTitle = (TextView) rootView.findViewById(R.id.theme);
-		mEtDecimal = (EditText) rootView.findViewById(R.id.ed_decimal);
-		mEtSign = (EditText) rootView.findViewById(R.id.ed_sign);
-		mEtExponent = (EditText) rootView.findViewById(R.id.ed_exponent);
-		mEtMantissa = (EditText) rootView.findViewById(R.id.ed_mantissa);
-		mCheck = (Button) rootView.findViewById(R.id.btn_check);
-		mSolution = (Button) rootView.findViewById(R.id.btn_getsolution);
-		mToggle = (Button) rootView.findViewById(R.id.btn_togglebinary);
+		mTvNumberToconvert = (TextView) mRootView.findViewById(R.id.numbertoconvert);
+		mTvDecimal = (TextView) mRootView.findViewById(R.id.tv_decimal);
+		mTvSign = (TextView) mRootView.findViewById(R.id.tv_s);
+		mTvExponent = (TextView) mRootView.findViewById(R.id.tv_exp);
+		mTvMantissa = (TextView) mRootView.findViewById(R.id.tv_mant);
+		mTvTitle = (TextView) mRootView.findViewById(R.id.theme);
+		mEtDecimal = (EditText) mRootView.findViewById(R.id.ed_decimal);
+		mEtSign = (EditText) mRootView.findViewById(R.id.ed_sign);
+		mEtExponent = (EditText) mRootView.findViewById(R.id.ed_exponent);
+		mEtMantissa = (EditText) mRootView.findViewById(R.id.ed_mantissa);
+		mCheck = (Button) mRootView.findViewById(R.id.btn_check);
+		mSolution = (Button) mRootView.findViewById(R.id.btn_getsolution);
+		mToggle = (Button) mRootView.findViewById(R.id.btn_togglebinary);
+		mKeyboardView = (KeyboardView) mRootView.findViewById(R.id.keyboard);
 
+		OnFocusChangedListener onFocusChangedListener = new OnFocusChangedListener();
+		mEtDecimal.setOnFocusChangeListener(onFocusChangedListener);
+		mEtSign.setOnFocusChangeListener(onFocusChangedListener);
+		mEtExponent.setOnFocusChangeListener(onFocusChangedListener);
+		mEtMantissa.setOnFocusChangeListener(onFocusChangedListener);
+		
 		if (savedInstanceState == null) {
 			newConvertToBinaryQuestion();
+			updateFocusedEditText(mEtSign);
 		}
 
 		mCheck.setOnClickListener(new OnClickListener() {
@@ -121,7 +131,11 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 			}
 		});
 
-		return rootView;
+		return mRootView;
+	}
+
+	private void updateFocusedEditText(EditText editText) {
+		mKeyboardView.assignEditText(editText);
 	}
 
 	@Override
@@ -143,6 +157,7 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 		if (mConvertToDecimal) {
 			prepareConvertToDecimalView();
 			showDecimalViews();
+			updateFocusedEditText(mEtDecimal);
 		} else {
 			prepareConvertToBinarylView();
 			showBinaryViews();
@@ -249,10 +264,12 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 			newConvertToBinaryQuestion();
 			mConvertToDecimal = false;
 			showBinaryViews();
+			updateFocusedEditText(mEtSign);
 		} else {
 			newConvertToDecimalQuestion();
 			mConvertToDecimal = true;
 			showDecimalViews();
+			updateFocusedEditText(mEtDecimal);
 		}
 	}
 
@@ -381,4 +398,16 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 		return R.string.floating_point;
 	}
 
+	class OnFocusChangedListener
+		implements android.view.View.OnFocusChangeListener {
+
+		@Override
+		public void onFocusChange(View v, boolean hasFocus) {
+			if (hasFocus) {
+				mKeyboardView.assignEditText((EditText) v);
+				updateFocusedEditText((EditText) v);
+			}
+		}
+		
+	}
 }
