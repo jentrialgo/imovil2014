@@ -1,5 +1,5 @@
 # imovil2014
-Repository for Hacker Master, an Android app developed for the course
+Repository for Master Hacker, an Android app developed for the course
 Informática Móvil of the EPI Gijón
 
 This is a game for Android for practicing basic concepts of computers and 
@@ -15,7 +15,7 @@ There are three difficulty levels that can be selected on the menu.
 Development is carried out in the dev branch
 
 ***
-Repositorio para Hacker Master, una aplicación para Android desarrollada para
+Repositorio para Master Hacker, una aplicación para Android desarrollada para
 la asignatura Informática Movil de la EPI de Gijón
 
 Juego para Android para practicar estos conceptos básicos de computadores y redes:
