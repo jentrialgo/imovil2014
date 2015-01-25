@@ -27,17 +27,10 @@ limitations under the License.
         android:onClick="onKeyboardClick"
         android:text="0" />
 
-    <!-- Placeholder for skipping one column -->
-
     <Button
         style="@style/key_decimal"
         android:onClick="onKeyboardClick"
         android:text="1" />
-
-    <Button
-        style="@style/key_control"
-        android:onClick="onKeyboardClick"
-        android:text="." />
 
     <Button
         android:id="@+id/key_delete"
