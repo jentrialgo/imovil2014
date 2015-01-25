@@ -14,178 +14,184 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/game_fragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:fillViewport="true" >
 
-    <include
-        android:id="@+id/game_info_panel"
+    <RelativeLayout
+        style="@style/game_fragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/game_info_panel" />
+        android:layout_height="wrap_content" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/game_info_panel"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/theme"
-            style="@style/Title2DarkLight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/convert_to_iee" />
-
-        <RelativeLayout
-            style="@style/cards"
+        <include
+            android:id="@+id/game_info_panel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/cards" >
-
-            <TextView
-                android:id="@+id/numbertoconvert"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:padding="10dp"
-                android:textColor="@color/mediumdarkgray"
-                android:textSize="@dimen/normal_font" />
-        </RelativeLayout>
+            layout="@layout/game_info_panel" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <EditText
-                android:id="@+id/ed_decimal"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="100"
-                android:ems="10"
-                android:gravity="top"
-                android:imeOptions="actionDone"
-                android:inputType="numberDecimal|numberSigned"
-                android:textSize="@dimen/normal_font" >
-
-                <requestFocus android:layout_width="match_parent" />
-            </EditText>
-
-            <EditText
-                android:id="@+id/ed_sign"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="12"
-                android:gravity="start"
-                android:imeOptions="actionDone"
-                android:inputType="number"
-                android:textSize="@dimen/small_font"
-                tools:text="0" />
-
-            <EditText
-                android:id="@+id/ed_exponent"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="33"
-                android:gravity="start"
-                android:imeOptions="actionDone"
-                android:inputType="number"
-                android:textSize="@dimen/small_font"
-                tools:text="00000000" />
-
-            <EditText
-                android:id="@+id/ed_mantissa"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="65"
-                android:gravity="start"
-                android:imeOptions="actionDone"
-                android:inputType="number"
-                android:textSize="@dimen/small_font"
-                tools:text="00000000000000000000000" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                android:id="@+id/tv_decimal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="100"
-                android:gravity="center_horizontal"
-                android:text="@string/tv_decimal" />
-
-            <TextView
-                android:id="@+id/tv_s"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="10"
-                android:gravity="center_horizontal"
-                android:text="@string/tv_sign" />
-
-            <TextView
-                android:id="@+id/tv_exp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="40"
-                android:gravity="center_horizontal"
-                android:text="@string/tv_exponent" />
-
-            <TextView
-                android:id="@+id/tv_mant"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="50"
-                android:gravity="center_horizontal"
-                android:text="@string/tv_mant" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <Button
-                android:id="@+id/btn_check"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="OnButtonClick"
-                android:text="@string/check" />
-
-            <Button
-                android:id="@+id/btn_getsolution"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="OnButtonClick"
-                android:text="@string/solution" />
-
-            <Button
-                android:id="@+id/btn_togglebinary"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_import_export"
-                android:drawableStart="@drawable/ic_import_export"
-                android:minWidth="48dp"
-                android:onClick="OnButtonClick" />
-        </LinearLayout>
-
-        <es.uniovi.imovil.fcrtrainer.KeyboardView
-            android:id="@+id/keyboard"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" />
-    </LinearLayout>
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/game_info_panel"
+            android:orientation="vertical" >
 
-    <include layout="@layout/overlapped_info_window" />
+            <TextView
+                android:id="@+id/theme"
+                style="@style/Title2DarkLight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/convert_to_iee" />
 
-</RelativeLayout>
+            <RelativeLayout
+                style="@style/cards"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/cards" >
+
+                <TextView
+                    android:id="@+id/numbertoconvert"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:padding="10dp"
+                    android:textColor="@color/mediumdarkgray"
+                    android:textSize="@dimen/normal_font" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <EditText
+                    android:id="@+id/ed_decimal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="100"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:imeOptions="actionDone"
+                    android:inputType="numberDecimal|numberSigned"
+                    android:textSize="@dimen/normal_font" >
+
+                    <requestFocus android:layout_width="match_parent" />
+                </EditText>
+
+                <EditText
+                    android:id="@+id/ed_sign"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="12"
+                    android:gravity="start"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:textSize="@dimen/small_font"
+                    tools:text="0" />
+
+                <EditText
+                    android:id="@+id/ed_exponent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="33"
+                    android:gravity="start"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:textSize="@dimen/small_font"
+                    tools:text="00000000" />
+
+                <EditText
+                    android:id="@+id/ed_mantissa"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="65"
+                    android:gravity="start"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:textSize="@dimen/small_font"
+                    tools:text="00000000000000000000000" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/tv_decimal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="100"
+                    android:gravity="center_horizontal"
+                    android:text="@string/tv_decimal" />
+
+                <TextView
+                    android:id="@+id/tv_s"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10"
+                    android:gravity="center_horizontal"
+                    android:text="@string/tv_sign" />
+
+                <TextView
+                    android:id="@+id/tv_exp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="40"
+                    android:gravity="center_horizontal"
+                    android:text="@string/tv_exponent" />
+
+                <TextView
+                    android:id="@+id/tv_mant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:gravity="center_horizontal"
+                    android:text="@string/tv_mant" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <Button
+                    android:id="@+id/btn_check"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="OnButtonClick"
+                    android:text="@string/check" />
+
+                <Button
+                    android:id="@+id/btn_getsolution"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="OnButtonClick"
+                    android:text="@string/solution" />
+
+                <Button
+                    android:id="@+id/btn_togglebinary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_import_export"
+                    android:drawableStart="@drawable/ic_import_export"
+                    android:minWidth="48dp"
+                    android:onClick="OnButtonClick" />
+            </LinearLayout>
+
+            <es.uniovi.imovil.fcrtrainer.KeyboardView
+                android:id="@+id/keyboard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+        </LinearLayout>
+
+        <include layout="@layout/overlapped_info_window" />
+    </RelativeLayout>
+
+</ScrollView>

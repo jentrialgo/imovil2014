@@ -14,99 +14,105 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/game_fragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:fillViewport="true" >
 
-    <include
-        android:id="@+id/game_info_panel"
+    <RelativeLayout
+        style="@style/game_fragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/game_info_panel" />
+        android:layout_height="wrap_content" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/game_info_panel"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/exercisetitle"
-            style="@style/Title2DarkLight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <LinearLayout
-            android:id="@+id/LinearLayout2"
-            style="@style/cards"
+        <include
+            android:id="@+id/game_info_panel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/cards"
-            android:orientation="horizontal" >
+            layout="@layout/game_info_panel" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/game_info_panel"
+            android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/numbertoconvert"
-                android:layout_width="0dp"
+                android:id="@+id/exercisetitle"
+                style="@style/Title2DarkLight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:id="@+id/LinearLayout2"
+                style="@style/cards"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.6"
-                android:gravity="center_horizontal"
-                android:padding="10dp"
-                android:textColor="@color/mediumdarkgray"
-                android:textSize="@dimen/normal_font" />
+                android:background="@drawable/cards"
+                android:orientation="horizontal" >
 
-            <EditText
-                android:id="@+id/text_view_answer"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:gravity="center"
-                android:imeOptions="actionDone"
-                android:inputType="text"
-                android:padding="10dp"
-                android:textSize="@dimen/normal_font" />
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/numbertoconvert"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.6"
+                    android:gravity="center_horizontal"
+                    android:padding="10dp"
+                    android:textColor="@color/mediumdarkgray"
+                    android:textSize="@dimen/normal_font" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+                <EditText
+                    android:id="@+id/text_view_answer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"
+                    android:padding="10dp"
+                    android:textSize="@dimen/normal_font" />
+            </LinearLayout>
 
-            <Button
-                android:id="@+id/checkbutton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/check" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
-            <Button
-                android:id="@+id/seesolution"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/solution" />
+                <Button
+                    android:id="@+id/checkbutton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/check" />
 
-            <Button
-                android:id="@+id/change"
+                <Button
+                    android:id="@+id/seesolution"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/solution" />
+
+                <Button
+                    android:id="@+id/change"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_import_export"
+                    android:drawableStart="@drawable/ic_import_export"
+                    android:minWidth="48dp" />
+            </LinearLayout>
+
+            <es.uniovi.imovil.fcrtrainer.KeyboardView
+                android:id="@+id/keyboard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_import_export"
-                android:drawableStart="@drawable/ic_import_export"
-                android:minWidth="48dp" />
+                android:layout_gravity="center" />
         </LinearLayout>
 
-        <es.uniovi.imovil.fcrtrainer.KeyboardView
-            android:id="@+id/keyboard"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
-    </LinearLayout>
+        <include layout="@layout/overlapped_info_window" />
+    </RelativeLayout>
 
-    <include layout="@layout/overlapped_info_window" />
-
-</RelativeLayout>
+</ScrollView>

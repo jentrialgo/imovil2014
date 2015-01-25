@@ -14,95 +14,101 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/game_fragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:fillViewport="true" >
 
-    <include
-        android:id="@+id/game_info_panel"
+    <RelativeLayout
+        style="@style/game_fragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/game_info_panel" />
+        android:layout_height="wrap_content" >
 
-    <LinearLayout
-        android:id="@+id/LinearLayout1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/game_info_panel"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/text_view_exercise_title"
-            style="@style/Title2DarkLight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <LinearLayout
-            android:id="@+id/LinearLayout2"
-            style="@style/cards"
+        <include
+            android:id="@+id/game_info_panel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/cards"
+            layout="@layout/game_info_panel" />
+
+        <LinearLayout
+            android:id="@+id/LinearLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/game_info_panel"
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/text_view_question"
+                android:id="@+id/text_view_exercise_title"
+                style="@style/Title2DarkLight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:id="@+id/LinearLayout2"
+                style="@style/cards"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/cards"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/text_view_question"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:textColor="@color/mediumdarkgray"
+                    android:textSize="@dimen/normal_font" />
+
+                <EditText
+                    android:id="@+id/text_view_answer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:imeOptions="actionDone"
+                    android:inputType="phone"
+                    android:padding="10dp"
+                    android:textSize="@dimen/normal_font" >
+
+                    <requestFocus />
+                </EditText>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <Button
+                    android:id="@+id/button_check_answer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/check" />
+
+                <Button
+                    android:id="@+id/button_show_solution"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/solution" />
+            </LinearLayout>
+
+            <es.uniovi.imovil.fcrtrainer.KeyboardView
+                android:id="@+id/keyboard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:padding="10dp"
-                android:textColor="@color/mediumdarkgray"
-                android:textSize="@dimen/normal_font" />
-
-            <EditText
-                android:id="@+id/text_view_answer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:ems="10"
-                android:gravity="center"
-                android:imeOptions="actionDone"
-                android:inputType="phone"
-                android:padding="10dp"
-                android:textSize="@dimen/normal_font" >
-
-                <requestFocus />
-            </EditText>
+                android:layout_gravity="center" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+        <include layout="@layout/overlapped_info_window" />
+    </RelativeLayout>
 
-            <Button
-                android:id="@+id/button_check_answer"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/check" />
-
-            <Button
-                android:id="@+id/button_show_solution"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/solution" />
-        </LinearLayout>
-
-        <es.uniovi.imovil.fcrtrainer.KeyboardView
-            android:id="@+id/keyboard"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
-    </LinearLayout>
-
-    <include layout="@layout/overlapped_info_window" />
-
-</RelativeLayout>
+</ScrollView>
