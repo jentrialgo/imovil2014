@@ -25,7 +25,9 @@ import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
 import es.uniovi.imovil.fcrtrainer.R;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.InputFilter;
 import android.text.InputType;
+import android.text.Spanned;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,6 +54,21 @@ public abstract class BaseNumericalExerciseFragment extends
 
 	protected Random mRandomGenerator;
 	protected boolean mDirectConversion = true;
+
+	private InputFilter mNumberFilter = new InputFilter() {
+		
+		@Override
+		public CharSequence filter(CharSequence source, int start, int end,
+				Spanned dest, int dstart, int dend) {
+			for (int i = start; i < end; i++) {
+				if (!Character.isDigit(source.charAt(i))) {
+					return "";
+				}
+			}
+
+			return null;
+		}
+	};
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -140,11 +157,13 @@ public abstract class BaseNumericalExerciseFragment extends
 
 	private void setKeyboardLayout() {
 		if (!isResultNumeric()) {
+			mAnswerEditText.setFilters((new InputFilter[] {}));
 			mAnswerEditText.setInputType(EditorInfo.TYPE_CLASS_TEXT);
 		} else {
 			// setInputType cannot be used because it doesn't allow the sign
 			mAnswerEditText.setRawInputType(InputType.TYPE_CLASS_NUMBER
 					| InputType.TYPE_NUMBER_FLAG_SIGNED);
+			mAnswerEditText.setFilters(new InputFilter[]{mNumberFilter});
 		}
 	}
 
