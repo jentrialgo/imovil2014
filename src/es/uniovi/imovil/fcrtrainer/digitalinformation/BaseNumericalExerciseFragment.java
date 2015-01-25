@@ -42,7 +42,7 @@ public abstract class BaseNumericalExerciseFragment extends
 	private static final String STATE_DIRECT_CONVERSION = "mDirectConversion";
 	private static final String STATE_NUMBER_TO_CONVERT = "mNumberToConvertString";
 
-	private EditText mAnswerTextView;
+	private EditText mAnswerEditText;
 	private Button mCheckButton;
 	private Button mChangeDirectionButton;
 	private Button mSolutionButton;
@@ -61,7 +61,7 @@ public abstract class BaseNumericalExerciseFragment extends
 		rootView = inflater.inflate(R.layout.fragment_numerical_exercise,
 				container, false);
 
-		mAnswerTextView = (EditText) rootView.findViewById(R.id.text_view_answer);
+		mAnswerEditText = (EditText) rootView.findViewById(R.id.text_view_answer);
 		mChangeDirectionButton = (Button) rootView.findViewById(R.id.change);
 		mSolutionButton = (Button) rootView.findViewById(R.id.seesolution);
 		mCheckButton = (Button) rootView.findViewById(R.id.checkbutton);
@@ -70,13 +70,13 @@ public abstract class BaseNumericalExerciseFragment extends
 		mTitleTextView = (TextView) rootView.findViewById(R.id.exercisetitle);
 		mRandomGenerator = new Random();
 
-		mAnswerTextView.setOnEditorActionListener(new OnEditorActionListener() {
+		mAnswerEditText.setOnEditorActionListener(new OnEditorActionListener() {
 
 			@Override
 			public boolean onEditorAction(TextView v, int actionId,
 					KeyEvent event) {
 				if (EditorInfo.IME_ACTION_DONE == actionId) {
-					checkSolution(mAnswerTextView.getEditableText().toString()
+					checkSolution(mAnswerEditText.getEditableText().toString()
 							.trim().toLowerCase(Locale.US));
 				}
 				return false;
@@ -87,7 +87,7 @@ public abstract class BaseNumericalExerciseFragment extends
 
 			@Override
 			public void onClick(View v) {
-				checkSolution(mAnswerTextView.getEditableText().toString()
+				checkSolution(mAnswerEditText.getEditableText().toString()
 						.trim().toLowerCase(Locale.US));
 			}
 		});
@@ -140,10 +140,10 @@ public abstract class BaseNumericalExerciseFragment extends
 
 	private void setKeyboardLayout() {
 		if (!isResultNumeric()) {
-			mAnswerTextView.setInputType(EditorInfo.TYPE_CLASS_TEXT);
+			mAnswerEditText.setInputType(EditorInfo.TYPE_CLASS_TEXT);
 		} else {
 			// setInputType cannot be used because it doesn't allow the sign
-			mAnswerTextView.setRawInputType(InputType.TYPE_CLASS_NUMBER
+			mAnswerEditText.setRawInputType(InputType.TYPE_CLASS_NUMBER
 					| InputType.TYPE_NUMBER_FLAG_SIGNED);
 		}
 	}
@@ -195,7 +195,7 @@ public abstract class BaseNumericalExerciseFragment extends
 	}
 
 	private void showSolution() {
-		mAnswerTextView.setText(obtainSolution());
+		mAnswerEditText.setText(obtainSolution());
 	}
 
 	/**
@@ -223,7 +223,7 @@ public abstract class BaseNumericalExerciseFragment extends
 	}
 
 	private void clearAnswer() {
-		mAnswerTextView.setText("");
+		mAnswerEditText.setText("");
 	}
 
 	/**
