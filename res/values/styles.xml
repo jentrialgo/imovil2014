@@ -65,8 +65,8 @@ limitations under the License.
     </style>
 
     <style name="key">
-        <item name="android:layout_width">48dp</item>
-        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_width">@dimen/key_size</item>
+        <item name="android:layout_height">@dimen/key_size</item>
         <item name="android:textSize">@dimen/score_font</item>
         <item name="android:textColor">@color/key</item>
         <item name="android:layout_margin">2dp</item>

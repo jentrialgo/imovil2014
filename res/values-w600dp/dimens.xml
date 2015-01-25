@@ -7,5 +7,7 @@
     <dimen name="normal_font">36sp</dimen>
     <dimen name="big_font">50sp</dimen>
     <dimen name="score_font">24sp</dimen>
-    
+
+    <dimen name="key_size">56sp</dimen>
+
 </resources>

@@ -31,4 +31,6 @@ limitations under the License.
     <dimen name="big_font">35sp</dimen>
     <dimen name="score_font">14sp</dimen>
 
+    <dimen name="key_size">48sp</dimen>
+
 </resources>
