@@ -131,12 +131,10 @@ limitations under the License.
             android:text="P"
             android:visibility="invisible" />
 
-        <!-- Placeholder for skipping one column -->
         <Button
-            style="@style/key_hexadecimal"
+            style="@style/key_control"
             android:onClick="onKeyboardClick"
-            android:text="P"
-            android:visibility="invisible" />
+            android:text="-" />
 
         <Button
             style="@style/key_control"

@@ -47,7 +47,12 @@ public class BinaryExerciseFragment extends BaseNumericalExerciseFragment {
 	}
 
 	private boolean checkDecimalAnswer(String answer) {
-		String answerConverted = convertToBinary(answer);
+		String answerConverted;
+		try {
+			answerConverted = convertToBinary(answer);
+		} catch (NumberFormatException e) {
+			return false;
+		}
 		return answerConverted.equals(mNumberToConvertString);
 	}
 
