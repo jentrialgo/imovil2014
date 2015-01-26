@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 /**
  * Esta vista se utiliza para gestionar una teclado que contiene los números
@@ -33,6 +35,7 @@ import android.view.View.OnClickListener;
 public class KeyboardView extends LinearLayout implements OnClickListener {
 	private EditText mEditText = null; // this receives the keystrokes
 	private static String delChar = "◀";
+	private Animation animation;
 
 	public KeyboardView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -53,6 +56,8 @@ public class KeyboardView extends LinearLayout implements OnClickListener {
 		}
 		
 		((Button) rootView.findViewById(R.id.key_delete)).setText(delChar);
+		
+		animation = AnimationUtils.loadAnimation(context, R.anim.popup);
 	}
 
 	private int getLayoutId(Context context, AttributeSet attrs) {
@@ -80,6 +85,8 @@ public class KeyboardView extends LinearLayout implements OnClickListener {
 	
 	@Override
 	public void onClick(View view) {
+		view.startAnimation(animation);
+		
 		if (mEditText == null) {
 			// No textView assigned. By default, we look for one with id answer
 			View parent = (View) getParent();
