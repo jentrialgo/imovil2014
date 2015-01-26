@@ -16,7 +16,7 @@ Development is carried out in the dev branch
 
 ***
 Repositorio para Master Hacker, una aplicación para Android desarrollada para
-la asignatura Informática Movil de la EPI de Gijón
+la asignatura Informática Móvil de la EPI de Gijón
 
 Juego para Android para practicar estos conceptos básicos de computadores y redes:
 
