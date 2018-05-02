@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright 2014 Profesores y alumnos de la asignatura Informática Móvil de la EPI de Gijón
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -70,8 +69,8 @@ limitations under the License.
     <string name="check">Comprobar</string>
     <string name="solution">Solución</string>
 
-	<!-- Cadenas comunes a varios módulos -->
-	<string name="game_over_message">Juego finalizado. Puntos: %1$d</string>
+    <!-- Cadenas comunes a varios módulos -->
+    <string name="game_over_message">Juego finalizado. Puntos: %1$d</string>
     <string name="score">Puntos:</string>
     <string name="game_on">¡A jugar!</string>
     <string name="gameisoverexp">¡Has acabado el juego! Te han sobrado %1$d segundos y has obtenido %2$d puntos.</string>
@@ -86,7 +85,7 @@ limitations under the License.
     <string name="convert_bin_to_hex">Convierte de binario con %1$d bits a hexadecimal</string>
     <string name="convert_hex_to_bin">Convierte de hexadecimal a binario con %1$d bits</string>
 
-	<!--  Módulo: signo y magnitud -->
+    <!--  Módulo: signo y magnitud -->
     <string name="convert_sign_and_magnitude_to_dec">Convierte de decimal a signo-magnitud con %1$d bits</string>
     <string name="convert_dec_to_sign_and_magnitude">Convierte de signo-magnitud con %1$d bits a decimal</string>
 
@@ -109,14 +108,14 @@ limitations under the License.
     <!-- Host count exercise -->
     <string name="host_count_title">¿Cuántas máquinas podría haber en una red con esta máscara de subred?</string>
     <!-- End Host count exercise -->
-    
+
     <!--  Punto Flotante -->
     <string name="convert_to_iee">Convierte a formato IEEE 754</string>
     <string name="convert_from_iee">Convierte de IEEE 754 a decimal</string>
     <string name="tv_sign">S</string>
     <string name="tv_exponent">Exp (8 bits)</string>
     <string name="tv_mant">Mantisa (23 bits)</string>
-	<!--  Fin Punto Flotante -->
+    <!--  Fin Punto Flotante -->
 
     <!-- Help activity -->
     <string name="help_info">
@@ -125,7 +124,7 @@ limitations under the License.
     </string>
     <!-- End Help activity -->
 
-	<!-- Máscara de red -->
+    <!-- Máscara de red -->
     <string name="network_mask_title">Máscara de red más pequeña que puede tener este número de máquinas</string>
     <!-- Fin Máscara de red -->
 
@@ -134,8 +133,20 @@ limitations under the License.
     <!-- Preferences -->
     <string name="pref_level_key" translatable="false">PREF_LEVEL</string>
     <string name="pref_level_title">Nivel</string>
-    
+
     <string name="pref_level1_name">Aprendiz</string>
     <string name="pref_level2_name">Iniciado</string>
     <string name="pref_level3_name">Maestro</string>
+    <string name="endgame_good">Buen intento, sigue así.</string>
+    <string name="endgame_verygood">¡Muy buena partida!</string>
+    <string name="endgame_excellent">Eres todo un Hacker Master</string>
+    <string name="endgame_bad">No está mal, sigue practicando.</string>
+    <string name="endgame_verybad">Hay que estudiar más.</string>
+    <string name="endgame_luck">¿Estás respondiendo al azar?</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="play_again">Volver a jugar</string>
+    <string name="endgame_score">Puntuación:</string>
+    <string name="endgame_newrecord">¡Nuevo Récord!</string>
 </resources>

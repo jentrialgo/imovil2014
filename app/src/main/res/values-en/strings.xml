@@ -117,5 +117,14 @@
     <string name="pref_level1_name">Beginner</string>
     <string name="pref_level2_name">Advanced</string>
     <string name="pref_level3_name">Master</string>
-    
+    <string name="endgame_bad">Not bad, keep practising.</string>
+    <string name="endgame_excellent">You are truly a Hacker Master</string>
+    <string name="endgame_good">Good try, keep the good work.</string>
+    <string name="endgame_verygood">Nice game!</string>
+    <string name="endgame_verybad">You need to study more.</string>
+    <string name="endgame_luck">Are you answering randomly?</string>
+    <string name="play_again">Play again</string>
+    <string name="endgame_score">"Score: "</string>
+    <string name="endgame_newrecord">New Highscore!</string>
+
 </resources>

@@ -345,34 +345,18 @@ public abstract class BaseExerciseFragment extends Fragment {
 	 */
 	protected void endGame() {
 		stopPlaying();
-		showEndGameDialog();
 		saveScore();
+		showEndGameFragment();
 	}
 
-	private void showEndGameDialog() {
-		String message = gameOverMessage();
+    private void showEndGameFragment() {
+	    EndGameFragment endGameFragment = EndGameFragment.newInstance(mScore, obtainExerciseId());
+	    getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content_frame, endGameFragment, "ENDGAME")
+                .addToBackStack(null)
+                .commit();
+    }
 
-		Builder alert = new AlertDialog.Builder(getActivity())
-				.setTitle(getResources().getString(R.string.end_game))
-				.setMessage(message)
-				.setPositiveButton(android.R.string.ok,
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
-								dialog.cancel();
-							}
-						});
-		alert.show();
-	}
-
-	/***
-	 * Crea un mensaje para la pantalla final que simplemente muestra la
-	 * puntuación
-	 */
-	private String gameOverMessage() {
-		return String.format(getString(R.string.game_over_message), mScore);
-	}
 
 	private void stopPlaying() {
 		if (mIsPlaying) {
@@ -446,7 +430,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 
 	/**
 	 * Saves the score using the Highscore Manager.
-	 * 
+	 *
 	 * @param score
 	 */
 	protected void saveScore() {
