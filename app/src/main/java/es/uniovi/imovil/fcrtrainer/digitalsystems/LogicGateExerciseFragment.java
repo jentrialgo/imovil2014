@@ -22,6 +22,8 @@ import java.util.Random;
 
 import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
 import es.uniovi.imovil.fcrtrainer.R;
+
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.Nullable;

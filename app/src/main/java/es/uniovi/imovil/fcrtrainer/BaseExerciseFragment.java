@@ -17,6 +17,10 @@ limitations under the License.
 
 package es.uniovi.imovil.fcrtrainer;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Date;
 
 import org.json.JSONException;
@@ -29,11 +33,19 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -41,6 +53,7 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnticipateOvershootInterpolator;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -107,6 +120,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 	private static final int POINTS_PER_CORRECT_QUESTION = 5;
 	private static final int PENALIZATION_PER_INCORRECT_QUESTION = 2;
 	private static final int INITIAL_SCORE = 0;
+	private static final int WRITE_REQUEST_CODE=1;
 
 	protected boolean mIsPlaying = false;
 	private int mScore = 0;
@@ -125,6 +139,9 @@ public abstract class BaseExerciseFragment extends Fragment {
 
 	private View mResult;
 	private ImageView mResultImage;
+	private File imagePath;
+	private Uri uriSreenshot;
+	private Bitmap bitmapSreenshot;
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -344,17 +361,54 @@ public abstract class BaseExerciseFragment extends Fragment {
 	 * padre, para añadir lo necesario a cada juego particular
 	 */
 	protected void endGame() {
+		bitmapSreenshot = takeScreenshot();
 		stopPlaying();
 		showEndGameDialog();
 		saveScore();
 	}
 
 	private void showEndGameDialog() {
-		String message = gameOverMessage();
+		final String message = gameOverMessage();
+
+			// Get the layout inflater
+		LayoutInflater inflater = getActivity().getLayoutInflater();
+		View dialoglayout=inflater.inflate(R.layout.dialog_endgame, null);
+		ImageButton buttonShare= (ImageButton) dialoglayout.findViewById(R.id.ibShare);
+
+		buttonShare.setOnClickListener(new ImageButton.OnClickListener() {
+									  @Override
+									  public void onClick(View arg0) {
+									  	shareGame("generic");
+									  }});
+
+		ImageButton buttonFacebook= (ImageButton) dialoglayout.findViewById(R.id.ibShareFacebook);
+		buttonFacebook.setOnClickListener(new ImageButton.OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				shareGame("com.facebook.katana");
+			}});
+
+
+		ImageButton buttonTwitter= (ImageButton) dialoglayout.findViewById(R.id.ibShareTwitter);
+		buttonTwitter.setOnClickListener(new ImageButton.OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				shareGame("com.twitter.android");
+			}});
+
+
+		ImageButton buttonInstagram= (ImageButton) dialoglayout.findViewById(R.id.ibShareInstagram);
+		buttonInstagram.setOnClickListener(new ImageButton.OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				shareGame("com.instagram.android");
+
+			}});
 
 		Builder alert = new AlertDialog.Builder(getActivity())
 				.setTitle(getResources().getString(R.string.end_game))
 				.setMessage(message)
+				.setView(dialoglayout)
 				.setPositiveButton(android.R.string.ok,
 						new DialogInterface.OnClickListener() {
 							@Override
@@ -367,12 +421,43 @@ public abstract class BaseExerciseFragment extends Fragment {
 	}
 
 	/***
+	 * Crea una captura de pantalla para compartirla al final del juego
+	 */
+	public Bitmap takeScreenshot() {
+		View rootView = getView().getRootView();
+		rootView.setDrawingCacheEnabled(true);
+		return rootView.getDrawingCache();
+	}
+
+	private void saveBitmap(Bitmap bitmap) {
+		imagePath = new File(Environment.getExternalStorageDirectory() + "/scrnshot.png"); ////File imagePath
+		FileOutputStream fos;
+		try {
+			fos = new FileOutputStream(imagePath);
+			bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+			fos.flush();
+			fos.close();
+		} catch (FileNotFoundException e) {
+			Log.e("GREC", e.getMessage(), e);
+		} catch (IOException e) {
+			Log.e("GREC", e.getMessage(), e);
+		}
+	}
+
+
+	/***
 	 * Crea un mensaje para la pantalla final que simplemente muestra la
 	 * puntuación
 	 */
 	private String gameOverMessage() {
 		return String.format(getString(R.string.game_over_message), mScore);
 	}
+
+
+	private String shareMessage() {
+		return String.format(getString(R.string.share_message), mScore);
+	}
+
 
 	private void stopPlaying() {
 		if (mIsPlaying) {
@@ -460,5 +545,53 @@ public abstract class BaseExerciseFragment extends Fragment {
 		}
 	}
 
+
+	/**
+	 * for write permissions
+	 */
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+		switch (requestCode) {
+			case WRITE_REQUEST_CODE:
+				if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+					//Granted.
+
+				}
+				else{
+					//Denied.
+				}
+				break;
+		}
+	}
+
+	/**
+	 * Intent para compartir
+	 */
+	public void shareGame(String target){
+		if (ContextCompat.checkSelfPermission(getActivity(),
+				android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+				!= PackageManager.PERMISSION_GRANTED) {
+
+
+			String[] permissions = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
+			requestPermissions(permissions, WRITE_REQUEST_CODE);
+
+		}
+		else{
+			saveBitmap(bitmapSreenshot);
+			uriSreenshot = FileProvider.getUriForFile(getActivity(), getActivity().getApplicationContext().getPackageName() + ".es.uniovi.imovil.fcrtrainer.provider", imagePath);
+
+			Intent intent = new Intent(Intent.ACTION_SEND);
+			intent.setType("image/*");
+			intent.putExtra(Intent.EXTRA_TEXT, shareMessage());
+			intent.putExtra(Intent.EXTRA_STREAM, uriSreenshot);
+			if(target.equals("generic"))
+				startActivity(Intent.createChooser(intent, getString(R.string.share)));
+			else{
+				intent.setPackage(target);
+				startActivity(intent);
+			}
+		}
+	}
 
 }

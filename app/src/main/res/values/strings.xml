@@ -72,6 +72,8 @@ limitations under the License.
 
 	<!-- Cadenas comunes a varios módulos -->
 	<string name="game_over_message">Juego finalizado. Puntos: %1$d</string>
+    <string name="share_message">Estoy jugando a Hacker Master ¡Mira mi puntuacion! Puntos: %1$d</string>
+    <string name="share">Compartir</string>
     <string name="score">Puntos:</string>
     <string name="game_on">¡A jugar!</string>
     <string name="gameisoverexp">¡Has acabado el juego! Te han sobrado %1$d segundos y has obtenido %2$d puntos.</string>
