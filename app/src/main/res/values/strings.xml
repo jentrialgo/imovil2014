@@ -70,7 +70,6 @@ limitations under the License.
     <string name="solution">Solución</string>
 
     <!-- Cadenas comunes a varios módulos -->
-    <string name="game_over_message">Juego finalizado. Puntos: %1$d</string>
     <string name="score">Puntos:</string>
     <string name="game_on">¡A jugar!</string>
     <string name="gameisoverexp">¡Has acabado el juego! Te han sobrado %1$d segundos y has obtenido %2$d puntos.</string>

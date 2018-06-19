@@ -73,8 +73,8 @@ public class EndGameFragment extends Fragment implements Button.OnClickListener 
 
     /**
     * resolveScore computes the score and gives you a motivational phrase depending on the score
-    * This also changes the icon on topright of the layout depending on the score
-    * If the score is a Max Score, the icon is different and appear a new TextView (lbHighScore)
+    * This also changes the icon on top right of the layout depending on the score
+    * If the score is a Max Score, the icon is different and a new TextView (lbHighScore) appears
     */
     private void resolveScore() {
         lbScore.setText(R.string.endgame_score);
@@ -134,9 +134,7 @@ public class EndGameFragment extends Fragment implements Button.OnClickListener 
             return getResources().getString(R.string.endgame_good);
         else if (pScore < 40)
             return getResources().getString(R.string.endgame_verygood);
-        else if (pScore < 75)
+        else
             return getResources().getString(R.string.endgame_excellent);
-
-        else return getResources().getString(R.string.game_over_message);
     }
 }
