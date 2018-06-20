@@ -91,7 +91,7 @@ public class HexadecimalExerciseFragment extends BaseNumericalExerciseFragment {
 
 	@Override
 	protected String generateRandomNumber() {
-		int maxNumberToConvert = (int) (Math.pow(2, numberOfBits()) - 1);
+		int maxNumberToConvert = (int) Math.pow(2, numberOfBits());
 		mNumberToConvert = mRandomGenerator.nextInt(maxNumberToConvert);
 		if (mDirectConversion) {
 			return BinaryConverter.binaryToStringWithNbits(mNumberToConvert,
