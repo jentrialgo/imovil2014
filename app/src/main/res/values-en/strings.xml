@@ -35,7 +35,6 @@
     <string name="solution">Solution</string>
 
 	<!-- Cadenas comunes a varios módulos -->
-	<string name="game_over_message">Game over. Score: %1$d</string>
     <string name="score">Score:</string>
     <string name="game_on">Game on!</string>
     <string name="gameisoverexp">Game ended! You have %1$d seconds left and obtained %2$d points!</string>
@@ -117,5 +116,14 @@
     <string name="pref_level1_name">Beginner</string>
     <string name="pref_level2_name">Advanced</string>
     <string name="pref_level3_name">Master</string>
-    
+    <string name="endgame_bad">Not bad, keep practising.</string>
+    <string name="endgame_excellent">You are truly a Hacker Master</string>
+    <string name="endgame_good">Good try, keep the good work.</string>
+    <string name="endgame_verygood">Nice game!</string>
+    <string name="endgame_verybad">You need to study more.</string>
+    <string name="endgame_luck">Are you answering randomly?</string>
+    <string name="play_again">Play again</string>
+    <string name="endgame_score">"Score: %1d"</string>
+    <string name="endgame_newrecord">New Highscore!</string>
+
 </resources>
