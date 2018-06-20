@@ -138,7 +138,7 @@ limitations under the License.
     <string name="pref_level3_name">Maestro</string>
     <string name="endgame_good">Buen intento, sigue así.</string>
     <string name="endgame_verygood">¡Muy buena partida!</string>
-    <string name="endgame_excellent">Eres todo un Hacker Master</string>
+    <string name="endgame_excellent">Eres todo un Master Hacker</string>
     <string name="endgame_bad">No está mal, sigue practicando.</string>
     <string name="endgame_verybad">Hay que estudiar más.</string>
     <string name="endgame_luck">¿Estás respondiendo al azar?</string>
@@ -146,6 +146,6 @@ limitations under the License.
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="play_again">Volver a jugar</string>
-    <string name="endgame_score">Puntuación:</string>
+    <string name="endgame_score">Puntuación: %1d</string>
     <string name="endgame_newrecord">¡Nuevo Récord!</string>
 </resources>

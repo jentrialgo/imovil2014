@@ -80,8 +80,7 @@ public class EndGameFragment extends Fragment implements Button.OnClickListener 
     * If the score is a Max Score, the icon is different and a new TextView (lbHighScore) appears
     */
     private void resolveScore() {
-        lbScore.setText(R.string.endgame_score);
-        lbScore.setText(lbScore.getText() + "" + this.score);
+        lbScore.setText(getResources().getString(R.string.endgame_score, score));
         lbMotivation.setText(gameOverMessage(this.score));
 
         if(score < 5) {
