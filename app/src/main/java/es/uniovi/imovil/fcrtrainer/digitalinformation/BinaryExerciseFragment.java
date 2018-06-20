@@ -30,9 +30,8 @@ public class BinaryExerciseFragment extends BaseNumericalExerciseFragment {
 	private BinaryConverter binaryConverter = new BinaryConverter();
 
 	public static BinaryExerciseFragment newInstance() {
-		BinaryExerciseFragment fragment = new BinaryExerciseFragment();
 
-		return fragment;
+		return new BinaryExerciseFragment();
 	}
 
 	public BinaryExerciseFragment() {

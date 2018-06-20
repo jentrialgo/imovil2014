@@ -23,8 +23,7 @@ import es.uniovi.imovil.fcrtrainer.R;
 public class CidrExerciseFragment extends BaseNetworkMaskExerciseFragment {
 
 	public static BaseNetworkMaskExerciseFragment newInstance() {
-		BaseNetworkMaskExerciseFragment fragment = new CidrExerciseFragment();
-		return fragment;
+		return new CidrExerciseFragment();
 	}
 
 	public CidrExerciseFragment() {

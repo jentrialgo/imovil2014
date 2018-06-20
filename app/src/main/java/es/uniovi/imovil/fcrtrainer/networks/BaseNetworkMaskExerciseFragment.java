@@ -3,6 +3,7 @@ package es.uniovi.imovil.fcrtrainer.networks;
 import java.util.Random;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,23 +31,23 @@ public abstract class BaseNetworkMaskExerciseFragment
 	protected Button mButtonShowSolution;
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+							 Bundle savedInstanceState) {
 
 		View rootView = inflater.inflate(R.layout.fragment_network_exercise,
 				container, false);
 		
-		mExerciseTitle = (TextView) rootView.findViewById(
+		mExerciseTitle = rootView.findViewById(
 				R.id.text_view_exercise_title);
-		mQuestion = (TextView) rootView.findViewById(R.id.text_view_question);
-		mAnswer = (EditText) rootView.findViewById(R.id.text_view_answer);
+		mQuestion = rootView.findViewById(R.id.text_view_question);
+		mAnswer = rootView.findViewById(R.id.text_view_answer);
 
 		mExerciseTitle.setText(titleString());
 		
-		((Button) rootView.findViewById(R.id.button_check_answer))
+		rootView.findViewById(R.id.button_check_answer)
 			.setOnClickListener(this);
-		mButtonShowSolution = ((Button) rootView.findViewById(
-				R.id.button_show_solution));
+		mButtonShowSolution = rootView.findViewById(
+				R.id.button_show_solution);
 		mButtonShowSolution.setOnClickListener(this);
 		
 		if (savedInstanceState == null) {

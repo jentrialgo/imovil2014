@@ -47,7 +47,7 @@ final public class FragmentFactory {
 	 * Crea el fragmento de un ejercicio a partir de un �ndice. Este �ndice
 	 * coincide con el �ndice de la opci�n correspondiente en el Drawer.
 	 * 
-	 * @param �ndice
+	 * @param resIndex �ndice
 	 *            del ejercicio en el Drawer.
 	 * @return el fragmento del ejercicio.
 	 */

@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 import es.uniovi.imovil.fcrtrainer.R;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,19 +40,20 @@ public class HighscoreAdapter extends ArrayAdapter<Highscore> {
 		mHighscores = highscores;
 	}
 
-	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	@NonNull
+    @Override
+	public View getView(int position, View convertView, @NonNull ViewGroup parent) {
 		LayoutInflater inflater = (LayoutInflater) mContext
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View rowView = inflater.inflate(R.layout.highscore_item, parent, false);
 
-		TextView pos = (TextView) rowView.findViewById(R.id.text_view_position);
+		TextView pos = rowView.findViewById(R.id.text_view_position);
 		pos.setText(Integer.toString(position + 1)); // Position 0 is 1st place
 
-		TextView userName = (TextView) rowView.findViewById(R.id.text_view_user_name);
+		TextView userName = rowView.findViewById(R.id.text_view_user_name);
 		userName.setText(mHighscores.get(position).getUserName());
 
-		TextView score = (TextView) rowView.findViewById(R.id.text_view_score);
+		TextView score = rowView.findViewById(R.id.text_view_score);
 		score.setText(Integer.toString(mHighscores.get(position).getScore()));
 
 		return rowView;

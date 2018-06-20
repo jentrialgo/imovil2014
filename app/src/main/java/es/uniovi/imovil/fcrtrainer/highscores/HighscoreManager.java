@@ -55,7 +55,7 @@ public class HighscoreManager {
 	 * 
 	 * @param context
 	 *            Contexto para gestionar recursos
-	 * @param level 
+	 * @param level Nivel a cargar
 	 * @return Un array con la lista de todas las mejores puntuaciones
 	 *         almacenadas
 	 * @throws JSONException
@@ -77,7 +77,7 @@ public class HighscoreManager {
 
 	private static ArrayList<Highscore> jsonToHighscoreList(Context context,
 			String highscoreJson) throws JSONException {
-		ArrayList<Highscore> highscores = new ArrayList<Highscore>();
+		ArrayList<Highscore> highscores = new ArrayList<>();
 
 		JSONArray array;
 		array = new JSONArray(highscoreJson);
@@ -128,7 +128,7 @@ public class HighscoreManager {
 		}
 		Highscore highscore = new Highscore(score, exercise, date, userName);
 
-		ArrayList<Highscore> highscores = new ArrayList<Highscore>();
+		ArrayList<Highscore> highscores = new ArrayList<>();
 		try {
 			highscores = loadHighscores(context, level);
 		} catch (JSONException e) {
@@ -142,7 +142,7 @@ public class HighscoreManager {
 
 	private static ArrayList<Highscore> trim(ArrayList<Highscore> highscores,
 			int maxNumberHighscores) {
-		ArrayList<Highscore> trimmedHighscores = new ArrayList<Highscore>();
+		ArrayList<Highscore> trimmedHighscores = new ArrayList<>();
 		SparseIntArray highscoresPerExercise = new SparseIntArray();
 
 		Collections.sort(highscores);
@@ -170,14 +170,18 @@ public class HighscoreManager {
 	 * inicialmente cuando se rellenan con las puntuaciones iniciales para ser
 	 * m�s r�pido que a�adirlas una a una
 	 * 
-	 * @param activity
-	 * @param highscores
+	 * @param context
+	 *			Contexto para gestionar recursos
+	 *@param newHighscores
+	 * 			Array de puntuaciones a añadir
+	 * @param level
+	 * 			Nivel para el que son las puntuaciones
 	 * @throws JSONException
 	 */
 	public static void addAllHighscores(Context context,
 			ArrayList<Highscore> newHighscores, Level level)
 					throws JSONException {
-		ArrayList<Highscore> highscores = new ArrayList<Highscore>();
+		ArrayList<Highscore> highscores = new ArrayList<>();
 		try {
 			highscores = loadHighscores(context, level);
 		} catch (JSONException e) {
@@ -194,7 +198,7 @@ public class HighscoreManager {
 		SharedPreferences.Editor editor = mSharedPreferences.edit();
 		String json = highscoresToJsonString(highscores);
 		editor.putString(preferenceName(level), json);
-		editor.commit();
+		editor.apply();
 	}
 
 	private static String highscoresToJsonString(ArrayList<Highscore> highscores)

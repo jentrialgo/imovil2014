@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		Toolbar toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 
 		mTitle = getTitle();
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements
 		SharedPreferences.Editor prefsEditor = prefs.edit();
 		prefsEditor.putInt(LAST_EXERCISE, mExerciseResIndex);
 		prefsEditor.putBoolean(USER_LEARNED_DRAWER, mUserLearnedDrawer);
-		prefsEditor.commit();
+		prefsEditor.apply();
 	}
 
 	@Override
@@ -206,8 +206,8 @@ public class MainActivity extends AppCompatActivity implements
 	private void initializeDrawer(boolean fromSavedState) {
 		// Contenido organizado en secciones
 		ArrayList<Group<String, Integer>> sections = createDrawerEntries();
-		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-		mDrawerList = (ListView) findViewById(R.id.left_drawer);
+		mDrawerLayout = findViewById(R.id.drawer_layout);
+		mDrawerList = findViewById(R.id.left_drawer);
 		mDrawerList.setAdapter(new SectionedDrawerAdapter(this,
 				R.layout.drawer_list_item, R.layout.drawer_list_header,
 				sections));
@@ -248,15 +248,14 @@ public class MainActivity extends AppCompatActivity implements
 			setTitle(mTitle);
 		}
 
-		mDrawerLayout.setDrawerListener(mDrawerToggle);
+		mDrawerLayout.addDrawerListener(mDrawerToggle);
 
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		actionBar.setHomeButtonEnabled(true);
 	}
 
 	private ArrayList<Group<String, Integer>> createDrawerEntries() {
-		ArrayList<Group<String, Integer>> sections = new ArrayList<Group<String,
-				Integer>>();
+		ArrayList<Group<String, Integer>> sections = new ArrayList<>();
 
 		addSection(sections, R.string.codes, R.array.codes);
 		addSection(sections, R.string.digital_systems, R.array.digital_systems);
@@ -268,8 +267,7 @@ public class MainActivity extends AppCompatActivity implements
 
 	private void addSection(ArrayList<Group<String, Integer>> sections,
 			int sectionNameId, int childrenArrayId) {
-		Group<String, Integer> group;
-		group = new Group<String, Integer>(getString(sectionNameId));
+		Group<String, Integer> group = new Group<>(getString(sectionNameId));
 
 		TypedArray array = getResources().obtainTypedArray(childrenArrayId);
 

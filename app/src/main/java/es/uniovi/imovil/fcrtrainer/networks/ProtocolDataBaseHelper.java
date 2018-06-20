@@ -131,7 +131,7 @@ public class ProtocolDataBaseHelper extends SQLiteOpenHelper {
 	}
 
 	public ArrayList<ProtocolTest> loadData() {
-		ArrayList<ProtocolTest> testList = new ArrayList<ProtocolTest>();
+		ArrayList<ProtocolTest> testList = new ArrayList<>();
 		SQLiteDatabase db = getReadableDatabase();
 		Cursor cursor;
 		try {

@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,22 +54,21 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 	private RadioGroup mRadioGroup;
 
 	public static ProtocolExerciseFragment newInstance() {
-		ProtocolExerciseFragment fragment = new ProtocolExerciseFragment();
-		return fragment;
+		return new ProtocolExerciseFragment();
 	}
 
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+							 Bundle savedInstanceState) {
 		mRootView = inflater.inflate(R.layout.fragment_protocol, container,
 				false);
 		ProtocolDataBaseHelper db = new ProtocolDataBaseHelper(
 				this.getActivity(), DB_NAME, null, DB_VERSION);
-		mQuestion = (TextView) mRootView.findViewById(R.id.exerciseQuestion);
-		mCardView = (RelativeLayout) mRootView.findViewById(R.id.card);
+		mQuestion = mRootView.findViewById(R.id.exerciseQuestion);
+		mCardView = mRootView.findViewById(R.id.card);
 		mRadioGroup = new RadioGroup(getActivity());
 		addAnswerRadioButtons();
-		mShowSolutionButton = (Button) mRootView.findViewById(R.id.seesolution);
-		mCheckSolutionButton = (Button) mRootView
+		mShowSolutionButton = mRootView.findViewById(R.id.seesolution);
+		mCheckSolutionButton = mRootView
 				.findViewById(R.id.checkbutton);
 
 		// Manejador del evento de mostrar solución (solo en modo
@@ -153,7 +153,7 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 				RelativeLayout.LayoutParams.WRAP_CONTENT);
 
 		params.addRule(RelativeLayout.ALIGN_LEFT);
-		TextView question = (TextView) mRootView
+		TextView question = mRootView
 				.findViewById(R.id.exerciseQuestion); // Obtener pregunta.
 		params.addRule(RelativeLayout.BELOW, question.getId()); // Debajo de la
 																// pregunta.
@@ -166,12 +166,7 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 	}
 
 	private void checkIfButtonClickedIsCorrectAnswer(int index) {
-		boolean correct = false;
-		if (mRadioButtonAnswers[index].getText().equals(mTest.getResponse())) {
-			correct = true;
-		} else {
-			correct = false;
-		}
+		boolean correct = mRadioButtonAnswers[index].getText().equals(mTest.getResponse());
 		showAnimationAnswer(correct);
 
 		if (correct) {
@@ -210,7 +205,7 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 	private void updateToGameMode() {
 		newQuestion();
 
-		Button solution = (Button) mRootView.findViewById(R.id.seesolution);
+		Button solution = mRootView.findViewById(R.id.seesolution);
 		solution.setVisibility(View.GONE);
 	}
 

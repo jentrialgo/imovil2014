@@ -23,6 +23,7 @@ import java.util.Random;
 import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
 import es.uniovi.imovil.fcrtrainer.R;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -63,24 +64,23 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 	int mNumeroPregunta = 0;
 
 	public static LogicOperationExerciseFragment newInstance() {
-		LogicOperationExerciseFragment fragment = new LogicOperationExerciseFragment();
-		return fragment;
+        return new LogicOperationExerciseFragment();
 	}
 
 	public LogicOperationExerciseFragment() {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+							 Bundle savedInstanceState) {
 		mRootView = inflater.inflate(R.layout.fragment_logic_operation,
 				container, false);
 
-		mTvEntrada1 = (TextView) mRootView.findViewById(R.id.LOentrada1);
-		mTvEntrada2 = (TextView) mRootView.findViewById(R.id.LOentrada2);
-		mTvOperacion = (TextView) mRootView.findViewById(R.id.LOoperacion);
+		mTvEntrada1 = mRootView.findViewById(R.id.LOentrada1);
+		mTvEntrada2 = mRootView.findViewById(R.id.LOentrada2);
+		mTvOperacion = mRootView.findViewById(R.id.LOoperacion);
 
-		mEtRespuesta = (EditText) mRootView.findViewById(R.id.text_view_answer);
+		mEtRespuesta = mRootView.findViewById(R.id.text_view_answer);
 
 		inicializarButtons();
 
@@ -136,10 +136,10 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 	}
 
 	private void inicializarButtons() {
-		mButtonCheck = (Button) mRootView.findViewById(R.id.LObCalcular);
+		mButtonCheck = mRootView.findViewById(R.id.LObCalcular);
 		mButtonCheck.setOnClickListener(this);
 
-		mButtonSolucion = (Button) mRootView.findViewById(R.id.LObSolucion);
+		mButtonSolucion = mRootView.findViewById(R.id.LObSolucion);
 		mButtonSolucion.setOnClickListener(this);
 	}
 

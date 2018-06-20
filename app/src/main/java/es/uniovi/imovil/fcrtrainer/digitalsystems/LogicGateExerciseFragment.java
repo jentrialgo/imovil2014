@@ -24,6 +24,7 @@ import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
 import es.uniovi.imovil.fcrtrainer.R;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,8 +61,8 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
 		// Inflamos el Layout
 		View rootView = inflater.inflate(R.layout.fragment_logic_gate,
@@ -71,8 +72,8 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 		mLogicstring = getResources().getStringArray(R.array.logic_gates);
 
 		// Inicializamos las vistas de los botones y sus respectivos Listener
-		mButtoncheck = (Button) rootView.findViewById(R.id.cButton);
-		mSolutionButton = (Button) rootView.findViewById(R.id.sButton);
+		mButtoncheck = rootView.findViewById(R.id.cButton);
+		mSolutionButton = rootView.findViewById(R.id.sButton);
 		mButtoncheck.setOnClickListener(this);
 		mSolutionButton.setOnClickListener(this);
 
@@ -80,7 +81,7 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 		mImageArray = getResources().obtainTypedArray(
 				R.array.logic_gates_images);
 
-		mImageView = (ImageView) rootView.findViewById(R.id.imagelogicgate);
+		mImageView = rootView.findViewById(R.id.imagelogicgate);
 
 		if (savedInstanceState == null) {
 			// Inicializamos la variable contador con el fin de recorrer el array
@@ -92,7 +93,7 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 		}
 
 		// Inicializamos el spinner y le cargamos los elementos
-		mSpinner = (Spinner) rootView.findViewById(R.id.spinner_logic_gate);
+		mSpinner = rootView.findViewById(R.id.spinner_logic_gate);
 
 		// Create an ArrayAdapter using the string array and a default spinner
 		// layout

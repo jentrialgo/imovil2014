@@ -25,8 +25,7 @@ public class NetworkMaskExerciseFragment
 		extends BaseNetworkMaskExerciseFragment {
 
 	public static NetworkMaskExerciseFragment newInstance() {
-		NetworkMaskExerciseFragment fragment = new NetworkMaskExerciseFragment();
-		return fragment;
+		return new NetworkMaskExerciseFragment();
 	}
 
 	public NetworkMaskExerciseFragment() {

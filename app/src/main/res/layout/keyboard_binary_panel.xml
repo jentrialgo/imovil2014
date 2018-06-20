@@ -24,18 +24,15 @@ limitations under the License.
 
     <Button
         style="@style/key_decimal"
-        android:onClick="onKeyboardClick"
         android:text="0" />
 
     <Button
         style="@style/key_decimal"
-        android:onClick="onKeyboardClick"
         android:text="1" />
 
     <Button
         android:id="@+id/key_delete"
         style="@style/key_control"
-        android:onClick="onKeyboardClick"
         android:text="D" />
 
 </LinearLayout>

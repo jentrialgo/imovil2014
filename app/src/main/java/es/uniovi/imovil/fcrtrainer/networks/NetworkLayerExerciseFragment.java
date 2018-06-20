@@ -23,6 +23,7 @@ import java.util.Random;
 import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
 import es.uniovi.imovil.fcrtrainer.R;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,19 +68,19 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 		return fragment;
 	}
 
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, 
-			Bundle savedInstanceState) {
+	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+							 Bundle savedInstanceState) {
 
 		mRootView =inflater.inflate(R.layout.fragment_layer, container, false);
 		//TextView para mostrar la pregunta
-		mQuestion = (TextView) mRootView.findViewById(R.id.textlayer);
+		mQuestion = mRootView.findViewById(R.id.textlayer);
 
 		//Radiogrup
-		mOptions = (RadioGroup) mRootView.findViewById(R.id.layer_group);
-		mRbLink = (RadioButton) mRootView.findViewById(R.id.link_layer);
-		mRbNetwork = (RadioButton) mRootView.findViewById(R.id.internet_layer);
-		mRbTransport = (RadioButton) mRootView.findViewById(R.id.transport_layer);
-		mRbAplication = (RadioButton) mRootView.findViewById(R.id.application_layer);
+		mOptions = mRootView.findViewById(R.id.layer_group);
+		mRbLink = mRootView.findViewById(R.id.link_layer);
+		mRbNetwork = mRootView.findViewById(R.id.internet_layer);
+		mRbTransport = mRootView.findViewById(R.id.transport_layer);
+		mRbAplication = mRootView.findViewById(R.id.application_layer);
 
 		mOptions.setOnCheckedChangeListener( new RadioGroup.OnCheckedChangeListener() {
 			public void onCheckedChanged(RadioGroup rGroup, int checkedId) {
@@ -101,8 +102,8 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 		});
 
 		//Buttons
-		mCheck = (Button) mRootView.findViewById(R.id.button_layer);
-		mSolution = (Button) mRootView.findViewById(R.id.button_solutionlayer);
+		mCheck = mRootView.findViewById(R.id.button_layer);
+		mSolution = mRootView.findViewById(R.id.button_solutionlayer);
 
 		mCheck.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {

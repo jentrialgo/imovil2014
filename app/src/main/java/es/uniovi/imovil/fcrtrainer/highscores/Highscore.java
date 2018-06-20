@@ -18,6 +18,8 @@ limitations under the License.
 
 package es.uniovi.imovil.fcrtrainer.highscores;
 
+import android.support.annotation.NonNull;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -97,7 +99,7 @@ public class Highscore implements Comparable<Highscore> {
 	}
 
 	@Override
-	public int compareTo(Highscore another) {
+	public int compareTo(@NonNull Highscore another) {
 		if (mScore - another.getScore() != 0) {
 			return mScore - another.getScore();
 		} else {

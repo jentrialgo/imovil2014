@@ -26,8 +26,7 @@ public class HostCountExerciseFragment extends BaseNetworkMaskExerciseFragment {
 	}
 
 	public static BaseNetworkMaskExerciseFragment newInstance() {
-		BaseNetworkMaskExerciseFragment fragment = new HostCountExerciseFragment();
-		return fragment;
+		return new HostCountExerciseFragment();
 	}
 
 	private int correctAnswer() {

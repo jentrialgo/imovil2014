@@ -27,8 +27,7 @@ public class BinaryOffsetExerciseFragment extends BaseNumericalExerciseFragment 
 
 	public static BinaryOffsetExerciseFragment newInstance() {
 
-		BinaryOffsetExerciseFragment fragment = new BinaryOffsetExerciseFragment();
-		return fragment;
+		return new BinaryOffsetExerciseFragment();
 	}
 
 	public BinaryOffsetExerciseFragment() {
@@ -62,7 +61,7 @@ public class BinaryOffsetExerciseFragment extends BaseNumericalExerciseFragment 
 
 		int min = (int) -(Math.pow(2, numberOfBits - 1));
 		int max = (int) (Math.pow(2, numberOfBits - 1)) - 1;
-		int numberInDecimal = mRandomGenerator.nextInt(max - min + 1) + min;;
+		int numberInDecimal = mRandomGenerator.nextInt(max - min + 1) + min;
 
 		// Exceso central
 		mOffset = (int) Math.pow(2, numberOfBits - 1);

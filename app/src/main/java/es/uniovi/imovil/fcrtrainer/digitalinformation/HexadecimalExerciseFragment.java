@@ -31,8 +31,7 @@ public class HexadecimalExerciseFragment extends BaseNumericalExerciseFragment {
 
 	public static HexadecimalExerciseFragment newInstance() {
 
-		HexadecimalExerciseFragment fragment = new HexadecimalExerciseFragment();
-		return fragment;
+		return new HexadecimalExerciseFragment();
 	}
 
 	public HexadecimalExerciseFragment() {

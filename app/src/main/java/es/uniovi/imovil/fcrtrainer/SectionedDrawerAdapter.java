@@ -147,7 +147,7 @@ final class SectionedDrawerAdapter extends BaseAdapter {
 			|| !(groupView.getTag() instanceof HeaderViewHolder)) {
 			groupView = mInflater.inflate(mHeaderLayoutRes, parent, false);
 			viewHolder = new HeaderViewHolder();
-			viewHolder.titleTextView = (TextView) groupView
+			viewHolder.titleTextView = groupView
 					.findViewById(R.id.title_text);
 			groupView.setTag(viewHolder);
 		}
@@ -163,7 +163,7 @@ final class SectionedDrawerAdapter extends BaseAdapter {
 			|| !(childView.getTag() instanceof ChildViewHolder)) {
 			childView = mInflater.inflate(mChildLayoutRes, parent, false);
 			viewHolder = new ChildViewHolder();
-			viewHolder.entryTextView = (TextView) childView
+			viewHolder.entryTextView = childView
 					.findViewById(R.id.entry_text);
 			childView.setTag(viewHolder);
 		}

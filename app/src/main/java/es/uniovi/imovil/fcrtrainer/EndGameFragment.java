@@ -2,6 +2,7 @@ package es.uniovi.imovil.fcrtrainer;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -58,16 +59,16 @@ public class EndGameFragment extends Fragment implements Button.OnClickListener 
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_endgame, container, false);
-        btPlayAgain = (Button) rootview.findViewById(R.id.btPlayAgain);
+        btPlayAgain = rootview.findViewById(R.id.btPlayAgain);
         btPlayAgain.setOnClickListener(this);
 
-        lbScore = (TextView) rootview.findViewById(R.id.lbScore);
-        lbHighScore = (TextView) rootview.findViewById(R.id.lbHighScore);
-        lbMotivation = (TextView) rootview.findViewById(R.id.lbMotivation);
-        ivEndGame = (ImageView) rootview.findViewById(R.id.ivEndGame);
+        lbScore = rootview.findViewById(R.id.lbScore);
+        lbHighScore = rootview.findViewById(R.id.lbHighScore);
+        lbMotivation = rootview.findViewById(R.id.lbMotivation);
+        ivEndGame = rootview.findViewById(R.id.ivEndGame);
         resolveScore();
         return rootview;
 

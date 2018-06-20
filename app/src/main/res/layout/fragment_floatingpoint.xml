@@ -163,7 +163,6 @@ limitations under the License.
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:onClick="OnButtonClick"
                     android:text="@string/check" />
 
                 <Button
@@ -171,7 +170,6 @@ limitations under the License.
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:onClick="OnButtonClick"
                     android:text="@string/solution" />
 
                 <Button
@@ -180,8 +178,7 @@ limitations under the License.
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_import_export"
                     android:drawableStart="@drawable/ic_import_export"
-                    android:minWidth="48dp"
-                    android:onClick="OnButtonClick" />
+                    android:minWidth="48dp" />
             </LinearLayout>
 
             <es.uniovi.imovil.fcrtrainer.KeyboardView

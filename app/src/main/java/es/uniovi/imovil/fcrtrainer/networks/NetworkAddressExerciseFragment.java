@@ -34,8 +34,7 @@ public class NetworkAddressExerciseFragment
 	int mIp; // IP address
 
 	public static NetworkAddressExerciseFragment newInstance() {
-		NetworkAddressExerciseFragment fragment = new NetworkAddressExerciseFragment();
-		return fragment;
+		return new NetworkAddressExerciseFragment();
 	}
 
 	public NetworkAddressExerciseFragment() {

@@ -33,22 +33,18 @@ limitations under the License.
 
         <Button
             style="@style/key_decimal"
-            android:onClick="onKeyboardClick"
             android:text="8" />
 
         <Button
             style="@style/key_decimal"
-            android:onClick="onKeyboardClick"
             android:text="9" />
 
         <Button
             style="@style/key_hexadecimal"
-            android:onClick="onKeyboardClick"
             android:text="E" />
 
         <Button
             style="@style/key_hexadecimal"
-            android:onClick="onKeyboardClick"
             android:text="F" />
     </LinearLayout>
 
@@ -59,27 +55,22 @@ limitations under the License.
 
         <Button
             style="@style/key_decimal"
-            android:onClick="onKeyboardClick"
             android:text="4" />
 
         <Button
             style="@style/key_decimal"
-            android:onClick="onKeyboardClick"
             android:text="5" />
 
         <Button
             style="@style/key_decimal"
-            android:onClick="onKeyboardClick"
             android:text="6" />
 
         <Button
             style="@style/key_hexadecimal"
-            android:onClick="onKeyboardClick"
             android:text="C" />
 
         <Button
             style="@style/key_hexadecimal"
-            android:onClick="onKeyboardClick"
             android:text="D" />
     </LinearLayout>
 
@@ -90,27 +81,22 @@ limitations under the License.
 
         <Button
             style="@style/key_decimal"
-            android:onClick="onKeyboardClick"
             android:text="1" />
 
         <Button
             style="@style/key_decimal"
-            android:onClick="onKeyboardClick"
             android:text="2" />
 
         <Button
             style="@style/key_decimal"
-            android:onClick="onKeyboardClick"
             android:text="3" />
 
         <Button
             style="@style/key_hexadecimal"
-            android:onClick="onKeyboardClick"
             android:text="A" />
 
         <Button
             style="@style/key_hexadecimal"
-            android:onClick="onKeyboardClick"
             android:text="B" />
     </LinearLayout>
 
@@ -121,30 +107,25 @@ limitations under the License.
 
         <Button
             style="@style/key_decimal"
-            android:onClick="onKeyboardClick"
             android:text="0" />
 
         <!-- Placeholder for skipping one column -->
         <Button
             style="@style/key_hexadecimal"
-            android:onClick="onKeyboardClick"
             android:text="P"
             android:visibility="invisible" />
 
         <Button
             style="@style/key_control"
-            android:onClick="onKeyboardClick"
             android:text="-" />
 
         <Button
             style="@style/key_control"
-            android:onClick="onKeyboardClick"
             android:text="." />
 
         <Button
             android:id="@+id/key_delete"
             style="@style/key_control"
-            android:onClick="onKeyboardClick"
             android:text="D" />
 
     </LinearLayout>

@@ -21,6 +21,7 @@ package es.uniovi.imovil.fcrtrainer.digitalinformation;
 import java.util.Random;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -77,26 +78,26 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+							 Bundle savedInstanceState) {
 
 		mRootView = inflater.inflate(R.layout.fragment_floatingpoint, container,
 				false);
 
-		mTvNumberToconvert = (TextView) mRootView.findViewById(R.id.numbertoconvert);
-		mTvDecimal = (TextView) mRootView.findViewById(R.id.tv_decimal);
-		mTvSign = (TextView) mRootView.findViewById(R.id.tv_s);
-		mTvExponent = (TextView) mRootView.findViewById(R.id.tv_exp);
-		mTvMantissa = (TextView) mRootView.findViewById(R.id.tv_mant);
-		mTvTitle = (TextView) mRootView.findViewById(R.id.theme);
-		mEtDecimal = (EditText) mRootView.findViewById(R.id.ed_decimal);
-		mEtSign = (EditText) mRootView.findViewById(R.id.ed_sign);
-		mEtExponent = (EditText) mRootView.findViewById(R.id.ed_exponent);
-		mEtMantissa = (EditText) mRootView.findViewById(R.id.ed_mantissa);
-		mCheck = (Button) mRootView.findViewById(R.id.btn_check);
-		mSolution = (Button) mRootView.findViewById(R.id.btn_getsolution);
-		mToggle = (Button) mRootView.findViewById(R.id.btn_togglebinary);
-		mKeyboardView = (KeyboardView) mRootView.findViewById(R.id.keyboard);
+		mTvNumberToconvert = mRootView.findViewById(R.id.numbertoconvert);
+		mTvDecimal = mRootView.findViewById(R.id.tv_decimal);
+		mTvSign = mRootView.findViewById(R.id.tv_s);
+		mTvExponent = mRootView.findViewById(R.id.tv_exp);
+		mTvMantissa = mRootView.findViewById(R.id.tv_mant);
+		mTvTitle = mRootView.findViewById(R.id.theme);
+		mEtDecimal = mRootView.findViewById(R.id.ed_decimal);
+		mEtSign = mRootView.findViewById(R.id.ed_sign);
+		mEtExponent = mRootView.findViewById(R.id.ed_exponent);
+		mEtMantissa = mRootView.findViewById(R.id.ed_mantissa);
+		mCheck = mRootView.findViewById(R.id.btn_check);
+		mSolution = mRootView.findViewById(R.id.btn_getsolution);
+		mToggle = mRootView.findViewById(R.id.btn_togglebinary);
+		mKeyboardView = mRootView.findViewById(R.id.keyboard);
 
 		OnFocusChangedListener onFocusChangedListener = new OnFocusChangedListener();
 		mEtDecimal.setOnFocusChangeListener(onFocusChangedListener);
@@ -207,7 +208,7 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 	}
 	
 	private void checkSolutionListener() {
-		if (mConvertToDecimal == true) {
+		if (mConvertToDecimal) {
 			checkSolutionBinaryToDecimal();
 		} else {
 			checkSolutionDecimalToBinary();

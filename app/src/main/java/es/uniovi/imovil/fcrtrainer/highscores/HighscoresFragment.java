@@ -31,6 +31,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -65,16 +66,15 @@ public class HighscoresFragment extends Fragment implements
 	ArrayList<Exercise> mExercises;
 
 	public static HighscoresFragment newInstance() {
-		HighscoresFragment fragment = new HighscoresFragment();
-		return fragment;
+		return new HighscoresFragment();
 	}
 
 	public HighscoresFragment() {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+							 Bundle savedInstanceState) {
 
 		mRootView = inflater.inflate(R.layout.fragment_highscores, container,
 				false);
@@ -89,7 +89,7 @@ public class HighscoresFragment extends Fragment implements
 	}
 
 	private void initializeLevelSpinner() {
-		ArrayList<String> levelNames = new ArrayList<String>();
+		ArrayList<String> levelNames = new ArrayList<>();
 
 		TypedArray array = getResources().obtainTypedArray(
 				R.array.pref_level_values);
@@ -104,13 +104,13 @@ public class HighscoresFragment extends Fragment implements
 
 		array.recycle();
 
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+		ArrayAdapter<String> adapter = new ArrayAdapter<>(
 				getActivity(), android.R.layout.simple_spinner_item,
 				levelNames);
 		adapter.setDropDownViewResource(
 				android.R.layout.simple_spinner_dropdown_item);
  
-		mLevelSpinner = (Spinner) mRootView.findViewById(R.id.spinner_level);
+		mLevelSpinner = mRootView.findViewById(R.id.spinner_level);
 		mLevelSpinner.setAdapter(adapter);
 
 		mLevelSpinner.setOnItemSelectedListener(this);
@@ -120,18 +120,18 @@ public class HighscoresFragment extends Fragment implements
 		// La idea de esta función es crear los elementos del spinner utilizando
 		// los arrays definidos en los recursos
 
-		mExercises = new ArrayList<Exercise>();
+		mExercises = new ArrayList<>();
 		addExerciseModule(mExercises, R.array.codes);
 		addExerciseModule(mExercises, R.array.digital_systems);
 		addExerciseModule(mExercises, R.array.networks);
 
-		ArrayAdapter<Exercise> adapter = new ArrayAdapter<Exercise>(
+		ArrayAdapter<Exercise> adapter = new ArrayAdapter<>(
 				getActivity(), android.R.layout.simple_spinner_item,
 				mExercises);
 		adapter.setDropDownViewResource(
 				android.R.layout.simple_spinner_dropdown_item);
 	 
-		mExerciseSpinner = (Spinner) mRootView
+		mExerciseSpinner = mRootView
 				.findViewById(R.id.spinner_exercise);
 		mExerciseSpinner.setAdapter(adapter);
 
@@ -155,7 +155,7 @@ public class HighscoresFragment extends Fragment implements
 	}
 
 	private void initializeListView(int selectedExerciseId, Level level) {
-		mHighscoreListView = (ListView) mRootView
+		mHighscoreListView = mRootView
 				.findViewById(R.id.list_view_highscores);
 
 		if (firstTime()) {
@@ -183,14 +183,14 @@ public class HighscoresFragment extends Fragment implements
 		if (firstTime) {
 			SharedPreferences.Editor editor = sharedPreferences.edit();
 			editor.putBoolean(FIRST_TIME_HIGHSCORES, false);
-			editor.commit();
+			editor.apply();
 			return true;
 		}
 		return false;
 	}
 
 	private ArrayList<Highscore> loadHighscores(Level level) {
-		ArrayList<Highscore> highscores = new ArrayList<Highscore>();
+		ArrayList<Highscore> highscores = new ArrayList<>();
 
 		try {
 			highscores = HighscoreManager.loadHighscores(getActivity(), level);
@@ -207,7 +207,7 @@ public class HighscoresFragment extends Fragment implements
 
 	private ArrayList<Highscore> selectHighscores(
 			ArrayList<Highscore> highscores, int selectedExerciseId) {
-		ArrayList<Highscore> selectedHighscores = new ArrayList<Highscore>();
+		ArrayList<Highscore> selectedHighscores = new ArrayList<>();
 
 		for (Highscore highscore : highscores) {
 			if (selectedExerciseId == highscore.getExercise()) {
@@ -225,7 +225,7 @@ public class HighscoresFragment extends Fragment implements
 
 	private void addBasicHighscores(Level level) {
 		String[] names = getResources().getStringArray(R.array.student_names);
-		ArrayList<Highscore> highscores = new ArrayList<Highscore>();
+		ArrayList<Highscore> highscores = new ArrayList<>();
 
 		for (Exercise exercise : mExercises) {
 			addBasicScoresForExercise(highscores, names, exercise.getId());

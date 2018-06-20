@@ -24,6 +24,7 @@ import java.util.Random;
 import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
 import es.uniovi.imovil.fcrtrainer.R;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -72,20 +73,19 @@ public abstract class BaseNumericalExerciseFragment extends
 	};
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
 		View rootView;
 		rootView = inflater.inflate(R.layout.fragment_numerical_exercise,
 				container, false);
 
-		mAnswerEditText = (EditText) rootView.findViewById(R.id.text_view_answer);
-		mChangeDirectionButton = (Button) rootView.findViewById(R.id.change);
-		mSolutionButton = (Button) rootView.findViewById(R.id.seesolution);
-		mCheckButton = (Button) rootView.findViewById(R.id.checkbutton);
-		mNumberToConvertTextView = (TextView) rootView
-				.findViewById(R.id.numbertoconvert);
-		mTitleTextView = (TextView) rootView.findViewById(R.id.exercisetitle);
+		mAnswerEditText = rootView.findViewById(R.id.text_view_answer);
+		mChangeDirectionButton = rootView.findViewById(R.id.change);
+		mSolutionButton = rootView.findViewById(R.id.seesolution);
+		mCheckButton = rootView.findViewById(R.id.checkbutton);
+		mNumberToConvertTextView = rootView.findViewById(R.id.numbertoconvert);
+		mTitleTextView = rootView.findViewById(R.id.exercisetitle);
 		mRandomGenerator = new Random();
 
 		mAnswerEditText.setOnEditorActionListener(new OnEditorActionListener() {

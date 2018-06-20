@@ -26,11 +26,9 @@ import com.google.android.gms.analytics.Tracker;
 
 import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -127,12 +125,12 @@ public abstract class BaseExerciseFragment extends Fragment {
 	private ImageView mResultImage;
 
 	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		mResult = (View) view.findViewById(R.id.result);
-		mResultImage = (ImageView) view.findViewById(R.id.resultimage);
-		mClock = (TextView) getView().findViewById(R.id.text_view_clock);
-		mScoreTextView = (TextView) view.findViewById(R.id.text_view_score);
-		mLevelTextView = (TextView) view.findViewById(R.id.text_view_level);
+	public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+		mResult = view.findViewById(R.id.result);
+		mResultImage = view.findViewById(R.id.resultimage);
+		mClock = getView().findViewById(R.id.text_view_clock);
+		mScoreTextView = view.findViewById(R.id.text_view_score);
+		mLevelTextView = view.findViewById(R.id.text_view_level);
 
 		mGameInfoPanel = view.findViewById(R.id.game_info_panel);
 		if (mGameInfoPanel != null) {
@@ -168,7 +166,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 	}
 
 	@Override
-	public void onSaveInstanceState(Bundle outState) {
+	public void onSaveInstanceState(@NonNull Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putBoolean(STATE_IS_PLAYING, mIsPlaying);
 		outState.putLong(STATE_CONSUMED_TIME_MS,
@@ -389,16 +387,13 @@ public abstract class BaseExerciseFragment extends Fragment {
 			mResultImage.setImageDrawable(getResources().getDrawable(R.drawable.correct));
 		else mResultImage.setImageDrawable(getResources().getDrawable(R.drawable.incorrect));
 
-		// This only works in API 12+, so we skip this animation on old devices
-		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB_MR2){
-			mResultImage.animate().setDuration(700).setInterpolator(mAntovershoot).scaleX(1.5f).scaleY(1.5f).withEndAction(new Runnable(){
-				@Override
-				public void run() {
-					// Back to its original size after the animation's end
-					mResultImage.animate().scaleX(1f).scaleY(1f);
-				}
-			});
-		}
+		mResultImage.animate().setDuration(700).setInterpolator(mAntovershoot).scaleX(1.5f).scaleY(1.5f).withEndAction(new Runnable(){
+			@Override
+			public void run() {
+				// Back to its original size after the animation's end
+				mResultImage.animate().scaleX(1f).scaleY(1f);
+			}
+		});
 	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -431,7 +426,6 @@ public abstract class BaseExerciseFragment extends Fragment {
 	/**
 	 * Saves the score using the Highscore Manager.
 	 *
-	 * @param score
 	 */
 	protected void saveScore() {
 		String user = getString(R.string.default_user_name);

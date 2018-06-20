@@ -29,8 +29,7 @@ public class TwosComplementExerciseFragment extends
 	private int mNumberToConvert;
 
 	public static TwosComplementExerciseFragment newInstance() {
-		TwosComplementExerciseFragment fragment = new TwosComplementExerciseFragment();
-		return fragment;
+		return new TwosComplementExerciseFragment();
 	}
 
 	@Override

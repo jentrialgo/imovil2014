@@ -90,7 +90,7 @@ public class KeyboardView extends LinearLayout implements OnClickListener {
 		if (mEditText == null) {
 			// No textView assigned. By default, we look for one with id answer
 			View parent = (View) getParent();
-			mEditText = (EditText) parent.findViewById(R.id.text_view_answer);
+			mEditText = parent.findViewById(R.id.text_view_answer);
 			if (mEditText == null) { // not found
 				return;
 			}
