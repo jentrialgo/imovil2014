@@ -35,6 +35,9 @@
     <string name="solution">Solution</string>
 
 	<!-- Cadenas comunes a varios módulos -->
+    <string name="share_message">I\'m playing #MasterHacker, this is my score! Score: %1$d</string>
+    <string name="share">Share</string>
+    <string name="official_app_needed">You need to install the official application</string>
     <string name="score">Score:</string>
     <string name="game_on">Game on!</string>
     <string name="gameisoverexp">Game ended! You have %1$d seconds left and obtained %2$d points!</string>
