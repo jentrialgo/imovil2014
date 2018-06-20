@@ -3,12 +3,14 @@ package es.uniovi.imovil.fcrtrainer;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 
@@ -18,6 +20,7 @@ import es.uniovi.imovil.fcrtrainer.highscores.Highscore;
 import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
 
 public class EndGameFragment extends Fragment implements Button.OnClickListener {
+    private static final String TAG = "EndGameFragment";
     private final static String ARG_SCORE = "score";
     private final static  String ARG_ID = "exerciseID";
     private int score;  //Score of the game that just ended
@@ -81,33 +84,34 @@ public class EndGameFragment extends Fragment implements Button.OnClickListener 
         lbScore.setText(lbScore.getText() + "" + this.score);
         lbMotivation.setText(gameOverMessage(this.score));
 
-        if(score < 5)
+        if(score < 5) {
             ivEndGame.setImageResource(R.drawable.incorrect);
-
-        boolean isHighscore = false;
-        try {
-            ArrayList<Highscore> highscores = HighscoreManager.loadHighscores(getActivity().getApplicationContext(),
-                    PreferenceUtils.getLevel(getActivity()));
-            ArrayList<Highscore> trimmedHighscores = new ArrayList<Highscore>();
-
-            for(Highscore h : highscores)
-                if(h.getExercise() == this.exerciseId)
-                    trimmedHighscores.add(h);
-
-            for(Highscore h : trimmedHighscores)
-                if(h.getScore() <= this.score)
-                    isHighscore = true;
-
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
 
-        if(isHighscore){
+        boolean isHighscore = true;
+        try {
+            ArrayList<Highscore> highscores = HighscoreManager.loadHighscores(getContext(),
+                    PreferenceUtils.getLevel(getActivity()));
+
+            for (Highscore h : highscores) {
+                if (h.getExercise() == exerciseId && h.getScore() > score) {
+                    isHighscore = false;
+                }
+            }
+        } catch (JSONException e) {
+            Log.d(TAG, "Error al analizar el JSON: " + e.getMessage());
+            Toast.makeText(getActivity(),
+                    getActivity().getString(R.string.error_parsing_highscores),
+                    Toast.LENGTH_LONG).show();
+        }
+
+        if (isHighscore){
             lbHighScore.setText(R.string.endgame_newrecord);
             ivEndGame.setImageResource(R.drawable.ic_star);
         }
-        else
+        else {
             lbHighScore.setVisibility(View.GONE);
+        }
 
     }
 
