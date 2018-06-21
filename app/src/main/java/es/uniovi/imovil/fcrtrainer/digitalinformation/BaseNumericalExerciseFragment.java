@@ -51,7 +51,7 @@ public abstract class BaseNumericalExerciseFragment extends
 	private Button mChangeDirectionButton;
 	private Button mSolutionButton;
 	private TextSwitcher mNumberToConvertTextSwitcher;
-	private TextView mTitleTextView;
+	private TextSwitcher mTitleTextView;
 	protected String mNumberToConvertString;
 
 	protected Random mRandomGenerator;
@@ -85,8 +85,11 @@ public abstract class BaseNumericalExerciseFragment extends
 		mChangeDirectionButton = rootView.findViewById(R.id.change);
 		mSolutionButton = rootView.findViewById(R.id.seesolution);
 		mCheckButton = rootView.findViewById(R.id.checkbutton);
-		mTitleTextView = rootView.findViewById(R.id.exercisetitle);
 		mRandomGenerator = new Random();
+
+		mTitleTextView = rootView.findViewById(R.id.exercisetitle);
+		mTitleTextView.setInAnimation(getActivity(), R.anim.slide_in_right);
+		mTitleTextView.setOutAnimation(getActivity(), R.anim.slide_out_left);
 
 		mNumberToConvertTextSwitcher = rootView.findViewById(R.id.numbertoconvert);
 		mNumberToConvertTextSwitcher.setInAnimation(getActivity(), android.R.anim.slide_in_left);

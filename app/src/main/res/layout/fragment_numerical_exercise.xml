@@ -41,11 +41,22 @@ limitations under the License.
             android:layout_below="@+id/game_info_panel"
             android:orientation="vertical" >
 
-            <TextView
+            <TextSwitcher
                 android:id="@+id/exercisetitle"
-                style="@style/Title2DarkLight"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                >
+                <TextView
+                    style="@style/Title2DarkLight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Exercise title"/>
+                <TextView
+                    style="@style/Title2DarkLight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Exercise title"/>
+            </TextSwitcher>
 
             <LinearLayout
                 android:id="@+id/LinearLayout2"
