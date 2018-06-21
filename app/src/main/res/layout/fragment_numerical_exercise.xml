@@ -55,15 +55,29 @@ limitations under the License.
                 android:background="@drawable/cards"
                 android:orientation="horizontal" >
 
-                <TextView
+                <TextSwitcher
                     android:id="@+id/numbertoconvert"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.6"
-                    android:gravity="center_horizontal"
-                    android:padding="10dp"
-                    android:textColor="@color/mediumdarkgray"
-                    android:textSize="@dimen/normal_font" />
+                    >
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/mediumdarkgray"
+                        android:gravity="center_horizontal"
+                        android:text="0001"
+                        android:textSize="@dimen/normal_font">
+                    </TextView>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/mediumdarkgray"
+                        android:gravity="center_horizontal"
+                        android:text="0010"
+                        android:textSize="@dimen/normal_font">
+                    </TextView>
+                </TextSwitcher>
 
                 <EditText
                     android:id="@+id/text_view_answer"
@@ -75,7 +89,8 @@ limitations under the License.
                     android:imeOptions="actionDone"
                     android:inputType="text"
                     android:padding="10dp"
-                    android:textSize="@dimen/normal_font" />
+                    android:textSize="@dimen/normal_font"
+                    tools:text="1"/>
             </LinearLayout>
 
             <LinearLayout

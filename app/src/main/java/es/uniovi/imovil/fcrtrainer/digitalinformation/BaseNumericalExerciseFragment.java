@@ -37,6 +37,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
@@ -49,7 +50,7 @@ public abstract class BaseNumericalExerciseFragment extends
 	private Button mCheckButton;
 	private Button mChangeDirectionButton;
 	private Button mSolutionButton;
-	private TextView mNumberToConvertTextView;
+	private TextSwitcher mNumberToConvertTextSwitcher;
 	private TextView mTitleTextView;
 	protected String mNumberToConvertString;
 
@@ -84,9 +85,12 @@ public abstract class BaseNumericalExerciseFragment extends
 		mChangeDirectionButton = rootView.findViewById(R.id.change);
 		mSolutionButton = rootView.findViewById(R.id.seesolution);
 		mCheckButton = rootView.findViewById(R.id.checkbutton);
-		mNumberToConvertTextView = rootView.findViewById(R.id.numbertoconvert);
 		mTitleTextView = rootView.findViewById(R.id.exercisetitle);
 		mRandomGenerator = new Random();
+
+		mNumberToConvertTextSwitcher = rootView.findViewById(R.id.numbertoconvert);
+		mNumberToConvertTextSwitcher.setInAnimation(getActivity(), android.R.anim.slide_in_left);
+		mNumberToConvertTextSwitcher.setOutAnimation(getActivity(), android.R.anim.slide_out_right);
 
 		mAnswerEditText.setOnEditorActionListener(new OnEditorActionListener() {
 
@@ -181,7 +185,7 @@ public abstract class BaseNumericalExerciseFragment extends
 	}
 	
 	private void updateUI() {
-		mNumberToConvertTextView.setText(mNumberToConvertString);
+		mNumberToConvertTextSwitcher.setText(mNumberToConvertString);
 		setTitle();
 	}
 
