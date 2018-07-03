@@ -123,6 +123,7 @@ public abstract class BaseNumericalExerciseFragment extends
 			public void onClick(View arg0) {
 				mDirectConversion ^= true;
 				setKeyboardLayout();
+				setTitle();
 				newQuestion();
 			}
 		});
@@ -152,12 +153,13 @@ public abstract class BaseNumericalExerciseFragment extends
 			generateRandomQuestion();
 		}
 
-		updateUI();
+		setTitle();
+		mNumberToConvertTextSwitcher.setText(mNumberToConvertString);
 		setKeyboardLayout();
 	}
 
 	@Override
-	public void onSaveInstanceState(Bundle outState) {
+	public void onSaveInstanceState(@NonNull Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putBoolean(STATE_DIRECT_CONVERSION, mDirectConversion);
 		outState.putString(STATE_NUMBER_TO_CONVERT, mNumberToConvertString);
@@ -187,11 +189,6 @@ public abstract class BaseNumericalExerciseFragment extends
 		return level().numberOfBits();
 	}
 	
-	private void updateUI() {
-		mNumberToConvertTextSwitcher.setText(mNumberToConvertString);
-		setTitle();
-	}
-
 	/**
 	 * Checks if the answer is correct. If the game mode is selected checks for
 	 * the number of questions that already has been asked, in case that number
@@ -218,7 +215,7 @@ public abstract class BaseNumericalExerciseFragment extends
 	private void newQuestion() {
 		clearAnswer();
 		generateRandomQuestion();
-		updateUI();
+		mNumberToConvertTextSwitcher.setText(mNumberToConvertString);
 	}
 
 	private void showSolution() {
