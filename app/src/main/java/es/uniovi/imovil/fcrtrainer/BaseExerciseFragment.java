@@ -26,6 +26,7 @@ import com.google.android.gms.analytics.Tracker;
 
 import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -372,7 +373,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 	 * 
 	 * @param correct if the answer is correct
 	 */
-	@SuppressLint("NewApi") protected void showAnimationAnswer(boolean correct){ 
+	protected void showAnimationAnswer(boolean correct){
 		// Fade in - fade out
 		mResult.setVisibility(View.VISIBLE);
 		mAnimation = new AlphaAnimation(0,1);
@@ -386,13 +387,15 @@ public abstract class BaseExerciseFragment extends Fragment {
 			mResultImage.setImageDrawable(getResources().getDrawable(R.drawable.correct));
 		else mResultImage.setImageDrawable(getResources().getDrawable(R.drawable.incorrect));
 
-		mResultImage.animate().setDuration(700).setInterpolator(mAntovershoot).scaleX(1.5f).scaleY(1.5f).withEndAction(new Runnable(){
-			@Override
-			public void run() {
-				// Back to its original size after the animation's end
-				mResultImage.animate().scaleX(1f).scaleY(1f);
-			}
-		});
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+			mResultImage.animate().setDuration(700).setInterpolator(mAntovershoot).scaleX(1.5f).scaleY(1.5f).withEndAction(new Runnable(){
+                @Override
+                public void run() {
+                    // Back to its original size after the animation's end
+                    mResultImage.animate().scaleX(1f).scaleY(1f);
+                }
+            });
+		}
 	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
