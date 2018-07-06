@@ -18,8 +18,11 @@ limitations under the License.
 
 package es.uniovi.imovil.fcrtrainer.networks;
 
+import es.uniovi.imovil.fcrtrainer.Screen;
 import es.uniovi.imovil.fcrtrainer.R;
+
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.WindowManager;
@@ -57,7 +60,7 @@ public class NetworkAddressExerciseFragment
 	}
 
 	@Override
-	public void onSaveInstanceState(Bundle outState) {
+	public void onSaveInstanceState(@NonNull Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putInt(STATE_IP, mIp);
 	}
@@ -134,9 +137,9 @@ public class NetworkAddressExerciseFragment
 		return getString(R.string.na_title);
 	}
 
-	@Override
-	protected int obtainExerciseId() {
-		return R.string.network_address;
-	}
+    @Override
+    protected Screen associatedExercise() {
+        return Screen.NETWORK_ADDRESS;
+    }
 
 }

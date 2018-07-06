@@ -18,6 +18,7 @@ limitations under the License.
 
 package es.uniovi.imovil.fcrtrainer.digitalinformation;
 
+import es.uniovi.imovil.fcrtrainer.Screen;
 import es.uniovi.imovil.fcrtrainer.R;
 
 
@@ -65,8 +66,8 @@ public class BinaryExerciseFragment extends BaseNumericalExerciseFragment {
 	}
 
 	@Override
-	protected int obtainExerciseId() {
-		return R.string.binary;
+	protected Screen associatedExercise() {
+		return Screen.BINARY;
 	}
 
 	@Override

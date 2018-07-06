@@ -21,6 +21,7 @@ package es.uniovi.imovil.fcrtrainer.digitalsystems;
 import java.util.Random;
 
 import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
+import es.uniovi.imovil.fcrtrainer.Screen;
 import es.uniovi.imovil.fcrtrainer.R;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -130,7 +131,7 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 	}
 
 	@Override
-	public void onSaveInstanceState(Bundle outState) {
+	public void onSaveInstanceState(@NonNull Bundle outState) {
 		super.onSaveInstanceState(outState);
 
 		outState.putInt(STATE_CURRENT_QUESTION, mCurrentQuestion);
@@ -220,8 +221,8 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 	}
 
 	@Override
-	protected int obtainExerciseId() {
-		return R.string.logic_gate;
+	protected Screen associatedExercise() {
+		return Screen.LOGIC_GATE;
 	}
 
 	@Override

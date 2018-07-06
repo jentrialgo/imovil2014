@@ -19,7 +19,10 @@ limitations under the License.
 package es.uniovi.imovil.fcrtrainer.digitalinformation;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import es.uniovi.imovil.fcrtrainer.Screen;
 import es.uniovi.imovil.fcrtrainer.R;
 
 public class TwosComplementExerciseFragment extends
@@ -43,15 +46,15 @@ public class TwosComplementExerciseFragment extends
 	}
 
 	@Override
-	public void onSaveInstanceState(Bundle outState) {
+	public void onSaveInstanceState(@NonNull Bundle outState) {
 		super.onSaveInstanceState(outState);
 
 		outState.putInt(STATE_NUMBER_TO_CONVERT, mNumberToConvert);
 	}
 
 	@Override
-	protected int obtainExerciseId() {
-		return R.string.twoscomplement;
+	protected Screen associatedExercise() {
+		return Screen.TWOS_COMPLEMENT;
 	}
 
 	@Override

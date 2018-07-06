@@ -178,14 +178,13 @@ public abstract class BaseExerciseFragment extends Fragment {
 	@Override
 	public void onStart() {
 		super.onStart();
-		analyticsTrack(obtainExerciseId());
+		analyticsTrack(associatedExercise().toString());
 	}
 
-	private void analyticsTrack(int exerciseNameId) {
+	private void analyticsTrack(String screenName) {
 		Tracker t = ((FcrTrainerApplication) getActivity().getApplication())
 				.getTracker();
 
-		String screenName = getString(exerciseNameId);
 		t.setScreenName(screenName);
 
 		// Send a screen view.
@@ -348,7 +347,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 	}
 
     private void showEndGameFragment() {
-	    EndGameFragment endGameFragment = EndGameFragment.newInstance(mScore, obtainExerciseId());
+	    EndGameFragment endGameFragment = EndGameFragment.newInstance(mScore, associatedExercise());
 	    getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, endGameFragment, "ENDGAME")
                 .addToBackStack(null)
@@ -419,9 +418,9 @@ public abstract class BaseExerciseFragment extends Fragment {
 	}
 
 	/***
-	 * Debe devolver el id de una cadena que identifique el ejercicio
+	 * Debe devolver el objeto Screen de tipo ejercicio asociado con el fragmento concreto
 	 */
-	protected abstract int obtainExerciseId();
+	protected abstract Screen associatedExercise();
 
 	/**
 	 * Saves the score using the Highscore Manager.
@@ -432,7 +431,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 
 		try {
 			HighscoreManager.addScore(getActivity().getApplicationContext(),
-					mScore, obtainExerciseId(), new Date(), user, level());
+					mScore, associatedExercise(), new Date(), user, level());
 		} catch (JSONException e) {
 			Log.v(getClass().getSimpleName(), "Error when saving score");
 		}

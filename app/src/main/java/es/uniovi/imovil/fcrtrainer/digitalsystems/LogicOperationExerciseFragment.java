@@ -21,7 +21,9 @@ package es.uniovi.imovil.fcrtrainer.digitalsystems;
 import java.util.Random;
 
 import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
+import es.uniovi.imovil.fcrtrainer.Screen;
 import es.uniovi.imovil.fcrtrainer.R;
+
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -240,7 +242,7 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 	}
 
 	@Override
-	public void onSaveInstanceState(Bundle outState) {
+	public void onSaveInstanceState(@NonNull Bundle outState) {
 		super.onSaveInstanceState(outState);
 		// guardamos los campos de los textViews
 		String entrada1 = mTvEntrada1.getText().toString();
@@ -309,9 +311,9 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		mIsPlaying = true;
 	}
 
-	@Override
-	protected int obtainExerciseId() {
-		return R.string.logic_operation;
-	}
+    @Override
+    protected Screen associatedExercise() {
+        return Screen.LOGIC_OPERATION;
+    }
 
 }

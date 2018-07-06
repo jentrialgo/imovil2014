@@ -26,6 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import es.uniovi.imovil.fcrtrainer.Screen;
 import es.uniovi.imovil.fcrtrainer.Level;
 import es.uniovi.imovil.fcrtrainer.R;
 
@@ -108,9 +109,7 @@ public class HighscoreManager {
 	 * @param score
 	 *            Puntos obtenidos
 	 * @param exercise
-	 *            Ejercicio donde se han obtenido. Debe ser una de las
-	 *            constantes usadas en FragmentFactory para lanzar el fragmento,
-	 *            por ejemplo, R.string.logic_gate
+	 *            Ejercicio donde se han obtenido
 	 * @param date
 	 *            Fecha en la que se obtuvo la puntuaci�n
 	 * @param userName
@@ -121,12 +120,13 @@ public class HighscoreManager {
 	 * @throws JSONException
 	 *             Cuando no se puede pasar a JSON o de JSON una puntuaci�n
 	 */
-	public static void addScore(Context context, int score, int exercise,
+	public static void addScore(Context context, int score, Screen exercise,
+
 			Date date, String userName, Level level) throws JSONException {
 		if (userName == null) {
 			userName = context.getString(R.string.default_user_name);
 		}
-		Highscore highscore = new Highscore(score, exercise, date, userName);
+		Highscore highscore = new Highscore(score, exercise.ordinal(), date, userName);
 
 		ArrayList<Highscore> highscores = new ArrayList<>();
 		try {

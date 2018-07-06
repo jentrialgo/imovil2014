@@ -24,9 +24,10 @@ import java.util.Date;
 
 import org.json.JSONException;
 
-import es.uniovi.imovil.fcrtrainer.Exercise;
+import es.uniovi.imovil.fcrtrainer.Screen;
 import es.uniovi.imovil.fcrtrainer.Level;
 import es.uniovi.imovil.fcrtrainer.R;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
@@ -63,7 +64,6 @@ public class HighscoresFragment extends Fragment implements
 	private Spinner mLevelSpinner;
 	private Spinner mExerciseSpinner;
 	private ListView mHighscoreListView;
-	ArrayList<Exercise> mExercises;
 
 	public static HighscoresFragment newInstance() {
 		return new HighscoresFragment();
@@ -118,45 +118,22 @@ public class HighscoresFragment extends Fragment implements
 
 	private void initializeExerciseSpinner() {
 		// La idea de esta función es crear los elementos del spinner utilizando
-		// los arrays definidos en los recursos
+		// los elementos de Screen que son ejercicios
 
-		mExercises = new ArrayList<>();
-		addExerciseModule(mExercises, R.array.codes);
-		addExerciseModule(mExercises, R.array.digital_systems);
-		addExerciseModule(mExercises, R.array.networks);
-
-		ArrayAdapter<Exercise> adapter = new ArrayAdapter<>(
+		ArrayAdapter<Screen> adapter = new ArrayAdapter<>(
 				getActivity(), android.R.layout.simple_spinner_item,
-				mExercises);
+				Screen.exercises());
 		adapter.setDropDownViewResource(
 				android.R.layout.simple_spinner_dropdown_item);
 	 
-		mExerciseSpinner = mRootView
-				.findViewById(R.id.spinner_exercise);
+		mExerciseSpinner = mRootView.findViewById(R.id.spinner_exercise);
 		mExerciseSpinner.setAdapter(adapter);
 
 		mExerciseSpinner.setOnItemSelectedListener(this);
 	}
 
-	private void addExerciseModule(ArrayList<Exercise> exercises,
-			int arrayResourceId) {
-		TypedArray array = getResources().obtainTypedArray(arrayResourceId);
-
-		for (int i = 0; i < array.length(); i++) {
-			int defaultId = 0;
-			int resourceId = array.getResourceId(i, defaultId);
-
-			Exercise exercise = new Exercise(getResources().getString(
-					resourceId), resourceId);
-			exercises.add(exercise);
-		}
-
-		array.recycle();
-	}
-
 	private void initializeListView(int selectedExerciseId, Level level) {
-		mHighscoreListView = mRootView
-				.findViewById(R.id.list_view_highscores);
+		mHighscoreListView = mRootView.findViewById(R.id.list_view_highscores);
 
 		if (firstTime()) {
 			addBasicHighscores();
@@ -165,6 +142,15 @@ public class HighscoresFragment extends Fragment implements
 		ArrayList<Highscore> highscores = loadHighscores(level);
 
 		highscores = selectHighscores(highscores, selectedExerciseId);
+
+		if (highscores.size() == 0) {
+			// This can happen if the ids of the highscores change. Recreate the high scores
+			Toast.makeText(getActivity(),
+					getActivity().getString(R.string.error_highscores_not_found),
+					Toast.LENGTH_LONG).show();
+
+			addBasicHighscores();
+		}
 
 		Collections.sort(highscores);
 		Collections.reverse(highscores);
@@ -227,8 +213,8 @@ public class HighscoresFragment extends Fragment implements
 		String[] names = getResources().getStringArray(R.array.student_names);
 		ArrayList<Highscore> highscores = new ArrayList<>();
 
-		for (Exercise exercise : mExercises) {
-			addBasicScoresForExercise(highscores, names, exercise.getId());
+		for (Screen exercise : Screen.exercises()) {
+			addBasicScoresForExercise(highscores, names, exercise.ordinal());
 		}
 
 		try {
@@ -263,8 +249,8 @@ public class HighscoresFragment extends Fragment implements
 	}
 
 	private int readExerciseIdFromSpinner() {
-		Exercise exercise = (Exercise) mExerciseSpinner.getSelectedItem();
-		return exercise.getId();
+		Screen exercise = (Screen) mExerciseSpinner.getSelectedItem();
+		return exercise.ordinal();
 	}
 
 	private Level readLevelFromSpinner() {

@@ -21,7 +21,10 @@ package es.uniovi.imovil.fcrtrainer.digitalinformation;
 import java.util.Locale;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import es.uniovi.imovil.fcrtrainer.Screen;
 import es.uniovi.imovil.fcrtrainer.R;
 
 public class HexadecimalExerciseFragment extends BaseNumericalExerciseFragment {
@@ -48,14 +51,14 @@ public class HexadecimalExerciseFragment extends BaseNumericalExerciseFragment {
 	}
 
 	@Override
-	public void onSaveInstanceState(Bundle outState) {
+	public void onSaveInstanceState(@NonNull Bundle outState) {
 		super.onSaveInstanceState(outState);
 
 		outState.putInt(STATE_NUMBER_TO_CONVERT, mNumberToConvert);
 	}
 
-	protected int obtainExerciseId() {
-		return R.string.hexadecimal;
+	protected Screen associatedExercise() {
+		return Screen.HEXADECIMAL;
 	}
 
 	@Override

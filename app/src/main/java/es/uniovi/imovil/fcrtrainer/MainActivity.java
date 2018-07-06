@@ -18,16 +18,16 @@ limitations under the License.
 
 package es.uniovi.imovil.fcrtrainer;
 
-import java.util.ArrayList;
-
 import com.google.android.gms.analytics.GoogleAnalytics;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -38,12 +38,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import es.uniovi.imovil.fcrtrainer.SectionedDrawerAdapter.Group;
 
 public class MainActivity extends AppCompatActivity implements
-		ListView.OnItemClickListener {
+		NavigationView.OnNavigationItemSelectedListener {
 
 	/**
 	 * Nombre del fichero de preferencias.
@@ -62,10 +59,9 @@ public class MainActivity extends AppCompatActivity implements
 
 	private DrawerLayout mDrawerLayout;
 	private ActionBarDrawerToggle mDrawerToggle;
-	private ListView mDrawerList;
 	private CharSequence mDrawerTitle;
 	private CharSequence mTitle;
-	private int mExerciseResIndex;
+	private Screen mExercise;
 	private boolean mUserLearnedDrawer;
 
 	@Override
@@ -80,26 +76,31 @@ public class MainActivity extends AppCompatActivity implements
 		mDrawerTitle = mTitle;
 		boolean fromSavedInstanceState = false;
 
+		int exerciseOrdinal;
 		if (savedInstanceState != null) {
 			// Recuperar el estado tras una interrupción
-			mExerciseResIndex = savedInstanceState.getInt(LAST_EXERCISE);
-			mUserLearnedDrawer = savedInstanceState
-					.getBoolean(USER_LEARNED_DRAWER);
+			exerciseOrdinal= savedInstanceState.getInt(LAST_EXERCISE);
+			mUserLearnedDrawer = savedInstanceState.getBoolean(USER_LEARNED_DRAWER);
 			fromSavedInstanceState = true;
 		} else {
 			// Restaurar el estado desde las preferencias
-			SharedPreferences prefs = getSharedPreferences(PREFERENCES,
-					Context.MODE_PRIVATE);
-			mExerciseResIndex = prefs.getInt(LAST_EXERCISE, R.string.binary);
+			SharedPreferences prefs = getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
+			exerciseOrdinal = prefs.getInt(LAST_EXERCISE, Screen.BINARY.ordinal());
 			mUserLearnedDrawer = prefs.getBoolean(USER_LEARNED_DRAWER, false);
 		}
 
-		// Cargo el fragmento con el contenido
+		if (exerciseOrdinal > Screen.values().length) {
+			// Esto puede ocurrir cuando cambia el número de ejercicios en una actualización
+			exerciseOrdinal = Screen.BINARY.ordinal();
+		}
 
+		mExercise = Screen.values()[exerciseOrdinal];
+
+		// Cargo el fragmento con el contenido
 		if (savedInstanceState == null)
 			updateContentFragment();
 
-		initializeDrawer(fromSavedInstanceState);		
+		initializeDrawer(fromSavedInstanceState);
 	}
 
 	@Override
@@ -110,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements
 		SharedPreferences prefs = getSharedPreferences(PREFERENCES,
 				Context.MODE_PRIVATE);
 		SharedPreferences.Editor prefsEditor = prefs.edit();
-		prefsEditor.putInt(LAST_EXERCISE, mExerciseResIndex);
+		prefsEditor.putInt(LAST_EXERCISE, mExercise.ordinal());
 		prefsEditor.putBoolean(USER_LEARNED_DRAWER, mUserLearnedDrawer);
 		prefsEditor.apply();
 	}
@@ -120,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements
 		super.onSaveInstanceState(savedInstanceState);
 
 		// Guardar el estado de la actividad
-		savedInstanceState.putInt(LAST_EXERCISE, mExerciseResIndex);
+		savedInstanceState.putInt(LAST_EXERCISE, mExercise.ordinal());
 		savedInstanceState.putBoolean(USER_LEARNED_DRAWER, mUserLearnedDrawer);
 	}
 
@@ -175,45 +176,22 @@ public class MainActivity extends AppCompatActivity implements
 		getSupportActionBar().setTitle(mTitle);
 	}
 
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
-		int newExerciseIndex = (Integer) parent.getItemAtPosition(position);
-		if (newExerciseIndex != mExerciseResIndex) {
-			// Cambiar el fragmento de contenido actual
-			mExerciseResIndex = newExerciseIndex;
-			updateContentFragment();
-			mTitle = getString(mExerciseResIndex);
-		}
-		// Cerrar el Drawer
-		mDrawerLayout.closeDrawer(mDrawerList);
-	}
-
 	public boolean isDrawerOpen() {
-		return mDrawerLayout.isDrawerOpen(mDrawerList);
+		return mDrawerLayout.isDrawerOpen(GravityCompat.START);
 	}
 	
 	private void updateContentFragment() {
-		Fragment fragment = FragmentFactory
-				.createExercise(mExerciseResIndex);
-		FragmentTransaction fragmentTransaction = getSupportFragmentManager()
-				.beginTransaction();
+		Fragment fragment = mExercise.toFragment();
+		FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
 		fragmentTransaction.replace(R.id.content_frame, fragment, "Hola");
 		fragmentTransaction.commit();
 	}
 
 	private void initializeDrawer(boolean fromSavedState) {
-		// Contenido organizado en secciones
-		ArrayList<Group<String, Integer>> sections = createDrawerEntries();
 		mDrawerLayout = findViewById(R.id.drawer_layout);
-		mDrawerList = findViewById(R.id.left_drawer);
-		mDrawerList.setAdapter(new SectionedDrawerAdapter(this,
-				R.layout.drawer_list_item, R.layout.drawer_list_header,
-				sections));
-
-		// Listener
-		mDrawerList.setOnItemClickListener(this);
+		NavigationView navigationView = findViewById(R.id.nav_view);
+		navigationView.setNavigationItemSelectedListener(this);
 
 		// Mostrar el icono del drawer
 		final ActionBar actionBar = getSupportActionBar();
@@ -240,9 +218,9 @@ public class MainActivity extends AppCompatActivity implements
 		};
 
 		// Si el usuario no ha desplegado alguna vez el Drawer
-		mTitle = getString(mExerciseResIndex);
+		mTitle = mExercise.toString();
 		if (!mUserLearnedDrawer && !fromSavedState) {
-			mDrawerLayout.openDrawer(mDrawerList);
+			mDrawerLayout.openDrawer(GravityCompat.START);
 			actionBar.setTitle(mDrawerTitle);
 		} else {			
 			setTitle(mTitle);
@@ -252,34 +230,6 @@ public class MainActivity extends AppCompatActivity implements
 
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		actionBar.setHomeButtonEnabled(true);
-	}
-
-	private ArrayList<Group<String, Integer>> createDrawerEntries() {
-		ArrayList<Group<String, Integer>> sections = new ArrayList<>();
-
-		addSection(sections, R.string.codes, R.array.codes);
-		addSection(sections, R.string.digital_systems, R.array.digital_systems);
-		addSection(sections, R.string.networks, R.array.networks);
-		addSection(sections, R.string.highscores, R.array.highscores);
-
-		return sections;
-	}
-
-	private void addSection(ArrayList<Group<String, Integer>> sections,
-			int sectionNameId, int childrenArrayId) {
-		Group<String, Integer> group = new Group<>(getString(sectionNameId));
-
-		TypedArray array = getResources().obtainTypedArray(childrenArrayId);
-
-		group.children = new Integer[array.length()];
-		for (int i = 0; i < array.length(); i++) {
-			int defaultId = 0;
-			group.children[i] = array.getResourceId(i, defaultId);
-		}
-		
-		array.recycle();
-		
-		sections.add(group);
 	}
 
 	@Override
@@ -292,5 +242,14 @@ public class MainActivity extends AppCompatActivity implements
 	protected void onStop() {
 		super.onStop();
 		GoogleAnalytics.getInstance(this).reportActivityStop(this);
+	}
+
+	@Override
+	public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+		mExercise = Screen.fromNavId(item.getItemId());
+		mTitle = mExercise.toString();
+		updateContentFragment();
+		mDrawerLayout.closeDrawer(GravityCompat.START);
+		return false;
 	}
 }

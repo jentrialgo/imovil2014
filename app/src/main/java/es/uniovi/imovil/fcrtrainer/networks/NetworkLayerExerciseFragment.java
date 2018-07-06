@@ -21,6 +21,7 @@ package es.uniovi.imovil.fcrtrainer.networks;
 import java.util.Random;
 
 import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
+import es.uniovi.imovil.fcrtrainer.Screen;
 import es.uniovi.imovil.fcrtrainer.R;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -154,7 +155,7 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 	}
 
 	@Override
-	public void onSaveInstanceState(Bundle outState) {
+	public void onSaveInstanceState(@NonNull Bundle outState) {
 		super.onSaveInstanceState(outState);
 
 		outState.putInt(STATE_CURRENT_QUESTION, mCurrentQuestion);
@@ -222,10 +223,10 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 		super.endGame();
 		updateToTrainMode();
 	}
-	
-	@Override
-	protected int obtainExerciseId() {
-		return R.string.network_layer;
-	}
+
+    @Override
+    protected Screen associatedExercise() {
+        return Screen.NETWORK_LAYER;
+    }
 
 }

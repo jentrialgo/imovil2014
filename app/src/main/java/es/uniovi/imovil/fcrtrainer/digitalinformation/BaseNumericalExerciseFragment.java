@@ -22,7 +22,9 @@ import java.util.Locale;
 import java.util.Random;
 
 import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
+import es.uniovi.imovil.fcrtrainer.Screen;
 import es.uniovi.imovil.fcrtrainer.R;
+
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -282,7 +284,7 @@ public abstract class BaseNumericalExerciseFragment extends
 	 * Debe retornar la constante usada en FragmentFactory para lanzar el
 	 * fragmento, por ejemplo, R.string.logic_gate
 	 */
-	protected abstract int obtainExerciseId();
+	protected abstract Screen associatedExercise();
 
 	/**
 	 * Debe retornar true si el resultado está compuesto sólo de números entre 0

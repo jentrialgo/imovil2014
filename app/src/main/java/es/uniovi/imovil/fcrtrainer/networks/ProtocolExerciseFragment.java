@@ -34,6 +34,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
+import es.uniovi.imovil.fcrtrainer.Screen;
 import es.uniovi.imovil.fcrtrainer.R;
 
 // TODO: Necesita que se traduzcan las preguntas de la base de datos a ingl�s
@@ -137,7 +138,7 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 	}
 
 	@Override
-	public void onSaveInstanceState(Bundle outState) {
+	public void onSaveInstanceState(@NonNull Bundle outState) {
 		super.onSaveInstanceState(outState);
 
 		// TODO: save mTestList
@@ -220,8 +221,8 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 	}
 
 	@Override
-	protected int obtainExerciseId() {
-		return R.string.protocol;
+	protected Screen associatedExercise() {
+		return Screen.PROTOCOL;
 	}
 
 }

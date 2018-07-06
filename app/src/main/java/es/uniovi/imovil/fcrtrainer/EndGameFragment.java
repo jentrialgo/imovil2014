@@ -54,11 +54,11 @@ public class EndGameFragment extends Fragment implements Button.OnClickListener 
         // Required empty public constructor
     }
 
-    public static EndGameFragment newInstance(int score, int exerciseId) {
+    public static EndGameFragment newInstance(int score, Screen exercise) {
         EndGameFragment fragment = new EndGameFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SCORE, score);
-        args.putInt(ARG_ID, exerciseId);
+        args.putInt(ARG_ID, exercise.ordinal());
         fragment.setArguments(args);
         return fragment;
     }

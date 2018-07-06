@@ -17,33 +17,7 @@ limitations under the License.
 
 <resources>
 
-    <array name="codes">
-        <item>@string/binary</item>
-        <item>@string/hexadecimal</item>
-        <item>@string/sign_and_magnitude</item>
-     <!--    <item>@string/interpretation</item> -->
-     <!--    <item>@string/offset_binary</item>  -->
-		<item>@string/twoscomplement</item>
-        <item>@string/floating_point</item>
-    </array>
-    <array name="digital_systems">
-        <item>@string/logic_gate</item>
-        <item>@string/logic_operation</item>
-    </array>
-    <array name="networks">
-        <item>@string/network_address</item>
-        <item>@string/cidr</item>
-        <item>@string/host_count</item>
-        <item>@string/network_mask</item>
-        <item>@string/network_layer</item>
-      <!--    <item>@string/protocol</item>  -->
-    </array>
-     
-    <array name="highscores">
-        <item>@string/highscores</item>
-    </array>
-
-    <string-array name="student_names">
+    <string-array name="student_names" translatable="false">
         <item>Ángel Manuel</item>
         <item>Beltrán</item>
         <item>David Alejandro</item>
@@ -62,7 +36,7 @@ limitations under the License.
     </string-array>
 
     <!-- Arrays layer exercise -->  
-    <string-array name="layer_exercise_questions">
+    <string-array name="layer_exercise_questions" translatable="false">
         <item>IP</item>
         <item>UDP</item>
         <item>TCP</item>
@@ -91,7 +65,7 @@ limitations under the License.
     </string-array>
 
     <!-- Arrays logic gate -->
-    <string-array name="logic_gates">
+    <string-array name="logic_gates" translatable="false">
         <item>AND</item>
         <item>OR</item>
         <item>NOT</item>

@@ -18,6 +18,7 @@ limitations under the License.
 
 package es.uniovi.imovil.fcrtrainer.networks;
 
+import es.uniovi.imovil.fcrtrainer.Screen;
 import es.uniovi.imovil.fcrtrainer.R;
 
 public class HostCountExerciseFragment extends BaseNetworkMaskExerciseFragment {
@@ -79,9 +80,9 @@ public class HostCountExerciseFragment extends BaseNetworkMaskExerciseFragment {
 		return getString(R.string.host_count_title);
 	}
 
-	@Override
-	protected int obtainExerciseId() {
-		return R.string.host_count;
-	}
+    @Override
+    protected Screen associatedExercise() {
+        return Screen.HOST_COUNT;
+    }
 
 }

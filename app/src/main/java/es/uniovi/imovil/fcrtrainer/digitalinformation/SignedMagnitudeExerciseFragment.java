@@ -1,7 +1,10 @@
 package es.uniovi.imovil.fcrtrainer.digitalinformation;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import es.uniovi.imovil.fcrtrainer.Screen;
 import es.uniovi.imovil.fcrtrainer.R;
 
 public class SignedMagnitudeExerciseFragment extends
@@ -28,15 +31,15 @@ public class SignedMagnitudeExerciseFragment extends
 	}
 
 	@Override
-	public void onSaveInstanceState(Bundle outState) {
+	public void onSaveInstanceState(@NonNull Bundle outState) {
 		super.onSaveInstanceState(outState);
 
 		outState.putString(STATE_CORRECT_ANSWER, mCorrectAnswer);
 	}
 
 	@Override
-	protected int obtainExerciseId() {
-		return R.string.sign_and_magnitude;
+	protected Screen associatedExercise() {
+		return Screen.SIGN_MAGNITUDE;
 	}
 
 	@Override

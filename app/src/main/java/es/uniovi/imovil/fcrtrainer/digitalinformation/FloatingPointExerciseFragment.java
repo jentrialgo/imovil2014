@@ -31,6 +31,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import es.uniovi.imovil.fcrtrainer.BaseExerciseFragment;
+import es.uniovi.imovil.fcrtrainer.Screen;
 import es.uniovi.imovil.fcrtrainer.KeyboardView;
 import es.uniovi.imovil.fcrtrainer.Level;
 import es.uniovi.imovil.fcrtrainer.PreferenceUtils;
@@ -166,7 +167,7 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 	}
 
 	@Override
-	public void onSaveInstanceState(Bundle outState) {
+	public void onSaveInstanceState(@NonNull Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putBoolean(STATE_CONVERT_TO_DECIMAL, mConvertToDecimal);
 		outState.putFloat(STATE_DECIMAL_VALUE_F, mDecimalValueF);
@@ -395,8 +396,8 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 	}
 
 	@Override
-	protected int obtainExerciseId() {
-		return R.string.floating_point;
+	protected Screen associatedExercise() {
+		return Screen.FLOATING_POINT;
 	}
 
 	class OnFocusChangedListener

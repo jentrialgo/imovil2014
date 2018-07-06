@@ -151,4 +151,7 @@ limitations under the License.
     <string name="play_again">Volver a jugar</string>
     <string name="endgame_score">Puntuación: %1d</string>
     <string name="endgame_newrecord">¡Nuevo Récord!</string>
+    <string name="nav_header_desc">Master Hacker</string>
+    <string name="nav_header_title">Master Hacker</string>
+    <string name="error_highscores_not_found">Puntuaciones no encontradas. Recreándolas...</string>
 </resources>

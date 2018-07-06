@@ -72,7 +72,7 @@ public abstract class BaseNetworkMaskExerciseFragment
 	}
 
 	@Override
-	public void onSaveInstanceState(Bundle outState) {
+	public void onSaveInstanceState(@NonNull Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putInt(STATE_MASK, mMask);
 	}

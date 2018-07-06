@@ -19,6 +19,8 @@ limitations under the License.
 package es.uniovi.imovil.fcrtrainer.networks;
 
 import android.view.WindowManager;
+
+import es.uniovi.imovil.fcrtrainer.Screen;
 import es.uniovi.imovil.fcrtrainer.R;
 
 public class NetworkMaskExerciseFragment
@@ -100,8 +102,8 @@ public class NetworkMaskExerciseFragment
 	}
 
 	@Override
-	protected int obtainExerciseId() {
-		return R.string.network_mask;
+	protected Screen associatedExercise() {
+		return Screen.NETWORK_MASK;
 	}
 
 }

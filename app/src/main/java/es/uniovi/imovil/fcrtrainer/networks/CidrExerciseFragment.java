@@ -18,6 +18,7 @@ limitations under the License.
 
 package es.uniovi.imovil.fcrtrainer.networks;
 
+import es.uniovi.imovil.fcrtrainer.Screen;
 import es.uniovi.imovil.fcrtrainer.R;
 
 public class CidrExerciseFragment extends BaseNetworkMaskExerciseFragment {
@@ -92,9 +93,9 @@ public class CidrExerciseFragment extends BaseNetworkMaskExerciseFragment {
 		return getString(R.string.cidr_title);
 	}
 
-	@Override
-	protected int obtainExerciseId() {
-		return R.string.cidr;
-	}
+    @Override
+    protected Screen associatedExercise() {
+        return Screen.CIDR;
+    }
 
 }
