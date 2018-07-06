@@ -29,7 +29,6 @@ limitations under the License.
     <string name="hexadecimal">Hexadecimal</string>
     <string name="sign_and_magnitude">Signo-magnitud</string>
     <string name="twoscomplement">Complemento a dos</string>
-    <string name="interpretation">Interpretación</string>
     <string name="floating_point">Coma flotante</string>
     <string name="offset_binary">Exceso a Z</string>
     <string name="logic_gate">Puerta lógica</string>
@@ -147,11 +146,10 @@ limitations under the License.
     <string name="endgame_luck">¿Estás respondiendo al azar?</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="play_again">Volver a jugar</string>
     <string name="endgame_score">Puntuación: %1d</string>
     <string name="endgame_newrecord">¡Nuevo Récord!</string>
     <string name="nav_header_desc">Master Hacker</string>
     <string name="nav_header_title">Master Hacker</string>
-    <string name="error_highscores_not_found">Puntuaciones no encontradas. Recreándolas...</string>
+    <string name="error_highscores_not_found">Puntuaciones no encontradas. Recreándolas…</string>
 </resources>

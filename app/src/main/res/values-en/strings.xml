@@ -24,11 +24,11 @@
     <string name="network_mask">Network mask</string>
     <string name="network_layer">Network layer</string>
     <string name="protocol">Protocol</string>
-    <string name="highscores">Highscores</string>
+    <string name="highscores">High scores</string>
     <string name="exercise">Exercise</string>
     <string name="default_user_name">Me</string>
     <string name="error_parsing_highscores">Error analyzing scores</string>
-    <string name="error_adding_initial_highscores">Error while inserting initial highscores</string>
+    <string name="error_adding_initial_highscores">Error while inserting initial high scores</string>
 
     <string name="error_no_clock">Error: this exercise is not prepared for playing</string>
     <string name="check">Check</string>
@@ -127,7 +127,11 @@
     <string name="endgame_luck">Are you answering randomly?</string>
     <string name="play_again">Play again</string>
     <string name="endgame_score">"Score: %1d"</string>
-    <string name="endgame_newrecord">New Highscore!</string>
-    <string name="error_highscores_not_found">High scores not found. Recreating them...</string>
+    <string name="endgame_newrecord">New High score!</string>
+    <string name="error_highscores_not_found">High scores not found. Recreating them…</string>
+    <string name="action_game_control">Play</string>
+    <string name="nav_header_desc">Master Hacker</string>
+    <string name="nav_header_title">Master Hacker</string>
+    <string name="tv_decimal">Decimal number</string>
 
 </resources>
