@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements
 			mUserLearnedDrawer = prefs.getBoolean(USER_LEARNED_DRAWER, false);
 		}
 
-		if (exerciseOrdinal > Screen.values().length) {
+		if (exerciseOrdinal >= Screen.values().length) {
 			// Esto puede ocurrir cuando cambia el número de ejercicios en una actualización
 			exerciseOrdinal = Screen.BINARY.ordinal();
 		}
