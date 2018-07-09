@@ -9,13 +9,13 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="256"
-   height="256"
+   width="1024"
+   height="500"
    id="svg2"
    version="1.1"
    inkscape:version="0.48.5 r10040"
-   sodipodi:docname="ic_launcher.svg"
-   inkscape:export-filename="C:\Users\joaquin\git\imovil2014-android-studio\artwork\bitmap.png"
+   sodipodi:docname="banner.svg"
+   inkscape:export-filename="C:\Users\joaquin\git\imovil2014-android-studio\artwork\banner.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
@@ -2713,9 +2713,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2"
-     inkscape:cx="138.63296"
-     inkscape:cy="160.11094"
+     inkscape:zoom="0.70710678"
+     inkscape:cx="93.586572"
+     inkscape:cy="134.74612"
      inkscape:document-units="px"
      inkscape:current-layer="layer2"
      showgrid="false"
@@ -2728,7 +2728,11 @@
      inkscape:guide-bbox="true">
     <inkscape:grid
        type="xygrid"
-       id="grid2985" />
+       id="grid2985"
+       empspacing="5"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true" />
   </sodipodi:namedview>
   <metadata
      id="metadata7">
@@ -2746,24 +2750,18 @@
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="Capa"
-     style="display:inline">
-    <path
-       sodipodi:type="arc"
-       style="fill:#26356b;fill-opacity:1;fill-rule:evenodd;stroke:#131d46;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       id="path2996"
-       sodipodi:cx="138.21428"
-       sodipodi:cy="139.92857"
-       sodipodi:rx="104.64286"
-       sodipodi:ry="104.64286"
-       d="m 242.85714,139.92857 a 104.64286,104.64286 0 1 1 -209.285721,0 104.64286,104.64286 0 1 1 209.285721,0 z"
-       transform="matrix(1.142663,0,0,1.142663,-29.932343,-31.891204)"
-       inkscape:export-filename="C:\Users\UsuarioA\git\imovil2014\artwork\incorrect.png"
-       inkscape:export-xdpi="191.78"
-       inkscape:export-ydpi="191.78"
-       clip-path="url(#clipPath6478)" />
+     style="display:inline"
+     transform="translate(0,244)">
+    <rect
+       style="fill:#26356b;fill-opacity:1;stroke:none"
+       id="rect7928"
+       width="1024.3717"
+       height="502.41125"
+       x="-0.18585205"
+       y="-245.20563" />
     <g
        id="g3807"
-       transform="matrix(0.85960221,0,0,0.85960221,13.740453,22.124939)"
+       transform="matrix(2.4668991,0,0,2.4668991,184.09627,-279.51587)"
        style="stroke:#ffffff;stroke-opacity:1">
       <path
          inkscape:connector-curvature="0"
@@ -2803,14 +2801,16 @@
     </g>
     <path
        style="fill:#ffffff;fill-opacity:1;stroke:none"
-       d="m 96.2119,133.31252 0,11.90438 -20.74639,0 0,5.86592 20.74639,0 0,31.57248 -20.74639,0 0,5.86592 20.74639,0 0,11.94751 36.36011,0 c 0.0437,1.8e-4 0.0856,0 0.12932,0 17.2573,0 31.42914,-13.47022 32.86643,-30.66671 l 14.96673,0 0,-5.86592 -14.96673,0 c -1.47663,-17.16027 -15.63742,-30.62358 -32.86643,-30.62358 -0.0437,0 -0.0858,-1.9e-4 -0.12932,0 l -36.36011,0 z"
+       d="m 425.32026,30.802998 0,32.460843 -56.57122,0 0,15.995181 56.57122,0 0,86.091788 -56.57122,0 0,15.99518 56.57122,0 0,32.57845 99.14669,0 c 0.11915,4.9e-4 0.23341,0 0.35263,0 47.05718,0 85.70093,-36.73058 89.62013,-83.62193 l 40.81125,0 0,-15.99519 -40.81125,0 c -4.02648,-46.792592 -42.6401,-83.504322 -89.62013,-83.504322 -0.11917,0 -0.23396,-5.18e-4 -0.35263,0 l -99.14669,0 z"
        id="path7126"
-       inkscape:connector-curvature="0" />
+       inkscape:connector-curvature="0"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
   </g>
   <g
      inkscape:label="Capa 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-796.36218)"
+     transform="translate(0,-552.36218)"
      style="display:inline" />
 </svg>

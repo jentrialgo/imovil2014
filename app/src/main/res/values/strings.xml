@@ -152,4 +152,14 @@ limitations under the License.
     <string name="nav_header_desc">Master Hacker</string>
     <string name="nav_header_title">Master Hacker</string>
     <string name="error_highscores_not_found">Puntuaciones no encontradas. Recreándolas…</string>
+    <string name="players_exception">No se pudo obtener el jugador de Google Play Games</string>
+    <string name="signin_other_error">Error al intentar iniciar sesión en Google Play Games</string>
+    <string name="leaderboards_exception">Error al intentar obtener las puntuaciones de Google Play Games</string>
+    <string name="status_exception_error">Error %1$s (status %2$d). %3$s.</string>
+    <string name="sign_in">Conectar</string>
+    <string name="sign_out">Desconectar</string>
+    <string name="not_connected">No conectado</string>
+    <string name="remote_high_scores">Puntuaciones remotas</string>
+    <string name="local_high_scores">Puntuaciones locales</string>
+    <string name="error_not_logged_in">Tienes que entrar en sessión en Google Play Games</string>
 </resources>

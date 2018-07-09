@@ -25,7 +25,6 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 import es.uniovi.imovil.fcrtrainer.highscores.HighscoreManager;
-import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -124,6 +123,12 @@ public abstract class BaseExerciseFragment extends Fragment {
 
 	private View mResult;
 	private ImageView mResultImage;
+
+	interface ScoreListener {
+		void onNewScore(int score);
+	}
+
+	private ScoreListener mScoreListener = null;
 
 	@Override
 	public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -426,7 +431,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 	protected abstract Screen associatedExercise();
 
 	/**
-	 * Saves the score using the Highscore Manager.
+	 * Saves the score using the Highscore Manager. Also sends it too Google Play Games
 	 *
 	 */
 	protected void saveScore() {
@@ -438,6 +443,12 @@ public abstract class BaseExerciseFragment extends Fragment {
 		} catch (JSONException e) {
 			Log.v(getClass().getSimpleName(), "Error when saving score");
 		}
+
+		mScoreListener.onNewScore(mScore);
+	}
+
+	public void setScoreListener(ScoreListener scoreListener) {
+		mScoreListener = scoreListener;
 	}
 
 
