@@ -31,7 +31,17 @@ public class PlayGamesManager implements OnCompleteListener<Player> {
 
     private MainActivity mActivity;
 
-    public void onSignInButtonClicked() {
+    // Achievements and scores we're pending to push to the cloud
+    // (waiting for the user to sign in, for instance)
+    private final AccomplishmentsOutbox mOutbox = new AccomplishmentsOutbox();
+
+    PlayGamesManager(MainActivity activity) {
+        mActivity = activity;
+        mGoogleSignInClient = GoogleSignIn.getClient(mActivity,
+                new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).build());
+    }
+
+    void onSignInButtonClicked() {
         if (isSignedIn()) {
             signOut();
         } else {
@@ -39,29 +49,9 @@ public class PlayGamesManager implements OnCompleteListener<Player> {
         }
     }
 
-    public void onNewScore(int score) {
+    void onNewScore(int score) {
         mOutbox.mScore = score;
         pushAccomplishments();
-    }
-
-    private class AccomplishmentsOutbox {
-        int mScore = -1;
-
-        boolean isEmpty() {
-            return mScore < 0;
-        }
-    }
-
-    // Achievements and scores we're pending to push to the cloud
-    // (waiting for the user to sign in, for instance)
-    private final AccomplishmentsOutbox mOutbox = new AccomplishmentsOutbox();
-
-    PlayGamesManager(MainActivity activity) {
-        mActivity = activity;
-
-        mGoogleSignInClient = GoogleSignIn.getClient(mActivity,
-                new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).build());
-
     }
 
     void signInSilently() {
@@ -84,22 +74,17 @@ public class PlayGamesManager implements OnCompleteListener<Player> {
         mActivity.startActivityForResult(mGoogleSignInClient.getSignInIntent(), RC_SIGN_IN);
     }
 
-
     void signIn(Intent intent) {
-        Task<GoogleSignInAccount> task =
-                GoogleSignIn.getSignedInAccountFromIntent(intent);
+        Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(intent);
 
         try {
             GoogleSignInAccount account = task.getResult(ApiException.class);
             onConnected(account);
         } catch (ApiException apiException) {
-            String message = apiException.getMessage();
-            if (message == null || message.isEmpty()) {
-                message = mActivity.getString(R.string.signin_other_error);
-            }
-
             onDisconnected();
 
+            String message = mActivity.getString(R.string.signin_other_error)
+                    + apiException.getMessage();
             new AlertDialog.Builder(mActivity)
                     .setMessage(message)
                     .setNeutralButton(android.R.string.ok, null)
@@ -110,16 +95,9 @@ public class PlayGamesManager implements OnCompleteListener<Player> {
     private void onConnected(GoogleSignInAccount googleSignInAccount) {
         Log.d(TAG, "onConnected(): connected to Google APIs");
 
-        //mAchievementsClient = Games.getAchievementsClient(this, googleSignInAccount);
         mLeaderboardsClient = Games.getLeaderboardsClient(mActivity, googleSignInAccount);
-        //mEventsClient = Games.getEventsClient(this, googleSignInAccount);
         mPlayersClient = Games.getPlayersClient(mActivity, googleSignInAccount);
 
-        // Show sign-out button on main menu
-        //mMainMenuFragment.setShowSignInButton(false);
-
-        // Show "you are signed in" message on win screen, with no sign in button.
-        //mWinFragment.setShowSignInButton(false);
         mActivity.onConnected();
 
         // Set the greeting appropriately on main menu
@@ -130,26 +108,15 @@ public class PlayGamesManager implements OnCompleteListener<Player> {
             pushAccomplishments();
         }
 
-		/*
-		loadAndPrintEvents();
-		*/
     }
 
     private void onDisconnected() {
         Log.d(TAG, "onDisconnected()");
 
-        //mAchievementsClient = null;
         mLeaderboardsClient = null;
         mPlayersClient = null;
 
-        // Show sign-in button on main menu
-        //mMainMenuFragment.setShowSignInButton(true);
-
-        // Show sign-in button on win screen
-        //mWinFragment.setShowSignInButton(true);
         mActivity.onDisconnected();
-
-        //mMainMenuFragment.setGreeting(getString(R.string.signed_out_greeting));
     }
 
     private void signOut() {
@@ -194,8 +161,10 @@ public class PlayGamesManager implements OnCompleteListener<Player> {
 
     void showRemoteLeaderboards() {
         if (!isSignedIn()) {
-            Toast.makeText(mActivity, mActivity.getString(R.string.error_not_logged_in),
-                    Toast.LENGTH_LONG).show();
+            new AlertDialog.Builder(mActivity)
+                    .setMessage(mActivity.getString(R.string.error_not_logged_in))
+                    .setNeutralButton(android.R.string.ok, null)
+                    .show();
             return;
         }
 
@@ -241,5 +210,13 @@ public class PlayGamesManager implements OnCompleteListener<Player> {
             mOutbox.mScore = -1;
         }
     }
-}
 
+    private class AccomplishmentsOutbox {
+        int mScore = -1;
+
+        boolean isEmpty() {
+            return mScore < 0;
+        }
+    }
+
+}

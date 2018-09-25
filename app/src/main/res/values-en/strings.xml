@@ -134,7 +134,7 @@
     <string name="nav_header_title">Master Hacker</string>
     <string name="tv_decimal">Decimal number</string>
     <string name="players_exception">Could not get the player from Google Play Games</string>
-    <string name="signin_other_error">Error trying to sign in Google Play Games</string>
+    <string name="signin_other_error">Error trying to sign in Google Play Games: </string>
     <string name="leaderboards_exception">Error trying to read the high scores from Google Play Games</string>
     <string name="status_exception_error">Error %1$s (status %2$d). %3$s.</string>
     <string name="sign_in">Sign in</string>
