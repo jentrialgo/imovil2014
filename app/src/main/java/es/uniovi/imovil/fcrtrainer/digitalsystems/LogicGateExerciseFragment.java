@@ -54,8 +54,7 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 
 	public static LogicGateExerciseFragment newInstance() {
 
-		LogicGateExerciseFragment fragment = new LogicGateExerciseFragment();
-		return fragment;
+		return new LogicGateExerciseFragment();
 	}
 
 	public LogicGateExerciseFragment() {

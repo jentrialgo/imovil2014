@@ -51,10 +51,10 @@ public class BinaryConverter{
 			i++;
 		}
 		
-		if(binaryText.substring(lastPosition) == "")
+		if(binaryText.substring(lastPosition).equals(""))
 			return "0";
-		//System.out.println("substring: " + binaryText.substring(lastPosition));
-		//Now substring and return	
+
+		//Now substring and return
 		return binaryText.substring(lastPosition);
 	}
 	

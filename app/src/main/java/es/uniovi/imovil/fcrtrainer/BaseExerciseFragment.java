@@ -118,7 +118,6 @@ public abstract class BaseExerciseFragment extends Fragment {
 	private long mDurationMs = DEFAULT_GAME_DURATION_MS;
 	private long mStartMs;
 
-	private AlphaAnimation mAnimation;
 	private AnticipateOvershootInterpolator mAntovershoot;
 
 	private View mResult;
@@ -134,7 +133,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 	public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
 		mResult = view.findViewById(R.id.result);
 		mResultImage = view.findViewById(R.id.resultimage);
-		mClock = getView().findViewById(R.id.text_view_clock);
+		mClock = view.findViewById(R.id.text_view_clock);
 		mScoreTextView = view.findViewById(R.id.text_view_score);
 		mLevelTextView = view.findViewById(R.id.text_view_level);
 
@@ -298,12 +297,12 @@ public abstract class BaseExerciseFragment extends Fragment {
 		updateScore();
 		showLevel();
 
-		getActivity().supportInvalidateOptionsMenu(); // to hide the settings action
+		getActivity().invalidateOptionsMenu(); // to hide the settings action
 
 		mIsPlaying = true;
 		mClock.setText(getString(R.string.game_on));
 		setGameInfoPanelVisibility(View.VISIBLE);
-		getActivity().supportInvalidateOptionsMenu();
+		getActivity().invalidateOptionsMenu();
 		mStartMs = System.currentTimeMillis();
 		mTimerHandler.postDelayed(mUpdateTimeTask, CLOCK_UPDATE_PERIOD_MS);
 	}
@@ -366,7 +365,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 			mIsPlaying = false;
 			mTimerHandler.removeCallbacks(mUpdateTimeTask);
 			setGameInfoPanelVisibility(View.GONE);
-			getActivity().supportInvalidateOptionsMenu();
+			getActivity().invalidateOptionsMenu();
 		}
 	}
 
@@ -381,13 +380,13 @@ public abstract class BaseExerciseFragment extends Fragment {
 	protected void showAnimationAnswer(boolean correct){
 		// Fade in - fade out
 		mResult.setVisibility(View.VISIBLE);
-		mAnimation = new AlphaAnimation(0,1);
-		mAnimation.setDuration(600);
-		mAnimation.setFillBefore(true);
-		mAnimation.setFillAfter(true);
-		mAnimation.setRepeatCount(Animation.RESTART);
-		mAnimation.setRepeatMode(Animation.REVERSE);
-		mResult.startAnimation(mAnimation);
+		AlphaAnimation animation = new AlphaAnimation(0, 1);
+		animation.setDuration(600);
+		animation.setFillBefore(true);
+		animation.setFillAfter(true);
+		animation.setRepeatCount(Animation.RESTART);
+		animation.setRepeatMode(Animation.REVERSE);
+		mResult.startAnimation(animation);
 		if(correct)
 			mResultImage.setImageDrawable(getResources().getDrawable(R.drawable.correct));
 		else mResultImage.setImageDrawable(getResources().getDrawable(R.drawable.incorrect));

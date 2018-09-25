@@ -65,8 +65,7 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 
 	//metodos
 	public static NetworkLayerExerciseFragment newInstance() {
-		NetworkLayerExerciseFragment fragment = new NetworkLayerExerciseFragment();
-		return fragment;
+		return new NetworkLayerExerciseFragment();
 	}
 
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,

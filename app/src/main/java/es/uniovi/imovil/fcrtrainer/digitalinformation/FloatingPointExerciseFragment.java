@@ -70,8 +70,7 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 	private View mRootView;
 
 	public static FloatingPointExerciseFragment newInstance() {
-		FloatingPointExerciseFragment fragment = new FloatingPointExerciseFragment();
-		return fragment;
+		return new FloatingPointExerciseFragment();
 	}
 
 	public FloatingPointExerciseFragment() {
