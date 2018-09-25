@@ -3,19 +3,6 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:showIn="navigation_view">
 
-    <item android:title="@string/highscores">
-        <menu>
-            <item
-                android:id="@+id/nav_remote_highscores"
-                android:icon="@drawable/ic_nav_high_scores"
-                android:title="@string/remote_high_scores"/>
-            <item
-                android:id="@+id/nav_highscores"
-                android:icon="@drawable/ic_nav_high_scores"
-                android:title="@string/local_high_scores"/>
-        </menu>
-    </item>
-
     <item android:title="@string/codes">
         <menu>
             <item
@@ -76,6 +63,19 @@
                 android:id="@+id/nav_network_layer"
                 android:icon="@drawable/ic_nav_network_layer"
                 android:title="@string/network_layer"/>
+        </menu>
+    </item>
+
+    <item android:title="@string/highscores">
+        <menu>
+            <item
+                android:id="@+id/nav_remote_highscores"
+                android:icon="@drawable/ic_nav_high_scores"
+                android:title="@string/remote_high_scores"/>
+            <item
+                android:id="@+id/nav_highscores"
+                android:icon="@drawable/ic_nav_high_scores"
+                android:title="@string/local_high_scores"/>
         </menu>
     </item>
 
