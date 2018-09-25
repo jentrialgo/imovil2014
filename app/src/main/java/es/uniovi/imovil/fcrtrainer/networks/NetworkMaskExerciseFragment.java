@@ -55,7 +55,7 @@ public class NetworkMaskExerciseFragment
 	@Override
 	protected void printQuestion() {
 		mQuestion.setText(Integer.toString(maxHost()));
-		mAnswer.setText("255.255.255.255");
+		mAnswer.setText(R.string.default_net_mask);
 		
 		// Set the focus on the edit text and show the keyboard
 		if(mAnswer.requestFocus()) {

@@ -143,4 +143,5 @@
     <string name="remote_high_scores">Remote high scores</string>
     <string name="local_high_scores">Local high scores</string>
     <string name="error_not_logged_in">You have to log in to Google Play Games</string>
+    <string name="default_net_mask">255.255.255.255</string>
 </resources>

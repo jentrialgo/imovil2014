@@ -161,4 +161,5 @@ limitations under the License.
     <string name="remote_high_scores">Puntuaciones remotas</string>
     <string name="local_high_scores">Puntuaciones locales</string>
     <string name="error_not_logged_in">Tienes que entrar en sessión en Google Play Games</string>
+    <string name="default_net_mask">255.255.255.255</string>
 </resources>

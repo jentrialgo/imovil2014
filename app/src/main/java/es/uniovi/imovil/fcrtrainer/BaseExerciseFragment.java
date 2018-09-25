@@ -18,6 +18,7 @@ limitations under the License.
 package es.uniovi.imovil.fcrtrainer;
 
 import java.util.Date;
+import java.util.Locale;
 
 import org.json.JSONException;
 
@@ -228,7 +229,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 		int remainingTimeMin = remainingTimeSec / 60;
 		remainingTimeSec = remainingTimeSec % 60;
 
-		mClock.setText(String.format("%d:%02d", remainingTimeMin,
+		mClock.setText(String.format(Locale.getDefault(), "%d:%02d", remainingTimeMin,
 				remainingTimeSec));
 	}
 

@@ -321,7 +321,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 	void onConnected() {
-		mSignInButton.setText("Desconectar");
+		mSignInButton.setText(R.string.sign_out);
 	}
 
 	void onDisconnected() {
