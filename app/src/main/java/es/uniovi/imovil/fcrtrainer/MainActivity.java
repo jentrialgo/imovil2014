@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements
 	private boolean mUserLearnedDrawer;
 
 	private PlayGamesManager mPlayGamesManager;
-    private Button mSignInButton;
+    private TextView mSignInButton;
 	private TextView mUserName;
 
     @Override
@@ -298,8 +298,6 @@ public class MainActivity extends AppCompatActivity implements
 			// Remote leaderboards are handled with an Activity by Google Play Games
 			mPlayGamesManager.showRemoteLeaderboards();
 		} else {
-			Screen screen = Screen.fromNavId(item.getItemId());
-
 			mExercise = Screen.fromNavId(item.getItemId());
 			mTitle = mExercise.toString();
 			updateContentFragment();

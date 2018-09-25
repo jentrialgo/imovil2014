@@ -126,7 +126,6 @@ public class PlayGamesManager implements OnCompleteListener<Player> {
         // Set the greeting appropriately on main menu
         mPlayersClient.getCurrentPlayer().addOnCompleteListener(this);
 
-
         // If we have accomplishments to push, push them
         if (!mOutbox.isEmpty()) {
             pushAccomplishments();
