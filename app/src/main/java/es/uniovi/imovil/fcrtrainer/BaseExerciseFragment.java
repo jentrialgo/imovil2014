@@ -57,11 +57,13 @@ import android.widget.Toast;
  * 
  * Todos los juegos tienen la misma mecánica: hay una cuenta atrás durante la
  * cual se van haciendo preguntas. Cuando el usuario acierta una pregunta, se
- * debe llamar a computeCorrectQuestion() para que se actualice la puntuación;
- * cuando falle, se debe llamar a computeIncorrectQuestion() para que penalice
+ * debe llamar a computeCorrectQuestionAndUpdateScore() para que se actualice la puntuación;
+ * cuando falle, se debe llamar a computeIncorrectQuestionAndUpdateScore() para que penalice
  * al jugador. La idea es evitar que probar valores al azar sea una estrategia
- * ventajosa en el juego.
- * 
+ * ventajosa en el juego. Por defecto, se suman y restan unos valores definidos como constantes
+ * en esta clase para aciertos y fallos, respectivamente; si se quieren modificar estos valores
+ * hay que redefinir los métodos pointsPerCorrectQuestion() y penalizationPerIncorrectQuestion().
+ *
  * Para que este fragmento funcione, el fragmento debe tener definido un panel
  * para la información del juego llamado game_info_panel, que debe ser incluido
  * en el layout utilizando esta orden:
@@ -86,7 +88,7 @@ import android.widget.Toast;
  * - Redefinir el método cancelGame(), que se llama cuando el usuario cancela el
  * juego, para hacer las acciones que se deseen.
  * 
- * En estros tres métodos se debe llamar siempre al método padre en
+ * En estos tres métodos se debe llamar siempre al método padre en
  * BaseExerciseFragment, ya que son los que controlan el comportamiento del
  * juego.
  * 
@@ -125,7 +127,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 	private ImageView mResultImage;
 
 	interface ScoreListener {
-		void onNewScore(int score);
+		void onNewScore(Screen screen, int score);
 	}
 
 	private ScoreListener mScoreListener = null;
@@ -321,13 +323,21 @@ public abstract class BaseExerciseFragment extends Fragment {
 				+ String.valueOf(mScore));
 	}
 
-	protected void computeCorrectQuestion() {
-		mScore += POINTS_PER_CORRECT_QUESTION;
+	protected int pointsPerCorrectQuestion() {
+		return POINTS_PER_CORRECT_QUESTION;
+	}
+
+	protected int penalizationPerIncorrectQuestion() {
+		return PENALIZATION_PER_INCORRECT_QUESTION;
+	}
+
+	protected void computeCorrectQuestionAndUpdateScore() {
+		mScore += pointsPerCorrectQuestion();
 		updateScore();
 	}
 
-	protected void computeIncorrectQuestion() {
-		mScore -= PENALIZATION_PER_INCORRECT_QUESTION;
+	protected void computeIncorrectQuestionAndUpdateScore() {
+		mScore -= penalizationPerIncorrectQuestion();
 		updateScore();
 	}
 
@@ -444,7 +454,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 			Log.v(getClass().getSimpleName(), "Error when saving score");
 		}
 
-		mScoreListener.onNewScore(mScore);
+		mScoreListener.onNewScore(associatedExercise(), mScore);
 	}
 
 	public void setScoreListener(ScoreListener scoreListener) {

@@ -180,4 +180,13 @@ public abstract class BaseNetworkMaskExerciseFragment
 	 */
 	protected abstract void printQuestion();
 
+	@Override
+	protected int pointsPerCorrectQuestion() {
+		return level().scoreMultiplier() * super.pointsPerCorrectQuestion();
+	}
+
+	@Override
+	protected int penalizationPerIncorrectQuestion() {
+		return level().scoreMultiplier() * super.penalizationPerIncorrectQuestion();
+	}
 }

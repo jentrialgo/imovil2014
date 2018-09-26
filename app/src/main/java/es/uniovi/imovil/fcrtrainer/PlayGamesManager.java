@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -20,6 +19,10 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import static es.uniovi.imovil.fcrtrainer.MainActivity.RC_SIGN_IN;
 
 public class PlayGamesManager implements OnCompleteListener<Player> {
@@ -29,16 +32,16 @@ public class PlayGamesManager implements OnCompleteListener<Player> {
     private LeaderboardsClient mLeaderboardsClient;
     private PlayersClient mPlayersClient;
 
-    private MainActivity mActivity;
+    // Scores not yet submitted to the cloud
+    private List<ScoreInfo> pendingScores;
 
-    // Achievements and scores we're pending to push to the cloud
-    // (waiting for the user to sign in, for instance)
-    private final AccomplishmentsOutbox mOutbox = new AccomplishmentsOutbox();
+    private MainActivity mActivity;
 
     PlayGamesManager(MainActivity activity) {
         mActivity = activity;
         mGoogleSignInClient = GoogleSignIn.getClient(mActivity,
                 new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).build());
+        pendingScores = new ArrayList<>();
     }
 
     void onSignInButtonClicked() {
@@ -49,8 +52,9 @@ public class PlayGamesManager implements OnCompleteListener<Player> {
         }
     }
 
-    void onNewScore(int score) {
-        mOutbox.mScore = score;
+    void onNewScore(Screen screen, int score) {
+        ScoreInfo scoreInfo = new ScoreInfo(screen, score);
+        pendingScores.add(scoreInfo);
         pushAccomplishments();
     }
 
@@ -104,7 +108,7 @@ public class PlayGamesManager implements OnCompleteListener<Player> {
         mPlayersClient.getCurrentPlayer().addOnCompleteListener(this);
 
         // If we have accomplishments to push, push them
-        if (!mOutbox.isEmpty()) {
+        if (!pendingScores.isEmpty()) {
             pushAccomplishments();
         }
 
@@ -203,19 +207,25 @@ public class PlayGamesManager implements OnCompleteListener<Player> {
             return;
         }
 
-        if (mOutbox.mScore >= 0) {
-            mLeaderboardsClient.submitScore(
-                    mActivity.getString(R.string.leaderboard_binary__beginner),
-                    mOutbox.mScore);
-            mOutbox.mScore = -1;
+        Iterator<ScoreInfo> it = pendingScores.iterator();
+        while (it.hasNext()) {
+            ScoreInfo scoreInfo = it.next();
+            mLeaderboardsClient.submitScore(scoreInfo.mLeaderboardId, scoreInfo.mScore);
+            it.remove();
         }
+
     }
 
-    private class AccomplishmentsOutbox {
-        int mScore = -1;
+    /** This class represents an score to be submitted
+     *
+     */
+    private class ScoreInfo {
+        String mLeaderboardId;
+        int mScore;
 
-        boolean isEmpty() {
-            return mScore < 0;
+        ScoreInfo(Screen screen, int score) {
+            mLeaderboardId = screen.toLeaderboardId();
+            mScore = score;
         }
     }
 

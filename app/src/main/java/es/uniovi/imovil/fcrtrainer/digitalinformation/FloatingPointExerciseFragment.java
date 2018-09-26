@@ -222,12 +222,12 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 				&& Float.parseFloat(userAnswer) == mDecimalValueF) {
 			showAnimationAnswer(true);
 			if (mIsPlaying) {
-				computeCorrectQuestion();
+				computeCorrectQuestionAndUpdateScore();
 			}
 			newConvertToDecimalQuestion();
 		} else {
 			showAnimationAnswer(false);
-			computeIncorrectQuestion();
+			computeIncorrectQuestionAndUpdateScore();
 		}
 	}
 
@@ -241,12 +241,12 @@ public class FloatingPointExerciseFragment extends BaseExerciseFragment {
 						RemoveTrailingZeroes(userAnswer))) {
 			showAnimationAnswer(true);
 			if (mIsPlaying) {
-				computeCorrectQuestion();
+				computeCorrectQuestionAndUpdateScore();
 			}
 			newConvertToBinaryQuestion();
 		} else {
 			showAnimationAnswer(false);
-			computeIncorrectQuestion();
+			computeIncorrectQuestionAndUpdateScore();
 		}
 	}
 

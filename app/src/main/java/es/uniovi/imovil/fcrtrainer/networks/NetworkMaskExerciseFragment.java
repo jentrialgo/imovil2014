@@ -83,11 +83,11 @@ public class NetworkMaskExerciseFragment
 			showAnimationAnswer(true);
 			newQuestion();
 			if (mIsPlaying) {
-				computeCorrectQuestion();
+				computeCorrectQuestionAndUpdateScore();
 			}
 		} else {
 			showAnimationAnswer(false);
-			computeIncorrectQuestion();
+			computeIncorrectQuestionAndUpdateScore();
 		}
 	}
 

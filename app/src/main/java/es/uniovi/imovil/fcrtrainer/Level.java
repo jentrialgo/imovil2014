@@ -20,16 +20,18 @@ package es.uniovi.imovil.fcrtrainer;
 import android.content.Context;
 
 public enum Level {
-	BEGINNER(4, 1),
-	INTERMEDIATE(6, 2),
-	PROFICIENCY(8, 3);
+	BEGINNER(4, 1, 1),
+	INTERMEDIATE(6, 2, 2),
+	PROFICIENCY(8, 3, 4);
 
 	private final int mNumberOfBits; // for numerical exercises
 	private final int mNumberOfBitsFractionalPart; // for floating point
+	private final int mScoreMultiplier;
 
-	Level(int numberOfBits, int numberOfBitsFractonalPart) {
+	Level(int numberOfBits, int numberOfBitsFractonalPart, int scoreMultiplier) {
 		mNumberOfBits = numberOfBits;
 		mNumberOfBitsFractionalPart = numberOfBitsFractonalPart;
+		mScoreMultiplier = scoreMultiplier;
 	}
 
 	public int numberOfBits() {
@@ -63,6 +65,9 @@ public enum Level {
 		}
 
 		throw new IllegalArgumentException();
-		
+	}
+
+	public int scoreMultiplier() {
+		return mScoreMultiplier;
 	}
 }

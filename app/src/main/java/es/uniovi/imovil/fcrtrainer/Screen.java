@@ -116,6 +116,23 @@ public enum Screen {
         //navMap.put(R.id.nav_protocol, Screen.PROTOCOL); // TODO: it is disabled at the moment
     }
 
+    private static Map<Screen, Integer> leaderboard;
+    static {
+        leaderboard = new HashMap<>();
+        leaderboard.put(Screen.BINARY, R.string.leaderboard_binary);
+        leaderboard.put(Screen.HEXADECIMAL, R.string.leaderboard_hexadecimal);
+        leaderboard.put(Screen.SIGN_MAGNITUDE, R.string.leaderboard_sign_and_magnitude);
+        leaderboard.put(Screen.TWOS_COMPLEMENT, R.string.leaderboard_twos_complement);
+        leaderboard.put(Screen.FLOATING_POINT, R.string.leaderboard_floating_point);
+        leaderboard.put(Screen.LOGIC_GATE, R.string.leaderboard_logic_gate);
+        leaderboard.put(Screen.LOGIC_OPERATION, R.string.leaderboard_logic_operation);
+        leaderboard.put(Screen.NETWORK_ADDRESS, R.string.leaderboard_network_address);
+        leaderboard.put(Screen.CIDR, R.string.leaderboard_cidr);
+        leaderboard.put(Screen.HOST_COUNT, R.string.leaderboard_host_count);
+        leaderboard.put(Screen.NETWORK_MASK, R.string.leaderboard_network_mask);
+        leaderboard.put(Screen.NETWORK_LAYER, R.string.leaderboard_network_layer);
+    }
+
     private final boolean mIsExercise;
 
     Screen(boolean isExercise) {
@@ -137,6 +154,10 @@ public enum Screen {
 
     public static Screen fromNavId(int navId) {
         return navMap.get(navId);
+    }
+
+    public String toLeaderboardId() {
+        return getResourceString(leaderboard.get(this));
     }
 
     public boolean isExercise() {

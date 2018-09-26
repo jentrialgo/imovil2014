@@ -155,7 +155,7 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 		if (mLogicstring[mCurrentQuestion].equals(answer)) {
 			showAnimationAnswer(true);
 			if (mIsPlaying) {
-				computeCorrectQuestion();
+				computeCorrectQuestionAndUpdateScore();
 			}
 			mCurrentQuestion = random();
 			mImageView.setImageResource(mImageArray.getResourceId(
@@ -163,7 +163,7 @@ public class LogicGateExerciseFragment extends BaseExerciseFragment implements
 		} else {
 			showAnimationAnswer(false);
 			if (mIsPlaying) {
-				computeIncorrectQuestion();
+				computeIncorrectQuestionAndUpdateScore();
 			}
 		}
 	}

@@ -180,7 +180,7 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 		if (mRbPressed.equals(mAnswers[mCurrentQuestion])){
 			showAnimationAnswer(true);
 			if (mIsPlaying){
-				computeCorrectQuestion();
+				computeCorrectQuestionAndUpdateScore();
 			}
 			newRandomQuestion();			
 			updateQuestionText();
@@ -188,7 +188,7 @@ public class NetworkLayerExerciseFragment extends BaseExerciseFragment {
 		}
 		else {
 			showAnimationAnswer(false);
-			computeIncorrectQuestion();
+			computeIncorrectQuestionAndUpdateScore();
 		}
 	}
 

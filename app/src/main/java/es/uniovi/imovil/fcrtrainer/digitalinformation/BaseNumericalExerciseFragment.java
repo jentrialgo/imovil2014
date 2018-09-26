@@ -203,12 +203,12 @@ public abstract class BaseNumericalExerciseFragment extends
 	private void checkSolution(String answer) {
 		if (answer.equals("") || !isCorrect(answer)) {
 			showAnimationAnswer(false);
-			computeIncorrectQuestion();
+			computeIncorrectQuestionAndUpdateScore();
 		} else {
 			// Correct answer
 			showAnimationAnswer(true);
 			if (mIsPlaying) {
-				computeCorrectQuestion();
+				computeCorrectQuestionAndUpdateScore();
 			}
 			newQuestion();
 		}
@@ -278,6 +278,16 @@ public abstract class BaseNumericalExerciseFragment extends
 	protected void endGame() {
 		super.endGame();
 		setTrainingMode(true);
+	}
+
+	@Override
+	protected int pointsPerCorrectQuestion() {
+		return level().scoreMultiplier() * super.pointsPerCorrectQuestion();
+	}
+
+	@Override
+	protected int penalizationPerIncorrectQuestion() {
+		return level().scoreMultiplier() * super.penalizationPerIncorrectQuestion();
 	}
 
 	/**

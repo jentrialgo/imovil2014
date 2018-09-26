@@ -70,12 +70,12 @@ public class NetworkAddressExerciseFragment
 		if (net.equals(mAnswer.getText().toString())) {
 			showAnimationAnswer(true);
 			if (mIsPlaying) {
-				computeCorrectQuestion();
+				computeCorrectQuestionAndUpdateScore();
 			}
 			newQuestion();
 		} else {
 			showAnimationAnswer(false);
-			computeIncorrectQuestion();
+			computeIncorrectQuestionAndUpdateScore();
 		}
 	}
 

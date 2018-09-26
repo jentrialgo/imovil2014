@@ -41,13 +41,13 @@ public class CidrExerciseFragment extends BaseNetworkMaskExerciseFragment {
 		if (ans.equals(correctAnswer())) {
 			showAnimationAnswer(true);
 			if (mIsPlaying) {
-				computeCorrectQuestion();
+				computeCorrectQuestionAndUpdateScore();
 			}
 			mAnswer.setText("");
 			newQuestion();
 		} else {
 			showAnimationAnswer(false);
-			computeIncorrectQuestion();
+			computeIncorrectQuestionAndUpdateScore();
 		}
 	}
 

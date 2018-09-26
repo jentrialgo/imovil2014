@@ -172,11 +172,11 @@ public class ProtocolExerciseFragment extends BaseExerciseFragment {
 
 		if (correct) {
 			if (mIsPlaying) {
-				computeCorrectQuestion();
+				computeCorrectQuestionAndUpdateScore();
 			}
 			newQuestion();
 		} else {
-			computeIncorrectQuestion();
+			computeIncorrectQuestionAndUpdateScore();
 		}
 	}
 

@@ -316,8 +316,8 @@ public class MainActivity extends AppCompatActivity implements
 	}
 
     @Override
-    public void onNewScore(int score) {
-    	mPlayGamesManager.onNewScore(score);
+    public void onNewScore(Screen screen, int score) {
+    	mPlayGamesManager.onNewScore(screen, score);
     }
 
 	void onConnected() {

@@ -295,12 +295,12 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
 		if (answer.equals(mSolucion)) {
 			showAnimationAnswer(true);
 			mNumeroPregunta++;
-			computeCorrectQuestion();
+			computeCorrectQuestionAndUpdateScore();
 			
 			crearPregunta();
 		} else {
 			showAnimationAnswer(false);
-			computeIncorrectQuestion();
+			computeIncorrectQuestionAndUpdateScore();
 		}
 
 	}
@@ -315,5 +315,15 @@ public class LogicOperationExerciseFragment extends BaseExerciseFragment
     protected Screen associatedExercise() {
         return Screen.LOGIC_OPERATION;
     }
+
+	@Override
+	protected int pointsPerCorrectQuestion() {
+		return level().scoreMultiplier() * super.pointsPerCorrectQuestion();
+	}
+
+	@Override
+	protected int penalizationPerIncorrectQuestion() {
+		return level().scoreMultiplier() * super.penalizationPerIncorrectQuestion();
+	}
 
 }
