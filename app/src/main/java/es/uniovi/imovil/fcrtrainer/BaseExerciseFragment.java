@@ -32,6 +32,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -405,11 +406,11 @@ public abstract class BaseExerciseFragment extends Fragment {
 		animation.setRepeatMode(Animation.REVERSE);
 		mResult.startAnimation(animation);
 
-		if(correct) {
-			mResultImage.setImageDrawable(getResources().getDrawable(R.drawable.correct));
-		} else {
-			mResultImage.setImageDrawable(getResources().getDrawable(R.drawable.incorrect));
+		int drawableId = R.drawable.correct;
+		if (!correct) {
+			drawableId = R.drawable.incorrect;
 		}
+		mResultImage.setImageDrawable(ContextCompat.getDrawable(this.getContext(), drawableId));
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 			mResultImage.animate().setDuration(300).setInterpolator(mAntovershoot)
