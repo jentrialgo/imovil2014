@@ -226,7 +226,6 @@ public class MainActivity extends AppCompatActivity implements
 		FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 		fragmentTransaction.replace(R.id.content_frame, fragment, "Hola");
 		fragmentTransaction.commit();
-
 	}
 
     private void initializeDrawer(boolean fromSavedState) {

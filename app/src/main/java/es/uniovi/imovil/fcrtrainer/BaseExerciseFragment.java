@@ -152,9 +152,14 @@ public abstract class BaseExerciseFragment extends Fragment {
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
+		restorePlayingState(savedInstanceState);
+	}
+
+	private void restorePlayingState(@NonNull Bundle savedInstanceState) {
 		if (savedInstanceState == null) {
 			return;
 		}
+
 		mIsPlaying = savedInstanceState.getBoolean(STATE_IS_PLAYING);
 
 		if (mIsPlaying) {
@@ -176,6 +181,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 	@Override
 	public void onSaveInstanceState(@NonNull Bundle outState) {
 		super.onSaveInstanceState(outState);
+
 		outState.putBoolean(STATE_IS_PLAYING, mIsPlaying);
 		outState.putLong(STATE_CONSUMED_TIME_MS,
 				mDurationMs - getRemainingTimeMs());

@@ -110,14 +110,24 @@ public class EndGameFragment extends Fragment implements Button.OnClickListener 
             ivEndGame.setImageResource(R.drawable.incorrect);
         }
 
-        boolean isHighscore = true;
+        if (isHighscore()){
+            lbHighScore.setText(R.string.endgame_newrecord);
+            ivEndGame.setImageResource(R.drawable.ic_star);
+        }
+        else {
+            lbHighScore.setVisibility(View.INVISIBLE);
+        }
+
+    }
+
+    private boolean isHighscore() {
         try {
             ArrayList<Highscore> highscores = HighscoreManager.loadHighscores(getContext(),
                     PreferenceUtils.getLevel(getActivity()));
 
             for (Highscore h : highscores) {
                 if (h.getExercise() == exerciseId && h.getScore() > score) {
-                    isHighscore = false;
+                    return false;
                 }
             }
         } catch (JSONException e) {
@@ -126,15 +136,7 @@ public class EndGameFragment extends Fragment implements Button.OnClickListener 
                     getActivity().getString(R.string.error_parsing_highscores),
                     Toast.LENGTH_LONG).show();
         }
-
-        if (isHighscore){
-            lbHighScore.setText(R.string.endgame_newrecord);
-            ivEndGame.setImageResource(R.drawable.ic_star);
-        }
-        else {
-            lbHighScore.setVisibility(View.INVISIBLE);
-        }
-
+        return true;
     }
 
     /**
