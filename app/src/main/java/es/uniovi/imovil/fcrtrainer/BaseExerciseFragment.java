@@ -398,18 +398,23 @@ public abstract class BaseExerciseFragment extends Fragment {
 		// Fade in - fade out
 		mResult.setVisibility(View.VISIBLE);
 		AlphaAnimation animation = new AlphaAnimation(0, 1);
-		animation.setDuration(600);
+		animation.setDuration(300);
 		animation.setFillBefore(true);
 		animation.setFillAfter(true);
 		animation.setRepeatCount(Animation.RESTART);
 		animation.setRepeatMode(Animation.REVERSE);
 		mResult.startAnimation(animation);
-		if(correct)
+
+		if(correct) {
 			mResultImage.setImageDrawable(getResources().getDrawable(R.drawable.correct));
-		else mResultImage.setImageDrawable(getResources().getDrawable(R.drawable.incorrect));
+		} else {
+			mResultImage.setImageDrawable(getResources().getDrawable(R.drawable.incorrect));
+		}
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-			mResultImage.animate().setDuration(700).setInterpolator(mAntovershoot).scaleX(1.5f).scaleY(1.5f).withEndAction(new Runnable(){
+			mResultImage.animate().setDuration(300).setInterpolator(mAntovershoot)
+					.scaleX(1.5f).scaleY(1.5f)
+					.withEndAction(new Runnable(){
                 @Override
                 public void run() {
                     // Back to its original size after the animation's end
