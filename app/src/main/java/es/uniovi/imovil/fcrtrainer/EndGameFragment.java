@@ -132,7 +132,7 @@ public class EndGameFragment extends Fragment implements Button.OnClickListener 
             ivEndGame.setImageResource(R.drawable.ic_star);
         }
         else {
-            lbHighScore.setVisibility(View.GONE);
+            lbHighScore.setVisibility(View.INVISIBLE);
         }
 
     }
@@ -148,11 +148,11 @@ public class EndGameFragment extends Fragment implements Button.OnClickListener 
             return getResources().getString(R.string.endgame_luck);
         else if(pScore < 1)
             return getResources().getString(R.string.endgame_verybad);
-        else if (pScore < 5)
+        else if (pScore <= 10)
             return getResources().getString(R.string.endgame_bad);
-        else if (pScore < 15)
+        else if (pScore <= 25)
             return getResources().getString(R.string.endgame_good);
-        else if (pScore < 40)
+        else if (pScore <= 50)
             return getResources().getString(R.string.endgame_verygood);
         else
             return getResources().getString(R.string.endgame_excellent);

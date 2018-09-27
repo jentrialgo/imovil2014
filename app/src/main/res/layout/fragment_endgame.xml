@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:fillViewport="true">
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
@@ -15,84 +16,129 @@
 
         <TextView
             android:id="@+id/lbScore"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
             android:gravity="center_horizontal"
             android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/lbMotivation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="Score: 10"/>
 
         <TextView
             android:id="@+id/lbMotivation"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
             android:gravity="center_horizontal"
             android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/lbHighScore"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lbScore"
             tools:text="Good job!"/>
 
         <TextView
             android:id="@+id/lbHighScore"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
             android:gravity="center_horizontal"
             android:textSize="24sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/ivEndGame"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lbMotivation"
             tools:text="New high score"/>
 
         <ImageView
             android:id="@+id/ivEndGame"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:foregroundGravity="center_vertical|center_horizontal"
-            android:padding="24dp"
-            app:srcCompat="@drawable/correct"/>
-
-        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/ibShareFacebook"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/ic_facebook_box_black_24dp" />
-
-
-            <ImageButton
-                android:id="@+id/ibShareTwitter"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/ic_twitter_box_black_24dp" />
+            android:foregroundGravity="center_vertical|center_horizontal"
+            android:padding="24dp"
+            app:layout_constraintBottom_toTopOf="@+id/ibShareTwitter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lbHighScore"
+            app:srcCompat="@drawable/ic_star"/>
 
 
-            <ImageButton
-                android:id="@+id/ibShareInstagram"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/ic_instagram_black_24dp" />
+        <ImageButton
+            android:id="@+id/ibShareFacebook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            android:layout_marginLeft="80dp"
+            app:layout_constraintBottom_toTopOf="@+id/btPlayAgain"
+            app:layout_constraintEnd_toStartOf="@+id/ibShareTwitter"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivEndGame"
+            app:layout_constraintVertical_bias="0.827"
+            app:srcCompat="@drawable/ic_facebook_box_black_24dp"/>
 
-            <ImageButton
-                android:id="@+id/ibShare"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                app:srcCompat="?attr/actionModeShareDrawable" />
-        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/ibShareTwitter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/btPlayAgain"
+            app:layout_constraintEnd_toStartOf="@+id/ibShareInstagram"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/ibShareFacebook"
+            app:layout_constraintTop_toBottomOf="@+id/ivEndGame"
+            app:srcCompat="@drawable/ic_twitter_box_black_24dp"/>
+
+
+        <ImageButton
+            android:id="@+id/ibShareInstagram"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/btPlayAgain"
+            app:layout_constraintEnd_toStartOf="@+id/ibShare"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/ibShareTwitter"
+            app:layout_constraintTop_toBottomOf="@+id/ivEndGame"
+            app:srcCompat="@drawable/ic_instagram_black_24dp"/>
+
+        <ImageButton
+            android:id="@+id/ibShare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="88dp"
+            android:layout_marginRight="88dp"
+            app:layout_constraintBottom_toTopOf="@+id/btPlayAgain"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/ibShareInstagram"
+            app:layout_constraintTop_toBottomOf="@+id/ivEndGame"
+            app:srcCompat="?attr/actionModeShareDrawable"/>
+
 
         <Button
             android:id="@+id/btPlayAgain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="@string/play_again"/>
+            android:text="@string/play_again"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ibShareFacebook"
+            app:layout_constraintVertical_bias="0.804"/>
 
-    </LinearLayout>
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="20dp"/>
+
+    </android.support.constraint.ConstraintLayout>
 
 </ScrollView>
