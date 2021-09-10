@@ -6,7 +6,7 @@
 Repository for Master Hacker, an Android app developed in the course
 Informática Móvil of the EPI Gijón
 
-This is an Android game or practicing basic concepts of computers and 
+This is an Android game for practicing basic concepts of computers and 
 networks such as:
 
 - Encodings (binary, hexadecimal, two's complement, IEEE 754)
